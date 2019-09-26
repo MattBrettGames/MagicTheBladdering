@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class UIController : BlankMono
+public class CharacterSelector : BlankMono
 {
     public string thisPlayer;
 
@@ -18,6 +18,10 @@ public class UIController : BlankMono
 
     private bool inputCooldown;
 
+    [Header("Readying Up")]
+    public bool locked;
+    public UniverseController universe;
+       
     [Header("UI Elements")]
     public Text characterText;
     public Text skinText;
@@ -98,6 +102,12 @@ public class UIController : BlankMono
                 UpdateDisplay();
             }
             Invoke("EndCooldown", 0.3f);
+        }
+
+        if (Input.GetButtonDown(thisPlayer + "XButton"))
+        {
+            UpdateDisplay();
+            universe.CheckReady();
         }
     }
 
