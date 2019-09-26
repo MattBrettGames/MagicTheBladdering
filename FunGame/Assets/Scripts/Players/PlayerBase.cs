@@ -23,26 +23,42 @@ public abstract class PlayerBase : BlankMono
     public Transform aimTarget;
     public GameObject visuals;
 
+    [Header("Input Strings")]
+    string horiPlayerInput;
+    string vertPlayerInput;
+    string aPlayerInput;
+    string bPlayerInput;
+    string xPlayerInput;
+    string yPlayerInput;
+
     void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
+
+        //More Efficient version of the multi-player input system
+        horiPlayerInput = thisPlayer + "Horizontal";
+        vertPlayerInput = thisPlayer + "Vertical";
+        aPlayerInput = thisPlayer + "AButton";
+        bPlayerInput = thisPlayer + "BButton";
+        xPlayerInput = thisPlayer + "XButton";
+        yPlayerInput = thisPlayer + "YButton";
     }
 
     void Update()
     {
-        float hori = Input.GetAxis(thisPlayer + "Horizontal");
-        float vert = Input.GetAxis(thisPlayer + "Vertical");
+        float hori = Input.GetAxis(horiPlayerInput);
+        float vert = Input.GetAxis(vertPlayerInput);
         transform.Translate(new Vector3(hori, 0, vert) * speed);
         if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
         else { anim.SetFloat("Movement", 0); }
 
         aimTarget.position = transform.position + new Vector3(hori, 0, vert);
 
-        if (Input.GetButtonDown(thisPlayer + "AButton")) { AAction(); }
-        if (Input.GetButtonDown(thisPlayer + "BButton")) { BAction(); }
-        if (Input.GetButtonDown(thisPlayer + "XButton")) { XAction(); }
-        if (Input.GetButtonDown(thisPlayer + "YButton")) { YAction(); }
-        if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(-70); }
+        if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
+        if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
+        if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
+        if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(-70); }
 
         visuals.transform.LookAt(aimTarget);
     }
