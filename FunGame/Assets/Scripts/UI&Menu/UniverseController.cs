@@ -20,6 +20,9 @@ public class UniverseController : BlankMono
     public GameObject lockedCharacter1;
     public GameObject lockedCharacter2;
 
+    [Header("Instantiation Info")]
+    public List<Vector3> spawnPosList = new List<Vector3>();
+
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -33,11 +36,12 @@ public class UniverseController : BlankMono
         }
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            if (Input.GetButtonDown("AllAButton")) { }
-            if (Input.GetButtonDown("AllBButton")) { }
-            if (Input.GetButtonDown("AllXButton")) { }
-            if (Input.GetButtonDown("AllYButton")) { }
+            if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); }
+            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); }
+            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); }
+            if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
         }
+
     }
 
 
