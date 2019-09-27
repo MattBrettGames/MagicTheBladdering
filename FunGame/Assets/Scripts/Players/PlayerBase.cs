@@ -9,8 +9,9 @@ public abstract class PlayerBase : BlankMono
     public string thisPlayer;
 
     [Header("Movement Stats")]
-    protected float speed = 0.1f;
+    public float speed = 0.1f;
     protected float moving;
+    
 
     [Header("Common Stats")]
     protected int healthMax;
@@ -42,13 +43,14 @@ public abstract class PlayerBase : BlankMono
         bPlayerInput = thisPlayer + "BButton";
         xPlayerInput = thisPlayer + "XButton";
         yPlayerInput = thisPlayer + "YButton";
+        print(horiPlayerInput);
     }
 
     void Update()
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
-        transform.Translate(new Vector3(hori, 0, vert) * speed);
+        transform.Translate(new Vector3(-vert, 0, hori) * speed);
         if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
         else { anim.SetFloat("Movement", 0); }
 
@@ -58,7 +60,7 @@ public abstract class PlayerBase : BlankMono
         if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
         if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
         if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
-        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(-70); }
+        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
 
         visuals.transform.LookAt(aimTarget);
     }
@@ -71,7 +73,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { HealthChange(damageInc); anim.SetTrigger("Stagger"); }
+    public virtual void TakeDamage(int damageInc) { HealthChange(-damageInc); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { }
     public virtual void Death() { anim.SetTrigger("Death"); Destroy(this); }
