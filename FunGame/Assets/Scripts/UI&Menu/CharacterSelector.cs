@@ -29,9 +29,10 @@ public class CharacterSelector : BlankMono
 
     void Start()
     {
+        transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
         vertPlayerInput = thisPlayer + "Vertical";
-        UpdateDisplay();
+       //UpdateDisplay();
         displayChar.SetActive(true);
     }
 

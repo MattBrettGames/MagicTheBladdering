@@ -1,25 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class BioSelector : BlankMono
+public class ArenaSelector : BlankMono
 {
-
-    public List<GameObject> displays = new List<GameObject>();
-    private int currentDisplay;
     private bool inputCooldown;
-
-    private void Start()
-    {
-        displays[currentDisplay].SetActive(true);
-    }
+    public List<GameObject> displays;
+    private int currentDisplay;
 
     void Update()
     {
-        if (Input.GetAxis("AllVertical") >= 0.4f && !inputCooldown)
+        if (Input.GetAxis("AllHorizontal") >= 0.4f && !inputCooldown)
         {
-            if (currentDisplay < displays.Count-1)
+            if (currentDisplay < displays.Count - 1)
             {
                 displays[currentDisplay].SetActive(false);
                 currentDisplay++;
@@ -52,10 +45,16 @@ public class BioSelector : BlankMono
             Invoke("EndCooldown", 0.3f);
         }
 
+        if (Input.GetButtonDown("AllXButton"))
+        {
+            UniverseController universe = GameObject.FindGameObjectWithTag("Universe").GetComponent<UniverseController>();
+            universe.ChooseArena(displays[currentDisplay].name);
+        }
     }
 
     void EndCooldown()
     {
         inputCooldown = false;
     }
+
 }
