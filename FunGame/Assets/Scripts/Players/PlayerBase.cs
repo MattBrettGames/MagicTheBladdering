@@ -9,9 +9,9 @@ public abstract class PlayerBase : BlankMono
     public string thisPlayer;
 
     [Header("Movement Stats")]
-    public float speed = 0.1f;
+    public float speed;
     protected float moving;
-    
+    public float turningSpeed;
 
     [Header("Common Stats")]
     protected int healthMax;
@@ -43,7 +43,6 @@ public abstract class PlayerBase : BlankMono
         bPlayerInput = thisPlayer + "BButton";
         xPlayerInput = thisPlayer + "XButton";
         yPlayerInput = thisPlayer + "YButton";
-        print(horiPlayerInput);
     }
 
     void Update()
@@ -54,15 +53,20 @@ public abstract class PlayerBase : BlankMono
         if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
         else { anim.SetFloat("Movement", 0); }
 
+        //Rotating the Character Model
         aimTarget.position = transform.position + new Vector3(hori, 0, vert);
+
+        Quaternion newRot = Quaternion.LookRotation(aimTarget.position - transform.position);
+        transform.rotation = Quaternion.Slerp(visuals.transform.rotation, newRot, turningSpeed);
 
         if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
         if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
         if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
         if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
-        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
 
-        visuals.transform.LookAt(aimTarget);
+        //Playtesting Inputs
+        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
+        if (Input.GetKeyDown(KeyCode.G)) { XAction(); }
     }
 
     #region Input Actions

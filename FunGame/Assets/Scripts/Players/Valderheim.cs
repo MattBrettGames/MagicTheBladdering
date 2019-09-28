@@ -15,7 +15,6 @@ public class Valderheim : PlayerBase
     public int yAttack;
 
     [Header("Frenzy")]
-    public int bAttack;
     public int frenzyDuration;
 
 
