@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -187,6 +187,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1325848085669411717}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &431425503 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1325848085663719550, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1325848085669411717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &431425504
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -309,7 +315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0.44532296, y: -0, z: -0, w: 0.89537007}
-  m_LocalPosition: {x: 0, y: 25.85, z: -22.91}
+  m_LocalPosition: {x: 0, y: 23.89, z: -25.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -322,21 +328,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 641e53acefe345e4d9391e97de41560f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 623486926}
-  player2: {fileID: 0}
-  player3: {fileID: 0}
-  player4: {fileID: 0}
---- !u!4 &623486926 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1325848085280313322, guid: ef001ee46bcc5234cabfd8a2c3355d70,
-    type: 3}
-  m_PrefabInstance: {fileID: 1325848085669411717}
-  m_PrefabAsset: {fileID: 0}
+  player1: {fileID: 431425503}
+  player2: {fileID: 1834765659}
 --- !u!1 &868254249 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1325848085544516169, guid: ef001ee46bcc5234cabfd8a2c3355d70,
@@ -556,6 +554,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 1325848085663719551, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325848085663719551, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: m_Name
+      value: Aimer2
+      objectReference: {fileID: 0}
     - target: {fileID: 1325848085280313322, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -645,16 +653,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Conan_skelemesh2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325848085663719551, guid: ef001ee46bcc5234cabfd8a2c3355d70,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325848085663719551, guid: ef001ee46bcc5234cabfd8a2c3355d70,
-        type: 3}
-      propertyPath: m_Name
-      value: Aimer2
       objectReference: {fileID: 0}
     - target: {fileID: 1325848086454514959, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
@@ -989,6 +987,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1312606741}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1834765659 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1325848085663719550, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1312606741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &1834765660
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1047,6 +1051,11 @@ PrefabInstance:
       value: Valderheim
       objectReference: {fileID: 0}
     - target: {fileID: 1325848085280313321, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325848085663719551, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_TagString
       value: Player1
@@ -1127,11 +1136,6 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1325848086464022217, guid: ef001ee46bcc5234cabfd8a2c3355d70,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325848085663719551, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_TagString
       value: Player1
