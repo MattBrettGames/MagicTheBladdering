@@ -19,8 +19,8 @@ public class Weapons : BlankMono
 
     private void Start()
     {
-        hitBox = gameObject.GetComponentInChildren<BoxCollider>();
-        trails = gameObject.GetComponentInChildren<TrailRenderer>();
+        hitBox = gameObject.GetComponent<BoxCollider>();
+        trails = gameObject.GetComponent<TrailRenderer>();
         trails.enabled = false;
         hitBox.enabled = false;
     }
@@ -37,8 +37,9 @@ public class Weapons : BlankMono
         hitBox.enabled = false;
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
+        print("Collided with " + other);
         if (other.transform.tag != transform.tag)
         {
             PlayerBase target = other.transform.GetComponent<PlayerBase>();

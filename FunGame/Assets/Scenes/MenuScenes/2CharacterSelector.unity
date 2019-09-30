@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 58631568}
   - component: {fileID: 58631567}
   m_Layer: 5
-  m_Name: CharacterName
+  m_Name: CharacterName2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 186192976}
   m_Layer: 0
   m_Name: P1Controller
-  m_TagString: Untagged
+  m_TagString: P1Selector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,7 +253,6 @@ MonoBehaviour:
     - name: Cylinder
       Skin: {fileID: 1217669521}
   locked: 0
-  universe: {fileID: 0}
   characterText: {fileID: 1704160575}
   skinText: {fileID: 1483712695}
   displayChar: {fileID: 161549558}
@@ -292,8 +291,8 @@ Camera:
   m_GameObject: {fileID: 314074749}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.4185208, g: 0.4648822, b: 0.5377358, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -384,7 +383,7 @@ GameObject:
   - component: {fileID: 359870456}
   m_Layer: 0
   m_Name: P2Controller
-  m_TagString: Untagged
+  m_TagString: P2Selector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -414,10 +413,9 @@ MonoBehaviour:
     - name: Cylinder
       Skin: {fileID: 919477940}
   locked: 0
-  universe: {fileID: 0}
-  characterText: {fileID: 1704160575}
-  skinText: {fileID: 1483712695}
-  displayChar: {fileID: 161549558}
+  characterText: {fileID: 58631567}
+  skinText: {fileID: 1115804684}
+  displayChar: {fileID: 1125803621}
 --- !u!4 &359870457
 Transform:
   m_ObjectHideFlags: 0
@@ -481,7 +479,7 @@ GameObject:
   - component: {fileID: 502138871}
   - component: {fileID: 502138870}
   m_Layer: 5
-  m_Name: Text
+  m_Name: VS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -681,7 +679,7 @@ GameObject:
   - component: {fileID: 919477943}
   - component: {fileID: 919477942}
   m_Layer: 0
-  m_Name: P1CubemanCylinder
+  m_Name: P2CubemanCylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -772,7 +770,7 @@ GameObject:
   - component: {fileID: 941048816}
   - component: {fileID: 941048815}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: VSShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -953,7 +951,7 @@ GameObject:
   - component: {fileID: 1115804685}
   - component: {fileID: 1115804684}
   m_Layer: 5
-  m_Name: CharacterSkin
+  m_Name: CharacterSkin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1408,7 +1406,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: a0b92ad45cc739d49b130a05fab14f93, type: 3}
       propertyPath: m_Name
-      value: P1ValderheimBase
+      value: P2ValderheimBase
       objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: a0b92ad45cc739d49b130a05fab14f93, type: 3}
       propertyPath: m_IsActive
@@ -1489,7 +1487,7 @@ GameObject:
   - component: {fileID: 1676311796}
   - component: {fileID: 1676311795}
   m_Layer: 0
-  m_Name: P1CubemanCube
+  m_Name: P2CubemanCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
