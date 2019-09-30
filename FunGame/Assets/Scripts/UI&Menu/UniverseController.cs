@@ -49,13 +49,7 @@ public class UniverseController : BlankMono
         else if (SceneManager.GetActiveScene().name == "Bio")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
-        }
-        if (SceneManager.GetActiveScene().name == "ArenaSelector")
-        {
-
-
-        }
-
+        }       
     }
 
     private void OnLevelWasLoaded(int level)
