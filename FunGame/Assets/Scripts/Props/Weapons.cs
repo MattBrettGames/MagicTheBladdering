@@ -5,12 +5,16 @@ using UnityEngine;
 public class Weapons : BlankMono
 {
     private int damageFull;
+    private int knockFull;
+    private Vector3 knockDir;
     private BoxCollider hitBox;
     private TrailRenderer trails;
 
-    public void GainInfo(int damage)
+    public void GainInfo(int damage, int knockback, Vector3 forward)
     {
         damageFull = damage;
+        knockFull = knockback;
+        knockDir = forward;
     }
 
     private void Start()
@@ -40,6 +44,7 @@ public class Weapons : BlankMono
             PlayerBase target = other.transform.GetComponent<PlayerBase>();
             target.TakeDamage(damageFull);
             target.KnockedDown(damageFull / 10);
+            target.Knockback(knockFull, knockDir);
         }
     }
 

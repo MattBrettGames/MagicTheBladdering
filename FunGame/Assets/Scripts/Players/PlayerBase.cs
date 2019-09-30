@@ -25,12 +25,12 @@ public abstract class PlayerBase : BlankMono
     public GameObject visuals;
 
     [Header("Input Strings")]
-    string horiPlayerInput;
-    string vertPlayerInput;
-    string aPlayerInput;
-    string bPlayerInput;
-    string xPlayerInput;
-    string yPlayerInput;
+    private string horiPlayerInput;
+    private string vertPlayerInput;
+    private string aPlayerInput;
+    private string bPlayerInput;
+    private string xPlayerInput;
+    private string yPlayerInput;
 
     void Start()
     {
@@ -49,16 +49,15 @@ public abstract class PlayerBase : BlankMono
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
-        transform.Translate(new Vector3(-vert, 0, hori) * speed);
+        transform.Translate(new Vector3(-vert, 0, hori).normalized * speed);
         if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
         else { anim.SetFloat("Movement", 0); }
 
         //Rotating the Character Model
-        aimTarget.position = transform.position + new Vector3(hori, 0, vert);
-
-        Quaternion newRot = Quaternion.LookRotation(aimTarget.position - transform.position);
-        transform.rotation = Quaternion.Slerp(visuals.transform.rotation, newRot, turningSpeed);
-
+        aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized*3;
+        visuals.transform.LookAt(aimTarget);
+        
+        //Standard Inputs
         if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
         if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
         if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
@@ -66,7 +65,9 @@ public abstract class PlayerBase : BlankMono
 
         //Playtesting Inputs
         //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
-        if (Input.GetKeyDown(KeyCode.G)) { XAction(); }
+        //if (Input.GetKeyDown(KeyCode.G)) { XAction(); }
+        //print(Input.GetAxis(horiPlayerInput)+" - Horizontal");
+        //print(Input.GetAxis(vertPlayerInput)+" - Vertical");
     }
 
     #region Input Actions
@@ -79,8 +80,9 @@ public abstract class PlayerBase : BlankMono
     #region Common Events
     public virtual void TakeDamage(int damageInc) { HealthChange(-damageInc); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); anim.SetTrigger("Knockdown"); }
-    public virtual void StandUp() { }
+    public virtual void StandUp() { anim.SetTrigger("StandUp"); }
     public virtual void Death() { anim.SetTrigger("Death"); Destroy(this); }
+    public virtual void Knockback(int power, Vector3 direction) { }
     #endregion
 
     #region Utility Functions

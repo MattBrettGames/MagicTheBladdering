@@ -10,28 +10,34 @@ public class Valderheim : PlayerBase
 
     [Header("Wide Swing")]
     public int xAttack;
+    public int xKnockback;
 
     [Header("Ground Slam")]
-    public int yAttack;
+    public int movingAttack;
+    public int movingKnockback;
+    public int statAttack;
+    public int statKnockback;
 
     [Header("Frenzy")]
     public int frenzyDuration;
-
+    public int frenzyMult;
 
     public override void XAction()
     {
+        weapon.GainInfo(xAttack, xKnockback, visuals.transform.forward);
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(xAttack);
     }
 
     public override void YAction()
     {
         if (moving != 0)
         {
+            weapon.GainInfo(movingAttack, movingKnockback, visuals.transform.forward);
             anim.SetTrigger("YAttack");
         }
         else
         {
+            weapon.GainInfo(statAttack, statKnockback, visuals.transform.forward);
             print("Stationary Hammer Slam!");
             anim.SetTrigger("YAttack");
         }
@@ -40,8 +46,8 @@ public class Valderheim : PlayerBase
     public override void BAction()
     {
         Invoke("StopFrenzy", frenzyDuration);
-        damageMult = 2;
-        incomingMult = 2;
+        damageMult = frenzyMult;
+        incomingMult = frenzyMult;
     }
 
     private void StopFrenzy()

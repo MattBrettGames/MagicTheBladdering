@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 641e53acefe345e4d9391e97de41560f, type: 3}
   m_Name: 
@@ -564,6 +564,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aimer2
       objectReference: {fileID: 0}
+    - target: {fileID: 1325848085544516169, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player1
+      objectReference: {fileID: 0}
     - target: {fileID: 1325848085280313322, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -619,11 +624,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1325848085544516169, guid: ef001ee46bcc5234cabfd8a2c3355d70,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player1
-      objectReference: {fileID: 0}
     - target: {fileID: 1325848085280313323, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: currentHealth
@@ -643,6 +643,11 @@ PrefabInstance:
         type: 3}
       propertyPath: thisPlayer
       value: P2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325848085280313323, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: speed
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1325848086464022217, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
@@ -1000,7 +1005,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834765658}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1060,6 +1065,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 1325848085544516169, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player1
+      objectReference: {fileID: 0}
     - target: {fileID: 1325848085280313322, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1115,11 +1125,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1325848085544516169, guid: ef001ee46bcc5234cabfd8a2c3355d70,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player1
-      objectReference: {fileID: 0}
     - target: {fileID: 1325848085280313323, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: currentHealth
@@ -1135,6 +1140,11 @@ PrefabInstance:
       propertyPath: frenzyDuration
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1325848085280313323, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: speed
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1325848086464022217, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_TagString
@@ -1143,6 +1153,11 @@ PrefabInstance:
     - target: {fileID: 1325848086454514959, guid: ef001ee46bcc5234cabfd8a2c3355d70,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325848086454514959, guid: ef001ee46bcc5234cabfd8a2c3355d70,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325848086692571015, guid: ef001ee46bcc5234cabfd8a2c3355d70,
