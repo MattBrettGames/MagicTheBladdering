@@ -20,8 +20,8 @@ public class CharacterSelector : BlankMono
 
     [Header("Readying Up")]
     public bool locked;
-    public UniverseController universe;
-       
+    private UniverseController universe;
+
     [Header("UI Elements")]
     public Text characterText;
     public Text skinText;
@@ -32,83 +32,87 @@ public class CharacterSelector : BlankMono
         transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
         vertPlayerInput = thisPlayer + "Vertical";
-       //UpdateDisplay();
+        UpdateDisplay();
         displayChar.SetActive(true);
     }
 
     void Update()
     {
-        if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown)
+        if (!locked)
         {
-            inputCooldown = true;
-            if (currentChar < characters.Count - 1)
+            if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown)
             {
+                inputCooldown = true;
+                if (currentChar < characters.Count - 1)
+                {
+                    currentSkin = 0;
+                    currentChar++;
+                    UpdateDisplay();
+                }
+                else
+                {
+                    currentSkin = 0;
+                    currentChar = 0;
+                    UpdateDisplay();
+                }
+                Invoke("EndCooldown", 0.3f);
                 currentSkin = 0;
-                currentChar++;
-                UpdateDisplay();
             }
-            else
+            if (Input.GetAxis(horiPlayerInput) <= -0.4f && !inputCooldown)
             {
-                currentSkin = 0;
-                currentChar = 0;
-                UpdateDisplay();
+                inputCooldown = true;
+                if (currentChar != 0)
+                {
+                    currentChar--;
+                    currentSkin = 0;
+                    UpdateDisplay();
+                }
+                else
+                {
+                    currentChar = characters.Count - 1;
+                    currentSkin = 0;
+                    UpdateDisplay();
+                }
+                Invoke("EndCooldown", 0.3f);
             }
-            Invoke("EndCooldown", 0.3f);
-            currentSkin = 0;
-        }
-        if (Input.GetAxis(horiPlayerInput) <= -0.4f && !inputCooldown)
-        {
-            inputCooldown = true;
-            if (currentChar != 0)
-            {
-                currentChar--;
-                currentSkin = 0;
-                UpdateDisplay();
-            }
-            else
-            {
-                currentChar = characters.Count - 1;
-                currentSkin = 0;
-                UpdateDisplay();
-            }
-            Invoke("EndCooldown", 0.3f);
-        }
 
-        if (Input.GetAxis(vertPlayerInput) >= 0.4f && !inputCooldown)
-        {
-            inputCooldown = true;
-            if (currentSkin < characters[currentChar].skins.Count - 1)
+            if (Input.GetAxis(vertPlayerInput) >= 0.4f && !inputCooldown)
             {
-                currentSkin++;
-                UpdateDisplay();
+                inputCooldown = true;
+                if (currentSkin < characters[currentChar].skins.Count - 1)
+                {
+                    currentSkin++;
+                    UpdateDisplay();
+                }
+                else
+                {
+                    currentSkin = 0;
+                    UpdateDisplay();
+                }
+                Invoke("EndCooldown", 0.3f);
             }
-            else
+            if (Input.GetAxis(vertPlayerInput) <= -0.4f && !inputCooldown)
             {
-                currentSkin = 0;
-                UpdateDisplay();
+                inputCooldown = true;
+                if (currentSkin != 0)
+                {
+                    currentSkin--;
+                    UpdateDisplay();
+                }
+                else
+                {
+                    currentSkin = characters[currentChar].skins.Count - 1;
+                    UpdateDisplay();
+                }
+                Invoke("EndCooldown", 0.3f);
             }
-            Invoke("EndCooldown", 0.3f);
-        }
-        if (Input.GetAxis(vertPlayerInput) <= -0.4f && !inputCooldown)
-        {
-            inputCooldown = true;
-            if (currentSkin != 0)
-            {
-                currentSkin--;
-                UpdateDisplay();
-            }
-            else
-            {
-                currentSkin = characters[currentChar].skins.Count - 1;
-                UpdateDisplay();
-            }
-            Invoke("EndCooldown", 0.3f);
-        }
 
-        if (Input.GetButtonDown(thisPlayer + "XButton"))
-        {
-            UpdateDisplay();
-            universe.CheckReady();
+            if (Input.GetButtonDown(thisPlayer + "XButton"))
+            {
+                locked = true;
+                UpdateDisplay();
+                universe.CheckReady();
+            }
         }
     }
 
@@ -119,6 +123,11 @@ public class CharacterSelector : BlankMono
         displayChar.SetActive(false);
         displayChar = characters[currentChar].skins[currentSkin].Skin;
         displayChar.SetActive(true);
+    }
+
+    public void SetUniverse(UniverseController universeTemp)
+    {
+        universe = universeTemp;
     }
 
     void EndCooldown()

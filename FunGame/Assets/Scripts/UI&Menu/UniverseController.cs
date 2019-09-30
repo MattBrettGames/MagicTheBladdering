@@ -26,7 +26,11 @@ public class UniverseController : BlankMono
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (GameObject.FindGameObjectsWithTag("UniverseController").Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else { Destroy(gameObject); }
     }
 
     private void Update()
@@ -42,9 +46,13 @@ public class UniverseController : BlankMono
             if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); }
             if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
         }
-        if(SceneManager.GetActiveScene().name == "ArenaSelector")
+        else if (SceneManager.GetActiveScene().name == "Bio")
         {
-            
+            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
+        }
+        if (SceneManager.GetActiveScene().name == "ArenaSelector")
+        {
+
 
         }
 
@@ -52,33 +60,83 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
-        if(level == 1)
+        if (level == 2)
         {
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
+            charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
-        }
-        else if(level == 2)
-        {
-            charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
-            charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
-            charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
+            charSelector2.SetUniverse(this);
         }
         else if (level == 3)
         {
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
+            charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
+            charSelector2.SetUniverse(this);
             charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
+            charSelector3.SetUniverse(this);
+        }
+        else if (level == 4)
+        {
+            charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
+            charSelector1.SetUniverse(this);
+            charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
+            charSelector2.SetUniverse(this);
+            charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
+            charSelector3.SetUniverse(this);
             charSelector4 = GameObject.FindGameObjectWithTag("P4Selector").GetComponent<CharacterSelector>();
+            charSelector4.SetUniverse(this);
+        }
+        else if(level == 6 || level == 7)
+        {
+            PlayerBase p1 = Instantiate<GameObject>(lockedCharacter1).GetComponent<PlayerBase>();
+            p1.enabled = true;
+            PlayerBase p2 = Instantiate<GameObject>(lockedCharacter2).GetComponent<PlayerBase>();
+            p2.enabled = true;
+            if(lockedCharacter3 != null)
+            {
+                PlayerBase p3 = Instantiate<GameObject>(lockedCharacter3).GetComponent<PlayerBase>();
+                p3.enabled = true;
+            }
+            if(lockedCharacter4 != null)
+            {
+                PlayerBase p4 = Instantiate<GameObject>(lockedCharacter4).GetComponent<PlayerBase>();
+                p4.enabled = true;
+            }
         }
     }
 
     public void CheckReady()
     {
-        if (charSelector1.locked && charSelector2.locked)
+        if (SceneManager.GetActiveScene().name == "2CharacterSelector")
         {
-            lockedCharacter1 = charSelector1.displayChar;
-            lockedCharacter2 = charSelector2.displayChar;
-            SceneManager.LoadScene("arenaSelector");
+            if (charSelector1.locked && charSelector2.locked)
+            {
+                lockedCharacter1 = charSelector1.displayChar;
+                lockedCharacter2 = charSelector2.displayChar;
+                SceneManager.LoadScene("arenaSelector");
+            }
+        }
+        if (SceneManager.GetActiveScene().name == "3CharacterSelector")
+        {
+            if (charSelector1.locked && charSelector2.locked && charSelector3.locked)
+            {
+                lockedCharacter1 = charSelector1.displayChar;
+                lockedCharacter2 = charSelector2.displayChar;
+                lockedCharacter3 = charSelector3.displayChar;
+                SceneManager.LoadScene("arenaSelector");
+            }
+        }
+        if (SceneManager.GetActiveScene().name == "4CharacterSelector")
+        {
+            if (charSelector1.locked && charSelector2.locked && charSelector3.locked && charSelector4.locked)
+            {
+                lockedCharacter1 = charSelector1.displayChar;
+                lockedCharacter2 = charSelector2.displayChar;
+                lockedCharacter3 = charSelector3.displayChar;
+                lockedCharacter4 = charSelector4.displayChar;
+                SceneManager.LoadScene("arenaSelector");
+            }
         }
     }
 
