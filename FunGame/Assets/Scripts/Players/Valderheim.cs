@@ -13,14 +13,19 @@ public class Valderheim : PlayerBase
     public int xKnockback;
 
     [Header("Ground Slam")]
-    public int movingAttack;
-    public int movingKnockback;
-    public int statAttack;
-    public int statKnockback;
+    public int slamAttack;
+    public int slamKnockback;
+    public int kickAttack;
+    public int kickKnockback;
+    private bool comboTime;
 
     [Header("Frenzy")]
     public int frenzyDuration;
     public int frenzyMult;
+
+    [Header("Charge!")]
+    public float speedMult;
+    private float currentSpeed;
 
     public override void XAction()
     {
@@ -30,19 +35,22 @@ public class Valderheim : PlayerBase
 
     public override void YAction()
     {
-        if (moving != 0)
+        if (comboTime)
         {
-            weapon.GainInfo(movingAttack, movingKnockback, visuals.transform.forward);
-            anim.SetTrigger("YAttack");
+            weapon.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
+            print("Combo Kick!");
+            anim.SetTrigger("ComboKick");
         }
         else
         {
-            weapon.GainInfo(statAttack, statKnockback, visuals.transform.forward);
-            print("Stationary Hammer Slam!");
+            weapon.GainInfo(slamAttack, slamKnockback, visuals.transform.forward);
+            print("Hammer Slam!");
             anim.SetTrigger("YAttack");
         }
     }
-
+    public void OpenCombo() { comboTime = true; }
+    public void CloseCombo() { comboTime = false; }
+    
     public override void BAction()
     {
         Invoke("StopFrenzy", frenzyDuration);
@@ -56,6 +64,21 @@ public class Valderheim : PlayerBase
         incomingMult = 1;
     }
 
+    public override void AAction()
+    {
+        anim.SetTrigger("AAction");
+        currentSpeed = speed;
+        speed *= speedMult;        
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        if (Input.GetButtonUp(thisPlayer + "AButton"))
+        {
+            speed = currentSpeed;
+        }
+    }
 
     //Passive Effects - Surefooted & Building Rage
     public override void KnockedDown(int power) { }
