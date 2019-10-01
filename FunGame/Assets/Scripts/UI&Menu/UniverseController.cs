@@ -6,7 +6,6 @@ using System;
 
 public class UniverseController : BlankMono
 {
-
     [Header("GameObjects")]
     public CharacterSelector charSelector1;
     public CharacterSelector charSelector2;
@@ -77,24 +76,28 @@ public class UniverseController : BlankMono
         else if (level >= 6)
         {
             GameObject p1 = selectedChars[0];
-            p1.transform.position = allSpawnPositions[level-6].spawnPos[0];
+            p1.transform.position = allSpawnPositions[level - 6].spawnPos[0];
             p1.GetComponent<PlayerBase>().enabled = true;
+            p1.GetComponent<PlayerBase>().thisPlayer = "P1";
 
             GameObject p2 = selectedChars[1];
-            p2.transform.position = allSpawnPositions[level-6].spawnPos[1];
+            p2.transform.position = allSpawnPositions[level - 6].spawnPos[1];
             p2.GetComponent<PlayerBase>().enabled = true;
-            
+            p2.GetComponent<PlayerBase>().thisPlayer = "P2";
+
             if (selectedChars[2] != null)
             {
                 GameObject p3 = selectedChars[2];
                 p3.transform.position = allSpawnPositions[level - 6].spawnPos[2];
                 p3.GetComponent<PlayerBase>().enabled = true;
+                p3.GetComponent<PlayerBase>().thisPlayer = "P3";
             }
             if (selectedChars[3] != null)
             {
                 GameObject p4 = selectedChars[3];
                 p4.transform.position = allSpawnPositions[level - 6].spawnPos[3];
                 p4.GetComponent<PlayerBase>().enabled = true;
+                p4.GetComponent<PlayerBase>().thisPlayer = "P4";
             }
         }
     }
@@ -104,7 +107,7 @@ public class UniverseController : BlankMono
         selectedChars[arrayIndex] = gobject;
         gobject.transform.parent = gameObject.transform;
         lockedInPlayers++;
-        if(lockedInPlayers == numOfPlayers)
+        if (lockedInPlayers == numOfPlayers)
         {
             SceneManager.LoadScene("ArenaSelector");
         }
