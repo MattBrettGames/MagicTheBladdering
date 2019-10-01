@@ -22,7 +22,7 @@ public class Weapons : BlankMono
         hitBox = gameObject.GetComponent<BoxCollider>();
         trails = gameObject.GetComponent<TrailRenderer>();
         trails.enabled = false;
-        hitBox.enabled = false;
+        //hitBox.enabled = false;
     }
 
     public void StartAttack()

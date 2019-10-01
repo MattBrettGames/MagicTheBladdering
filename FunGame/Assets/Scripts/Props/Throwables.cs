@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Throwables : Weapons
+public abstract class Throwables : BlankMono
 {
-  
-
-
+    private void OnCollisionEnter(Collision collision) { CollisionEvent(collision.gameObject); }
+    public virtual void CollisionEvent(GameObject collision) { }
 }

@@ -7,6 +7,7 @@ using System;
 public class CharacterSelector : BlankMono
 {
     public string thisPlayer;
+    public int thisPInt;
 
     private string horiPlayerInput;
     private string vertPlayerInput;
@@ -20,7 +21,7 @@ public class CharacterSelector : BlankMono
 
     [Header("Readying Up")]
     public bool locked;
-    private UniverseController universe;
+    public UniverseController universe;
 
     [Header("UI Elements")]
     public Text characterText;
@@ -32,8 +33,9 @@ public class CharacterSelector : BlankMono
         transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
         vertPlayerInput = thisPlayer + "Vertical";
-        UpdateDisplay();
         displayChar.SetActive(true);
+        skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
+        characterText.text = characters[currentChar].name.ToString();
     }
 
     void Update()
@@ -109,9 +111,8 @@ public class CharacterSelector : BlankMono
 
             if (Input.GetButtonDown(thisPlayer + "XButton"))
             {
+                universe.CheckReady(thisPInt, displayChar);
                 locked = true;
-                UpdateDisplay();
-                universe.CheckReady();
             }
         }
     }

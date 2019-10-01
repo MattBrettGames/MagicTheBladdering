@@ -10,6 +10,7 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Movement Stats")]
     public float speed;
+    private float baseSpeed;
     protected float moving;
 
     [Header("Common Stats")]
@@ -55,7 +56,7 @@ public abstract class PlayerBase : BlankMono
         float vert = Input.GetAxis(vertPlayerInput);
         if (!prone)
         {
-            transform.Translate(new Vector3(-vert, 0, hori).normalized * speed);
+            transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
             else { anim.SetFloat("Movement", 0); }
 
@@ -92,6 +93,8 @@ public abstract class PlayerBase : BlankMono
 
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
+    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; Invoke("LoseCurse", duration); }
+    public virtual void LoseCurse() { cursed = false; speed = baseSpeed; }
     #endregion
 
 }

@@ -14,10 +14,9 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector4;
 
     [Header("Character Info")]
-    public GameObject lockedCharacter1;
-    public GameObject lockedCharacter2;
-    public GameObject lockedCharacter3;
-    public GameObject lockedCharacter4;
+    public GameObject[] selectedChars = new GameObject[4];
+    public int numOfPlayers;
+    private int lockedInPlayers;
 
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
@@ -35,9 +34,9 @@ public class UniverseController : BlankMono
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); }
-            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); }
-            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); }
+            if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); numOfPlayers = 3; }
+            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); numOfPlayers = 4; }
+            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
             if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
         }
         else if (SceneManager.GetActiveScene().name == "Bio")
@@ -77,54 +76,37 @@ public class UniverseController : BlankMono
         }
         else if (level >= 6)
         {
-            PlayerBase p1 = Instantiate<GameObject>(lockedCharacter1, allSpawnPositions[level - 6].spawnPos[0], Quaternion.identity).GetComponent<PlayerBase>();
-            p1.enabled = true;
-            PlayerBase p2 = Instantiate<GameObject>(lockedCharacter2, allSpawnPositions[level - 6].spawnPos[1], Quaternion.identity).GetComponent<PlayerBase>();
-            p2.enabled = true;
-            if (lockedCharacter3 != null)
+            GameObject p1 = selectedChars[0];
+            p1.transform.position = allSpawnPositions[level-6].spawnPos[0];
+            p1.GetComponent<PlayerBase>().enabled = true;
+
+            GameObject p2 = selectedChars[1];
+            p2.transform.position = allSpawnPositions[level-6].spawnPos[1];
+            p2.GetComponent<PlayerBase>().enabled = true;
+            
+            if (selectedChars[2] != null)
             {
-                PlayerBase p3 = Instantiate<GameObject>(lockedCharacter3, allSpawnPositions[level - 6].spawnPos[2], Quaternion.identity).GetComponent<PlayerBase>();
-                p3.enabled = true;
+                GameObject p3 = selectedChars[2];
+                p3.transform.position = allSpawnPositions[level - 6].spawnPos[2];
+                p3.GetComponent<PlayerBase>().enabled = true;
             }
-            if (lockedCharacter4 != null)
+            if (selectedChars[3] != null)
             {
-                PlayerBase p4 = Instantiate<GameObject>(lockedCharacter4, allSpawnPositions[level - 6].spawnPos[3], Quaternion.identity).GetComponent<PlayerBase>();
-                p4.enabled = true;
+                GameObject p4 = selectedChars[3];
+                p4.transform.position = allSpawnPositions[level - 6].spawnPos[3];
+                p4.GetComponent<PlayerBase>().enabled = true;
             }
         }
     }
 
-    public void CheckReady()
+    public void CheckReady(int arrayIndex, GameObject gobject)
     {
-        if (SceneManager.GetActiveScene().name == "2CharacterSelector")
+        selectedChars[arrayIndex] = gobject;
+        gobject.transform.parent = gameObject.transform;
+        lockedInPlayers++;
+        if(lockedInPlayers == numOfPlayers)
         {
-            if (charSelector1.locked && charSelector2.locked)
-            {
-                lockedCharacter1 = charSelector1.displayChar;
-                lockedCharacter2 = charSelector2.displayChar;
-                SceneManager.LoadScene("arenaSelector");
-            }
-        }
-        if (SceneManager.GetActiveScene().name == "3CharacterSelector")
-        {
-            if (charSelector1.locked && charSelector2.locked && charSelector3.locked)
-            {
-                lockedCharacter1 = charSelector1.displayChar;
-                lockedCharacter2 = charSelector2.displayChar;
-                lockedCharacter3 = charSelector3.displayChar;
-                SceneManager.LoadScene("arenaSelector");
-            }
-        }
-        if (SceneManager.GetActiveScene().name == "4CharacterSelector")
-        {
-            if (charSelector1.locked && charSelector2.locked && charSelector3.locked && charSelector4.locked)
-            {
-                lockedCharacter1 = charSelector1.displayChar;
-                lockedCharacter2 = charSelector2.displayChar;
-                lockedCharacter3 = charSelector3.displayChar;
-                lockedCharacter4 = charSelector4.displayChar;
-                SceneManager.LoadScene("arenaSelector");
-            }
+            SceneManager.LoadScene("ArenaSelector");
         }
     }
 
