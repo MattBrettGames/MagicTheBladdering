@@ -211,7 +211,7 @@ PrefabInstance:
     - target: {fileID: 3040561324851252164, guid: 0c9f389f2314b6843a17ef22bd8bd512,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3040561324851252164, guid: 0c9f389f2314b6843a17ef22bd8bd512,
         type: 3}
@@ -221,7 +221,7 @@ PrefabInstance:
     - target: {fileID: 3040561324851252164, guid: 0c9f389f2314b6843a17ef22bd8bd512,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3040561324851252164, guid: 0c9f389f2314b6843a17ef22bd8bd512,
         type: 3}
@@ -336,6 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: P1
+  thisPInt: 0
   characters:
   - name: Valderheim
     skins:
@@ -348,9 +349,10 @@ MonoBehaviour:
     - name: Cylinder
       Skin: {fileID: 1217669521}
   locked: 0
+  universe: {fileID: 0}
   characterText: {fileID: 1704160575}
   skinText: {fileID: 1483712695}
-  displayChar: {fileID: 0}
+  displayChar: {fileID: 143315380}
 --- !u!1 &314074749
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: P2
+  thisPInt: 0
   characters:
   - name: Valderheim
     skins:
@@ -508,9 +511,10 @@ MonoBehaviour:
     - name: Cylinder
       Skin: {fileID: 919477940}
   locked: 0
+  universe: {fileID: 0}
   characterText: {fileID: 58631567}
   skinText: {fileID: 1115804684}
-  displayChar: {fileID: 0}
+  displayChar: {fileID: 1958060313}
 --- !u!4 &359870457
 Transform:
   m_ObjectHideFlags: 0
@@ -897,12 +901,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -916,10 +920,10 @@ Canvas:
   m_GameObject: {fileID: 1058148179}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 314074751}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -1041,6 +1045,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1144647273}
+  - component: {fileID: 1144647274}
   m_Layer: 0
   m_Name: Valderheims
   m_TagString: Untagged
@@ -1063,6 +1068,20 @@ Transform:
   m_Father: {fileID: 1744345611}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1144647274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144647272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26a2fdd0497cca45954021ef915da0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Angle: {x: 0, y: 1, z: 0}
+  speed: -1
 --- !u!1 &1217669521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,6 +1629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1745534212}
+  - component: {fileID: 1745534213}
   m_Layer: 0
   m_Name: Valderheims
   m_TagString: Untagged
@@ -1632,6 +1652,20 @@ Transform:
   m_Father: {fileID: 327939057}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1745534213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745534211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26a2fdd0497cca45954021ef915da0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Angle: {x: 0, y: 0, z: 0}
+  speed: 0
 --- !u!1001 &1958060311
 PrefabInstance:
   m_ObjectHideFlags: 0
