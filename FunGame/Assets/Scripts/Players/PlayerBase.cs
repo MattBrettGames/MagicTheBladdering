@@ -58,13 +58,14 @@ public abstract class PlayerBase : BlankMono
         float vert = Input.GetAxis(vertPlayerInput);
         if (!prone)
         {
+            //Rotating the Character Model
+            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
+            visuals.transform.LookAt(aimTarget);
+
             transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
             else { anim.SetFloat("Movement", 0); }
 
-            //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
-            visuals.transform.LookAt(aimTarget);
 
             //Standard Inputs
             if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
