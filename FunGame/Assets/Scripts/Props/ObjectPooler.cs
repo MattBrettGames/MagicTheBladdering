@@ -6,9 +6,14 @@ public class ObjectPooler : BlankMono
 {
     [Header("Songbird")]
     public List<GameObject> vials = new List<GameObject>();
-    public List<GameObject> curseSmoke = new List<GameObject>();
-    public void ReturnToVialPool(GameObject gameobject) { vials.Add(gameobject); }
-    public void ReturnToCurseSmokePool(GameObject gameobject) { curseSmoke.Add(gameobject); }
+    public List<GameObject> poisonSmoke = new List<GameObject>();
+    public List<GameObject> adrenalineSmoke = new List<GameObject>();
+    public List<GameObject> boomSmoke = new List<GameObject>();
+    public void ReturnToVialPool(GameObject gameobject) { vials.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+    public void ReturnToPoisonSmokePool(GameObject gameobject) { poisonSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+    public void ReturnToAdrenalineSmokePool(GameObject gameobject) { adrenalineSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+    public void ReturnToBoomSmokePool(GameObject gameobject) { boomSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+
 
 
 }

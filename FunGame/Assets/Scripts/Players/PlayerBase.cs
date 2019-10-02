@@ -36,7 +36,7 @@ public abstract class PlayerBase : BlankMono
     private string xPlayerInput;
     private string yPlayerInput;
 
-    void Start()
+    public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
