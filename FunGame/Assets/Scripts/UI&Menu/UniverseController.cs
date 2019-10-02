@@ -79,11 +79,13 @@ public class UniverseController : BlankMono
             p1.transform.position = allSpawnPositions[level - 6].spawnPos[0];
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
+            p1.GetComponent<Rigidbody>().isKinematic = false;
 
             GameObject p2 = selectedChars[1];
             p2.transform.position = allSpawnPositions[level - 6].spawnPos[1];
             p2.GetComponent<PlayerBase>().enabled = true;
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
+            p2.GetComponent<Rigidbody>().isKinematic = false;
 
             if (selectedChars[2] != null)
             {
@@ -91,6 +93,7 @@ public class UniverseController : BlankMono
                 p3.transform.position = allSpawnPositions[level - 6].spawnPos[2];
                 p3.GetComponent<PlayerBase>().enabled = true;
                 p3.GetComponent<PlayerBase>().thisPlayer = "P3";
+                p3.GetComponent<Rigidbody>().isKinematic = false;
             }
             if (selectedChars[3] != null)
             {
@@ -98,6 +101,7 @@ public class UniverseController : BlankMono
                 p4.transform.position = allSpawnPositions[level - 6].spawnPos[3];
                 p4.GetComponent<PlayerBase>().enabled = true;
                 p4.GetComponent<PlayerBase>().thisPlayer = "P4";
+                p4.GetComponent<Rigidbody>().isKinematic = false;
             }
         }
     }

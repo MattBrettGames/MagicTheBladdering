@@ -22,7 +22,7 @@ public class Weapons : BlankMono
         hitBox = gameObject.GetComponent<BoxCollider>();
         trails = gameObject.GetComponent<TrailRenderer>();
         trails.enabled = false;
-        //hitBox.enabled = false;
+        hitBox.enabled = false;
     }
 
     public void StartAttack()
@@ -37,7 +37,7 @@ public class Weapons : BlankMono
         hitBox.enabled = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         print("Collided with " + other);
         if (other.transform.tag != transform.tag)

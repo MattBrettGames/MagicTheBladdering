@@ -22,6 +22,7 @@ public abstract class PlayerBase : BlankMono
     [Header("Status Effects")]
     public bool cursed;
     public bool prone;
+    public float poison;
 
     [Header("Components")]
     public Transform aimTarget;
@@ -48,6 +49,7 @@ public abstract class PlayerBase : BlankMono
         bPlayerInput = thisPlayer + "BButton";
         xPlayerInput = thisPlayer + "XButton";
         yPlayerInput = thisPlayer + "YButton";
+        baseSpeed = speed;
     }
 
     public virtual void Update()
@@ -70,7 +72,10 @@ public abstract class PlayerBase : BlankMono
             if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
             if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
         }
-        //Playtesting Inputs
+
+        if (poison > 0) { poison -= Time.deltaTime; }
+
+        //Testing Inputs
         //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
         //print(Input.GetAxis(horiPlayerInput)+" - Horizontal");
         //print(Input.GetAxis(vertPlayerInput)+" - Vertical");
