@@ -27,11 +27,19 @@ public class Carman : PlayerBase
     [Header("DemonSlayer")]
     public int slayerDamage;
     private bool canComboToSlayer;
+    
 
+    public override void Start()
+    {
+        base.Start();
+        pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
+    }
 
     public override void XAction()
     {
         anim.SetTrigger("XAction");
+        weapons[0].GainInfo(xDamage, 0, visuals.transform.forward);
+        weapons[1].GainInfo(xDamage, 0, visuals.transform.forward);
     }
     public void OpenComboToDaggerSlash() { canDaggerSlash = true; }
     public void CloseComboToDaggerSlash() { canDaggerSlash = false; }
@@ -41,6 +49,7 @@ public class Carman : PlayerBase
         if (curseHunter == 0)
         {
             anim.SetTrigger("Headbutt");
+            weapons[2].GainInfo(0, headbuttKnockback, visuals.transform.forward);
         }
         else if (curseHunter != 0)
         {
@@ -70,7 +79,6 @@ public class Carman : PlayerBase
         yield return new WaitForSeconds(secsToTrapFade);
         TRAPFADE(trap);
     }
-
     private void TRAPFADE(GameObject trap)
     {
         trap.GetComponent<MeshRenderer>().enabled = false;
@@ -98,7 +106,11 @@ public class Carman : PlayerBase
     {
         ShadowStep();
         anim.SetTrigger("DemonSlayer");
+        visuals.transform.LookAt(curseList[0].transform);
+        weapons[0].GainInfo(slayerDamage, 0, visuals.transform.forward); //This only applies to one of Carman's weapons.
     }
+    public void openToDemonSlayer() { canComboToSlayer = true; }
+    public void closeToDemonSlayer() { canComboToSlayer = false; }
 
     public override void TakeDamage(int damageInc)
     {

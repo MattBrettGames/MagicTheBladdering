@@ -47,16 +47,17 @@ public class CharacterSelector : BlankMono
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
                 {
-                    currentSkin = 0;
+                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(5, i)); }
                     currentChar++;
                     UpdateDisplay();
                 }
                 else
                 {
-                    currentSkin = 0;
+                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(5, i)); }
                     currentChar = 0;
                     UpdateDisplay();
                 }
+
                 Invoke("EndCooldown", 0.3f);
                 currentSkin = 0;
             }
@@ -65,12 +66,14 @@ public class CharacterSelector : BlankMono
                 inputCooldown = true;
                 if (currentChar != 0)
                 {
+                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar--;
                     currentSkin = 0;
                     UpdateDisplay();
                 }
                 else
                 {
+                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar = characters.Count - 1;
                     currentSkin = 0;
                     UpdateDisplay();
@@ -115,6 +118,17 @@ public class CharacterSelector : BlankMono
                 locked = true;
             }
         }
+    }
+
+    private IEnumerator SpinTrigger(float angle, float time)
+    {
+        print(time);
+        yield return new WaitForSeconds(time / 200);
+        SpinJuice(angle);
+    }
+    private void SpinJuice(float angle)
+    {
+        displayChar.transform.Rotate(new Vector3(0, angle, 0));
     }
 
     public void UpdateDisplay()

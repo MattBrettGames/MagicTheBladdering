@@ -48,8 +48,8 @@ public class Valderheim : PlayerBase
             anim.SetTrigger("YAttack");
         }
     }
-    public void OpenCombo() { comboTime = true; }
-    public void CloseCombo() { comboTime = false; }
+    public void OpenComboKick() { comboTime = true; }
+    public void CloseComboKick() { comboTime = false; }
     
     public override void BAction()
     {
