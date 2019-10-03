@@ -11,5 +11,4 @@ public class CorvidDagger : Weapons
         base.OnTriggerEnter(other);
         if (poisonActive) { other.GetComponent<PlayerBase>().poison *= 2; }
     }
-
 }

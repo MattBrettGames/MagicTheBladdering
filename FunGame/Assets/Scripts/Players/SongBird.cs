@@ -35,7 +35,8 @@ public class SongBird : PlayerBase
         if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
     }
 
-    public override void YAction() { ThrowVial(); }
+    public override void YAction() { anim.SetTrigger("YAction"); }
+    //ThrowVial(); in the animation
 
     public override void BAction() { if (currentVial != 2) { currentVial++; } else { currentVial = 0; } }
 
@@ -59,10 +60,10 @@ public class SongBird : PlayerBase
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.SetActive(true);
-        for (int i = 0; i < 5; i++) { StartCoroutine(WaitForSmoke(smokeCloud)); }
+        for (int i = 0; i < 5; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
     }
 
-    private void ThrowVial()
+    public void ThrowVial()
     {
         vial = pooler.vials[0];
         vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
@@ -73,9 +74,9 @@ public class SongBird : PlayerBase
         vial = null;
     }
 
-    private IEnumerator WaitForSmoke(GameObject smoke)
+    private IEnumerator WaitForSmoke(GameObject smoke, int time)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f+(time/10));
         ScaleUp(smoke);
     }
 
