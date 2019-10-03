@@ -16,8 +16,8 @@ public abstract class PlayerBase : BlankMono
     [Header("Common Stats")]
     public int currentHealth;
     protected int healthMax;
-    protected int damageMult = 1;
-    protected int incomingMult = 1;
+    public float damageMult = 1;
+    public float incomingMult = 1;
 
     [Header("Status Effects")]
     public bool cursed;
@@ -90,7 +90,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { HealthChange(-damageInc * incomingMult); anim.SetTrigger("Stagger"); }
+    public virtual void TakeDamage(int damageInc) { HealthChange(-damageInc *  Mathf.RoundToInt(incomingMult)); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; }

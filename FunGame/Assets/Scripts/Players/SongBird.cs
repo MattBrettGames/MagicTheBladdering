@@ -27,6 +27,7 @@ public class SongBird : PlayerBase
 
     public override void XAction()
     {
+        print("X Action");
         if (currentVial == 0) { weapon.poisonActive = true; weapon.GainInfo(baseXDamage, 0, visuals.transform.forward); }
         else { weapon.poisonActive = false; }
 

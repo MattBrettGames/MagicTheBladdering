@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoomSmoke : MonoBehaviour
+public class BoomSmoke : BlankMono
 {
     public int knockbackPower;
 
