@@ -64,7 +64,7 @@ public abstract class PlayerBase : BlankMono
 
             transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
-            else { anim.SetFloat("Movement", 0); }
+ 
 
 
             //Standard Inputs

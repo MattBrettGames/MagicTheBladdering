@@ -77,9 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef7b22ac606bc747af580551deecf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPlayer: 
+  thisPlayer: P1
   speed: 0.2
   currentHealth: 100
+  damageMult: 1
+  incomingMult: 1
   cursed: 0
   prone: 0
   poison: 0
@@ -119,10 +121,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 36
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!1 &5707277281736326013
 GameObject:
   m_ObjectHideFlags: 0

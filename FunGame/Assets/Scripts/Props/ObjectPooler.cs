@@ -22,7 +22,7 @@ public class ObjectPooler : BlankMono
     public GameObject boomSmokeModel;
     #endregion
 
-    #region Celt
+    #region Carman
     public GameObject curseCircle;
     public GameObject curseTrap;
     public List<GameObject> curseCircleList = new List<GameObject>();
@@ -47,7 +47,7 @@ public class ObjectPooler : BlankMono
             vials[i].SetActive(false);
             #endregion
             
-            #region Celt
+            #region Carman
             curseCircleList.Add(Instantiate<GameObject>(curseCircle, transform.position, Quaternion.identity));
             curseCircleList[i].SetActive(false);
 
