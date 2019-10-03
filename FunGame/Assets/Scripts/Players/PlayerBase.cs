@@ -30,8 +30,8 @@ public abstract class PlayerBase : BlankMono
     protected Animator anim;
     protected Rigidbody rb2d;
 
-    private string horiPlayerInput;
-    private string vertPlayerInput;
+    protected string horiPlayerInput;
+    protected string vertPlayerInput;
     private string aPlayerInput;
     private string bPlayerInput;
     private string xPlayerInput;
