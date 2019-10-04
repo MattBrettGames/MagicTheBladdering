@@ -50,14 +50,13 @@ public class Valderheim : PlayerBase
     }
     public void OpenComboKick() { comboTime = true; }
     public void CloseComboKick() { comboTime = false; }
-    
+
     public override void BAction()
     {
         Invoke("StopFrenzy", frenzyDuration);
         damageMult = frenzyMult;
         incomingMult = frenzyMult;
     }
-
     private void StopFrenzy()
     {
         damageMult = 1;
@@ -66,14 +65,16 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
+        float hori = Input.GetAxis(horiPlayerInput);
+        float vert = Input.GetAxis(vertPlayerInput);
         anim.SetTrigger("AAction");
         currentSpeed = speed;
-        speed *= speedMult;        
+        speed *= speedMult;
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
         if (Input.GetButtonUp(thisPlayer + "AButton"))
         {
             speed = currentSpeed;

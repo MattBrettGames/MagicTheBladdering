@@ -52,7 +52,7 @@ public abstract class PlayerBase : BlankMono
         baseSpeed = speed;
     }
 
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
@@ -63,7 +63,7 @@ public abstract class PlayerBase : BlankMono
             visuals.transform.LookAt(aimTarget);
 
             transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-            if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
+            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
  
 
 
@@ -90,7 +90,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { HealthChange(-damageInc *  Mathf.RoundToInt(incomingMult)); anim.SetTrigger("Stagger"); }
+    public virtual void TakeDamage(int damageInc) { HealthChange(Mathf.RoundToInt(-damageInc *  incomingMult)); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; }
@@ -101,6 +101,9 @@ public abstract class PlayerBase : BlankMono
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
     public virtual void GainCurse(float duration) { cursed = true; speed /= 2; Invoke("LoseCurse", duration); }
     public virtual void LoseCurse() { cursed = false; speed = baseSpeed; }
+
+    public void GainHA() { }
+    public void LoseHA() { }
     #endregion
 
 }
