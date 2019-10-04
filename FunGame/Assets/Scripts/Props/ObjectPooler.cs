@@ -23,8 +23,10 @@ public class ObjectPooler : BlankMono
     #endregion
 
     #region Carman
+    [Header("Carman Editables")]
     public GameObject curseCircle;
     public GameObject curseTrap;
+    [Header("Carman DONOTTOUCH")]
     public List<GameObject> curseCircleList = new List<GameObject>();
     public List<GameObject> curseTrapList = new List<GameObject>();
     #endregion
@@ -47,7 +49,7 @@ public class ObjectPooler : BlankMono
             vials[i].SetActive(false);
             #endregion
             
-            #region Carman
+            #region Carman Props
             curseCircleList.Add(Instantiate<GameObject>(curseCircle, transform.position, Quaternion.identity));
             curseCircleList[i].SetActive(false);
 

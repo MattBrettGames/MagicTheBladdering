@@ -84,6 +84,7 @@ public class UniverseController : BlankMono
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             p1.GetComponent<Rigidbody>().isKinematic = false;
             p1.transform.parent = null;
+            GameObject.Find("Player1Base").transform.SetParent(p1.transform);
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
 
@@ -93,6 +94,7 @@ public class UniverseController : BlankMono
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
             p2.GetComponent<Rigidbody>().isKinematic = false;
             p2.transform.parent = null;
+            GameObject.Find("Player2Base").transform.SetParent(p2.transform);
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
 
@@ -104,6 +106,7 @@ public class UniverseController : BlankMono
                 p3.GetComponent<PlayerBase>().thisPlayer = "P3";
                 p3.GetComponent<Rigidbody>().isKinematic = false;
                 p3.transform.parent = null;
+                GameObject.Find("Player3Base").transform.SetParent(p3.transform);
                 p3.transform.localScale = targetScale;
                 p3.transform.rotation = targetLook;
 
@@ -116,6 +119,7 @@ public class UniverseController : BlankMono
                 p4.GetComponent<PlayerBase>().thisPlayer = "P4";
                 p4.GetComponent<Rigidbody>().isKinematic = false;
                 p4.transform.parent = null;
+                GameObject.Find("Player4Base").transform.SetParent(p4.transform);
                 p4.transform.localScale = targetScale;
                 p4.transform.rotation = targetLook;
 
