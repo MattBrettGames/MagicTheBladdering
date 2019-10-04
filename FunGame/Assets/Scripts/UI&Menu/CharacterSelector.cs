@@ -40,6 +40,7 @@ public class CharacterSelector : BlankMono
 
     void Update()
     {
+        Debug.Log(string.Format("GO: {0} | InputName:  {1} | InVal: {2}", gameObject.name, horiPlayerInput, Input.GetAxis(horiPlayerInput)));
         if (!locked)
         {
             if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown)
@@ -122,7 +123,6 @@ public class CharacterSelector : BlankMono
 
     private IEnumerator SpinTrigger(float angle, float time)
     {
-        print(time);
         yield return new WaitForSeconds(time / 200);
         SpinJuice(angle);
     }
