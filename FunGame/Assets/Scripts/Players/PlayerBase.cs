@@ -21,8 +21,10 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Status Effects")]
     public bool cursed;
+    private float curseTimer;
     public bool prone;
     public float poison;
+    private bool hyperArmour;
 
     [Header("Components")]
     public Transform aimTarget;
@@ -65,8 +67,6 @@ public abstract class PlayerBase : BlankMono
             transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
  
-
-
             //Standard Inputs
             if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
             if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
@@ -75,6 +75,8 @@ public abstract class PlayerBase : BlankMono
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
+        if(curseTimer <= 0) { LoseCurse(); }
+        else { curseTimer -= Time.deltaTime; }
 
         //Testing Inputs
         //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
@@ -99,11 +101,12 @@ public abstract class PlayerBase : BlankMono
 
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
-    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; Invoke("LoseCurse", duration); }
+    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
+
     public virtual void LoseCurse() { cursed = false; speed = baseSpeed; }
 
-    public void GainHA() { }
-    public void LoseHA() { }
+    public void GainHA() { hyperArmour = true; }
+    public void LoseHA() { hyperArmour = false; }
     #endregion
 
 }

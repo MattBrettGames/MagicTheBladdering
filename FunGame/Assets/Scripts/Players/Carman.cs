@@ -64,6 +64,7 @@ public class Carman : PlayerBase
     public override void BAction()
     {
         anim.SetTrigger("BAction");
+        PLACETRAP();
     }
 
     public void PLACETRAP()

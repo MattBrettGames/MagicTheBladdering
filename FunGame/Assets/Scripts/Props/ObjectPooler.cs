@@ -5,6 +5,12 @@ using UnityEngine;
 public class ObjectPooler : BlankMono
 {
     #region Songbird
+    [Header("Songbird Inputs")]
+    public GameObject vialModel;
+    public GameObject poisonSmokeModel;
+    public GameObject adrenalineSmokeModel;
+    public GameObject boomSmokeModel;
+
     [Header("Non Editable Songbird")]
     public List<GameObject> vials = new List<GameObject>();
     public List<GameObject> poisonSmoke = new List<GameObject>();
@@ -15,11 +21,6 @@ public class ObjectPooler : BlankMono
     public void ReturnToAdrenalineSmokePool(GameObject gameobject) { adrenalineSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     public void ReturnToBoomSmokePool(GameObject gameobject) { boomSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
 
-    [Header("Songbird Inputs")]
-    public GameObject vialModel;
-    public GameObject poisonSmokeModel;
-    public GameObject adrenalineSmokeModel;
-    public GameObject boomSmokeModel;
     #endregion
 
     #region Carman
@@ -48,7 +49,7 @@ public class ObjectPooler : BlankMono
             vials.Add(Instantiate<GameObject>(vialModel, transform.position, Quaternion.identity));
             vials[i].SetActive(false);
             #endregion
-            
+
             #region Carman Props
             curseCircleList.Add(Instantiate<GameObject>(curseCircle, transform.position, Quaternion.identity));
             curseCircleList[i].SetActive(false);

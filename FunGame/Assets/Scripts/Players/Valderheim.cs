@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Valderheim : PlayerBase
 {
-
     [Header("More Componenets")]
     public Weapons weapon;
 

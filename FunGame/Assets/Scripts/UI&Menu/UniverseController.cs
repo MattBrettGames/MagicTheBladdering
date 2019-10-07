@@ -33,8 +33,8 @@ public class UniverseController : BlankMono
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); numOfPlayers = 3; }
-            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); numOfPlayers = 4; }
+            //if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); numOfPlayers = 3; }
+            //if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); numOfPlayers = 4; }
             if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
             if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
         }
@@ -78,52 +78,73 @@ public class UniverseController : BlankMono
             Vector3 targetScale = new Vector3(0.3f, 0.3f, 0.3f);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
 
-            GameObject p1 = selectedChars[0];
-            p1.transform.position = allSpawnPositions[level - 6].spawnPos[0];
+            #region Player 1
+            GameObject p1 = selectedChars[1];
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
-            p1.GetComponent<Rigidbody>().isKinematic = false;
+            //p1.GetComponent<Rigidbody>().isKinematic = false;
             p1.transform.parent = null;
-            GameObject.Find("Player1Base").transform.SetParent(p1.transform);
+
+            GameObject parent1 = GameObject.Find("Player2Base");
+            p1.transform.SetParent(parent1.transform);
+            parent1.transform.position = allSpawnPositions[level - 6].spawnPos[0];
+            p1.transform.localPosition = Vector3.zero;
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
+            #endregion
 
+            #region Player 2
             GameObject p2 = selectedChars[1];
-            p2.transform.position = allSpawnPositions[level - 6].spawnPos[1];
             p2.GetComponent<PlayerBase>().enabled = true;
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
-            p2.GetComponent<Rigidbody>().isKinematic = false;
+            //p2.GetComponent<Rigidbody>().isKinematic = false;
             p2.transform.parent = null;
-            GameObject.Find("Player2Base").transform.SetParent(p2.transform);
+
+            GameObject parent2 = GameObject.Find("Player2Base");
+            p2.transform.SetParent(parent2.transform);
+            parent2.transform.position = allSpawnPositions[level - 6].spawnPos[1];
+            p2.transform.localPosition = Vector3.zero;
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
+            #endregion
 
+            #region Player 3
             if (selectedChars[2] != null)
             {
                 GameObject p3 = selectedChars[2];
-                p3.transform.position = allSpawnPositions[level - 6].spawnPos[2];
                 p3.GetComponent<PlayerBase>().enabled = true;
                 p3.GetComponent<PlayerBase>().thisPlayer = "P3";
-                p3.GetComponent<Rigidbody>().isKinematic = false;
+                //p3.GetComponent<Rigidbody>().isKinematic = false;
                 p3.transform.parent = null;
-                GameObject.Find("Player3Base").transform.SetParent(p3.transform);
+
+                GameObject parent3 = GameObject.Find("Player2Base");
+                p3.transform.SetParent(parent3.transform);
+                parent3.transform.position = allSpawnPositions[level - 6].spawnPos[2];
+                p3.transform.localPosition = Vector3.zero;
                 p3.transform.localScale = targetScale;
                 p3.transform.rotation = targetLook;
-
             }
+            #endregion
+
+            #region Player 4
             if (selectedChars[3] != null)
             {
                 GameObject p4 = selectedChars[3];
-                p4.transform.position = allSpawnPositions[level - 6].spawnPos[3];
                 p4.GetComponent<PlayerBase>().enabled = true;
                 p4.GetComponent<PlayerBase>().thisPlayer = "P4";
-                p4.GetComponent<Rigidbody>().isKinematic = false;
+                //p4.GetComponent<Rigidbody>().isKinematic = false;
                 p4.transform.parent = null;
-                GameObject.Find("Player4Base").transform.SetParent(p4.transform);
+
+                GameObject parent4 = GameObject.Find("Player4Base");
+                p4.transform.SetParent(parent4.transform);
+                parent4.transform.position = allSpawnPositions[level - 6].spawnPos[3];
+                p4.transform.localPosition = Vector3.zero;
                 p4.transform.localScale = targetScale;
                 p4.transform.rotation = targetLook;
 
             }
+            #endregion
+
             Destroy(gameObject);
         }
     }

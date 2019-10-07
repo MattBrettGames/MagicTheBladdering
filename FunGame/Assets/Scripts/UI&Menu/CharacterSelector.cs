@@ -11,13 +11,14 @@ public class CharacterSelector : BlankMono
 
     private string horiPlayerInput;
     private string vertPlayerInput;
-
-    public List<ModelList> characters = new List<ModelList>();
-
+    
     int currentChar;
     int currentSkin;
 
     private bool inputCooldown;
+
+    [Header("Skin Inputter")]
+    public List<ModelList> characters = new List<ModelList>();
 
     [Header("Readying Up")]
     public bool locked;
@@ -40,7 +41,7 @@ public class CharacterSelector : BlankMono
 
     void Update()
     {
-        Debug.Log(string.Format("GO: {0} | InputName:  {1} | InVal: {2}", gameObject.name, horiPlayerInput, Input.GetAxis(horiPlayerInput)));
+        //Debug.Log(string.Format("GO: {0} | InputName:  {1} | InVal: {2}", gameObject.name, horiPlayerInput, Input.GetAxis(horiPlayerInput)));
         if (!locked)
         {
             if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown)
@@ -115,6 +116,7 @@ public class CharacterSelector : BlankMono
 
             if (Input.GetButtonDown(thisPlayer + "XButton"))
             {
+                displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                 universe.CheckReady(thisPInt, displayChar);
                 locked = true;
             }
