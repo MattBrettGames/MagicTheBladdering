@@ -25,6 +25,7 @@ public abstract class PlayerBase : BlankMono
     public bool prone;
     public float poison;
     private bool hyperArmour;
+    protected bool counterFrames;
 
     [Header("Components")]
     public Transform aimTarget;

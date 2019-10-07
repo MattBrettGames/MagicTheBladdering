@@ -66,7 +66,6 @@ public class Carman : PlayerBase
         anim.SetTrigger("BAction");
         PLACETRAP();
     }
-
     public void PLACETRAP()
     {
         GameObject trap = pooler.curseTrapList[0];
@@ -74,7 +73,6 @@ public class Carman : PlayerBase
         trap.SetActive(true);
         TRAPPASSER(trap);
     }
-
     private IEnumerator TRAPPASSER(GameObject trap)
     {
         yield return new WaitForSeconds(secsToTrapFade);

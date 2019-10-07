@@ -32,6 +32,11 @@ public class ObjectPooler : BlankMono
     public List<GameObject> curseTrapList = new List<GameObject>();
     #endregion
 
+    #region Skjegg
+    public GameObject ghost;
+    public List<GameObject> ghostList = new List<GameObject>();
+    #endregion
+
     private void Start()
     {
         for (int i = 0; i < 5; i++)
@@ -57,7 +62,16 @@ public class ObjectPooler : BlankMono
             curseTrapList.Add(Instantiate<GameObject>(curseTrap, transform.position, Quaternion.identity));
             curseTrapList[i].SetActive(false);
             #endregion
+
         }
+
+        #region Skjegg
+        for (int i = 0; i < 15; i++)
+        {
+            ghostList.Add(Instantiate<GameObject>(ghost, transform.position, Quaternion.identity));
+            ghostList[i].SetActive(false);
+        }
+        #endregion
     }
 
 }
