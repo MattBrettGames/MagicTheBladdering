@@ -37,7 +37,7 @@ public class Carman : PlayerBase
 
     public override void XAction()
     {
-        anim.SetTrigger("XAction");
+        //anim.SetTrigger("XAction");
         weapons[0].GainInfo(xDamage, 0, visuals.transform.forward);
         weapons[1].GainInfo(xDamage, 0, visuals.transform.forward);
     }
@@ -87,7 +87,7 @@ public class Carman : PlayerBase
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
-        anim.SetTrigger("AAction");
+        //anim.SetTrigger("AAction");
         rb2d.AddForce(new Vector3(hori, 0, vert) * dodgeImpulse, ForceMode.Impulse);
     }
     public void GAINIFRAMES() { iFrames = true; }

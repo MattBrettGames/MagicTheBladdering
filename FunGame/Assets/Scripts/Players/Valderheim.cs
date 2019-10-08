@@ -68,7 +68,8 @@ public class Valderheim : PlayerBase
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
-        anim.SetTrigger("AAction");
+        print(new Vector3(hori, 0, vert) + " / " + speed + " / " + speedMult);
+        //anim.SetTrigger("AAction");
         currentSpeed = speed;
         speed *= speedMult;
         charging = true;
@@ -81,10 +82,11 @@ public class Valderheim : PlayerBase
             float hori = Input.GetAxis(horiPlayerInput);
             float vert = Input.GetAxis(vertPlayerInput);
             //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
+            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 10;
             visuals.transform.LookAt(aimTarget);
 
-            transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
+            transform.position = Vector3.Lerp(transform.position, aimTarget.position, 1);
+            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
 
             //Standard Inputs
