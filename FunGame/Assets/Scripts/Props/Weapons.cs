@@ -20,21 +20,22 @@ public class Weapons : BlankMono
     private void Start()
     {
         hitBox = gameObject.GetComponent<BoxCollider>();
-        trails = gameObject.GetComponent<TrailRenderer>();
-        trails.enabled = false;
+        //trails = gameObject.GetComponent<TrailRenderer>();
+        //trails.enabled = false;
         hitBox.enabled = false;
+        print(hitBox.enabled);
     }
 
     public void StartAttack()
     {
         hitBox.enabled = true;
-        trails.enabled = true;
+        //trails.enabled = true;
     }
 
     public void EndAttack()
     {
-        trails.enabled = false;
         hitBox.enabled = false;
+        //trails.enabled = false;
     }
 
     public virtual void OnTriggerEnter(Collider other)

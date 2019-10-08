@@ -5,7 +5,8 @@ using UnityEngine;
 public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
-    public Weapons weapon;
+    public Weapons hammer;
+    public Weapons chest;
 
     [Header("Wide Swing")]
     public int xAttack;
@@ -30,7 +31,7 @@ public class Valderheim : PlayerBase
 
     public override void XAction()
     {
-        weapon.GainInfo(xAttack, xKnockback, visuals.transform.forward);
+        hammer.GainInfo(xAttack, xKnockback, visuals.transform.forward);
         anim.SetTrigger("XAttack");
     }
 
@@ -39,12 +40,12 @@ public class Valderheim : PlayerBase
         if (comboTime)
         {
             anim.SetBool("Comboing", true);
-            weapon.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
+            hammer.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
             print("Combo Kick!");
         }
         else
         {
-            weapon.GainInfo(slamAttack, slamKnockback, visuals.transform.forward);
+            hammer.GainInfo(slamAttack, slamKnockback, visuals.transform.forward);
             print("Hammer Slam!");
             anim.SetTrigger("YAttack");
         }

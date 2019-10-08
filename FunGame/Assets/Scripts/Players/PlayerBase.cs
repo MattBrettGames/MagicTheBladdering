@@ -97,7 +97,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void TakeDamage(int damageInc) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
-    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; }
+    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); }
     public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power, ForceMode.Impulse); }
     #endregion
 
