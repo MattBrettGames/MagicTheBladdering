@@ -87,7 +87,7 @@ public class Valderheim : PlayerBase
             aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
             visuals.transform.LookAt(aimTarget);
 
-            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
+            transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
             //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
             else { anim.SetFloat("Movement", 0); }

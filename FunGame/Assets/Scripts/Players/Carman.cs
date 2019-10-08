@@ -22,7 +22,6 @@ public class Carman : PlayerBase
 
     [Header("Dodge Roll")]
     public float dodgeImpulse;
-    private bool iFrames;
 
     [Header("DemonSlayer")]
     public int slayerDamage;

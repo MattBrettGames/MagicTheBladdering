@@ -16,5 +16,8 @@ public class ValdyEventHandler : BlankMono
 
     public void OpenKickCombo() { valdy.OpenComboKick(); }
     public void CloseKickCombo() { valdy.CloseComboKick(); }
+
+    public void GainHA() { valdy.GainHA(); }
+    public void LoseHA() { valdy.LoseHA(); }
          
 }
