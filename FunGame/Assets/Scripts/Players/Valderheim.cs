@@ -82,10 +82,10 @@ public class Valderheim : PlayerBase
             float hori = Input.GetAxis(horiPlayerInput);
             float vert = Input.GetAxis(vertPlayerInput);
             //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 10;
+            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
             visuals.transform.LookAt(aimTarget);
 
-            transform.position = Vector3.Lerp(transform.position, aimTarget.position, 1);
+            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
             //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
 
@@ -101,7 +101,7 @@ public class Valderheim : PlayerBase
             charging = false;
         }
 
-        if (poison > 0) { poison -= Time.deltaTime; }
+        if (poison > 0) { poison -= Time.deltaTime; currentHealth -= Mathf.RoundToInt(Time.deltaTime); }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
     }
