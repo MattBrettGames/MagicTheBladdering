@@ -38,9 +38,9 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
+            anim.SetBool("Comboing", true);
             weapon.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
             print("Combo Kick!");
-            anim.SetTrigger("ComboKick");
         }
         else
         {
@@ -55,6 +55,7 @@ public class Valderheim : PlayerBase
     public override void BAction()
     {
         Invoke("StopFrenzy", frenzyDuration);
+        anim.SetTrigger("BAttack");
         damageMult = frenzyMult;
         incomingMult = frenzyMult;
     }
@@ -67,9 +68,8 @@ public class Valderheim : PlayerBase
     public override void AAction()
     {
         float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        print(new Vector3(hori, 0, vert) + " / " + speed + " / " + speedMult);
-        //anim.SetTrigger("AAction");
+        float vert = Input.GetAxis(vertPlayerInput);        
+        anim.SetTrigger("AAction");
         currentSpeed = speed;
         speed *= speedMult;
         charging = true;
@@ -87,7 +87,8 @@ public class Valderheim : PlayerBase
 
             transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
             //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+            if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+            else { anim.SetFloat("Movement", 0); }
 
             //Standard Inputs
             if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
@@ -99,6 +100,7 @@ public class Valderheim : PlayerBase
         {
             speed = currentSpeed;
             charging = false;
+            anim.SetTrigger("EndCharge");
         }
 
         if (poison > 0) { poison -= Time.deltaTime; currentHealth -= Mathf.RoundToInt(Time.deltaTime); }

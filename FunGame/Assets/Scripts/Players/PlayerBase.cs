@@ -65,9 +65,10 @@ public abstract class PlayerBase : BlankMono
             aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
             visuals.transform.LookAt(aimTarget);
 
-            transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
+            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
+            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
             if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
- 
+
             //Standard Inputs
             if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
             if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
@@ -76,7 +77,7 @@ public abstract class PlayerBase : BlankMono
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
-        if(curseTimer <= 0) { LoseCurse(); }
+        if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
 
         //Testing Inputs
@@ -93,7 +94,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { HealthChange(Mathf.RoundToInt(-damageInc *  incomingMult)); anim.SetTrigger("Stagger"); }
+    public virtual void TakeDamage(int damageInc) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; }
