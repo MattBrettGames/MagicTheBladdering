@@ -21,7 +21,7 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Status Effects")]
     public bool cursed;
-    private float curseTimer;
+    protected float curseTimer;
     public bool prone;
     public float poison;
     private bool hyperArmour;
@@ -35,10 +35,10 @@ public abstract class PlayerBase : BlankMono
 
     protected string horiPlayerInput;
     protected string vertPlayerInput;
-    private string aPlayerInput;
-    private string bPlayerInput;
-    private string xPlayerInput;
-    private string yPlayerInput;
+    protected string aPlayerInput;
+    protected string bPlayerInput;
+    protected string xPlayerInput;
+    protected string yPlayerInput;
 
     public virtual void Start()
     {

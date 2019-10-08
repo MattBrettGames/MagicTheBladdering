@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpiritDagger : Weapons
 {
-
     public void CallGhost()
     {
         ObjectPooler pooler = GameObject.Find("ObjectPooler").GetComponent<ObjectPooler>();
