@@ -21,8 +21,11 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Status Effects")]
     public bool cursed;
+    protected float curseTimer;
     public bool prone;
     public float poison;
+    private bool hyperArmour;
+    protected bool counterFrames;
 
     [Header("Components")]
     public Transform aimTarget;
@@ -32,10 +35,10 @@ public abstract class PlayerBase : BlankMono
 
     protected string horiPlayerInput;
     protected string vertPlayerInput;
-    private string aPlayerInput;
-    private string bPlayerInput;
-    private string xPlayerInput;
-    private string yPlayerInput;
+    protected string aPlayerInput;
+    protected string bPlayerInput;
+    protected string xPlayerInput;
+    protected string yPlayerInput;
 
     public virtual void Start()
     {
@@ -52,7 +55,7 @@ public abstract class PlayerBase : BlankMono
         baseSpeed = speed;
     }
 
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
@@ -62,10 +65,9 @@ public abstract class PlayerBase : BlankMono
             aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
             visuals.transform.LookAt(aimTarget);
 
-            transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-            if (Input.GetAxisRaw(thisPlayer + "Horizontal") != 0 || Input.GetAxisRaw(thisPlayer + "Vertical") != 0) { anim.SetFloat("Movement", 1); }
- 
-
+            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
+            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
+            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
 
             //Standard Inputs
             if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
@@ -75,6 +77,8 @@ public abstract class PlayerBase : BlankMono
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
+        if (curseTimer <= 0) { LoseCurse(); }
+        else { curseTimer -= Time.deltaTime; }
 
         //Testing Inputs
         //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
@@ -90,7 +94,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { HealthChange(-damageInc *  Mathf.RoundToInt(incomingMult)); anim.SetTrigger("Stagger"); }
+    public virtual void TakeDamage(int damageInc) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); }
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; }
@@ -99,8 +103,12 @@ public abstract class PlayerBase : BlankMono
 
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
-    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; Invoke("LoseCurse", duration); }
+    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
+
     public virtual void LoseCurse() { cursed = false; speed = baseSpeed; }
+
+    public void GainHA() { hyperArmour = true; }
+    public void LoseHA() { hyperArmour = false; }
     #endregion
 
 }

@@ -5,7 +5,13 @@ using UnityEngine;
 public class ObjectPooler : BlankMono
 {
     #region Songbird
-    [Header("Non Editable Songbird")]
+    [Header("Songbird Inputs")]
+    public GameObject vialModel;
+    public GameObject poisonSmokeModel;
+    public GameObject adrenalineSmokeModel;
+    public GameObject boomSmokeModel;
+
+    [Header("Songbird DONOTTOUCH")]
     public List<GameObject> vials = new List<GameObject>();
     public List<GameObject> poisonSmoke = new List<GameObject>();
     public List<GameObject> adrenalineSmoke = new List<GameObject>();
@@ -15,18 +21,25 @@ public class ObjectPooler : BlankMono
     public void ReturnToAdrenalineSmokePool(GameObject gameobject) { adrenalineSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     public void ReturnToBoomSmokePool(GameObject gameobject) { boomSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
 
-    [Header("Songbird Inputs")]
-    public GameObject vialModel;
-    public GameObject poisonSmokeModel;
-    public GameObject adrenalineSmokeModel;
-    public GameObject boomSmokeModel;
     #endregion
 
     #region Carman
+    [Header("Carman Editables")]
     public GameObject curseCircle;
     public GameObject curseTrap;
+    [Header("Carman DONOTTOUCH")]
     public List<GameObject> curseCircleList = new List<GameObject>();
     public List<GameObject> curseTrapList = new List<GameObject>();
+    public void ReturnToCurseCircleList(GameObject gameobject) { curseCircleList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+    public void ReturnToCurseTrapList(GameObject gameobject) { curseTrapList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+    #endregion
+
+    #region Skjegg
+    [Header("Skjegg Input")]
+    public GameObject ghost;
+    [Header("Skjegg DONOTTOUCH")]
+    public List<GameObject> ghostList = new List<GameObject>();
+    public void ReturnToGhostList(GameObject gameobject) { ghostList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     #endregion
 
     private void Start()
@@ -46,15 +59,24 @@ public class ObjectPooler : BlankMono
             vials.Add(Instantiate<GameObject>(vialModel, transform.position, Quaternion.identity));
             vials[i].SetActive(false);
             #endregion
-            
-            #region Carman
+
+            #region Carman Props
             curseCircleList.Add(Instantiate<GameObject>(curseCircle, transform.position, Quaternion.identity));
             curseCircleList[i].SetActive(false);
 
             curseTrapList.Add(Instantiate<GameObject>(curseTrap, transform.position, Quaternion.identity));
             curseTrapList[i].SetActive(false);
             #endregion
+
         }
+
+        #region Skjegg Props
+        for (int i = 0; i < 15; i++)
+        {
+            ghostList.Add(Instantiate<GameObject>(ghost, transform.position, Quaternion.identity));
+            ghostList[i].SetActive(false);
+        }
+        #endregion
     }
 
 }
