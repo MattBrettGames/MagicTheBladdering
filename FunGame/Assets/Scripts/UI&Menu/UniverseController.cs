@@ -172,4 +172,11 @@ public class UniverseController : BlankMono
 
     [Serializable] public struct spawnPositions { public List<Vector3> spawnPos; }
 
+    public void PlayerDeath(GameObject player)
+    {
+        player.SetActive(false);
+        PlayerBase playerCode = player.GetComponent<PlayerBase>();
+        playerCode.Respawn();
+    }
+
 }

@@ -25,6 +25,7 @@ public abstract class PlayerBase : BlankMono
     public bool prone;
     public float poison;
     private bool hyperArmour;
+    protected bool iFrames;
     protected bool counterFrames;
 
     [Header("Components")]
@@ -94,11 +95,14 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); }
+    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); if (!hyperArmour) { anim.SetTrigger("Stagger"); } } }
+
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
+
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); }
-    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power, ForceMode.Impulse); }
+    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power*10, ForceMode.Impulse); Invoke("StopKnockback", power/10);  print(power / 10); }
+    private void StopKnockback() { rb2d.velocity = new Vector3(0, 0, 0); }
     #endregion
 
     #region Utility Functions
@@ -109,6 +113,9 @@ public abstract class PlayerBase : BlankMono
 
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
+
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false;  }
+
     #endregion
 
 }
