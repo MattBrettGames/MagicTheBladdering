@@ -88,7 +88,6 @@ public class Valderheim : PlayerBase
 
     }
     public void BeginCharge() { anim.SetBool("Charging", true); }
-    public void EndCharge() { anim.SetBool("Charging", false); }
 
 
     public override void FixedUpdate()
@@ -131,10 +130,11 @@ public class Valderheim : PlayerBase
             anim.SetTrigger("EndCharge");
         }
 
-        if (poison > 0) { poison -= Time.deltaTime; currentHealth -= Mathf.RoundToInt(Time.deltaTime); }
+        if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
     }
+    
 
     //Passive Effects - Surefooted & Building Rage
     public override void KnockedDown(int power) { }

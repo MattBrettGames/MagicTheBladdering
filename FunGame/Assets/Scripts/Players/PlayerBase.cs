@@ -56,6 +56,8 @@ public abstract class PlayerBase : BlankMono
         xPlayerInput = thisPlayer + "XButton";
         yPlayerInput = thisPlayer + "YButton";
         baseSpeed = speed;
+
+        InvokeRepeating("PoisonTick", 0, 0.5f);
     }
 
     public virtual void FixedUpdate()
@@ -117,5 +119,7 @@ public abstract class PlayerBase : BlankMono
     public void LoseHA() { hyperArmour = false; }
 
     public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
+
+    protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
     #endregion
 }
