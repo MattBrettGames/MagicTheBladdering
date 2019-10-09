@@ -16,6 +16,7 @@ public class UniverseController : BlankMono
     public GameObject[] selectedChars = new GameObject[4];
     public int numOfPlayers;
     private int lockedInPlayers;
+    public int numOfRespawns;
 
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
@@ -41,6 +42,13 @@ public class UniverseController : BlankMono
         else if (SceneManager.GetActiveScene().name == "Bio")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
+        }
+        else if (SceneManager.GetActiveScene().name == "GameOver")
+        {
+            if (Input.GetButtonDown("AllBButton"))
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 
@@ -73,11 +81,11 @@ public class UniverseController : BlankMono
             charSelector4 = GameObject.FindGameObjectWithTag("P4Selector").GetComponent<CharacterSelector>();
             charSelector4.SetUniverse(this);
         }
-        else if (level >= 6)
+        else if (level >= 7)
         {
-            for (int i = 0; i < numOfPlayers; i++)
+            for (int i = 0; i < 2; i++)
             {
-                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(i);
+                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats();
             }
 
             Vector3 targetScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -92,7 +100,7 @@ public class UniverseController : BlankMono
 
             GameObject parent1 = GameObject.Find("Player2Base");
             p1.transform.SetParent(parent1.transform);
-            parent1.transform.position = allSpawnPositions[level - 6].spawnPos[0];
+            parent1.transform.position = allSpawnPositions[level - 7].spawnPos[0];
             p1.transform.localPosition = Vector3.zero;
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
@@ -107,7 +115,7 @@ public class UniverseController : BlankMono
 
             GameObject parent2 = GameObject.Find("Player2Base");
             p2.transform.SetParent(parent2.transform);
-            parent2.transform.position = allSpawnPositions[level - 6].spawnPos[1];
+            parent2.transform.position = allSpawnPositions[level - 7].spawnPos[1];
             p2.transform.localPosition = Vector3.zero;
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
@@ -124,7 +132,7 @@ public class UniverseController : BlankMono
 
                 GameObject parent3 = GameObject.Find("Player2Base");
                 p3.transform.SetParent(parent3.transform);
-                parent3.transform.position = allSpawnPositions[level - 6].spawnPos[2];
+                parent3.transform.position = allSpawnPositions[level - 7].spawnPos[2];
                 p3.transform.localPosition = Vector3.zero;
                 p3.transform.localScale = targetScale;
                 p3.transform.rotation = targetLook;
@@ -142,7 +150,7 @@ public class UniverseController : BlankMono
 
                 GameObject parent4 = GameObject.Find("Player4Base");
                 p4.transform.SetParent(parent4.transform);
-                parent4.transform.position = allSpawnPositions[level - 6].spawnPos[3];
+                parent4.transform.position = allSpawnPositions[level - 7].spawnPos[3];
                 p4.transform.localPosition = Vector3.zero;
                 p4.transform.localScale = targetScale;
                 p4.transform.rotation = targetLook;
@@ -150,7 +158,7 @@ public class UniverseController : BlankMono
             }
             #endregion
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
@@ -181,7 +189,21 @@ public class UniverseController : BlankMono
     {
         player.SetActive(false);
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
-        playerCode.Respawn();
+
+        if (playerCode.numOfDeaths != numOfRespawns)
+        {
+            StartCoroutine(StartSpawn(playerCode));
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+    }
+
+    private IEnumerator StartSpawn(PlayerBase player)
+    {
+        yield return new WaitForSeconds(7);
+        player.Respawn();
     }
 
 }

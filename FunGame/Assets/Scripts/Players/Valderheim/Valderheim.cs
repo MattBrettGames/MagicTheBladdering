@@ -39,8 +39,8 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            anim.SetBool("Comboing", true);
             hammer.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
+            anim.SetBool("Comboing", true);
             print("Combo Kick!");
         }
         else
@@ -81,6 +81,7 @@ public class Valderheim : PlayerBase
 
     public override void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(15); }
         if (!prone)
         {
             if (!charging)

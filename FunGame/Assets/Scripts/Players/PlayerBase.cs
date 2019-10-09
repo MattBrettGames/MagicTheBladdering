@@ -5,8 +5,9 @@ using UnityEngine;
 public abstract class PlayerBase : BlankMono
 {
 
-    [Header("Player Determination")]
+    [Header("GameMode Stuff")]
     public string thisPlayer;
+    public int numOfDeaths = 0;
 
     [Header("Movement Stats")]
     public float speed;
@@ -15,7 +16,7 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Common Stats")]
     public int currentHealth;
-    protected int healthMax;
+    public int healthMax;
     public float damageMult = 1;
     public float incomingMult = 1;
 
@@ -27,6 +28,7 @@ public abstract class PlayerBase : BlankMono
     private bool hyperArmour;
     protected bool iFrames;
     protected bool counterFrames;
+    protected bool knockbackForce;
 
     [Header("Components")]
     public Transform aimTarget;
@@ -60,7 +62,7 @@ public abstract class PlayerBase : BlankMono
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
-        if (!prone)
+        if (!prone && !knockbackForce)
         {
             //Rotating the Character Model
             aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
@@ -100,9 +102,9 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); }
-    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power*10, ForceMode.Impulse); Invoke("StopKnockback", power/10);  print(power / 10); }
-    private void StopKnockback() { rb2d.velocity = new Vector3(0, 0, 0); }
+    public virtual void Death() { anim.SetTrigger("Death"); enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); print(power / 10f); knockbackForce = true; }
+    private void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
     #endregion
 
     #region Utility Functions
@@ -114,8 +116,6 @@ public abstract class PlayerBase : BlankMono
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false;  }
-
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
     #endregion
-
 }
