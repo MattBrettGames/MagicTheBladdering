@@ -69,39 +69,48 @@ public class Valderheim : PlayerBase
     public override void AAction()
     {
         float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);        
+        float vert = Input.GetAxis(vertPlayerInput);
         anim.SetTrigger("AAction");
         currentSpeed = speed;
-        speed *= speedMult;
+        speed /= speedMult;
         charging = true;
     }
+    public void BeginCharge() { anim.SetBool("Charging", true); }
+    public void EndCharge() { anim.SetBool("Charging", false); }
+
 
     public override void FixedUpdate()
     {
-        if (!prone & !charging)
+        if (!prone)
         {
-            float hori = Input.GetAxis(horiPlayerInput);
-            float vert = Input.GetAxis(vertPlayerInput);
+            if (!charging)
+            {
+                float hori = Input.GetAxis(horiPlayerInput);
+                float vert = Input.GetAxis(vertPlayerInput);
 
-            //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
-            visuals.transform.LookAt(aimTarget);
+                //Rotating the Character Model
+                aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
+                visuals.transform.LookAt(aimTarget);
+
+                //Standard Inputs
+                if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
+                if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
+                if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
+                if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+
+                if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+                else { anim.SetFloat("Movement", 0); }
+            }
 
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
             //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-            if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
-            else { anim.SetFloat("Movement", 0); }
 
-            //Standard Inputs
-            if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
-            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
-            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
-            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
         }
         if (Input.GetButtonUp(thisPlayer + "AButton"))
         {
             speed = currentSpeed;
             charging = false;
+            anim.SetBool("Charging", false);
             anim.SetTrigger("EndCharge");
         }
 

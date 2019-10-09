@@ -75,11 +75,16 @@ public class UniverseController : BlankMono
         }
         else if (level >= 6)
         {
+            for (int i = 0; i < numOfPlayers; i++)
+            {
+                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(i);
+            }
+
             Vector3 targetScale = new Vector3(0.3f, 0.3f, 0.3f);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
 
             #region Player 1
-            GameObject p1 = selectedChars[1];
+            GameObject p1 = selectedChars[0];
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             //p1.GetComponent<Rigidbody>().isKinematic = false;
@@ -151,13 +156,13 @@ public class UniverseController : BlankMono
 
     public void CheckReady(int arrayIndex, GameObject gobject)
     {
-        print(gobject.transform.localScale);
+        //print(gobject.transform.localScale);
 
         selectedChars[arrayIndex] = gobject;
         gobject.transform.parent = gameObject.transform;
         lockedInPlayers++;
 
-        print(gobject.transform.localScale);
+        //print(gobject.transform.localScale);
 
         if (lockedInPlayers == numOfPlayers)
         {

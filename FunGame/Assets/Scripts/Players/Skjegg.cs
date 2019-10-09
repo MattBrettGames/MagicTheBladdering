@@ -44,18 +44,61 @@ public class Skjegg : PlayerBase
         anim.SetTrigger("XAction");
         fist.GainInfo(tacheDamage, tacheKnockback, visuals.transform.forward);
     }
-    
+
     public override void YAction()
     {
         anim.SetTrigger("YAction");
         dagger.GainInfo(deadlockDamage, deadlockKnockback, visuals.transform.forward);
     }
-    
+
     public void HairLine()
     {
         anim.SetTrigger("HairLine");
         hairline.GainInfo(0, hairlineKnockback, visuals.transform.forward);
     }
 
+    public void FurtherBurn()
+    {
+        if (burning)
+        {
+            float hori = Input.GetAxis(horiPlayerInput);
+            float vert = Input.GetAxis(vertPlayerInput);
+            rb2d.AddForce(new Vector3(hori, 0, vert) * burnerSpeed * 1.5f, ForceMode.Impulse);
+        }
+    }
+
+    public override void FixedUpdate()
+    {
+        float hori = Input.GetAxis(horiPlayerInput);
+        float vert = Input.GetAxis(vertPlayerInput);
+        if (!prone)
+        {
+            //Rotating the Character Model
+            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
+            visuals.transform.LookAt(aimTarget);
+
+            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
+            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
+            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+
+            //Standard Inputs
+            if (Input.GetButtonDown(aPlayerInput) && !burning) { AAction(); }
+            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
+            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
+            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+
+            if (Input.GetButtonDown(aPlayerInput) && burning)
+            {
+                EndBurn();
+            }
+        }
+
+        if (poison > 0) { poison -= Time.deltaTime; }
+        if (curseTimer <= 0) { LoseCurse(); }
+        else { curseTimer -= Time.deltaTime; }
+
+    }
+
+    private void EndBurn() { rb2d.velocity = Vector3.zero; }
 
 }
