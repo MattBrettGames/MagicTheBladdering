@@ -23,6 +23,9 @@ public class UniverseController : BlankMono
 
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         if (GameObject.FindGameObjectsWithTag("UniverseController").Length == 1)
         {
             DontDestroyOnLoad(gameObject);
@@ -98,8 +101,8 @@ public class UniverseController : BlankMono
             //p1.GetComponent<Rigidbody>().isKinematic = false;
             p1.transform.parent = null;
 
-            GameObject parent1 = GameObject.Find("Player2Base");
-            p1.transform.SetParent(parent1.transform);
+            GameObject parent1 = GameObject.Find("Player1Base");
+            parent1.transform.SetParent(p1.transform);
             parent1.transform.position = allSpawnPositions[level - 7].spawnPos[0];
             p1.transform.localPosition = Vector3.zero;
             p1.transform.localScale = targetScale;
@@ -114,7 +117,7 @@ public class UniverseController : BlankMono
             p2.transform.parent = null;
 
             GameObject parent2 = GameObject.Find("Player2Base");
-            p2.transform.SetParent(parent2.transform);
+            parent2.transform.SetParent(p2.transform);
             parent2.transform.position = allSpawnPositions[level - 7].spawnPos[1];
             p2.transform.localPosition = Vector3.zero;
             p2.transform.localScale = targetScale;
@@ -130,8 +133,8 @@ public class UniverseController : BlankMono
                 //p3.GetComponent<Rigidbody>().isKinematic = false;
                 p3.transform.parent = null;
 
-                GameObject parent3 = GameObject.Find("Player2Base");
-                p3.transform.SetParent(parent3.transform);
+                GameObject parent3 = GameObject.Find("Player3Base");
+                parent3.transform.SetParent(p3.transform);
                 parent3.transform.position = allSpawnPositions[level - 7].spawnPos[2];
                 p3.transform.localPosition = Vector3.zero;
                 p3.transform.localScale = targetScale;
@@ -149,7 +152,7 @@ public class UniverseController : BlankMono
                 p4.transform.parent = null;
 
                 GameObject parent4 = GameObject.Find("Player4Base");
-                p4.transform.SetParent(parent4.transform);
+                parent4.transform.SetParent(p4.transform);
                 parent4.transform.position = allSpawnPositions[level - 7].spawnPos[3];
                 p4.transform.localPosition = Vector3.zero;
                 p4.transform.localScale = targetScale;
@@ -157,8 +160,6 @@ public class UniverseController : BlankMono
 
             }
             #endregion
-
-            //Destroy(gameObject);
         }
     }
 

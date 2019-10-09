@@ -20,7 +20,7 @@ public class HUDController : BlankMono
 
     public void SetStats()
     {
-        //targetPlayer = GameObject.FindGameObjectWithTag("Player" + thisPlayer).GetComponent<PlayerBase>();
+        targetPlayer = GameObject.FindGameObjectWithTag("Player" + thisPlayer).GetComponent<PlayerBase>();
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         //image.sprite = images[imageInt];

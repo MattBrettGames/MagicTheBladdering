@@ -23,7 +23,6 @@ public class Weapons : BlankMono
         //trails = gameObject.GetComponent<TrailRenderer>();
         //trails.enabled = false;
         hitBox.enabled = false;
-        print(hitBox.enabled);
     }
 
     public void StartAttack()
@@ -44,9 +43,9 @@ public class Weapons : BlankMono
         if (other.transform.tag != transform.tag)
         {
             PlayerBase target = other.transform.GetComponent<PlayerBase>();
-            target.TakeDamage(damageFull);
             target.KnockedDown(damageFull / 10);
             target.Knockback(knockFull, knockDir);
+            target.TakeDamage(damageFull);
         }
     }
 

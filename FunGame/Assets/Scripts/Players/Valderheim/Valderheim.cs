@@ -21,7 +21,8 @@ public class Valderheim : PlayerBase
 
     [Header("Frenzy")]
     public int frenzyDuration;
-    public int frenzyMult;
+    public int frenzyBonus;
+    private bool frenzy;
 
     [Header("Charge!")]
     public float speedMult;
@@ -31,7 +32,8 @@ public class Valderheim : PlayerBase
 
     public override void XAction()
     {
-        hammer.GainInfo(xAttack, xKnockback, visuals.transform.forward);
+        print("This woud deal " + Mathf.RoundToInt(xAttack * damageMult) + " damage");
+        hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward);
         anim.SetTrigger("XAttack");
     }
 
@@ -45,6 +47,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
+            anim.SetBool("Comboing", false);
             hammer.GainInfo(slamAttack, slamKnockback, visuals.transform.forward);
             print("Hammer Slam!");
             anim.SetTrigger("YAttack");
@@ -55,25 +58,34 @@ public class Valderheim : PlayerBase
 
     public override void BAction()
     {
-        Invoke("StopFrenzy", frenzyDuration);
-        anim.SetTrigger("BAttack");
-        damageMult = frenzyMult;
-        incomingMult = frenzyMult;
+        if (!frenzy)
+        {
+            Invoke("StopFrenzy", frenzyDuration);
+            anim.SetTrigger("BAttack");
+            damageMult += frenzyBonus;
+            incomingMult += frenzyBonus;
+            frenzy = true;
+        }
     }
     private void StopFrenzy()
     {
-        damageMult = 1;
-        incomingMult = 1;
+        damageMult -= frenzyBonus;
+        incomingMult -= frenzyBonus;
+        frenzy = false;
     }
 
     public override void AAction()
     {
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        anim.SetTrigger("AAction");
-        currentSpeed = speed;
-        speed /= speedMult;
-        charging = true;
+        if (!charging)
+        {
+            float hori = Input.GetAxis(horiPlayerInput);
+            float vert = Input.GetAxis(vertPlayerInput);
+            anim.SetTrigger("AAction");
+            currentSpeed = speed;
+            speed /= speedMult;
+            charging = true;
+        }
+
     }
     public void BeginCharge() { anim.SetBool("Charging", true); }
     public void EndCharge() { anim.SetBool("Charging", false); }
@@ -81,7 +93,7 @@ public class Valderheim : PlayerBase
 
     public override void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(15); }
+        if (Input.GetKeyDown(KeyCode.Space) && thisPlayer == "P2") { TakeDamage(15); }
         if (!prone)
         {
             if (!charging)
@@ -106,6 +118,10 @@ public class Valderheim : PlayerBase
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
             //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
 
+        }
+        if (charging)
+        {
+            transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
         }
         if (Input.GetButtonUp(thisPlayer + "AButton"))
         {
