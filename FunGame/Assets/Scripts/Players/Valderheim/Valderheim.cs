@@ -44,6 +44,7 @@ public class Valderheim : PlayerBase
             hammer.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
             anim.SetBool("Comboing", true);
             print("Combo Kick!");
+            anim.SetTrigger("YAttack");
         }
         else
         {
@@ -92,7 +93,7 @@ public class Valderheim : PlayerBase
 
     public override void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && thisPlayer == "P2") { TakeDamage(15); }
+        //if (Input.GetKeyDown(KeyCode.Space) && thisPlayer == "P2") { TakeDamage(15); }
         if (!prone)
         {
             if (!charging)
@@ -140,4 +141,4 @@ public class Valderheim : PlayerBase
     public override void KnockedDown(int power) { }
     public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = (healthMax - currentHealth) / 10; }
 
-}
+};
