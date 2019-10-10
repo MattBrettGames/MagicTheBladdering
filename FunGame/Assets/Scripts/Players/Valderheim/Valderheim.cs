@@ -42,7 +42,7 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            hammer.GainInfo(kickAttack, kickKnockback, visuals.transform.forward);
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack*damageMult), Mathf.RoundToInt(kickKnockback*damageMult), visuals.transform.forward);
             anim.SetBool("Comboing", true);
             print("Combo Kick!");
             anim.SetTrigger("YAttack");
@@ -50,7 +50,7 @@ public class Valderheim : PlayerBase
         else
         {
             anim.SetBool("Comboing", false);
-            hammer.GainInfo(slamAttack, slamKnockback, visuals.transform.forward);
+            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward);
             print("Hammer Slam!");
             anim.SetTrigger("YAttack");
         }
@@ -88,13 +88,11 @@ public class Valderheim : PlayerBase
             speed /= speedMult;
             charging = true;
         }
-
     }
     public void BeginCharge() { anim.SetBool("Charging", true); }
     
     public override void FixedUpdate()
     {
-
         if (!prone)
         {
             if (!charging)
@@ -142,4 +140,4 @@ public class Valderheim : PlayerBase
     public override void KnockedDown(int power) { }
     public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = (healthMax - currentHealth) / 10; }
 
-};
+}
