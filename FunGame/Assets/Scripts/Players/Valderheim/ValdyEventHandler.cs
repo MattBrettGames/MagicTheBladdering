@@ -8,11 +8,11 @@ public class ValdyEventHandler : BlankMono
     public Weapons hammer;
     public Weapons chestBox;
 
-    public void ChestBoxOn() { chestBox.GetComponent<BoxCollider>().enabled = true; }
-    public void ChestBoxOff() { chestBox.GetComponent<BoxCollider>().enabled = true; }
+    public void ChestBoxOn() { chestBox.gameObject.GetComponent<BoxCollider>().enabled = true; }
+    public void ChestBoxOff() { chestBox.gameObject.GetComponent<BoxCollider>().enabled = true; }
 
-    public void HammerBoxOn() { hammer.GetComponent<BoxCollider>().enabled = true; }
-    public void HammerBoxOff() { hammer.GetComponent<BoxCollider>().enabled = false; }
+    public void HammerBoxOn() { hammer.gameObject.GetComponent<BoxCollider>().enabled = true; }
+    public void HammerBoxOff() { hammer.gameObject.GetComponent<BoxCollider>().enabled = false; }
 
     public void OpenKickCombo() { valdy.OpenComboKick(); }
     public void CloseKickCombo() { valdy.CloseComboKick(); }

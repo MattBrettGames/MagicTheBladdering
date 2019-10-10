@@ -113,7 +113,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
     public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
 
-    public virtual void LoseCurse() { cursed = false; speed = baseSpeed; }
+    public virtual void LoseCurse() { cursed = false; speed = baseSpeed; curseTimer = 0; }
 
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }

@@ -26,13 +26,14 @@ public class Valderheim : PlayerBase
 
     [Header("Charge!")]
     public float speedMult;
+    public int bodySlamDam;
+    public int bodySlamKO;
     private float currentSpeed;
     private bool charging;
 
 
     public override void XAction()
     {
-        print("This woud deal " + Mathf.RoundToInt(xAttack * damageMult) + " damage");
         hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward);
         anim.SetTrigger("XAttack");
     }
@@ -77,8 +78,9 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
-        if (!charging)
+        if (!charging && (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0))
         {
+            anim.ResetTrigger("EndCharge");
             float hori = Input.GetAxis(horiPlayerInput);
             float vert = Input.GetAxis(vertPlayerInput);
             anim.SetTrigger("AAction");
@@ -89,11 +91,10 @@ public class Valderheim : PlayerBase
 
     }
     public void BeginCharge() { anim.SetBool("Charging", true); }
-
-
+    
     public override void FixedUpdate()
     {
-        //if (Input.GetKeyDown(KeyCode.Space) && thisPlayer == "P2") { TakeDamage(15); }
+
         if (!prone)
         {
             if (!charging)
@@ -125,6 +126,7 @@ public class Valderheim : PlayerBase
         }
         if (Input.GetButtonUp(thisPlayer + "AButton"))
         {
+            hammer.GainInfo(bodySlamDam, bodySlamKO, visuals.transform.forward);
             speed = currentSpeed;
             charging = false;
             anim.SetBool("Charging", false);
@@ -136,7 +138,6 @@ public class Valderheim : PlayerBase
         else { curseTimer -= Time.deltaTime; }
     }
     
-
     //Passive Effects - Surefooted & Building Rage
     public override void KnockedDown(int power) { }
     public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = (healthMax - currentHealth) / 10; }
