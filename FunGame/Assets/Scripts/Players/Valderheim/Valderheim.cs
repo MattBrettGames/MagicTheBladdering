@@ -31,6 +31,9 @@ public class Valderheim : PlayerBase
     private float currentSpeed;
     private bool charging;
 
+    [Header("Passives")]
+    public int growingRageBoost;
+
 
     public override void XAction()
     {
@@ -91,7 +94,7 @@ public class Valderheim : PlayerBase
     }
     public void BeginCharge() { anim.SetBool("Charging", true); }
     
-    public override void FixedUpdate()
+    public override void Update()
     {
         if (!prone)
         {
@@ -122,7 +125,7 @@ public class Valderheim : PlayerBase
         {
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
         }
-        if (Input.GetButtonUp(thisPlayer + "AButton"))
+        if (Input.GetButtonUp(aPlayerInput))
         {
             hammer.GainInfo(bodySlamDam, bodySlamKO, visuals.transform.forward);
             speed = currentSpeed;
@@ -137,7 +140,7 @@ public class Valderheim : PlayerBase
     }
     
     //Passive Effects - Surefooted & Building Rage
-    public override void KnockedDown(int power) { }
-    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = (healthMax - currentHealth) / 10; }
+    //public override void KnockedDown(int power) { }
+    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageBoost)+1; }
 
 }

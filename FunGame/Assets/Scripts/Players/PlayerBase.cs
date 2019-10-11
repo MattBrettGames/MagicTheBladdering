@@ -60,7 +60,7 @@ public abstract class PlayerBase : BlankMono
         InvokeRepeating("PoisonTick", 0, 0.5f);
     }
 
-    public virtual void FixedUpdate()
+    public virtual void Update()
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
@@ -104,8 +104,8 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
-    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); print(power / 10f); knockbackForce = true; }
+    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); knockbackForce = true; }
     private void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
     #endregion
 
