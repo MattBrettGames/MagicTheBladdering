@@ -106,7 +106,7 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
     public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); knockbackForce = true; }
-    private void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
+    protected void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
     #endregion
 
     #region Utility Functions

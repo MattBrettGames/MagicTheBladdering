@@ -26,10 +26,7 @@ public class Valderheim : PlayerBase
 
     [Header("Charge!")]
     public float speedMult;
-    public int bodySlamDam;
-    public int bodySlamKO;
-    private float currentSpeed;
-    private bool charging;
+
 
     [Header("Passives")]
     public int growingRageBoost;
@@ -45,7 +42,7 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack*damageMult), Mathf.RoundToInt(kickKnockback*damageMult), visuals.transform.forward);
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward);
             anim.SetBool("Comboing", true);
             print("Combo Kick!");
             anim.SetTrigger("YAttack");
@@ -81,66 +78,48 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
-        if (!charging && (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0))
-        {
-            anim.ResetTrigger("EndCharge");
-            float hori = Input.GetAxis(horiPlayerInput);
-            float vert = Input.GetAxis(vertPlayerInput);
-            anim.SetTrigger("AAction");
-            currentSpeed = speed;
-            speed /= speedMult;
-            charging = true;
-        }
+        anim.SetTrigger("AAction");
+        float hori = Input.GetAxis(horiPlayerInput);
+        float vert = Input.GetAxis(vertPlayerInput);
+        rb2d.AddForce(new Vector3(hori, 0, vert), ForceMode.Impulse);
+        Invoke("StopKnockback", 0.4f);
     }
     public void BeginCharge() { anim.SetBool("Charging", true); }
-    
+
     public override void Update()
     {
         if (!prone)
         {
-            if (!charging)
-            {
-                float hori = Input.GetAxis(horiPlayerInput);
-                float vert = Input.GetAxis(vertPlayerInput);
 
-                //Rotating the Character Model
-                aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
-                visuals.transform.LookAt(aimTarget);
+            float hori = Input.GetAxis(horiPlayerInput);
+            float vert = Input.GetAxis(vertPlayerInput);
 
-                //Standard Inputs
-                if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
-                if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
-                if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
-                if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+            //Rotating the Character Model
+            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
+            visuals.transform.LookAt(aimTarget);
 
-                if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
-                else { anim.SetFloat("Movement", 0); }
-            }
+            //Standard Inputs
+            if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
+            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
+            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
+            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+
+            if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+            else { anim.SetFloat("Movement", 0); }
+
 
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
             //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
 
-        }
-        if (charging)
-        {
-            transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
-        }
-        if (Input.GetButtonUp(aPlayerInput))
-        {
-            hammer.GainInfo(bodySlamDam, bodySlamKO, visuals.transform.forward);
-            speed = currentSpeed;
-            charging = false;
-            anim.SetBool("Charging", false);
-            anim.SetTrigger("EndCharge");
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
     }
-    
+
     //Passive Effects - Surefooted & Building Rage
     //public override void KnockedDown(int power) { }
-    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageBoost)+1; }
+    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageBoost) + 1; }
 
 }
