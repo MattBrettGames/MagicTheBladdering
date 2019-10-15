@@ -26,8 +26,7 @@ public class Valderheim : PlayerBase
 
     [Header("Charge!")]
     public float speedMult;
-
-
+    
     [Header("Passives")]
     public int growingRageBoost;
 
@@ -88,9 +87,8 @@ public class Valderheim : PlayerBase
 
     public override void Update()
     {
-        if (!prone)
+        if (!prone && !knockbackForce && !acting)
         {
-
             float hori = Input.GetAxis(horiPlayerInput);
             float vert = Input.GetAxis(vertPlayerInput);
 
@@ -109,8 +107,6 @@ public class Valderheim : PlayerBase
 
 
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
-            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
