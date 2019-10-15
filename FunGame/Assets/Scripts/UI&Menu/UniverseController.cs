@@ -39,8 +39,8 @@ public class UniverseController : BlankMono
         {
             //if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); numOfPlayers = 3; }
             //if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); numOfPlayers = 4; }
-            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
-            if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
+            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; print("Someone pressed X"); }
+            if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); print("Someone pressed Y"); }
         }
         else if (SceneManager.GetActiveScene().name == "Bio")
         {
@@ -60,6 +60,7 @@ public class UniverseController : BlankMono
     {
         if (level == 2)
         {
+            print("Loaded 2CharacterSelector");
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -87,25 +88,22 @@ public class UniverseController : BlankMono
         }
         else if (level >= 7)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats();
-            }
-
-            Vector3 targetScale = new Vector3(0.3f, 0.3f, 0.3f);
+            Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
+            Vector3 targetPos = new Vector3(0, 5, 0);
 
             #region Player 1
             GameObject p1 = selectedChars[0];
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             //p1.GetComponent<Rigidbody>().isKinematic = false;
-            p1.transform.parent = null;
+            p1.transform.parent = GameObject.Find("GameObject").transform;
 
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
-            parent1.transform.position = allSpawnPositions[level - 7].spawnPos[0];
-            p1.transform.localPosition = Vector3.zero;
+            parent1.transform.localPosition = targetPos;
+            p1.transform.position = allSpawnPositions[level - 7].spawnPos[0];
+            //p1.transform.localPosition = Vector3.zero;
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
             #endregion
@@ -115,12 +113,14 @@ public class UniverseController : BlankMono
             p2.GetComponent<PlayerBase>().enabled = true;
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
             //p2.GetComponent<Rigidbody>().isKinematic = false;
-            p2.transform.parent = null;
+            p2.transform.parent = GameObject.Find("GameObject").transform;
+            //p2.transform.parent = null;
 
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
-            parent2.transform.position = allSpawnPositions[level - 7].spawnPos[1];
-            p2.transform.localPosition = Vector3.zero;
+            parent2.transform.localPosition = targetPos;
+            p2.transform.position = allSpawnPositions[level - 7].spawnPos[1];
+            //p2.transform.localPosition = Vector3.zero;
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
             #endregion
@@ -161,6 +161,11 @@ public class UniverseController : BlankMono
 
             }
             #endregion
+
+            for (int i = 0; i < 2; i++)
+            {
+                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats();
+            }
         }
     }
 

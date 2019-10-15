@@ -25,10 +25,10 @@ public class Valderheim : PlayerBase
     private bool frenzy;
 
     [Header("Charge!")]
-    public float speedMult;
-    
+    public int dodgeForce;
+
     [Header("Passives")]
-    public int growingRageBoost;
+    public int growingRageDiv;
 
 
     public override void XAction()
@@ -43,14 +43,12 @@ public class Valderheim : PlayerBase
         {
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward);
             anim.SetBool("Comboing", true);
-            print("Combo Kick!");
             anim.SetTrigger("YAttack");
         }
         else
         {
             anim.SetBool("Comboing", false);
             hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward);
-            print("Hammer Slam!");
             anim.SetTrigger("YAttack");
         }
     }
@@ -78,12 +76,12 @@ public class Valderheim : PlayerBase
     public override void AAction()
     {
         anim.SetTrigger("AAction");
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        rb2d.AddForce(new Vector3(hori, 0, vert), ForceMode.Impulse);
+        //   float hori = Input.GetAxis(horiPlayerInput);
+        // float vert = Input.GetAxis(vertPlayerInput);
+        //rb2d.AddForce(new Vector3(hori, 0, vert), ForceMode.Impulse);
+        Knockback(dodgeForce, visuals.transform.forward);
         Invoke("StopKnockback", 0.4f);
     }
-    public void BeginCharge() { anim.SetBool("Charging", true); }
 
     public override void Update()
     {
@@ -105,8 +103,11 @@ public class Valderheim : PlayerBase
             if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
             else { anim.SetFloat("Movement", 0); }
 
-
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
+        }
+        if (Input.GetButtonUp(aPlayerInput))
+        {
+
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
@@ -116,6 +117,6 @@ public class Valderheim : PlayerBase
 
     //Passive Effects - Surefooted & Building Rage
     //public override void KnockedDown(int power) { }
-    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageBoost) + 1; }
+    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageDiv) + 1; }
 
 }

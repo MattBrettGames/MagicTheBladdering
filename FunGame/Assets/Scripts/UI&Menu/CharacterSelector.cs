@@ -116,6 +116,7 @@ public class CharacterSelector : BlankMono
 
             if (Input.GetButtonDown(thisPlayer + "XButton"))
             {
+                print(thisPlayer + " did a press");
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                 universe.CheckReady(thisPInt, displayChar);
                 locked = true;
