@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Rewired;
 public abstract class PlayerBase : BlankMono
 {
 
@@ -36,6 +36,7 @@ public abstract class PlayerBase : BlankMono
     public GameObject visuals;
     protected Animator anim;
     protected Rigidbody rb2d;
+    protected PlayerController playerCont;
 
     protected string horiPlayerInput;
     protected string vertPlayerInput;
@@ -63,33 +64,26 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Update()
     {
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
         if (!prone && !knockbackForce && !acting)
         {
             //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
+            aimTarget.position = transform.position + new Vector3(playerCont.GetAxis(0), 0, playerCont.GetAxis(0)).normalized * 3;
             visuals.transform.LookAt(aimTarget);
 
             transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
 
-            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+            if (playerCont.GetAxis(0) != 0 || playerCont.GetAxis(1) != 0) { anim.SetFloat("Movement", 1); }
 
             //Standard Inputs
-            if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
-            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
-            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
-            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+            if (playerCont.GetButtonDown(4)) { AAction(); }
+            if (playerCont.GetButtonDown(5)) { BAction(); }
+            if (playerCont.GetButtonDown(6)) { XAction(); }
+            if (playerCont.GetButtonDown(7)) { YAction(); }
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
-
-        //Testing Inputs
-        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
-        //print(Input.GetAxis(horiPlayerInput)+" - Horizontal");
-        //print(Input.GetAxis(vertPlayerInput)+" - Vertical");
     }
 
     #region Input Actions

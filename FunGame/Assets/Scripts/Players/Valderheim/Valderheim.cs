@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Rewired;
 public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
@@ -83,7 +83,7 @@ public class Valderheim : PlayerBase
         Invoke("StopKnockback", 0.4f);
     }
 
-    public override void Update()
+    /*public override void Update()
     {
         if (!prone && !knockbackForce && !acting)
         {
@@ -95,7 +95,7 @@ public class Valderheim : PlayerBase
             visuals.transform.LookAt(aimTarget);
 
             //Standard Inputs
-            if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
+            if (Player.GetButtonDown("AAction")) { AAction(); }
             if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
             if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
             if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
@@ -113,7 +113,7 @@ public class Valderheim : PlayerBase
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
-    }
+    }*/
 
     //Passive Effects - Surefooted & Building Rage
     //public override void KnockedDown(int power) { }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-
+using Rewired;
 public class UniverseController : BlankMono
 {
     [Header("GameObjects")]
