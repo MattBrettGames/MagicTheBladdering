@@ -9612,7 +9612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: P1
-  numOfDeaths: 0
+  numOfDeaths: 3
   speed: 0.2
   currentHealth: 140
   healthMax: 140
@@ -9633,9 +9633,8 @@ MonoBehaviour:
   kickKnockback: 4
   frenzyDuration: 5
   frenzyBonus: 0
-  speedMult: 2
-  bodySlamDam: 0
-  bodySlamKO: 0
+  dodgeForce: 3
+  growingRageDiv: 0
 --- !u!136 &1414950365180919014
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9959,11 +9958,10 @@ MonoBehaviour:
   slamKnockback: 1
   kickAttack: 6
   kickKnockback: 4
-  frenzyDuration: 5
-  frenzyBonus: 0
-  speedMult: 2
-  bodySlamDam: 0
-  bodySlamKO: 0
+  frenzyDuration: 6
+  frenzyBonus: 1
+  dodgeForce: 3
+  growingRageDiv: 0
 --- !u!54 &5294485740794724442
 Rigidbody:
   m_ObjectHideFlags: 0

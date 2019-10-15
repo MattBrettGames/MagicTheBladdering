@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-
+using Rewired;
 public class CharacterSelector : BlankMono
 {
     public string thisPlayer;
@@ -116,6 +116,7 @@ public class CharacterSelector : BlankMono
 
             if (Input.GetButtonDown(thisPlayer + "XButton"))
             {
+                print(thisPlayer + "XButton");
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                 universe.CheckReady(thisPInt, displayChar);
                 locked = true;
