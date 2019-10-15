@@ -29,6 +29,7 @@ public abstract class PlayerBase : BlankMono
     protected bool iFrames;
     protected bool counterFrames;
     protected bool knockbackForce;
+    protected bool acting;
 
     [Header("Components")]
     public Transform aimTarget;
@@ -64,14 +65,14 @@ public abstract class PlayerBase : BlankMono
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
-        if (!prone && !knockbackForce)
+        if (!prone && !knockbackForce && !acting)
         {
             //Rotating the Character Model
             aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
             visuals.transform.LookAt(aimTarget);
 
             transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
-            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
+
             if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
 
             //Standard Inputs
@@ -111,15 +112,19 @@ public abstract class PlayerBase : BlankMono
 
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
-    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
 
+    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
     public virtual void LoseCurse() { cursed = false; speed = baseSpeed; curseTimer = 0; }
 
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
 
     public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
-
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
+
+
+    public void BeginActing() { acting = true; }
+    public void EndActing() { acting = false; }
+
     #endregion
 }
