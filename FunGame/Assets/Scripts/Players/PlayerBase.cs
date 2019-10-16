@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Rewired;
 public abstract class PlayerBase : BlankMono
 {
 
@@ -29,12 +29,14 @@ public abstract class PlayerBase : BlankMono
     protected bool iFrames;
     protected bool counterFrames;
     protected bool knockbackForce;
+    protected bool acting;
 
     [Header("Components")]
     public Transform aimTarget;
     public GameObject visuals;
     protected Animator anim;
     protected Rigidbody rb2d;
+    protected PlayerController playerCont;
 
     protected string horiPlayerInput;
     protected string vertPlayerInput;
@@ -60,35 +62,28 @@ public abstract class PlayerBase : BlankMono
         InvokeRepeating("PoisonTick", 0, 0.5f);
     }
 
-    public virtual void FixedUpdate()
+    public virtual void Update()
     {
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        if (!prone && !knockbackForce)
+        if (!prone && !knockbackForce && !acting)
         {
             //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
+            aimTarget.position = transform.position + new Vector3(playerCont.GetAxis(0), 0, playerCont.GetAxis(0)).normalized * 3;
             visuals.transform.LookAt(aimTarget);
 
             transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
-            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
+
+            if (playerCont.GetAxis(0) != 0 || playerCont.GetAxis(1) != 0) { anim.SetFloat("Movement", 1); }
 
             //Standard Inputs
-            if (Input.GetButtonDown(aPlayerInput)) { AAction(); }
-            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
-            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
-            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
+            if (playerCont.GetButtonDown(4)) { AAction(); }
+            if (playerCont.GetButtonDown(5)) { BAction(); }
+            if (playerCont.GetButtonDown(6)) { XAction(); }
+            if (playerCont.GetButtonDown(7)) { YAction(); }
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
-
-        //Testing Inputs
-        //if (Input.GetKeyDown(KeyCode.Space)) { TakeDamage(70); }
-        //print(Input.GetAxis(horiPlayerInput)+" - Horizontal");
-        //print(Input.GetAxis(vertPlayerInput)+" - Vertical");
     }
 
     #region Input Actions
@@ -104,22 +99,29 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
-    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); print(power / 10f); knockbackForce = true; }
-    private void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
+    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); knockbackForce = true; }
+    protected void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
     #endregion
 
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
-    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
 
+    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
     public virtual void LoseCurse() { cursed = false; speed = baseSpeed; curseTimer = 0; }
 
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
+    public void GainIFrames() { iFrames = true; }
+    public void LoseIFrames() { iFrames = false; }
 
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
+
+
+    public void BeginActing() { acting = true; }
+    public void EndActing() { acting = false; }
+
     #endregion
 }

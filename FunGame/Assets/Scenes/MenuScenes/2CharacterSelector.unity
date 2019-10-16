@@ -510,10 +510,6 @@ MonoBehaviour:
       Skin: {fileID: 1276763456}
     - name: Beach Day
       Skin: {fileID: 5294485740794724421}
-  - name: Songbird
-    skins:
-    - name: Base
-      Skin: {fileID: 0}
   locked: 0
   universe: {fileID: 0}
   characterText: {fileID: 58631567}
@@ -9616,7 +9612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: P1
-  numOfDeaths: 0
+  numOfDeaths: 3
   speed: 0.2
   currentHealth: 140
   healthMax: 140
@@ -9636,8 +9632,9 @@ MonoBehaviour:
   kickAttack: 6
   kickKnockback: 4
   frenzyDuration: 5
-  frenzyMult: 2
-  speedMult: 2
+  frenzyBonus: 0
+  dodgeForce: 3
+  growingRageDiv: 0
 --- !u!136 &1414950365180919014
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9961,9 +9958,10 @@ MonoBehaviour:
   slamKnockback: 1
   kickAttack: 6
   kickKnockback: 4
-  frenzyDuration: 5
-  frenzyMult: 2
-  speedMult: 2
+  frenzyDuration: 6
+  frenzyBonus: 1
+  dodgeForce: 3
+  growingRageDiv: 0
 --- !u!54 &5294485740794724442
 Rigidbody:
   m_ObjectHideFlags: 0

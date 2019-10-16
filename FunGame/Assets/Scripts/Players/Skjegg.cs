@@ -67,7 +67,7 @@ public class Skjegg : PlayerBase
         }
     }
 
-    public override void FixedUpdate()
+    public override void Update()
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
