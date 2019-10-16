@@ -83,38 +83,6 @@ public class Valderheim : PlayerBase
         Invoke("StopKnockback", 0.4f);
     }
 
-    /*public override void Update()
-    {
-        if (!prone && !knockbackForce && !acting)
-        {
-            float hori = Input.GetAxis(horiPlayerInput);
-            float vert = Input.GetAxis(vertPlayerInput);
-
-            //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized;
-            visuals.transform.LookAt(aimTarget);
-
-            //Standard Inputs
-            if (Player.GetButtonDown("AAction")) { AAction(); }
-            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
-            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
-            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
-
-            if (Input.GetAxis(horiPlayerInput) != 0 || Input.GetAxis(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
-            else { anim.SetFloat("Movement", 0); }
-
-            transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
-        }
-        if (Input.GetButtonUp(aPlayerInput))
-        {
-
-        }
-
-        if (poison > 0) { poison -= Time.deltaTime; }
-        if (curseTimer <= 0) { LoseCurse(); }
-        else { curseTimer -= Time.deltaTime; }
-    }*/
-
     //Passive Effects - Surefooted & Building Rage
     //public override void KnockedDown(int power) { }
     public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageDiv) + 1; }
