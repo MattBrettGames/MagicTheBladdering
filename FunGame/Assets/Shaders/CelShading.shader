@@ -9,7 +9,7 @@ Shader "ToonShader" {
 	 _UnlitColor("Unlit Color", Color) = (0.5,0.5,0.5,1)
 	 _DiffuseThreshold("Lighting Threshold", Range(-1.1,1)) = -0.01
 	 _SpecColor("Specular Material Color", Color) = (1,1,1,1)
-	 _Shininess("Shininess", Range(0.5,1)) = 1
+	 _Shininess("Shininess", Range(0,1000)) = 1
 	 _OutlineThickness("Outline Thickness", Range(0,1)) = 0.3
 	 _MainTex("Main Texture", 2D) = "" {}
 	_Mult("Texture Multiplier", Range(-1,2)) = 0.6
@@ -48,13 +48,12 @@ Shader "ToonShader" {
 		uniform sampler2D _BumpMap;
 		uniform float4 _MainTex_ST;
 
-		struct vertexInput {
-
-			//TOON SHADING VAR
-			float4 vertex : POSITION;
-			float3 normal : NORMAL;
-			float4 texcoord : TEXCOORD0;
-			
+			struct vertexInput 
+			{
+				//TOON SHADING VAR
+				float4 vertex : POSITION;
+				float3 normal : NORMAL;
+				float4 texcoord : TEXCOORD0;			
 			};
 
 			struct vertexOutput {
