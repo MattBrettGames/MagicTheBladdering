@@ -7,11 +7,14 @@ Shader "ToonShader" {
 
 	 _Color("Diffuse Material Color", Color) = (1,1,1,1)
 	 _UnlitColor("Unlit Color", Color) = (0.5,0.5,0.5,1)
-	 _DiffuseThreshold("Lighting Threshold", Range(-1.1,1)) = 0.1
+	 _DiffuseThreshold("Lighting Threshold", Range(-1.1,1)) = -0.01
 	 _SpecColor("Specular Material Color", Color) = (1,1,1,1)
 	 _Shininess("Shininess", Range(0.5,1)) = 1
-	 _OutlineThickness("Outline Thickness", Range(0,1)) = 0.1
+	 _OutlineThickness("Outline Thickness", Range(0,1)) = 0.3
 	 _MainTex("Main Texture", 2D) = "" {}
+	_Mult("Texture Multiplier", Range(-1,2)) = 0.6
+		_BumpMap("Normal Map", 2D) = ""{}
+
 
 	}
 
@@ -37,11 +40,12 @@ Shader "ToonShader" {
 		uniform float4 _SpecColor;
 		uniform float _Shininess;
 		uniform float _OutlineThickness;
-
+		uniform float _Mult;		
 
 		//== UNITY defined ==//
 		uniform float4 _LightColor0;
 		uniform sampler2D _MainTex;
+		uniform sampler2D _BumpMap;
 		uniform float4 _MainTex_ST;
 
 		struct vertexInput {
@@ -50,7 +54,7 @@ Shader "ToonShader" {
 			float4 vertex : POSITION;
 			float3 normal : NORMAL;
 			float4 texcoord : TEXCOORD0;
-
+			
 			};
 
 			struct vertexOutput {
@@ -113,7 +117,7 @@ Shader "ToonShader" {
 
 			float3 combinedLight = (ambientLight + diffuseReflection) * outlineStrength + specularReflection;
 
-			return float4(combinedLight, 1.0); // + tex2D(_MainTex, input.uv); // DELETE LINE COMMENTS & ';' TO ENABLE TEXTURE
+			return float4(combinedLight, 1.0) * tex2D(_MainTex, input.uv) + -tex2D(_BumpMap,input.uv) + _Mult; // DELETE LINE COMMENTS & ';' TO ENABLE TEXTURE
 
 
 				}
