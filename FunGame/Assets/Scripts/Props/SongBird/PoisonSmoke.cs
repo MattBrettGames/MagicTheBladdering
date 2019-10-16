@@ -5,8 +5,8 @@ using UnityEngine;
 public class PoisonSmoke : BlankMono
 {
     [Header("Editables")]
-    public float poisonPerTick;
-    private List<GameObject> afflicted = new List<GameObject>();
+    public float secsBetweenTicks;
+    private List<PlayerBase> afflicted = new List<PlayerBase>();
 
     private void Start()
     {
@@ -15,20 +15,21 @@ public class PoisonSmoke : BlankMono
 
     private void OnTriggerEnter(Collider other)
     {
-        afflicted.Add(other.gameObject);
+        afflicted.Add(other.gameObject.GetComponent<PlayerBase>()) ;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        afflicted.Remove(other.gameObject);
+        afflicted.Remove(other.gameObject.GetComponent<PlayerBase>());
     }
 
     private IEnumerator TIMETICK()
     {
-        yield return new WaitForSeconds(poisonPerTick);
+        yield return new WaitForSeconds(secsBetweenTicks);
         for (int i = 0; i < afflicted.Count; i++)
         {
-            afflicted[i].GetComponent<PlayerBase>().poison++;
+            afflicted[i].poison++;
         }
+        TIMETICK();
     }
 }

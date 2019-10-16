@@ -53,7 +53,7 @@ public class SongBird : PlayerBase
         }
         if (currentVial == 1)
         {
-            smokeCloud = pooler.adrenalineSmoke[1];
+            smokeCloud = pooler.adrenalineSmoke[1];            
         }
         if (currentVial == 2)
         {
