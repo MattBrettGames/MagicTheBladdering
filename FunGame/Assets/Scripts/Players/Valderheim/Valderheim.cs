@@ -76,9 +76,6 @@ public class Valderheim : PlayerBase
     public override void AAction()
     {
         anim.SetTrigger("AAction");
-        //   float hori = Input.GetAxis(horiPlayerInput);
-        // float vert = Input.GetAxis(vertPlayerInput);
-        //rb2d.AddForce(new Vector3(hori, 0, vert), ForceMode.Impulse);
         Knockback(dodgeForce, visuals.transform.forward);
         Invoke("StopKnockback", 0.4f);
     }

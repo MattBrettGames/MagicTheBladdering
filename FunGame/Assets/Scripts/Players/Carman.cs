@@ -21,7 +21,7 @@ public class Carman : PlayerBase
     private ObjectPooler pooler;
 
     [Header("Dodge Roll")]
-    public float dodgeImpulse;
+    public int dodgeForce;
 
     [Header("DemonSlayer")]
     public int slayerDamage;
@@ -84,13 +84,10 @@ public class Carman : PlayerBase
 
     public override void AAction()
     {
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        //anim.SetTrigger("AAction");
-        rb2d.AddForce(new Vector3(hori, 0, vert) * dodgeImpulse, ForceMode.Impulse);
+        anim.SetTrigger("AAction");
+        Knockback(dodgeForce, visuals.transform.forward);
+        Invoke("StopKnockback", 0.4f);
     }
-    public void GAINIFRAMES() { iFrames = true; }
-    public void LOSEIFRAMES() { iFrames = false; }
     
     private void ShadowStep()
     {

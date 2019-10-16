@@ -38,25 +38,12 @@ public abstract class PlayerBase : BlankMono
     protected Rigidbody rb2d;
     protected PlayerController playerCont;
 
-    protected string horiPlayerInput;
-    protected string vertPlayerInput;
-    protected string aPlayerInput;
-    protected string bPlayerInput;
-    protected string xPlayerInput;
-    protected string yPlayerInput;
-
     public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
 
         //More Efficient version of the multi-player input system
-        horiPlayerInput = thisPlayer + "Horizontal";
-        vertPlayerInput = thisPlayer + "Vertical";
-        aPlayerInput = thisPlayer + "AButton";
-        bPlayerInput = thisPlayer + "BButton";
-        xPlayerInput = thisPlayer + "XButton";
-        yPlayerInput = thisPlayer + "YButton";
         baseSpeed = speed;
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
@@ -118,8 +105,7 @@ public abstract class PlayerBase : BlankMono
 
     public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
-
-
+    
     public void BeginActing() { acting = true; }
     public void EndActing() { acting = false; }
 

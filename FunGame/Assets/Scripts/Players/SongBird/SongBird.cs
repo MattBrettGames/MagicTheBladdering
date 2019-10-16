@@ -19,6 +19,9 @@ public class SongBird : PlayerBase
     private int currentVial;
     private string[] types = new string[] { "Poison", "Adrenaline", "Boom" };
 
+    [Header("Dodge Stats")]
+    public int dodgeForce;
+
     public override void Start()
     {
         base.Start();
@@ -61,6 +64,10 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.SetActive(true);
         for (int i = 0; i < 5; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
+
+        anim.SetTrigger("AAction");
+        Knockback(dodgeForce, visuals.transform.forward);
+        Invoke("StopKnockback", 0.4f);
     }
 
     public void ThrowVial()
@@ -76,7 +83,7 @@ public class SongBird : PlayerBase
 
     private IEnumerator WaitForSmoke(GameObject smoke, int time)
     {
-        yield return new WaitForSeconds(0.1f+(time/10));
+        yield return new WaitForSeconds(0.1f + (time / 10));
         ScaleUp(smoke);
     }
 
