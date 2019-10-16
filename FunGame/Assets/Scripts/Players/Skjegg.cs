@@ -15,7 +15,7 @@ public class Skjegg : PlayerBase
     public SpiritDagger dagger;
 
     [Header("Side Burners")]
-    public int burnerSpeed;
+    public int burnerForce;
     public int boosterSpeed;
     private bool burning;
 
@@ -25,11 +25,9 @@ public class Skjegg : PlayerBase
 
     public override void AAction()
     {
-        burning = true;
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        anim.SetTrigger("AAcction");
-        rb2d.AddForce(new Vector3(hori, 0, vert) * burnerSpeed, ForceMode.Impulse);
+        anim.SetTrigger("AAction");
+        Knockback(burnerForce, visuals.transform.forward);
+        Invoke("StopKnockback", 0.4f);
     }
 
     public override void BAction()
@@ -59,15 +57,14 @@ public class Skjegg : PlayerBase
 
     public void FurtherBurn()
     {
-        if (burning)
-        {
-            float hori = Input.GetAxis(horiPlayerInput);
-            float vert = Input.GetAxis(vertPlayerInput);
-            rb2d.AddForce(new Vector3(hori, 0, vert) * burnerSpeed * 1.5f, ForceMode.Impulse);
-        }
+        anim.SetTrigger("AAction");
+        Knockback(boosterSpeed, visuals.transform.forward);
+        Invoke("StopKnockback", 0.4f);
     }
 
-    public override void Update()
+
+
+    /*public override void Update()
     {
         float hori = Input.GetAxis(horiPlayerInput);
         float vert = Input.GetAxis(vertPlayerInput);
@@ -97,8 +94,6 @@ public class Skjegg : PlayerBase
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
 
-    }
-
-    private void EndBurn() { rb2d.velocity = Vector3.zero; }
+    }*/
 
 }
