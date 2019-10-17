@@ -4,9 +4,9 @@ using UnityEngine;
 using Rewired;
 public abstract class PlayerBase : BlankMono
 {
-
     [Header("GameMode Stuff")]
     public string thisPlayer;
+    public int playerID;
     public int numOfDeaths = 0;
 
     [Header("Movement Stats")]
@@ -37,16 +37,17 @@ public abstract class PlayerBase : BlankMono
     protected Animator anim;
     protected Rigidbody rb2d;
     protected PlayerController playerCont;
+    protected Player player;
 
     public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
 
-        //More Efficient version of the multi-player input system
         baseSpeed = speed;
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
+        player = ReInput.players.GetPlayer(playerID);
     }
 
     public virtual void Update()
@@ -54,18 +55,19 @@ public abstract class PlayerBase : BlankMono
         if (!prone && !knockbackForce && !acting)
         {
             //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(playerCont.GetAxis(0), 0, playerCont.GetAxis(0)).normalized * 3;
+            aimTarget.position = transform.position + new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
             visuals.transform.LookAt(aimTarget);
 
-            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
+            transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
 
-            if (playerCont.GetAxis(0) != 0 || playerCont.GetAxis(1) != 0) { anim.SetFloat("Movement", 1); }
+            if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+            else { anim.SetFloat("Movement", 0); }
 
             //Standard Inputs
-            if (playerCont.GetButtonDown(4)) { AAction(); }
-            if (playerCont.GetButtonDown(5)) { BAction(); }
-            if (playerCont.GetButtonDown(6)) { XAction(); }
-            if (playerCont.GetButtonDown(7)) { YAction(); }
+            if (player.GetButtonDown("AAction")) { AAction(); }
+            if (player.GetButtonDown("BAttack")) { BAction(); }
+            if (player.GetButtonDown("XAttack")) { XAction(); }
+            if (player.GetButtonDown("YAttack")) { YAction(); }
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
@@ -105,7 +107,7 @@ public abstract class PlayerBase : BlankMono
 
     public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
-    
+
     public void BeginActing() { acting = true; }
     public void EndActing() { acting = false; }
 

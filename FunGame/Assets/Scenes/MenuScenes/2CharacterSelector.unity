@@ -673,11 +673,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ValderheimPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5653642201935402703, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -733,9 +728,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
-        type: 3}
-      propertyPath: m_Enabled
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _playerId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[1]._elements.Array.data[0]._actionId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[2]._elements.Array.data[0]._actionId
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[3]._elements.Array.data[0]._actionId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[4]._elements.Array.data[0]._actionId
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[0]._elements.Array.data[0]._actionId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[0]._elements.Array.data[1]._actionId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[0]._elements.Array.data[0]._name
+      value: Hori
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[0]._elements.Array.data[0]._repeatRate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[0]._elements.Array.data[1]._name
+      value: Vert
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _elements.Array.data[0]._elements.Array.data[1]._repeatRate
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1086,7 +1120,7 @@ PrefabInstance:
     - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Name
-      value: ValderheimPrefab
+      value: ValderheimPrefab2
       objectReference: {fileID: 0}
     - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
@@ -1152,6 +1186,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: thisPlayer
+      value: P2
+      objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _playerId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
@@ -9612,6 +9660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: P1
+  playerID: 0
   numOfDeaths: 3
   speed: 0.2
   currentHealth: 140
@@ -9677,6 +9726,7 @@ GameObject:
   - component: {fileID: 1414950365180919013}
   - component: {fileID: 1414950365180919014}
   - component: {fileID: 1414950365180919015}
+  - component: {fileID: 1414950365180919033}
   m_Layer: 0
   m_Name: ValderheimUndies
   m_TagString: Player1
@@ -9684,6 +9734,98 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &1414950365180919033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414950365180919032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1244824217, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rewiredInputManager: {fileID: 0}
+  _playerId: 0
+  _elements:
+  - _name: Stick
+    _elementType: 100
+    _enabled: 1
+    _elements:
+    - _name: Stick Horizontal
+      _elementType: 1
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+    - _name: Stick Vertical
+      _elementType: 1
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 1
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 2
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 3
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 4
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  _onButtonStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Rewired.Components.PlayerController+ButtonStateChangedHandler, Rewired_Core,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onAxisValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Rewired.Components.PlayerController+AxisValueChangedHandler, Rewired_Core,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onEnabledStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Rewired.Components.PlayerController+EnabledStateChangedHandler, Rewired_Core,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &1933766998588726082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9919,6 +10061,7 @@ GameObject:
   - component: {fileID: 5294485740794724440}
   - component: {fileID: 5294485740794724443}
   - component: {fileID: 5294485740794724442}
+  - component: {fileID: 5294485740794724422}
   m_Layer: 0
   m_Name: ValderheimUndies2
   m_TagString: Player1
@@ -9926,6 +10069,98 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &5294485740794724422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5294485740794724421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1244824217, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rewiredInputManager: {fileID: 0}
+  _playerId: 1
+  _elements:
+  - _name: Stick
+    _elementType: 100
+    _enabled: 1
+    _elements:
+    - _name: Stick Horizontal
+      _elementType: 1
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+    - _name: Stick Vertical
+      _elementType: 1
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 1
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 2
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 3
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  - _name: 
+    _elementType: 0
+    _enabled: 1
+    _elements:
+    - _name: Button 4
+      _elementType: 0
+      _enabled: 1
+      _actionId: -1
+      _coordinateMode: 0
+      _absoluteToRelativeSensitivity: 1
+      _repeatRate: 4
+  _onButtonStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Rewired.Components.PlayerController+ButtonStateChangedHandler, Rewired_Core,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onAxisValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Rewired.Components.PlayerController+AxisValueChangedHandler, Rewired_Core,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onEnabledStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Rewired.Components.PlayerController+EnabledStateChangedHandler, Rewired_Core,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &5294485740794724440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9938,8 +10173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f832a189cdc4c3b4aaf6359d860657f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPlayer: P1
-  numOfDeaths: 0
+  thisPlayer: P2
+  playerID: 1
+  numOfDeaths: 3
   speed: 0.2
   currentHealth: 140
   healthMax: 140

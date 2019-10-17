@@ -12,13 +12,13 @@ Shader "ToonShader" {
 	 _Shininess("Shininess", Range(0,1000)) = 1
 	 _OutlineThickness("Outline Thickness", Range(0,1)) = 0.3
 	 _MainTex("Main Texture", 2D) = "" {}
-	_Mult("Texture Multiplier", Range(-1,2)) = 0.6
+	_Mult("Texture Power", Range(-1,2)) = 0.6
 		_BumpMap("Normal Map", 2D) = ""{}
-
+	_OccMap("Occlusion Map", 2D) = ""{}
 
 	}
 
-		SubShader{
+	SubShader{
 		Pass {
 
 	   Tags{ "LightMode" = "ForwardBase" }
@@ -41,6 +41,7 @@ Shader "ToonShader" {
 		uniform float _Shininess;
 		uniform float _OutlineThickness;
 		uniform float _Mult;		
+		uniform float _OccMap;
 
 		//== UNITY defined ==//
 		uniform float4 _LightColor0;
@@ -98,34 +99,28 @@ Shader "ToonShader" {
 			float4 frag(vertexOutput input) : COLOR
 			{
 
-		float nDotL = saturate(dot(input.normalDir, input.lightDir.xyz));
+				float nDotL = saturate(dot(input.normalDir, input.lightDir.xyz));
 
-			//Diffuse threshold calculation
-			float diffuseCutoff = saturate((max(_DiffuseThreshold, nDotL) - _DiffuseThreshold) * 1000);
+				//Diffuse threshold calculation
+				float diffuseCutoff = saturate((max(_DiffuseThreshold, nDotL) - _DiffuseThreshold) * 1000);
 
-			//Specular threshold calculation
-			float specularCutoff = saturate(max(_Shininess, dot(reflect(-input.lightDir.xyz, input.normalDir), input.viewDir)) - _Shininess) * 1000;
+				//Specular threshold calculation
+				float specularCutoff = saturate(max(_Shininess, dot(reflect(-input.lightDir.xyz, input.normalDir), input.viewDir)) - _Shininess) * 100;
 
-			//Calculate Outlines
-			float outlineStrength = saturate((dot(input.normalDir, input.viewDir) - _OutlineThickness) * 1000);
-
-
-			float3 ambientLight = (1 - diffuseCutoff) * _UnlitColor.xyz; //adds general ambient illumination
-			float3 diffuseReflection = (1 - specularCutoff) * _Color.xyz * diffuseCutoff;
-			float3 specularReflection = _SpecColor.xyz * specularCutoff;
-
-			float3 combinedLight = (ambientLight + diffuseReflection) * outlineStrength + specularReflection;
-
-			return float4(combinedLight, 1.0) * tex2D(_MainTex, input.uv) + -tex2D(_BumpMap,input.uv) + _Mult; // DELETE LINE COMMENTS & ';' TO ENABLE TEXTURE
+				//Calculate Outlines
+				float outlineStrength = saturate((dot(input.normalDir, input.viewDir) - _OutlineThickness) * 1000);
 
 
-				}
+				float3 ambientLight = (1 - diffuseCutoff) * _UnlitColor.xyz; //adds general ambient illumination
+				float3 diffuseReflection = (1 - specularCutoff) * _Color.xyz * diffuseCutoff;
+				float3 specularReflection = _SpecColor.xyz * specularCutoff;
 
+				float3 combinedLight = (ambientLight + diffuseReflection) * outlineStrength + specularReflection + (_OccMap *1000);
+
+				return float4(combinedLight,1) * tex2D(_MainTex, input.uv) - tex2D(_BumpMap, input.uv) +_Mult;
+			}
 				ENDCG
-
-			  }
-
-
+	    }		
 	}
 		Fallback "Diffuse"
 }

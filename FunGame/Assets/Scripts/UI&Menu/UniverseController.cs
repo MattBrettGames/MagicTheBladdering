@@ -11,6 +11,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector2;
     public CharacterSelector charSelector3;
     public CharacterSelector charSelector4;
+    public InputManager iManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -96,9 +97,12 @@ public class UniverseController : BlankMono
             GameObject p1 = selectedChars[0];
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
+            p1.tag = "Player1";
             //p1.GetComponent<Rigidbody>().isKinematic = false;
             p1.transform.parent = GameObject.Find("GameObject").transform;
-
+            //p1.GetComponent<PlayerController>().playerId = 0;
+           // p1.GetComponent<PlayerController>().
+            
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
@@ -112,9 +116,11 @@ public class UniverseController : BlankMono
             GameObject p2 = selectedChars[1];
             p2.GetComponent<PlayerBase>().enabled = true;
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
+            p2.tag = "Player2";
             //p2.GetComponent<Rigidbody>().isKinematic = false;
             p2.transform.parent = GameObject.Find("GameObject").transform;
             //p2.transform.parent = null;
+            //p2.GetComponent<PlayerController>().playerId = 1;
 
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
@@ -131,8 +137,10 @@ public class UniverseController : BlankMono
                 GameObject p3 = selectedChars[2];
                 p3.GetComponent<PlayerBase>().enabled = true;
                 p3.GetComponent<PlayerBase>().thisPlayer = "P3";
+                p3.tag = "Player3";
                 //p3.GetComponent<Rigidbody>().isKinematic = false;
                 p3.transform.parent = null;
+                p3.GetComponent<PlayerController>().playerId = 2;
 
                 GameObject parent3 = GameObject.Find("Player3Base");
                 parent3.transform.SetParent(p3.transform);
@@ -149,8 +157,10 @@ public class UniverseController : BlankMono
                 GameObject p4 = selectedChars[3];
                 p4.GetComponent<PlayerBase>().enabled = true;
                 p4.GetComponent<PlayerBase>().thisPlayer = "P4";
+                p4.tag = "Player4";
                 //p4.GetComponent<Rigidbody>().isKinematic = false;
                 p4.transform.parent = null;
+                p4.GetComponent<PlayerController>().playerId = 3;
 
                 GameObject parent4 = GameObject.Find("Player4Base");
                 parent4.transform.SetParent(p4.transform);

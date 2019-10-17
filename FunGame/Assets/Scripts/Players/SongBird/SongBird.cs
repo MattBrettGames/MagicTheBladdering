@@ -22,6 +22,10 @@ public class SongBird : PlayerBase
     [Header("Dodge Stats")]
     public int dodgeForce;
 
+    [Header("Vial Tossing Stats")]
+    public float throwHeight;
+    public float throwDistance;
+
     public override void Start()
     {
         base.Start();
@@ -76,7 +80,7 @@ public class SongBird : PlayerBase
         vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
         vial.GetComponent<SongbirdVial>().vialType = types[currentVial];
         vial.transform.position = transform.position;
-        vial.GetComponent<Rigidbody>().AddForce(visuals.transform.forward + new Vector3(0, 3, 0), ForceMode.Impulse);
+        vial.GetComponent<Rigidbody>().AddForce((visuals.transform.forward*throwDistance) + new Vector3(0, throwHeight, 0), ForceMode.Impulse);
         vial.SetActive(true);
         vial = null;
     }

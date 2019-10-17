@@ -32,13 +32,13 @@ public class SongbirdVial : Throwables
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.SetActive(true);
-            for (int i = 0; i < 10; i++) { StartCoroutine(WaitForSmoke(smokeCloud)); }
+            for (int i = 0; i < 10; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
         }
     }
 
-    private IEnumerator WaitForSmoke(GameObject smoke)
+    private IEnumerator WaitForSmoke(GameObject smoke, int time)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(time/10);
         ScaleUp(smoke);
     }
 
