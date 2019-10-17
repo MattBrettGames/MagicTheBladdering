@@ -11,7 +11,6 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector2;
     public CharacterSelector charSelector3;
     public CharacterSelector charSelector4;
-    //public InputManager iManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -101,7 +100,7 @@ public class UniverseController : BlankMono
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             p1.tag = "Player1";
             //p1.GetComponent<Rigidbody>().isKinematic = false;
-            p1.transform.parent = GameObject.Find("GameObject").transform;
+            p1.transform.parent = GameObject.Find("CentreBase").transform;
             //p1.GetComponent<PlayerController>().playerId = 0;
             // p1.GetComponent<PlayerController>().
 
@@ -120,7 +119,7 @@ public class UniverseController : BlankMono
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
             p2.tag = "Player2";
             //p2.GetComponent<Rigidbody>().isKinematic = false;
-            p2.transform.parent = GameObject.Find("GameObject").transform;
+            p2.transform.parent = GameObject.Find("CentreBase").transform;
             //p2.transform.parent = null;
             //p2.GetComponent<PlayerController>().playerId = 1;
 
@@ -227,5 +226,4 @@ public class UniverseController : BlankMono
         player.Respawn();
         player.gameObject.transform.position = allSpawnPositions[currentLevel - 7].spawnPos[playerInt];
     }
-
 }

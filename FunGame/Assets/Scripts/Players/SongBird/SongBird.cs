@@ -42,7 +42,7 @@ public class SongBird : PlayerBase
         if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
     }
 
-    public override void YAction() { anim.SetTrigger("YAction"); }
+    public override void YAction() { ThrowVial(); anim.SetTrigger("YAction"); }
     //ThrowVial(); in the animation
 
     public override void BAction() { if (currentVial != 2) { currentVial++; } else { currentVial = 0; } }
