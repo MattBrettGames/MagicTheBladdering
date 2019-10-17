@@ -11,7 +11,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector2;
     public CharacterSelector charSelector3;
     public CharacterSelector charSelector4;
-    public InputManager iManager;
+    //public InputManager iManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -21,6 +21,7 @@ public class UniverseController : BlankMono
 
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
+    private int currentLevel;
 
     void Start()
     {
@@ -59,6 +60,7 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
+        currentLevel = level;
         if (level == 2)
         {
             print("Loaded 2CharacterSelector");
@@ -101,8 +103,8 @@ public class UniverseController : BlankMono
             //p1.GetComponent<Rigidbody>().isKinematic = false;
             p1.transform.parent = GameObject.Find("GameObject").transform;
             //p1.GetComponent<PlayerController>().playerId = 0;
-           // p1.GetComponent<PlayerController>().
-            
+            // p1.GetComponent<PlayerController>().
+
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
@@ -207,9 +209,11 @@ public class UniverseController : BlankMono
         player.SetActive(false);
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
 
+        playerCode.numOfDeaths++;
+
         if (playerCode.numOfDeaths != numOfRespawns)
         {
-            StartCoroutine(StartSpawn(playerCode));
+            StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
         }
         else
         {
@@ -217,10 +221,11 @@ public class UniverseController : BlankMono
         }
     }
 
-    private IEnumerator StartSpawn(PlayerBase player)
+    private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(7);
         player.Respawn();
+        player.gameObject.transform.position = allSpawnPositions[currentLevel - 7].spawnPos[playerInt];
     }
 
 }

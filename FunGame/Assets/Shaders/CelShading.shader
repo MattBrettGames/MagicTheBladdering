@@ -93,12 +93,10 @@ Shader "ToonShader" {
 				output.uv = input.texcoord;
 
 				return output;
-
 			}
 
 			float4 frag(vertexOutput input) : COLOR
 			{
-
 				float nDotL = saturate(dot(input.normalDir, input.lightDir.xyz));
 
 				//Diffuse threshold calculation
@@ -109,8 +107,7 @@ Shader "ToonShader" {
 
 				//Calculate Outlines
 				float outlineStrength = saturate((dot(input.normalDir, input.viewDir) - _OutlineThickness) * 1000);
-
-
+				
 				float3 ambientLight = (1 - diffuseCutoff) * _UnlitColor.xyz; //adds general ambient illumination
 				float3 diffuseReflection = (1 - specularCutoff) * _Color.xyz * diffuseCutoff;
 				float3 specularReflection = _SpecColor.xyz * specularCutoff;
@@ -119,8 +116,8 @@ Shader "ToonShader" {
 
 				return float4(combinedLight,1) * tex2D(_MainTex, input.uv) - tex2D(_BumpMap, input.uv) +_Mult;
 			}
-				ENDCG
+			ENDCG
 	    }		
 	}
-		Fallback "Diffuse"
+	Fallback "Diffuse"
 }

@@ -105,7 +105,7 @@ public abstract class PlayerBase : BlankMono
     public void GainIFrames() { iFrames = true; }
     public void LoseIFrames() { iFrames = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; }
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 4); }// numOfDeaths++; }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
     public void BeginActing() { acting = true; }
