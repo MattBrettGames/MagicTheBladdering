@@ -93,6 +93,7 @@ public class UniverseController : BlankMono
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
             Vector3 targetPos = new Vector3(0, 5, 0);
+            int[] charInts = new int[4];
 
             #region Player 1
             GameObject p1 = selectedChars[0];
@@ -111,6 +112,9 @@ public class UniverseController : BlankMono
             //p1.transform.localPosition = Vector3.zero;
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
+            if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
+            else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
+
             #endregion
 
             #region Player 2
@@ -130,6 +134,8 @@ public class UniverseController : BlankMono
             //p2.transform.localPosition = Vector3.zero;
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
+            if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
+            else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
             #endregion
 
             #region Player 3
@@ -175,7 +181,7 @@ public class UniverseController : BlankMono
 
             for (int i = 0; i < 2; i++)
             {
-                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats();
+                GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
             }
         }
     }

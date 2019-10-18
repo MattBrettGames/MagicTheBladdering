@@ -18,6 +18,7 @@ public class SongBird : PlayerBase
     public Color[] vialColours = new Color[3];
     private int currentVial;
     private string[] types = new string[] { "Poison", "Adrenaline", "Boom" };
+    private int smokeCount;
 
     [Header("Dodge Stats")]
     public int dodgeForce;
@@ -42,7 +43,7 @@ public class SongBird : PlayerBase
         if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
     }
 
-    public override void YAction() { ThrowVial(); anim.SetTrigger("YAction"); }
+    public override void YAction() { ThrowVial(); } // anim.SetTrigger("YAction"); }
     //ThrowVial(); in the animation
 
     public override void BAction() { if (currentVial != 2) { currentVial++; } else { currentVial = 0; } }
@@ -53,30 +54,34 @@ public class SongBird : PlayerBase
 
         if (currentVial == 0)
         {
-            smokeCloud = pooler.poisonSmoke[1];
+            smokeCloud = pooler.poisonSmoke[smokeCount];
+            pooler.poisonSmoke.Remove(smokeCloud);
         }
         if (currentVial == 1)
         {
-            smokeCloud = pooler.adrenalineSmoke[1];            
+            smokeCloud = pooler.adrenalineSmoke[smokeCount];            
+            pooler.adrenalineSmoke.Remove(smokeCloud);
         }
         if (currentVial == 2)
         {
-            smokeCloud = pooler.boomSmoke[1];
+            smokeCloud = pooler.boomSmoke[smokeCount];
+            pooler.boomSmoke.Remove(smokeCloud);
         }
-
+        
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.SetActive(true);
         for (int i = 0; i < 5; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
 
-        anim.SetTrigger("AAction");
         Knockback(dodgeForce, visuals.transform.forward);
+        //anim.SetTrigger("AAction");
         Invoke("StopKnockback", 0.4f);
     }
 
     public void ThrowVial()
     {
         vial = pooler.vials[0];
+        print(pooler.vials[0]);
         vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
         vial.GetComponent<SongbirdVial>().vialType = types[currentVial];
         vial.transform.position = transform.position;
@@ -87,6 +92,7 @@ public class SongBird : PlayerBase
 
     private IEnumerator WaitForSmoke(GameObject smoke, int time)
     {
+        print(0.1f + time / 10);
         yield return new WaitForSeconds(0.1f + (time / 10));
         ScaleUp(smoke);
     }

@@ -5,35 +5,36 @@ using System;
 
 public class SongbirdVial : Throwables
 {
-    public float curseDuration;
     private ObjectPooler pooler;
     public string vialType;
     private GameObject smokeCloud;
 
-    public override void CollisionEvent(GameObject collision)
+    public void VialThrown() { Invoke("VialExplode", 5); }
+
+    public void VialExplode()
     {
-        pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
+        pooler = GameObject.Find("ObjectPooler").GetComponent<ObjectPooler>();
 
-        if (collision.tag != transform.tag)
+        if (vialType == "Poison")
         {
-            if (vialType == "Poison")
-            {
-                smokeCloud = pooler.poisonSmoke[0];
-            }
-            if (vialType == "Adrenaline")
-            {
-                smokeCloud = pooler.adrenalineSmoke[0];
-            }
-            if (vialType == "Boom")
-            {
-                smokeCloud = pooler.boomSmoke[0];
-            }
-
-            smokeCloud.transform.position = transform.position;
-            smokeCloud.transform.localScale = Vector3.zero;
-            smokeCloud.SetActive(true);
-            for (int i = 0; i < 10; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
+            smokeCloud = pooler.poisonSmoke[0];
+            pooler.poisonSmoke.Remove(smokeCloud);
         }
+        if (vialType == "Adrenaline")
+        {
+            smokeCloud = pooler.adrenalineSmoke[0];
+            pooler.adrenalineSmoke.Remove(smokeCloud);
+        }
+        if (vialType == "Boom")
+        {
+            smokeCloud = pooler.boomSmoke[0];
+            pooler.boomSmoke.Remove(smokeCloud);
+        }
+
+        smokeCloud.transform.position = transform.position;
+        smokeCloud.transform.localScale = Vector3.zero;
+        smokeCloud.SetActive(true);
+        for (int i = 0; i < 10; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
     }
 
     private IEnumerator WaitForSmoke(GameObject smoke, int time)

@@ -39,7 +39,7 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        print("Collided with " + other);
+//        print("Collided with " + other);
         if (other.transform.tag != transform.tag)
         {
             PlayerBase target = other.transform.GetComponent<PlayerBase>();

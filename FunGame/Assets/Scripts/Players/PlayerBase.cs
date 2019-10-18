@@ -59,15 +59,16 @@ public abstract class PlayerBase : BlankMono
             visuals.transform.LookAt(aimTarget);
 
             transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed);
-
-            if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
-            else { anim.SetFloat("Movement", 0); }
-
+            
             //Standard Inputs
             if (player.GetButtonDown("AAction")) { AAction(); }
             if (player.GetButtonDown("BAttack")) { BAction(); }
             if (player.GetButtonDown("XAttack")) { XAction(); }
             if (player.GetButtonDown("YAttack")) { YAction(); }
+            /*
+            if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+            else { anim.SetFloat("Movement", 0); }
+            */
         }
 
         if (poison > 0) { poison -= Time.deltaTime; }
@@ -89,7 +90,11 @@ public abstract class PlayerBase : BlankMono
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; print(gameObject.name + " has just been killed!"); GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
-    public virtual void Knockback(int power, Vector3 direction) { rb2d.AddForce(direction * power * 10, ForceMode.Impulse); Invoke("StopKnockback", power / 10f); knockbackForce = true; }
+    public virtual void Knockback(int power, Vector3 direction)
+    { 
+        rb2d.AddForce(direction * power * 10, ForceMode.Impulse); 
+        Invoke("StopKnockback", power / 10f); knockbackForce = true; 
+    }
     protected void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
     #endregion
 
