@@ -23,4 +23,8 @@ public class SongBirdEventHandler : BlankMono
     public void BeginActing() { songBird.BeginActing(); }
     public void EndActing() { songBird.EndActing(); }
 
+    public void EndDodge() { songBird.StopKnockback(); }
+
+
+
 }

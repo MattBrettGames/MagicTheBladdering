@@ -75,25 +75,28 @@ public class SongBird : PlayerBase
 
         Knockback(dodgeForce, visuals.transform.forward);
         //anim.SetTrigger("AAction");
-        Invoke("StopKnockback", 0.4f);
+        //Uncomment above and replace below with an animation event;
+        Invoke("StopKnockback", 0.2f);
     }
 
     public void ThrowVial()
     {
-        vial = pooler.vials[0];
-        print(pooler.vials[0]);
+        vial = pooler.vials[pooler.vials.Count-1];
+        //print(pooler.vials[0]);
         vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
-        vial.GetComponent<SongbirdVial>().vialType = types[currentVial];
+        SongbirdVial vials = vial.GetComponent<SongbirdVial>();
+        vials.vialType = types[currentVial];
+        vials.VialThrown();
         vial.transform.position = transform.position;
-        vial.GetComponent<Rigidbody>().AddForce((visuals.transform.forward*throwDistance) + new Vector3(0, throwHeight, 0), ForceMode.Impulse);
+        vial.GetComponent<Rigidbody>().AddForce((visuals.transform.forward*throwDistance), ForceMode.Impulse);
         vial.SetActive(true);
         vial = null;
     }
 
     private IEnumerator WaitForSmoke(GameObject smoke, int time)
     {
-        print(0.1f + time / 10);
-        yield return new WaitForSeconds(0.1f + (time / 10));
+        print(0.1f + time * 0.5f);
+        yield return new WaitForSeconds(0.1f + (time * 0.5f));
         ScaleUp(smoke);
     }
 

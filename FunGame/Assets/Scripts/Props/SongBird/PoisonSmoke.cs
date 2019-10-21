@@ -6,11 +6,13 @@ public class PoisonSmoke : BlankMono
 {
     [Header("Editables")]
     public float secsBetweenTicks;
+    public float duration;
     private List<PlayerBase> afflicted = new List<PlayerBase>();
 
-    private void Start()
+    public void Begin()
     {
         StartCoroutine(TIMETICK());
+        Invoke("Return", duration);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,4 +34,10 @@ public class PoisonSmoke : BlankMono
         }
         TIMETICK();
     }
+
+    private void Return()
+    {
+        GameObject.Find("ObjectPooler").GetComponent<ObjectPooler>().ReturnToPoisonSmokePool(gameObject);
+    }
+
 }
