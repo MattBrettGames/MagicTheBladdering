@@ -8,8 +8,6 @@ public class AdrenalineSmoke : MonoBehaviour
     public float defenseMultBonus;
     public float duration;
 
-    private List<GameObject> afflicted = new List<GameObject>();
-
     public void Begin()
     {
         Invoke("Return", duration);

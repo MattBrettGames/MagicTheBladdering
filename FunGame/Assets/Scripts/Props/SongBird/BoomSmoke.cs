@@ -14,7 +14,10 @@ public class BoomSmoke : BlankMono
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<PlayerBase>().Knockback(knockbackPower, transform.position - other.transform.position);
+        if (other.tag != gameObject.tag)
+        {
+            other.GetComponent<PlayerBase>().Knockback(knockbackPower, transform.position - other.transform.position);
+        }
     }
 
     private void Return()

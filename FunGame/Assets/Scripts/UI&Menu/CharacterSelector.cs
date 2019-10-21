@@ -122,6 +122,10 @@ public class CharacterSelector : BlankMono
                 locked = true;
             }
         }
+        if (Input.GetButtonDown(thisPlayer + "BButton"))
+        {
+            locked = false;
+        }
     }
 
     private IEnumerator SpinTrigger(float angle, float time)

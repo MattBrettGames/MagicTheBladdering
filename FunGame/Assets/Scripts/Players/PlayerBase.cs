@@ -33,6 +33,7 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Components")]
     public Transform aimTarget;
+    public Transform rangeTarget;
     public GameObject visuals;
     protected Animator anim;
     protected Rigidbody rb2d;
@@ -54,11 +55,14 @@ public abstract class PlayerBase : BlankMono
     {
         if (!prone && !knockbackForce && !acting)
         {
+            Vector3 dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
             //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
+            aimTarget.position = transform.position +  dir* 5;
             visuals.transform.LookAt(aimTarget);
 
-            if (!knockbackForce) { transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed); }
+            rangeTarget.position = transform.position + dir * 30;
+
+            if (!knockbackForce) { transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed*0.2f); }
 
             //Standard Inputs
             if (player.GetButtonDown("AAction")) { AAction(); }

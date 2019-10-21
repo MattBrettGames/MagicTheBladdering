@@ -23,10 +23,6 @@ public class SongBird : PlayerBase
     [Header("Dodge Stats")]
     public int dodgeForce;
 
-    [Header("Vial Tossing Stats")]
-    public float throwHeight;
-    public float throwDistance;
-
     public override void Start()
     {
         base.Start();
@@ -59,7 +55,7 @@ public class SongBird : PlayerBase
         }
         if (currentVial == 1)
         {
-            smokeCloud = pooler.adrenalineSmoke[smokeCount];            
+            smokeCloud = pooler.adrenalineSmoke[smokeCount];
             pooler.adrenalineSmoke.Remove(smokeCloud);
         }
         if (currentVial == 2)
@@ -67,7 +63,7 @@ public class SongBird : PlayerBase
             smokeCloud = pooler.boomSmoke[smokeCount];
             pooler.boomSmoke.Remove(smokeCloud);
         }
-        
+
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.SetActive(true);
@@ -81,14 +77,20 @@ public class SongBird : PlayerBase
 
     public void ThrowVial()
     {
-        vial = pooler.vials[pooler.vials.Count-1];
         //print(pooler.vials[0]);
-        vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
+        //vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
+
+        vial = pooler.vials[playerID];
         SongbirdVial vials = vial.GetComponent<SongbirdVial>();
         vials.vialType = types[currentVial];
-        vials.VialThrown();
+        vials.VialThrown(vialColours[currentVial],
+            rangeTarget.position
+            , playerID, gameObject.tag);
+        print(visuals.transform.forward * 4);
         vial.transform.position = transform.position;
-        vial.GetComponent<Rigidbody>().AddForce((visuals.transform.forward*throwDistance), ForceMode.Impulse);
+
+        //vial.GetComponent<Rigidbody>().AddForce((visuals.transform.forward*throwDistance), ForceMode.Impulse);
+
         vial.SetActive(true);
         vial = null;
     }
