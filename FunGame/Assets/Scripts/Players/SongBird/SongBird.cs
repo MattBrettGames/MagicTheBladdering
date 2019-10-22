@@ -16,7 +16,7 @@ public class SongBird : PlayerBase
 
     [Header("Vial Stats")]
     public MeshRenderer renderer;
-    public Texture[] typeMaterials = new Texture[3];
+    public Material[] typeMaterials = new Material[3];
     public Color[] vialColours = new Color[3];
     private int currentVial;
     private string[] types = new string[] { "Poison", "Adrenaline", "Boom" };
@@ -47,7 +47,7 @@ public class SongBird : PlayerBase
     public override void BAction() 
     { 
         if (currentVial != 2) { currentVial++; } else { currentVial = 0; }
-        renderer.material.SetTexture("_EmissionMap", typeMaterials[currentVial]);
+        renderer.material = typeMaterials[currentVial];
     }
 
     public override void AAction()
