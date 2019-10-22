@@ -77,20 +77,11 @@ public class SongBird : PlayerBase
 
     public void ThrowVial()
     {
-        //print(pooler.vials[0]);
-        //vial.GetComponent<MeshRenderer>().material.color = vialColours[currentVial];
-
         vial = pooler.vials[playerID];
         SongbirdVial vials = vial.GetComponent<SongbirdVial>();
         vials.vialType = types[currentVial];
-        vials.VialThrown(vialColours[currentVial],
-            rangeTarget.position
-            , playerID, gameObject.tag);
-        print(visuals.transform.forward * 4);
+        vials.VialThrown(vialColours[currentVial], rangeTarget.position, playerID, gameObject.tag);
         vial.transform.position = transform.position;
-
-        //vial.GetComponent<Rigidbody>().AddForce((visuals.transform.forward*throwDistance), ForceMode.Impulse);
-
         vial.SetActive(true);
         vial = null;
     }

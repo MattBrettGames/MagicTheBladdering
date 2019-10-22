@@ -49,13 +49,13 @@ public class CharacterSelector : BlankMono
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
                 {
-                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(5, i)); }
+                    for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(5, i)); }
                     currentChar++;
                     UpdateDisplay();
                 }
                 else
                 {
-                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(5, i)); }
+                    for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(5, i)); }
                     currentChar = 0;
                     UpdateDisplay();
                 }
@@ -68,14 +68,14 @@ public class CharacterSelector : BlankMono
                 inputCooldown = true;
                 if (currentChar != 0)
                 {
-                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(-5, i)); }
+                    for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar--;
                     currentSkin = 0;
                     UpdateDisplay();
                 }
                 else
                 {
-                    for (int i = 0; i < 80; i++) { StartCoroutine(SpinTrigger(-5, i)); }
+                    for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar = characters.Count - 1;
                     currentSkin = 0;
                     UpdateDisplay();

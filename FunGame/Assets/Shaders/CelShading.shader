@@ -16,6 +16,8 @@ Shader "ToonShader" {
 		_BumpMap("Normal Map", 2D) = ""{}
 	_OccMap("Occlusion Map", 2D) = ""{}
 
+	_EmmisionMap("Emmision Map?", 2D) = ""{}
+
 	}
 
 	SubShader{
@@ -48,6 +50,7 @@ Shader "ToonShader" {
 		uniform sampler2D _MainTex;
 		uniform sampler2D _BumpMap;
 		uniform float4 _MainTex_ST;
+		uniform sampler2D _EmmisionMap;
 
 			struct vertexInput 
 			{
@@ -103,7 +106,7 @@ Shader "ToonShader" {
 				float diffuseCutoff = saturate((max(_DiffuseThreshold, nDotL) - _DiffuseThreshold) * 1000);
 
 				//Specular threshold calculation
-				float specularCutoff = saturate(max(_Shininess, dot(reflect(-input.lightDir.xyz, input.normalDir), input.viewDir)) - _Shininess) * 100;
+				float4 specularCutoff = saturate(max(_Shininess, dot(reflect(-input.lightDir.xyz, input.normalDir), input.viewDir)) - _Shininess); // *_EmmisionMap;
 
 				//Calculate Outlines
 				float outlineStrength = saturate((dot(input.normalDir, input.viewDir) - _OutlineThickness) * 1000);

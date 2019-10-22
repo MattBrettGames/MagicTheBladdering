@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using Rewired;
+
 public class UniverseController : BlankMono
 {
     [Header("GameObjects")]
@@ -17,6 +18,7 @@ public class UniverseController : BlankMono
     public int numOfPlayers;
     private int lockedInPlayers;
     public int numOfRespawns;
+    public int respawnTimer;
 
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
@@ -40,8 +42,8 @@ public class UniverseController : BlankMono
         {
             //if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); numOfPlayers = 3; }
             //if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); numOfPlayers = 4; }
-            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; print("Someone pressed X"); }
-            if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); print("Someone pressed Y"); }
+            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
+            if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
         }
         else if (SceneManager.GetActiveScene().name == "Bio")
         {
@@ -55,8 +57,7 @@ public class UniverseController : BlankMono
             }
         }
     }
-
-
+    
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
@@ -100,16 +101,12 @@ public class UniverseController : BlankMono
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             p1.tag = "Player1";
-            //p1.GetComponent<Rigidbody>().isKinematic = false;
             p1.transform.parent = GameObject.Find("CentreBase").transform;
-            //p1.GetComponent<PlayerController>().playerId = 0;
-            // p1.GetComponent<PlayerController>().
 
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
             p1.transform.position = allSpawnPositions[level - 7].spawnPos[0];
-            //p1.transform.localPosition = Vector3.zero;
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
@@ -122,16 +119,12 @@ public class UniverseController : BlankMono
             p2.GetComponent<PlayerBase>().enabled = true;
             p2.GetComponent<PlayerBase>().thisPlayer = "P2";
             p2.tag = "Player2";
-            //p2.GetComponent<Rigidbody>().isKinematic = false;
             p2.transform.parent = GameObject.Find("CentreBase").transform;
-            //p2.transform.parent = null;
-            //p2.GetComponent<PlayerController>().playerId = 1;
 
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
             p2.transform.position = allSpawnPositions[level - 7].spawnPos[1];
-            //p2.transform.localPosition = Vector3.zero;
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
@@ -188,13 +181,9 @@ public class UniverseController : BlankMono
 
     public void CheckReady(int arrayIndex, GameObject gobject)
     {
-        //print(gobject.transform.localScale);
-
         selectedChars[arrayIndex] = gobject;
         gobject.transform.parent = gameObject.transform;
         lockedInPlayers++;
-
-        //print(gobject.transform.localScale);
 
         if (lockedInPlayers == numOfPlayers)
         {
@@ -228,7 +217,7 @@ public class UniverseController : BlankMono
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(respawnTimer);
         player.Respawn();
         player.gameObject.transform.position = allSpawnPositions[currentLevel - 7].spawnPos[playerInt];
     }

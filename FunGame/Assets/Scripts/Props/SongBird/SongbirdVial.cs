@@ -26,7 +26,6 @@ public class SongbirdVial : Throwables
 
     void Update()
     {
-        print("Target pos = " + targetPos);
         if (moving)
         {
             transform.position = Vector3.Lerp(transform.position, targetPos, 1);

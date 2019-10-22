@@ -17,8 +17,8 @@ public class AdrenalineSmoke : MonoBehaviour
     {
         if(other.tag == gameObject.tag)
         {
-            other.GetComponent<PlayerBase>().damageMult += powerMultBonus/10;
-            other.GetComponent<PlayerBase>().incomingMult -= defenseMultBonus/10;
+            other.GetComponent<PlayerBase>().damageMult += powerMultBonus*0.01f;
+            other.GetComponent<PlayerBase>().incomingMult -= defenseMultBonus*0.01f;
         }
     }
 
@@ -26,8 +26,8 @@ public class AdrenalineSmoke : MonoBehaviour
     {
         if (other.tag == gameObject.tag)
         {
-            other.GetComponent<PlayerBase>().damageMult -= powerMultBonus/10;
-            other.GetComponent<PlayerBase>().incomingMult += defenseMultBonus/10;
+            other.GetComponent<PlayerBase>().damageMult -= powerMultBonus*0.01f;
+            other.GetComponent<PlayerBase>().incomingMult += defenseMultBonus*0.01f;
         }
     }
 
