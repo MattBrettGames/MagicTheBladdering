@@ -29,12 +29,17 @@ public class CharacterSelector : BlankMono
     public Text skinText;
     public GameObject displayChar;
 
+    [Header("Background Images")]
+    public GameObject[] backImages = new GameObject[2];
+    public GameObject displayImage;
+
     void Start()
     {
         transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
         vertPlayerInput = thisPlayer + "Vertical";
         displayChar.SetActive(true);
+        displayImage.SetActive(true);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
         characterText.text = characters[currentChar].name.ToString();
     }
@@ -142,6 +147,11 @@ public class CharacterSelector : BlankMono
     {
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
         characterText.text = characters[currentChar].name.ToString();
+
+        displayImage.SetActive(false);
+        displayImage = backImages[currentChar];
+        displayImage.SetActive(true);
+
         displayChar.SetActive(false);
         displayChar = characters[currentChar].skins[currentSkin].Skin;
         displayChar.SetActive(true);
