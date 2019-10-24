@@ -77,12 +77,19 @@ public class SongBird : PlayerBase
             smokeCloud.SetActive(true);
 
             smokeCount++;
+            Invoke("RegainSmoke", 6);
+
         }
 
         Knockback(dodgeForce, visuals.transform.forward);
         //anim.SetTrigger("AAction");
         //Uncomment above and replace below with an animation event;
         Invoke("StopKnockback", 0.2f);
+    }
+
+    private void RegainSmoke()
+    {
+        smokeCount--;
     }
 
     public void ThrowVial()
