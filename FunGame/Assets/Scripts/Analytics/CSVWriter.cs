@@ -3,7 +3,7 @@ using System.IO;
 
 public static class CSVWriter
 {
-    /*
+
     private static string reportDirectoryName = "Reports";
     private static string reportFileName = "data.csv";
     private static string reportSeparator = ",";
@@ -11,9 +11,9 @@ public static class CSVWriter
     {
         "Character",
         "Skin",
-        "Map",
-        "",
-        ""
+        "Character2",
+        "Skin2",
+        "Map"
     };
 
     static void CreateReport()
@@ -22,15 +22,15 @@ public static class CSVWriter
         using (StreamWriter sw = File.CreateText(GetFilePath()))
         {
             string finalString = "";
-            for(int i = 0; i < reportHeaders.Length; i++)
+            for (int i = 0; i < reportHeaders.Length; i++)
             {
-                if(finalString != "")
+                if (finalString != "")
                 {
                     finalString += reportSeparator;
                 }
                 finalString += reportSeparator;
             }
-            sw.WriteLine(finalString);            
+            sw.WriteLine(finalString);
         }
     }
 
@@ -38,17 +38,20 @@ public static class CSVWriter
     {
         VerifyDirectory();
         VerifyFile();
-        using(StreamWriter sw = File.AppendText(GetFilePath()))
+        //CreateReport();
+        using (StreamWriter sw = File.AppendText(GetFilePath()))
         {
             string finalString = "";
-            for(int i = 0; i < strings.Length; i++)
+            for (int i = 0; i < strings.Length; i++)
             {
-                if(finalString != "")
+                if (finalString != "")
                 {
                     finalString += reportSeparator;
                 }
                 finalString += strings[i];
+                //Debug.Log(finalString + strings[i]);
             }
+            sw.WriteLine(finalString);
         }
     }
 
@@ -79,6 +82,6 @@ public static class CSVWriter
     {
         return GetDirectoryPath() + "/" + reportFileName;
     }
-    */
+
 
 }

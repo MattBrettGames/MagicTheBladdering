@@ -12,6 +12,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector2;
     public CharacterSelector charSelector3;
     public CharacterSelector charSelector4;
+    public AnalyticsController analytics;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -23,6 +24,10 @@ public class UniverseController : BlankMono
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
     private int currentLevel;
+
+    [Header("Analytics")]
+    private string[] characters = new string[2] { "", "" };
+    private string[] skins = new string[2] { "", "" };
 
     void Start()
     {
@@ -57,13 +62,12 @@ public class UniverseController : BlankMono
             }
         }
     }
-    
+
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
         if (level == 2)
         {
-            print("Loaded 2CharacterSelector");
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -179,9 +183,11 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CheckReady(int arrayIndex, GameObject gobject)
+    public void CheckReady(int arrayIndex, GameObject gobject, string character, string skin)
     {
         selectedChars[arrayIndex] = gobject;
+        characters[arrayIndex] = character;
+        skins[arrayIndex] = skin;
         gobject.transform.parent = gameObject.transform;
         lockedInPlayers++;
 
@@ -191,9 +197,20 @@ public class UniverseController : BlankMono
         }
     }
 
+    public void Unlock()
+    {
+        lockedInPlayers--;
+    }
+
     public void ChooseArena(string arena)
     {
         SceneManager.LoadScene(arena);
+        analytics.map = arena;
+        analytics.character1 = characters[0];
+        analytics.character2 = characters[1];
+        analytics.skin1 = skins[0];
+        analytics.skin2 = skins[1];
+        analytics.CreateCSV();
     }
 
     [Serializable] public struct spawnPositions { public List<Vector3> spawnPos; }
@@ -214,7 +231,6 @@ public class UniverseController : BlankMono
             SceneManager.LoadScene("GameOver");
         }
     }
-
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(respawnTimer);
