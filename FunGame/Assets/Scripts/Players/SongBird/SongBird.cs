@@ -15,7 +15,7 @@ public class SongBird : PlayerBase
     public int boomXKnockback;
 
     [Header("Vial Stats")]
-    public MeshRenderer renderer;
+    public MeshRenderer meshRenderer;
     public Material[] typeMaterials = new Material[3];
     public Color[] vialColours = new Color[3];
     private int currentVial;
@@ -44,41 +44,52 @@ public class SongBird : PlayerBase
     public override void YAction() { ThrowVial(); } // anim.SetTrigger("YAction"); }
     //ThrowVial(); in the animation
 
-    public override void BAction() 
-    { 
+    public override void BAction()
+    {
         if (currentVial != 2) { currentVial++; } else { currentVial = 0; }
-        renderer.material = typeMaterials[currentVial];
+        GetComponent<Renderer>().material = typeMaterials[currentVial];
     }
 
     public override void AAction()
     {
-        GameObject smokeCloud = null;
+        if (smokeCount <= 2)
+        {
+            GameObject smokeCloud = null;
 
-        if (currentVial == 0)
-        {
-            smokeCloud = pooler.poisonSmoke[smokeCount];
-            pooler.poisonSmoke.Remove(smokeCloud);
-        }
-        if (currentVial == 1)
-        {
-            smokeCloud = pooler.adrenalineSmoke[smokeCount];
-            pooler.adrenalineSmoke.Remove(smokeCloud);
-        }
-        if (currentVial == 2)
-        {
-            smokeCloud = pooler.boomSmoke[smokeCount];
-            pooler.boomSmoke.Remove(smokeCloud);
-        }
+            if (currentVial == 0)
+            {
+                smokeCloud = pooler.poisonSmoke[smokeCount];
+                pooler.poisonSmoke.Remove(smokeCloud);
+            }
+            if (currentVial == 1)
+            {
+                smokeCloud = pooler.adrenalineSmoke[smokeCount];
+                pooler.adrenalineSmoke.Remove(smokeCloud);
+            }
+            if (currentVial == 2)
+            {
+                smokeCloud = pooler.boomSmoke[smokeCount];
+                pooler.boomSmoke.Remove(smokeCloud);
+            }
 
-        smokeCloud.transform.position = transform.position;
-        smokeCloud.transform.localScale = Vector3.zero;
-        smokeCloud.SetActive(true);
-        for (int i = 0; i < 5; i++) { StartCoroutine(WaitForSmoke(smokeCloud, i)); }
+            smokeCloud.transform.position = transform.position;
+            smokeCloud.transform.localScale = Vector3.zero;
+            smokeCloud.SetActive(true);
+
+            smokeCount++;
+            Invoke("RegainSmoke", 6);
+
+        }
 
         Knockback(dodgeForce, visuals.transform.forward);
         //anim.SetTrigger("AAction");
         //Uncomment above and replace below with an animation event;
         Invoke("StopKnockback", 0.2f);
+    }
+
+    private void RegainSmoke()
+    {
+        smokeCount--;
     }
 
     public void ThrowVial()
@@ -87,18 +98,7 @@ public class SongBird : PlayerBase
         SongbirdVial vials = vial.GetComponent<SongbirdVial>();
         vials.vialType = types[currentVial];
         vials.VialThrown(vialColours[currentVial], rangeTarget.position, playerID, gameObject.tag);
-        vial.transform.position = transform.position;
         vial.SetActive(true);
         vial = null;
     }
-
-    private IEnumerator WaitForSmoke(GameObject smoke, int time)
-    {
-        print(0.1f + time * 0.5f);
-        yield return new WaitForSeconds(0.1f + (time * 0.5f));
-        ScaleUp(smoke);
-    }
-
-    private void ScaleUp(GameObject smoke) { smoke.transform.localScale += Vector3.one; }
-
 }

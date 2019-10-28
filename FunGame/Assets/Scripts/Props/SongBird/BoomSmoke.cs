@@ -24,5 +24,4 @@ public class BoomSmoke : BlankMono
     {
         GameObject.Find("ObjectPooler").GetComponent<ObjectPooler>().ReturnToBoomSmokePool(gameObject);
     }
-
 }

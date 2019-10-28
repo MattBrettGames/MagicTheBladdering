@@ -11,7 +11,7 @@ public class CharacterSelector : BlankMono
 
     private string horiPlayerInput;
     private string vertPlayerInput;
-    
+
     int currentChar;
     int currentSkin;
 
@@ -46,10 +46,9 @@ public class CharacterSelector : BlankMono
 
     void Update()
     {
-        //Debug.Log(string.Format("GO: {0} | InputName:  {1} | InVal: {2}", gameObject.name, horiPlayerInput, Input.GetAxis(horiPlayerInput)));
         if (!locked)
         {
-            if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown)
+            if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
@@ -68,7 +67,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
                 currentSkin = 0;
             }
-            if (Input.GetAxis(horiPlayerInput) <= -0.4f && !inputCooldown)
+            if (Input.GetAxis(horiPlayerInput) <= -0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 inputCooldown = true;
                 if (currentChar != 0)
@@ -88,7 +87,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (Input.GetAxis(vertPlayerInput) >= 0.4f && !inputCooldown)
+            if (Input.GetAxis(vertPlayerInput) >= 0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 inputCooldown = true;
                 if (currentSkin < characters[currentChar].skins.Count - 1)
@@ -103,7 +102,7 @@ public class CharacterSelector : BlankMono
                 }
                 Invoke("EndCooldown", 0.3f);
             }
-            if (Input.GetAxis(vertPlayerInput) <= -0.4f && !inputCooldown)
+            if (Input.GetAxis(vertPlayerInput) <= -0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 inputCooldown = true;
                 if (currentSkin != 0)
@@ -123,7 +122,7 @@ public class CharacterSelector : BlankMono
             {
                 print(thisPlayer + "XButton");
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
-                universe.CheckReady(thisPInt, displayChar);
+                universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
                 locked = true;
             }
         }
