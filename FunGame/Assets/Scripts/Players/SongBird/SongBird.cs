@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SongBird : PlayerBase
 {
-    [Header("Props")]
-    private GameObject vial;
+    [Header("More Components")]
     public CorvidDagger weapon;
+    private GameObject vial;
     private ObjectPooler pooler;
 
     [Header("Dagger Swipe")]

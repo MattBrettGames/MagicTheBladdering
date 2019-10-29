@@ -120,11 +120,7 @@ public class CharacterSelector : BlankMono
 
             if (Input.GetButtonDown(thisPlayer + "XButton"))
             {
-                //print(thisPlayer + "XButton");
-                //print(displayChar);
-
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
-                print(thisPInt +" "+ displayChar + " " + characters[currentChar].name + " " + characters[currentChar].skins[currentSkin].name);
                 universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
 
                 locked = true;
@@ -133,6 +129,7 @@ public class CharacterSelector : BlankMono
         if (Input.GetButtonDown(thisPlayer + "BButton"))
         {
             locked = false;
+            universe.Unlock();
         }
     }
 
