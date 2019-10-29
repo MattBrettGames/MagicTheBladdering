@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SongBird : PlayerBase
 {
-    [Header("Props")]
-    private GameObject vial;
+    [Header("More Components")]
     public CorvidDagger weapon;
+    private GameObject vial;
     private ObjectPooler pooler;
 
     [Header("Dagger Swipe")]
@@ -33,7 +33,7 @@ public class SongBird : PlayerBase
 
     public override void XAction()
     {
-        print("X Action");
+        anim.SetTrigger("XAttack");
         if (currentVial == 0) { weapon.poisonActive = true; weapon.GainInfo(baseXDamage, 0, visuals.transform.forward); }
         else { weapon.poisonActive = false; }
 
@@ -41,13 +41,14 @@ public class SongBird : PlayerBase
         if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
     }
 
-    public override void YAction() { ThrowVial(); } // anim.SetTrigger("YAction"); }
+    public override void YAction() { ThrowVial(); anim.SetTrigger("YAction"); }
     //ThrowVial(); in the animation
 
     public override void BAction()
     {
+        anim.SetTrigger("BAction");
         if (currentVial != 2) { currentVial++; } else { currentVial = 0; }
-        GetComponent<Renderer>().material = typeMaterials[currentVial];
+        //GetComponentInChildren<Renderer>().material = typeMaterials[currentVial];
     }
 
     public override void AAction()
@@ -78,12 +79,10 @@ public class SongBird : PlayerBase
 
             smokeCount++;
             Invoke("RegainSmoke", 6);
-
         }
 
-        Knockback(dodgeForce, visuals.transform.forward);
-        //anim.SetTrigger("AAction");
-        //Uncomment above and replace below with an animation event;
+        anim.SetTrigger("AAction");
+        transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, dodgeForce);
         Invoke("StopKnockback", 0.2f);
     }
 

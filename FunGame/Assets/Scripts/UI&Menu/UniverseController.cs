@@ -13,6 +13,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector3;
     public CharacterSelector charSelector4;
     public AnalyticsController analytics;
+    public Player player;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -31,6 +32,8 @@ public class UniverseController : BlankMono
 
     void Start()
     {
+        player = ReInput.players.GetPlayer("System");
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -188,8 +191,9 @@ public class UniverseController : BlankMono
         selectedChars[arrayIndex] = gobject;
         characters[arrayIndex] = character;
         skins[arrayIndex] = skin;
-        gobject.transform.parent = gameObject.transform;
+
         lockedInPlayers++;
+        gobject.transform.parent = gameObject.transform;
 
         if (lockedInPlayers == numOfPlayers)
         {
