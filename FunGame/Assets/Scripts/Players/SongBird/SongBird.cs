@@ -33,6 +33,7 @@ public class SongBird : PlayerBase
 
     public override void XAction()
     {
+        anim.SetTrigger("XAttack");
         if (currentVial == 0) { weapon.poisonActive = true; weapon.GainInfo(baseXDamage, 0, visuals.transform.forward); }
         else { weapon.poisonActive = false; }
 
@@ -45,8 +46,9 @@ public class SongBird : PlayerBase
 
     public override void BAction()
     {
+        anim.SetTrigger("BAction");
         if (currentVial != 2) { currentVial++; } else { currentVial = 0; }
-        GetComponent<Renderer>().material = typeMaterials[currentVial];
+        //GetComponentInChildren<Renderer>().material = typeMaterials[currentVial];
     }
 
     public override void AAction()
@@ -79,11 +81,8 @@ public class SongBird : PlayerBase
             Invoke("RegainSmoke", 6);
         }
 
-        //Knockback(dodgeForce, visuals.transform.forward);
+        anim.SetTrigger("AAction");
         transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, dodgeForce);
-
-        //anim.SetTrigger("AAction");
-        //Uncomment above and replace below with an animation event;
         Invoke("StopKnockback", 0.2f);
     }
 
