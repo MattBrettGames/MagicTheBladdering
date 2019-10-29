@@ -33,7 +33,6 @@ public class SongBird : PlayerBase
 
     public override void XAction()
     {
-        print("X Action");
         if (currentVial == 0) { weapon.poisonActive = true; weapon.GainInfo(baseXDamage, 0, visuals.transform.forward); }
         else { weapon.poisonActive = false; }
 
@@ -41,7 +40,7 @@ public class SongBird : PlayerBase
         if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
     }
 
-    public override void YAction() { ThrowVial(); } // anim.SetTrigger("YAction"); }
+    public override void YAction() { ThrowVial(); anim.SetTrigger("YAction"); }
     //ThrowVial(); in the animation
 
     public override void BAction()
@@ -78,10 +77,11 @@ public class SongBird : PlayerBase
 
             smokeCount++;
             Invoke("RegainSmoke", 6);
-
         }
 
-        Knockback(dodgeForce, visuals.transform.forward);
+        //Knockback(dodgeForce, visuals.transform.forward);
+        transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, dodgeForce);
+
         //anim.SetTrigger("AAction");
         //Uncomment above and replace below with an animation event;
         Invoke("StopKnockback", 0.2f);

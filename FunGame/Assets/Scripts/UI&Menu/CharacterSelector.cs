@@ -50,6 +50,7 @@ public class CharacterSelector : BlankMono
         {
             if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.RightArrow))
             {
+                currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
                 {
@@ -63,7 +64,6 @@ public class CharacterSelector : BlankMono
                     currentChar = 0;
                     UpdateDisplay();
                 }
-
                 Invoke("EndCooldown", 0.3f);
                 currentSkin = 0;
             }
@@ -120,9 +120,13 @@ public class CharacterSelector : BlankMono
 
             if (Input.GetButtonDown(thisPlayer + "XButton"))
             {
-                print(thisPlayer + "XButton");
+                //print(thisPlayer + "XButton");
+                //print(displayChar);
+
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
+                print(thisPInt +" "+ displayChar + " " + characters[currentChar].name + " " + characters[currentChar].skins[currentSkin].name);
                 universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
+
                 locked = true;
             }
         }

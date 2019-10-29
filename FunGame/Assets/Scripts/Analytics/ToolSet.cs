@@ -4,7 +4,7 @@ using UnityEditor;
 public static class ToolSet 
 {
     
-    [MenuItem("ToolSet/Analytics/Export to CSV %F1")]
+    //[MenuItem("ToolSet/Analytics/Export to CSV %F1")]
 
     static void DEV_AppendToReport()
     {

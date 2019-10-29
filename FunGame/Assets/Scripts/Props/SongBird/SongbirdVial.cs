@@ -26,10 +26,9 @@ public class SongbirdVial : Throwables
 
     void Update()
     {
-        if (moving)
-        {
-            transform.position = Vector3.Lerp(transform.position, targetPos, 1);
-        }
+
+        transform.position = Vector3.Lerp(transform.position, targetPos, 1);
+
     }
 
     public void VialExplode()
@@ -60,7 +59,7 @@ public class SongbirdVial : Throwables
             smokeCloud.GetComponent<BoomSmoke>().Begin();
         }
 
-        smokeCloud.tag = gameObject.tag; 
+        smokeCloud.tag = gameObject.tag;
         smokeCloud.GetComponent<MeshRenderer>().material.color = vialColour;
         smokeCloud.SetActive(true);
         smokeCloud.transform.position = transform.position;

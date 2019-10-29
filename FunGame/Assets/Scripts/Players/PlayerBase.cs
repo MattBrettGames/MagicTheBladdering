@@ -20,6 +20,10 @@ public abstract class PlayerBase : BlankMono
     public float damageMult = 1;
     public float incomingMult = 1;
 
+    [Header("Probably should be lower")]
+    public int throwDist;
+    public int dodgeDist;
+
     [Header("Status Effects")]
     public bool cursed;
     protected float curseTimer;
@@ -34,6 +38,7 @@ public abstract class PlayerBase : BlankMono
     [Header("Components")]
     public Transform aimTarget;
     public Transform rangeTarget;
+    public Transform dodgeTarget;
     public GameObject visuals;
     protected Animator anim;
     protected Rigidbody rb2d;
@@ -60,7 +65,8 @@ public abstract class PlayerBase : BlankMono
             aimTarget.position = transform.position +  dir* 5;
             visuals.transform.LookAt(aimTarget);
 
-            rangeTarget.position = transform.position + dir * 30;
+            rangeTarget.position = transform.position + dir * throwDist;
+            dodgeTarget.position = transform.position + dir * dodgeDist;
 
             if (!knockbackForce) { transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed*0.2f); }
 
@@ -72,9 +78,7 @@ public abstract class PlayerBase : BlankMono
 
             if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
             else { anim.SetFloat("Movement", 0); }
-
         }
-
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
         else { curseTimer -= Time.deltaTime; }
