@@ -29,6 +29,7 @@ public class SongBird : PlayerBase
     {
         base.Start();
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
+        InvokeRepeating("RegainSmoke", 6, 6);
     }
 
     public override void XAction()
@@ -42,7 +43,6 @@ public class SongBird : PlayerBase
     }
 
     public override void YAction() { ThrowVial(); anim.SetTrigger("YAction"); }
-    //ThrowVial(); in the animation
 
     public override void BAction()
     {
@@ -53,6 +53,7 @@ public class SongBird : PlayerBase
 
     public override void AAction()
     {
+        print(smokeCount);
         if (smokeCount <= 2)
         {
             GameObject smokeCloud = null;
@@ -78,11 +79,10 @@ public class SongBird : PlayerBase
             smokeCloud.SetActive(true);
 
             smokeCount++;
-            Invoke("RegainSmoke", 6);
         }
 
         anim.SetTrigger("AAction");
-        transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, dodgeForce);
+        transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, 0.5f);
         Invoke("StopKnockback", 0.2f);
     }
 
@@ -100,4 +100,5 @@ public class SongBird : PlayerBase
         vial.SetActive(true);
         vial = null;
     }
+
 }

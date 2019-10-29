@@ -181,7 +181,9 @@ public class UniverseController : BlankMono
 
             for (int i = 0; i < 2; i++)
             {
+                print(i+"forLoop");
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
+                print(string.Format("Set {0}, HUD parsed {1}.", i, charInts[i]));
             }
         }
     }

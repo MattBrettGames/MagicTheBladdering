@@ -7,12 +7,14 @@ public class HUDController : BlankMono
 {
     public GameObject healthBar;
     public GameObject barBorder;
-    public PlayerBase targetPlayer;
+    private PlayerBase targetPlayer;
+    public GameObject playerBase;
     public string thisPlayerInt;
     public GameObject[] images = new GameObject[2];
     public List<Vector3> imagePos = new List<Vector3>();
     public GameObject image;
     
+
     public void Start()
     {
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
@@ -21,7 +23,8 @@ public class HUDController : BlankMono
 
     public void SetStats(int imageInt)
     {
-        targetPlayer = GameObject.FindGameObjectWithTag("Player" + thisPlayerInt).GetComponent<PlayerBase>();
+        //targetPlayer = GameObject.FindGameObjectWithTag("Player" + thisPlayerInt).GetComponent<PlayerBase>();
+        targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
 
@@ -34,6 +37,7 @@ public class HUDController : BlankMono
 
     public void Update()
     {
+        print(string.Format("HealthBar is {0} || targetPaleyr is {1} & their health is {2}", healthBar, targetPlayer, targetPlayer.currentHealth));
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
         if(targetPlayer.currentHealth < 0) { targetPlayer.currentHealth = 0; }
     }
