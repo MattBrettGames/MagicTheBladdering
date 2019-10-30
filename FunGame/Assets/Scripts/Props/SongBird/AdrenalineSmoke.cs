@@ -8,9 +8,10 @@ public class AdrenalineSmoke : MonoBehaviour
     public float defenseMultBonus;
     public float duration;
 
-    public void Begin()
+    public void Begin(string tagToGet)
     {
         Invoke("Return", duration);
+        tag = tagToGet;
     }
 
     private void OnTriggerEnter(Collider other)

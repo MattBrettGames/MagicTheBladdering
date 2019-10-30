@@ -7,9 +7,10 @@ public class BoomSmoke : BlankMono
     public int knockbackPower;
     public float duration;
 
-    public void Begin()
+    public void Begin(string tagToGet)
     {
         Invoke("Return", duration);
+        tag = tagToGet;
     }
 
     private void OnTriggerEnter(Collider other)
