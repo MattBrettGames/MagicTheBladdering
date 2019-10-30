@@ -17,13 +17,10 @@ public class SongBird : PlayerBase
     public int poisonTickDist;
     public int adrenalineTickDist;
     public int boomTickDist;
-    public MeshRenderer meshRenderer;
-    public Material[] typeMaterials = new Material[3];
-    public Color[] vialColours = new Color[3];
 
     private int currentVial;
     private string[] types = new string[] { "Poison", "Adrenaline", "Boom" };
-    private int smokeCount;
+    public int smokeCount = 3;
 
     [Header("Dodge Stats")]
     public int dodgeForce;
@@ -87,7 +84,9 @@ public class SongBird : PlayerBase
             smokeCount++;
 
             anim.SetTrigger("AAction");
-            transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, 0.5f);
+            rb2d.AddForce(visuals.transform.forward * dodgeForce, ForceMode.VelocityChange);
+
+//            transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, 0.5f);
             Invoke("StopKnockback", 0.2f);
             for (int i = 0; i < smokeTicks; i++)
             {
@@ -161,5 +160,11 @@ public class SongBird : PlayerBase
         smokeCloud.transform.position += dir * 2;
         smokeCloud.transform.localScale += Vector3.one;
     }
+
+    public override int AccessUniqueFeature(int v)
+    {
+        return smokeCount;
+    }
+
 
 }

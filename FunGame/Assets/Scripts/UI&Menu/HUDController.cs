@@ -7,13 +7,21 @@ public class HUDController : BlankMono
 {
     public GameObject healthBar;
     public GameObject barBorder;
+
     private PlayerBase targetPlayer;
+
     public GameObject playerBase;
     public string thisPlayerInt;
     public GameObject[] images = new GameObject[2];
     public List<Vector3> imagePos = new List<Vector3>();
     public GameObject image;
-    
+
+
+    [Header("Character Specific")]
+    public GameObject commonBar;
+    [Space]
+    public GameObject songCounter;
+
 
     public void Start()
     {
@@ -28,6 +36,15 @@ public class HUDController : BlankMono
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
 
+        commonBar.transform.localScale = new Vector3(targetPlayer.AccessUniqueFeature(1) * 20, 0.2f, 1);
+
+        if (targetPlayer.name.Contains("ongbir"))
+        {
+            commonBar.SetActive(true);
+            songCounter.SetActive(true);
+            songCounter.transform.localScale = new Vector3(targetPlayer.AccessUniqueFeature(1)*0.5f, 0.2f, 1);
+        }
+
         image.SetActive(false);
         image = images[imageInt];
         image.SetActive(true);
@@ -37,9 +54,9 @@ public class HUDController : BlankMono
 
     public void Update()
     {
-        print(string.Format("HealthBar is {0} || targetPaleyr is {1} & their health is {2}", healthBar, targetPlayer, targetPlayer.currentHealth));
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
-        if(targetPlayer.currentHealth < 0) { targetPlayer.currentHealth = 0; }
-    }
+        if (targetPlayer.currentHealth < 0) { targetPlayer.currentHealth = 0; }
 
+        commonBar.transform.localScale = Vector3.Lerp(commonBar.transform.localScale, new Vector3(targetPlayer.AccessUniqueFeature(1)*0.4f, 0.2f, 1), 0.3f);
+    }
 }

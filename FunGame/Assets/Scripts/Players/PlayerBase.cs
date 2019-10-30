@@ -124,5 +124,14 @@ public abstract class PlayerBase : BlankMono
     public void BeginActing() { acting = true; }
     public void EndActing() { acting = false; }
 
+
     #endregion
+
+    #region Returns
+    public virtual int AccessUniqueFeature(int v)
+    {
+        return 0;
+    }
+    #endregion
+
 }
