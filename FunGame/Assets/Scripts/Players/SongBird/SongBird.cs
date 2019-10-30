@@ -45,7 +45,7 @@ public class SongBird : PlayerBase
         if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
     }
 
-    public override void YAction() {anim.SetTrigger("YAction"); }
+    public override void YAction() { anim.SetTrigger("YAction"); }
 
     public override void BAction()
     {
@@ -120,35 +120,36 @@ public class SongBird : PlayerBase
             GameObject smokeCloud = null;
             Vector3 dir = visuals.transform.forward;
             int smokeTicks = 0;
+            print("Vars set");
 
             if (currentVial == 0)
             {
                 smokeCloud = pooler.poisonSmoke[pooler.poisonSmoke.Count - 1];
                 pooler.poisonSmoke.Remove(smokeCloud);
-                smokeCloud.GetComponent<PoisonSmoke>().Begin(tag);
                 smokeTicks = poisonTickDist;
             }
             if (currentVial == 1)
             {
                 smokeCloud = pooler.adrenalineSmoke[pooler.adrenalineSmoke.Count - 1];
                 pooler.adrenalineSmoke.Remove(smokeCloud);
-                smokeCloud.GetComponent<AdrenalineSmoke>().Begin(tag);
                 smokeTicks = adrenalineTickDist;
             }
             if (currentVial == 2)
             {
                 smokeCloud = pooler.boomSmoke[pooler.boomSmoke.Count - 1];
                 pooler.boomSmoke.Remove(smokeCloud);
-                smokeCloud.GetComponent<BoomSmoke>().Begin(tag);
                 smokeTicks = boomTickDist;
             }
+            print("Selected Smoke");
 
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.SetActive(true);
+            smokeCloud.GetComponent<SmokeBase>().Begin(tag);
 
             for (int i = 0; i < smokeTicks; i++)
             {
+                print(i + " is the current loop");
                 StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
             }
         }

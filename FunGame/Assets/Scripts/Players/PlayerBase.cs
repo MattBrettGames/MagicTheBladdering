@@ -49,7 +49,6 @@ public abstract class PlayerBase : BlankMono
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-        tag = thisPlayer;
 
         baseSpeed = speed;
 

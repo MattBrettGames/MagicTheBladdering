@@ -181,7 +181,6 @@ public class UniverseController : BlankMono
 
             for (int i = 0; i < 2; i++)
             {
-                print(i+"forLoop");
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
                 print(string.Format("Set {0}, HUD parsed {1}.", i, charInts[i]));
             }
@@ -210,13 +209,13 @@ public class UniverseController : BlankMono
 
     public void ChooseArena(string arena)
     {
-        SceneManager.LoadScene(arena);
         analytics.map = arena;
         analytics.character1 = characters[0];
         analytics.character2 = characters[1];
         analytics.skin1 = skins[0];
         analytics.skin2 = skins[1];
         analytics.CreateCSV();
+        SceneManager.LoadScene(arena);
     }
 
     [Serializable] public struct spawnPositions { public List<Vector3> spawnPos; }
