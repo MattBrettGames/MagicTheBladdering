@@ -16,7 +16,7 @@ public class EnemyDealer : MonoBehaviour
     {
         GameObject enemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Length)],spawnAreas[currentLevel - 7].spawnPosUnique[UnityEngine.Random.Range(0, 3)], Quaternion.identity);
         EnemyBase code = enemy.GetComponent<EnemyBase>();
-        code.SetStats(playerArray[UnityEngine.Random.Range(0, 2)].transform);
+        code.SetStats(playerArray[UnityEngine.Random.Range(0, 2)].transform, this);
         enemy.SetActive(false);
         return code;
     }
@@ -52,7 +52,9 @@ public class EnemyDealer : MonoBehaviour
     public void EnemyDeath(GameObject enemy)
     {
         enemy.SetActive(false);
-        wave.Add(enemy.GetComponent<EnemyBase>());
+        EnemyBase enemyCode = enemy.GetComponent<EnemyBase>();
+        wave.Add(enemyCode);
+        enemyCode.health = enemyCode.maxHealth;
     }
 
 

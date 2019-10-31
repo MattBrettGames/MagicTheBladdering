@@ -8,6 +8,7 @@ public abstract class EnemyBase : MonoBehaviour
 {
     [Header("RPG Stats")]
     public int health;
+    public int maxHealth;
     public float speed;
     public int attackPower;
 
@@ -25,9 +26,12 @@ public abstract class EnemyBase : MonoBehaviour
     protected NavMeshAgent agent;
     protected bool attackOnCooldown;
     protected PlayerBase playerCode;
+    protected EnemyDealer dealer;
 
-    public void SetStats(Transform target)
+    public void SetStats(Transform target, EnemyDealer gainDealer)
     {
+        maxHealth = health;
+        dealer = gainDealer;
         targetPlayer = target;
         agent = GetComponent<NavMeshAgent>();
         playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
@@ -50,7 +54,7 @@ public abstract class EnemyBase : MonoBehaviour
     public virtual void actionTwo() { }
     public virtual void actionThree() { }
     private void EndCooldown() { attackOnCooldown = false; }
-    public virtual void TakeDamage(int damage) { health -= Mathf.RoundToInt(damage * defMult); }
+    public virtual void TakeDamage(int damage) { health -= Mathf.RoundToInt(damage * defMult); if (health <= 0) { dealer.EnemyDeath(gameObject); } }
 
 
 }
