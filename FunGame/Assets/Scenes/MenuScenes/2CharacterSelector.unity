@@ -450,15 +450,7 @@ MonoBehaviour:
   poisonTickDist: 0
   adrenalineTickDist: 0
   boomTickDist: 0
-  meshRenderer: {fileID: 0}
-  typeMaterials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  vialColours:
-  - {r: 0.48402494, g: 0, b: 0.5566038, a: 0}
-  - {r: 0, g: 1, b: 0.17142844, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
+  smokeCount: 3
   dodgeForce: 3
 --- !u!1 &186192974
 GameObject:
@@ -1471,15 +1463,7 @@ MonoBehaviour:
   poisonTickDist: 0
   adrenalineTickDist: 0
   boomTickDist: 0
-  meshRenderer: {fileID: 0}
-  typeMaterials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  vialColours:
-  - {r: 0.48402494, g: 0, b: 0.5566038, a: 0}
-  - {r: 0, g: 1, b: 0.17142844, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
+  smokeCount: 3
   dodgeForce: 3
 --- !u!1 &424567402
 GameObject:
@@ -1963,6 +1947,31 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6011535050461816263, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6011535050461816263, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 6011535050461816263, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 15.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6011535050461816263, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6011535050461816263, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 5.41
+      objectReference: {fileID: 0}
     - target: {fileID: 6370844271881647915, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2207,6 +2216,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playerID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6011535050461816262, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
@@ -3037,15 +3051,7 @@ MonoBehaviour:
   poisonTickDist: 0
   adrenalineTickDist: 0
   boomTickDist: 0
-  meshRenderer: {fileID: 0}
-  typeMaterials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  vialColours:
-  - {r: 0.48402494, g: 0, b: 0.5566038, a: 0}
-  - {r: 0, g: 1, b: 0.17142844, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
+  smokeCount: 3
   dodgeForce: 3
 --- !u!54 &1129947618
 Rigidbody:
@@ -6670,15 +6676,7 @@ MonoBehaviour:
   poisonTickDist: 50
   adrenalineTickDist: 15
   boomTickDist: 25
-  meshRenderer: {fileID: 0}
-  typeMaterials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  vialColours:
-  - {r: 0.48402494, g: 0, b: 0.5566038, a: 0}
-  - {r: 0, g: 1, b: 0.17142844, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
+  smokeCount: 3
   dodgeForce: 3
 --- !u!54 &1638157961
 Rigidbody:
@@ -16670,8 +16668,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 5, z: 6}
-  m_Center: {x: 0, y: 5.4, z: 0.5}
+  m_Size: {x: 2, y: 15.21, z: 5.41}
+  m_Center: {x: 0, y: 0, z: 1.52}
 --- !u!1 &4615413021099632625
 GameObject:
   m_ObjectHideFlags: 0
@@ -16685,7 +16683,7 @@ GameObject:
   - component: {fileID: 4615413021101635889}
   - component: {fileID: 4615413021099632639}
   - component: {fileID: 4615413021099632624}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ToeCrusher
   m_TagString: Untagged
   m_Icon: {fileID: 0}

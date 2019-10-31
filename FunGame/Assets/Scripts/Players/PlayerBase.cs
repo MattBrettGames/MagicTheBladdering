@@ -92,7 +92,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); if (!hyperArmour) { anim.SetTrigger("Stagger"); } } }
+    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); } }
 
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }

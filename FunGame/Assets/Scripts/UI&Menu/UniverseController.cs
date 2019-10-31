@@ -14,6 +14,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector4;
     public AnalyticsController analytics;
     public Player player;
+    public WaveController waves;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -178,6 +179,8 @@ public class UniverseController : BlankMono
 
             }
             #endregion
+
+            waves.BeginWaves(level);
 
             for (int i = 0; i < 2; i++)
             {

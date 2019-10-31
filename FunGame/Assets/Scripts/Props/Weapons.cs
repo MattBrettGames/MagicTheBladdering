@@ -42,10 +42,10 @@ public class Weapons : BlankMono
         print("Collided with " + other);
         if (other.transform.tag != transform.tag)
         {
-            PlayerBase target = other.transform.GetComponent<PlayerBase>();
+            EnemyBase target = other.transform.GetComponent<EnemyBase>();
             target.TakeDamage(damageFull);
             //target.KnockedDown(damageFull / 10);
-            target.Knockback(knockFull, knockDir);
+            //target.Knockback(knockFull, knockDir);
         }
     }
 

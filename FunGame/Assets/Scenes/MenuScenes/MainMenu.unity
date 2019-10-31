@@ -958,29 +958,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220368205}
   m_CullTransparentMesh: 0
---- !u!1 &299718563 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7378513281623828792, guid: 14a2d9c32a86f0c45bb05ff66cfc8a01,
-    type: 3}
-  m_PrefabInstance: {fileID: 8903400886239918615}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &299718564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299718563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c00986391dfc0e04599b5aefcd316f18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character1: 
-  skin1: 
-  character2: 
-  skin2: 
-  map: 
 --- !u!1 &639046710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,108 +1857,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8903400887174466764, guid: 14a2d9c32a86f0c45bb05ff66cfc8a01,
+    - target: {fileID: 8325725304122433545, guid: 14a2d9c32a86f0c45bb05ff66cfc8a01,
         type: 3}
-      propertyPath: analytics
+      propertyPath: difficulty
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903400886239918617, guid: 14a2d9c32a86f0c45bb05ff66cfc8a01,
+        type: 3}
+      propertyPath: _rewiredInputManager
       value: 
-      objectReference: {fileID: 299718564}
+      objectReference: {fileID: 66106235}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14a2d9c32a86f0c45bb05ff66cfc8a01, type: 3}
---- !u!1 &8903400886239918616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8903400887174466765, guid: 14a2d9c32a86f0c45bb05ff66cfc8a01,
-    type: 3}
-  m_PrefabInstance: {fileID: 8903400886239918615}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8903400886239918617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8903400886239918616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1244824217, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rewiredInputManager: {fileID: 66106235}
-  _playerId: 9999999
-  _elements:
-  - _name: Stick
-    _elementType: 100
-    _enabled: 1
-    _elements:
-    - _name: Stick Horizontal
-      _elementType: 1
-      _enabled: 1
-      _actionId: -1
-      _coordinateMode: 0
-      _absoluteToRelativeSensitivity: 1
-      _repeatRate: 4
-    - _name: Stick Vertical
-      _elementType: 1
-      _enabled: 1
-      _actionId: -1
-      _coordinateMode: 0
-      _absoluteToRelativeSensitivity: 1
-      _repeatRate: 4
-  - _name: 
-    _elementType: 0
-    _enabled: 1
-    _elements:
-    - _name: Button 1
-      _elementType: 0
-      _enabled: 1
-      _actionId: -1
-      _coordinateMode: 0
-      _absoluteToRelativeSensitivity: 1
-      _repeatRate: 4
-  - _name: 
-    _elementType: 0
-    _enabled: 1
-    _elements:
-    - _name: Button 2
-      _elementType: 0
-      _enabled: 1
-      _actionId: -1
-      _coordinateMode: 0
-      _absoluteToRelativeSensitivity: 1
-      _repeatRate: 4
-  - _name: 
-    _elementType: 0
-    _enabled: 1
-    _elements:
-    - _name: Button 3
-      _elementType: 0
-      _enabled: 1
-      _actionId: -1
-      _coordinateMode: 0
-      _absoluteToRelativeSensitivity: 1
-      _repeatRate: 4
-  - _name: 
-    _elementType: 0
-    _enabled: 1
-    _elements:
-    - _name: Button 4
-      _elementType: 0
-      _enabled: 1
-      _actionId: -1
-      _coordinateMode: 0
-      _absoluteToRelativeSensitivity: 1
-      _repeatRate: 4
-  _onButtonStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Rewired.Components.PlayerController+ButtonStateChangedHandler, Rewired_Core,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  _onAxisValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Rewired.Components.PlayerController+AxisValueChangedHandler, Rewired_Core,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  _onEnabledStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Rewired.Components.PlayerController+EnabledStateChangedHandler, Rewired_Core,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
