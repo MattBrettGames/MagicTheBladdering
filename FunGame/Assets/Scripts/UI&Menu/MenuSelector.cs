@@ -42,7 +42,8 @@ public class MenuSelector : MonoBehaviour
         }
     }
 
-    void Play() { universe.SelectedPlay(); }
+    void Duel() { universe.SelectedPlay(); }
     void Bios() { universe.SelectedBios(); }
+    void Adventure() { universe.SelectedAdventure(); }
     void EndCooldown() { inputOnCooldown = false; }
 }

@@ -26,6 +26,7 @@ public class UniverseController : BlankMono
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
     private int currentLevel;
+    private string gameMode;
 
     [Header("Analytics")]
     private string[] characters = new string[2] { "", "" };
@@ -46,7 +47,7 @@ public class UniverseController : BlankMono
     }
 
     private void Update()
-    {        
+    {
         if (SceneManager.GetActiveScene().name == "Bio")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
@@ -60,14 +61,16 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
+    public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelectorPVP"); numOfPlayers = 2; }
     public void SelectedBios() { SceneManager.LoadScene("Bios"); }
+    public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; }
 
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
         if (level == 2)
         {
+            gameMode = "PvE";
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -75,25 +78,13 @@ public class UniverseController : BlankMono
         }
         else if (level == 3)
         {
+            gameMode = "PvP";
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
             charSelector2.SetUniverse(this);
-            charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
-            charSelector3.SetUniverse(this);
         }
-        else if (level == 4)
-        {
-            charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
-            charSelector1.SetUniverse(this);
-            charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
-            charSelector2.SetUniverse(this);
-            charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
-            charSelector3.SetUniverse(this);
-            charSelector4 = GameObject.FindGameObjectWithTag("P4Selector").GetComponent<CharacterSelector>();
-            charSelector4.SetUniverse(this);
-        }
-        else if (level >= 7)
+        else if (level >= 6)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
@@ -197,7 +188,7 @@ public class UniverseController : BlankMono
 
         if (lockedInPlayers == numOfPlayers)
         {
-            SceneManager.LoadScene("ArenaSelector");
+            SceneManager.LoadScene("ArenaSelector"+gameMode);
         }
     }
 
