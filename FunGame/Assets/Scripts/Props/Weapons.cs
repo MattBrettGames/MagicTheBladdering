@@ -39,13 +39,11 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        print("Collided with " + other);
-        if (other.transform.tag != transform.tag)
+        if (other.GetComponent<EnemyBase>() != null)
         {
-            PlayerBase target = other.transform.GetComponent<PlayerBase>();
-            target.TakeDamage(damageFull);
-            //target.KnockedDown(damageFull / 10);
-            target.Knockback(knockFull, knockDir);
+        print("Collided with " + other + ", dealt "+damageFull+" damage");
+            EnemyBase target = other.transform.GetComponent<EnemyBase>();
+            target.TakeDamage(damageFull);            
         }
     }
 
