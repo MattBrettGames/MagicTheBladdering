@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonSmoke : BlankMono
+public class PoisonSmoke : SmokeBase
 {
     [Header("Editables")]
     public float secsBetweenTicks;
     public float duration;
     private List<PlayerBase> afflicted = new List<PlayerBase>();
 
-    public void Begin()
+    public override void Begin(string tagToGet)
     {
         StartCoroutine(TIMETICK());
         Invoke("Return", duration);
+        tag = tagToGet;
     }
 
     private void OnTriggerEnter(Collider other)

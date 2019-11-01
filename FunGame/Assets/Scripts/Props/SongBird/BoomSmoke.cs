@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoomSmoke : BlankMono
+public class BoomSmoke : SmokeBase
 {
     public int knockbackPower;
     public float duration;
 
-    public void Begin()
+    public override void Begin(string tagToGet)
     {
         Invoke("Return", duration);
+        tag = tagToGet;
     }
 
     private void OnTriggerEnter(Collider other)

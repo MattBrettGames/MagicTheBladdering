@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AdrenalineSmoke : MonoBehaviour
+public class AdrenalineSmoke : SmokeBase
 {
     public float powerMultBonus;
     public float defenseMultBonus;
     public float duration;
 
-    public void Begin()
+    public override void Begin(string tagToGet)
     {
         Invoke("Return", duration);
+        tag = tagToGet;
     }
 
     private void OnTriggerEnter(Collider other)
