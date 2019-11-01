@@ -45,5 +45,4 @@ public class MenuSelector : MonoBehaviour
     void Play() { universe.SelectedPlay(); }
     void Bios() { universe.SelectedBios(); }
     void EndCooldown() { inputOnCooldown = false; }
-
 }

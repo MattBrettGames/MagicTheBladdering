@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AreaGen : BlankMono
 {
@@ -16,6 +17,7 @@ public class AreaGen : BlankMono
     [Header("Position Info")]
     public float xIncrease;
     public float zIncrease;
+    public GameObject navMap;
 
     [Header("Smoke & Mirrors")]
     public GameObject loadingImage;
@@ -44,18 +46,23 @@ public class AreaGen : BlankMono
         Destroy(gameObject.transform.GetChild(0).gameObject);
         Instantiate<GameObject>(playerHub, Vector3.zero, Quaternion.identity);
 
-        Vector3 finalPos = gameObject.transform.GetChild(gameObject.transform.childCount-1).transform.position; 
-        Destroy(gameObject.transform.GetChild(gameObject.transform.childCount-1).gameObject);
+        Vector3 finalPos = gameObject.transform.GetChild(gameObject.transform.childCount - 1).transform.position;
+        Destroy(gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject);
         Instantiate<GameObject>(bossRoom, finalPos, Quaternion.identity);
-                
-        for (int i = 0; i< numOfObjectives; i++)
+
+        for (int i = 0; i < numOfObjectives; i++)
         {
-            int z = Random.Range(0, gameObject.transform.childCount-1);
+            int z = Random.Range(0, gameObject.transform.childCount - 1);
             Vector3 newPos = gameObject.transform.GetChild(z).transform.position;
             Destroy(gameObject.transform.GetChild(z).gameObject);
             Instantiate<GameObject>(objectiveRoom, newPos, Quaternion.identity);
         }
 
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject zone = transform.GetChild(i).gameObject;
+            zone.transform.SetParent(navMap.transform);
+        }
 
         loadingImage.SetActive(false);
     }

@@ -21,8 +21,8 @@ public abstract class EnemyBase : MonoBehaviour
     public float attackTimer;
     public float safeDistance;
     protected Vector3 distanceGoal;
-    protected bool aggro;
-    protected Transform targetPlayer;
+    public bool aggro;
+    public Transform targetPlayer;
     protected NavMeshAgent agent;
     protected bool attackOnCooldown;
     protected PlayerBase playerCode;
@@ -41,7 +41,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual void Update()
     {
-
+        distanceGoal = new Vector3(UnityEngine.Random.Range(-safeDistance, safeDistance), 0, UnityEngine.Random.Range(-safeDistance, safeDistance));
         if (aggro)
         {
             if (Vector3.Distance(transform.position, targetPlayer.position) < attackRange && !attackOnCooldown) { actionOne(); }
