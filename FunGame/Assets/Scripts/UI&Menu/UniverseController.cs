@@ -46,15 +46,8 @@ public class UniverseController : BlankMono
     }
 
     private void Update()
-    {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            //if (Input.GetButtonDown("AllAButton")) { SceneManager.LoadScene("3CharacterSelector"); numOfPlayers = 3; }
-            //if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("4CharacterSelector"); numOfPlayers = 4; }
-            if (Input.GetButtonDown("AllXButton")) { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
-            if (Input.GetButtonDown("AllYButton")) { SceneManager.LoadScene("Bio"); }
-        }
-        else if (SceneManager.GetActiveScene().name == "Bio")
+    {        
+        if (SceneManager.GetActiveScene().name == "Bio")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
         }
@@ -66,6 +59,9 @@ public class UniverseController : BlankMono
             }
         }
     }
+
+    public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelector"); numOfPlayers = 2; }
+    public void SelectedBios() { SceneManager.LoadScene("Bios"); }
 
     private void OnLevelWasLoaded(int level)
     {
