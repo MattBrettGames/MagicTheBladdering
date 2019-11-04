@@ -8,6 +8,11 @@ using Rewired;
 
 public class UniverseController : BlankMono
 {
+    [Header("Level Counts")]
+    public int levelCount;
+    public int PVPLevelCount;
+    public int PVELevelCount;
+
     [Header("GameObjects")]
     public CharacterSelector charSelector1;
     public CharacterSelector charSelector2;
@@ -16,6 +21,7 @@ public class UniverseController : BlankMono
     public AnalyticsController analytics;
     public Player player;
     public AreaGen generator;
+    public ScoreTracker tracker;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -23,6 +29,8 @@ public class UniverseController : BlankMono
     private int lockedInPlayers;
     public int numOfRespawns;
     public int respawnTimer;
+    private List<GameObject> playersAlive = new List<GameObject>();
+    private int[] finalScore = new int[2];
 
     [Header("Instantiation Info")]
     public List<spawnPositions> allSpawnPositions = new List<spawnPositions>();
@@ -36,7 +44,6 @@ public class UniverseController : BlankMono
     [Header("Determining Victory")]
     private string winner;
     private Text victoryText;
-
 
     void Start()
     {
@@ -65,7 +72,7 @@ public class UniverseController : BlankMono
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
         }
-        else if (SceneManager.GetActiveScene().name == "GameOver")
+        else if (SceneManager.GetActiveScene().name.Contains("GameOver"))
         {
             if (Input.GetButtonDown("AllBButton"))
             {
@@ -76,7 +83,7 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelectorPVP"); numOfPlayers = 2; }
     public void SelectedBios() { SceneManager.LoadScene("Bios"); }
-    public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; }
+    public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; playersAlive.Add(GameObject.FindGameObjectWithTag("Player1")); playersAlive.Add(GameObject.FindGameObjectWithTag("Player2")); }
 
     private void OnLevelWasLoaded(int level)
     {
@@ -102,7 +109,15 @@ public class UniverseController : BlankMono
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner;
         }
-        else if (level >= 7)
+        else if(level == 5)
+        {
+            Text p1Text = GameObject.Find("ScoreInt1").GetComponent<Text>();
+            p1Text.text = finalScore[0].ToString();
+            Text p2Text = GameObject.Find("ScoreInt2").GetComponent<Text>();
+            p2Text.text = finalScore[1].ToString();
+
+        }
+        else if (level >= levelCount - PVPLevelCount - PVELevelCount)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
@@ -119,7 +134,7 @@ public class UniverseController : BlankMono
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
-            p1.transform.position = allSpawnPositions[level - 7].spawnPos[0];
+            p1.transform.position = allSpawnPositions[level - 1 - levelCount].spawnPos[0];
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
@@ -137,7 +152,7 @@ public class UniverseController : BlankMono
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
-            p2.transform.position = allSpawnPositions[level - 7].spawnPos[1];
+            p2.transform.position = allSpawnPositions[level - 1 - levelCount].spawnPos[1];
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
@@ -149,9 +164,9 @@ public class UniverseController : BlankMono
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
             }
         }
-        if (level >= 8)
+        if (level >= levelCount - PVELevelCount)
         {
-            generator.CreateZone(level - 8);
+            generator.CreateZone(level - levelCount);
         }
     }
 
@@ -190,19 +205,34 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player)
     {
-        player.SetActive(false);
-        PlayerBase playerCode = player.GetComponent<PlayerBase>();
-
-        playerCode.numOfDeaths++;
-
-        if (playerCode.numOfDeaths != numOfRespawns)
+        if (gameMode == "PvP")
         {
-            StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
+            player.SetActive(false);
+            PlayerBase playerCode = player.GetComponent<PlayerBase>();
+
+            playerCode.numOfDeaths++;
+
+            if (playerCode.numOfDeaths != numOfRespawns)
+            {
+                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
+            }
+            else
+            {
+                winner = player.name;
+                SceneManager.LoadScene("GameOver");
+            }
         }
         else
         {
-            winner = player.name;
-            SceneManager.LoadScene("GameOver");
+            playersAlive.Remove(player);
+            if (playersAlive.Count >= 0)
+            {
+                finalScore[0] = tracker.ReturnScores()[0];
+                finalScore[1] = tracker.ReturnScores()[1];
+
+                SceneManager.LoadScene("PvEGameOver");
+            }
+
         }
     }
 
@@ -219,5 +249,16 @@ public class UniverseController : BlankMono
         SceneManager.LoadScene("MainMenu");
 
     }
+
+    public void BossDeath()
+    {
+        generator.DestroyZones();
+        generator.CreateZone(currentLevel);
+        tracker.EnemyDeath("both", 0);
+
+
+
+    }
+
 
 }
