@@ -125,48 +125,7 @@ public class UniverseController : BlankMono
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
             #endregion
-
-            #region Player 3
-            if (selectedChars[2] != null)
-            {
-                GameObject p3 = selectedChars[2];
-                p3.GetComponent<PlayerBase>().enabled = true;
-                p3.GetComponent<PlayerBase>().thisPlayer = "P3";
-                p3.tag = "Player3";
-                //p3.GetComponent<Rigidbody>().isKinematic = false;
-                p3.transform.parent = null;
-                p3.GetComponent<PlayerController>().playerId = 2;
-
-                GameObject parent3 = GameObject.Find("Player3Base");
-                parent3.transform.SetParent(p3.transform);
-                parent3.transform.position = allSpawnPositions[level - 7].spawnPos[2];
-                p3.transform.localPosition = Vector3.zero;
-                p3.transform.localScale = targetScale;
-                p3.transform.rotation = targetLook;
-            }
-            #endregion
-
-            #region Player 4
-            if (selectedChars[3] != null)
-            {
-                GameObject p4 = selectedChars[3];
-                p4.GetComponent<PlayerBase>().enabled = true;
-                p4.GetComponent<PlayerBase>().thisPlayer = "P4";
-                p4.tag = "Player4";
-                //p4.GetComponent<Rigidbody>().isKinematic = false;
-                p4.transform.parent = null;
-                p4.GetComponent<PlayerController>().playerId = 3;
-
-                GameObject parent4 = GameObject.Find("Player4Base");
-                parent4.transform.SetParent(p4.transform);
-                parent4.transform.position = allSpawnPositions[level - 7].spawnPos[3];
-                p4.transform.localPosition = Vector3.zero;
-                p4.transform.localScale = targetScale;
-                p4.transform.rotation = targetLook;
-
-            }
-            #endregion
-
+            
             waves.BeginWaves(level);
 
             for (int i = 0; i < 2; i++)
@@ -232,4 +191,12 @@ public class UniverseController : BlankMono
         player.Respawn();
         player.gameObject.transform.position = allSpawnPositions[currentLevel - 7].spawnPos[playerInt];
     }
+    public void ReturnToMenu()
+    {
+        charSelector1.locked = false;
+        charSelector2.locked = false;
+        SceneManager.LoadScene("MainMenu");
+
+    }
+
 }
