@@ -115,7 +115,6 @@ public class UniverseController : BlankMono
             p1Text.text = finalScore[0].ToString();
             Text p2Text = GameObject.Find("ScoreInt2").GetComponent<Text>();
             p2Text.text = finalScore[1].ToString();
-
         }
         else if (level >= levelCount - PVPLevelCount - PVELevelCount)
         {

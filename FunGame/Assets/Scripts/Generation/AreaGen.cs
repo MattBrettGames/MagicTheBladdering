@@ -16,7 +16,6 @@ public class AreaGen : BlankMono
     [Header("Position Info")]
     public float xIncrease;
     public float zIncrease;
-    public GameObject navMap;
      
     public void CreateZone(int areaType)
     {
