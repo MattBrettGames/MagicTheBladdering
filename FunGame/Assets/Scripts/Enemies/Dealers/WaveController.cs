@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
-
+    /*
     public EnemyDealer dealer;
     public int waveGap;
     public int diffScaling;
@@ -29,5 +29,5 @@ public class WaveController : MonoBehaviour
 
             StartCoroutine(TriggerWave());
         }
-    }
+    }*/
 }

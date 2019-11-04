@@ -2,41 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class AreaGen : BlankMono
 {
     [Header("Spawning Stats")]
     public int rowsToSpawn;
     public int columnsToSpawn;
-    public GameObject[] zones = new GameObject[2];
-    public GameObject playerHub;
-    public GameObject bossRoom;
-    public GameObject objectiveRoom;
     public int numOfObjectives;
+    [Space]
+    public areaInfo[] areaTypes = new areaInfo[1];
 
     [Header("Position Info")]
     public float xIncrease;
     public float zIncrease;
     public GameObject navMap;
-
-    [Header("Smoke & Mirrors")]
-    public GameObject loadingImage;
-
-    void Start()
+     
+    public void CreateZone(int areaType)
     {
-        CreateZone();
-    }
-
-    public void CreateZone()
-    {
-        loadingImage.SetActive(true);
+        //loadingImage.SetActive(true);
         Vector3 spawnPos = Vector3.zero;
 
         for (int i = 0; i < rowsToSpawn; i++)
         {
             for (int c = 0; c < columnsToSpawn; c++)
             {
-                Instantiate<GameObject>(zones[Random.Range(0, zones.Length)], spawnPos, Quaternion.identity, gameObject.transform);
+                Instantiate<GameObject>(areaTypes[areaType].zones[UnityEngine.Random.Range(0, areaTypes[areaType].zones.Length)], spawnPos, Quaternion.identity, gameObject.transform);
                 spawnPos.x += xIncrease;
             }
             spawnPos.z += zIncrease;
@@ -44,27 +35,48 @@ public class AreaGen : BlankMono
         }
 
         Destroy(gameObject.transform.GetChild(0).gameObject);
-        Instantiate<GameObject>(playerHub, Vector3.zero, Quaternion.identity);
+        GameObject playerHome = Instantiate<GameObject>(areaTypes[areaType].playerHub, Vector3.zero, Quaternion.identity);
 
         Vector3 finalPos = gameObject.transform.GetChild(gameObject.transform.childCount - 1).transform.position;
         Destroy(gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject);
-        Instantiate<GameObject>(bossRoom, finalPos, Quaternion.identity);
+        GameObject bossHome = Instantiate<GameObject>(areaTypes[areaType].bossRoom, finalPos, Quaternion.identity);
 
         for (int i = 0; i < numOfObjectives; i++)
         {
-            int z = Random.Range(0, gameObject.transform.childCount - 1);
+            int z = UnityEngine.Random.Range(0, gameObject.transform.childCount - 1);
             Vector3 newPos = gameObject.transform.GetChild(z).transform.position;
             Destroy(gameObject.transform.GetChild(z).gameObject);
-            Instantiate<GameObject>(objectiveRoom, newPos, Quaternion.identity);
+            Instantiate<GameObject>(areaTypes[areaType].objectiveRoom, newPos, Quaternion.identity);
         }
+        
+        NavMeshPath path = new NavMeshPath();
 
-        for (int i = 0; i < transform.childCount; i++)
+        //print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
+        if (!NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path))
         {
-            GameObject zone = transform.GetChild(i).gameObject;
-            zone.transform.SetParent(navMap.transform);
+            DestroyZones();
+            CreateZone(areaType);
         }
 
-        loadingImage.SetActive(false);
+    }
+
+    public void DestroyZones()
+    {
+        GameObject[] zones = GameObject.FindGameObjectsWithTag("Zone");
+        for (int i = 0; i < zones.Length; i++)
+        {
+            Destroy(zones[i]);
+        }
+    }
+
+
+    [Serializable]
+    public struct areaInfo
+    {
+        public GameObject[] zones;
+        public GameObject playerHub;
+        public GameObject bossRoom;
+        public GameObject objectiveRoom;
     }
 
 }

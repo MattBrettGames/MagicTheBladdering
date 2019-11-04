@@ -62,13 +62,13 @@ public abstract class PlayerBase : BlankMono
         {
             Vector3 dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
             //Rotating the Character Model
-            aimTarget.position = transform.position +  dir* 5;
+            aimTarget.position = transform.position + dir * 5;
             visuals.transform.LookAt(aimTarget);
 
             rangeTarget.position = transform.position + dir * throwDist;
             dodgeTarget.position = transform.position + dir * dodgeDist;
 
-            if (!knockbackForce) { transform.position = Vector3.Lerp(transform.position, aimTarget.position, speed*0.2f); }
+            if (!knockbackForce) { rb2d.AddForce(dir * speed, ForceMode.Acceleration);                                                                                            }
 
             //Standard Inputs
             if (player.GetButtonDown("AAction")) { AAction(); }
@@ -100,6 +100,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
     public virtual void Knockback(int power, Vector3 direction)
     {
+        knockbackForce = true;
         rb2d.AddForce(direction * power * 10, ForceMode.Impulse);
         Invoke("StopKnockback", power / 10f); knockbackForce = true;
     }

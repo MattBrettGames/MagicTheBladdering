@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using Rewired;
@@ -14,7 +15,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector4;
     public AnalyticsController analytics;
     public Player player;
-    public WaveController waves;
+    public AreaGen generator;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -32,6 +33,11 @@ public class UniverseController : BlankMono
     private string[] characters = new string[2] { "", "" };
     private string[] skins = new string[2] { "", "" };
 
+    [Header("Determining Victory")]
+    private string winner;
+    private Text victoryText;
+
+
     void Start()
     {
         player = ReInput.players.GetPlayer("System");
@@ -48,6 +54,13 @@ public class UniverseController : BlankMono
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q)) { SceneManager.LoadScene("2CharacterSelectorPvE"); }
+        if (Input.GetKeyDown(KeyCode.W)) { SceneManager.LoadScene("2CharacterSelectorPvP"); }
+
+        if (Input.GetKeyDown(KeyCode.P)) { generator.DestroyZones(); }
+        if (Input.GetKeyDown(KeyCode.O)) { generator.CreateZone(0); }
+
+
         if (SceneManager.GetActiveScene().name == "Bio")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
@@ -84,7 +97,12 @@ public class UniverseController : BlankMono
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
             charSelector2.SetUniverse(this);
         }
-        else if (level >= 6)
+        else if (level == 4)
+        {
+            victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
+            victoryText.text = winner;
+        }
+        else if (level >= 7)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
@@ -125,14 +143,15 @@ public class UniverseController : BlankMono
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
             #endregion
-            
-            waves.BeginWaves(level);
 
             for (int i = 0; i < 2; i++)
             {
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
-                print(string.Format("Set {0}, HUD parsed {1}.", i, charInts[i]));
             }
+        }
+        if (level >= 8)
+        {
+            generator.CreateZone(level - 8);
         }
     }
 
@@ -147,7 +166,7 @@ public class UniverseController : BlankMono
 
         if (lockedInPlayers == numOfPlayers)
         {
-            SceneManager.LoadScene("ArenaSelector"+gameMode);
+            SceneManager.LoadScene("ArenaSelector" + gameMode);
         }
     }
 
@@ -182,9 +201,11 @@ public class UniverseController : BlankMono
         }
         else
         {
+            winner = player.name;
             SceneManager.LoadScene("GameOver");
         }
     }
+
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(respawnTimer);

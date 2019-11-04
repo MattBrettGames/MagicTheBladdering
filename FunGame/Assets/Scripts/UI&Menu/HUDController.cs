@@ -22,12 +22,12 @@ public class HUDController : BlankMono
     [Space]
     public GameObject songCounter;
 
-
+    /*
     public void Start()
     {
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
-    }
+    }*/
 
     public void SetStats(int imageInt)
     {
