@@ -47,11 +47,11 @@ public class AreaGen : BlankMono
             Destroy(gameObject.transform.GetChild(z).gameObject);
             Instantiate<GameObject>(areaTypes[areaType].objectiveRoom, newPos, Quaternion.identity);
         }
-        
+
         NavMeshPath path = new NavMeshPath();
 
         //print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
-        if (!NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path))
+        if (NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path))
         {
             DestroyZones();
             CreateZone(areaType);

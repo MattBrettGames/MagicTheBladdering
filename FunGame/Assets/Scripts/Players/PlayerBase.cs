@@ -68,7 +68,7 @@ public abstract class PlayerBase : BlankMono
             rangeTarget.position = transform.position + dir * throwDist;
             dodgeTarget.position = transform.position + dir * dodgeDist;
 
-            if (!knockbackForce) { rb2d.AddForce(dir * speed, ForceMode.Acceleration);                                                                                            }
+            if (!knockbackForce) { rb2d.velocity = dir * speed; }
 
             //Standard Inputs
             if (player.GetButtonDown("AAction")) { AAction(); }

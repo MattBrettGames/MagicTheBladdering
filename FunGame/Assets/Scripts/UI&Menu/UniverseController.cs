@@ -128,12 +128,13 @@ public class UniverseController : BlankMono
             p1.GetComponent<PlayerBase>().enabled = true;
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             p1.tag = "Player1";
+            print(p1);
             p1.transform.parent = GameObject.Find("CentreBase").transform;
 
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
-            p1.transform.position = allSpawnPositions[level - 1 - levelCount].spawnPos[0];
+            p1.transform.position = allSpawnPositions[level - levelCount].spawnPos[0];
             p1.transform.localScale = targetScale;
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
@@ -151,7 +152,7 @@ public class UniverseController : BlankMono
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
-            p2.transform.position = allSpawnPositions[level - 1 - levelCount].spawnPos[1];
+            p2.transform.position = allSpawnPositions[level - levelCount].spawnPos[1];
             p2.transform.localScale = targetScale;
             p2.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }

@@ -23,6 +23,9 @@ public class ValdyEventHandler : BlankMono
     public void GainIFrames() { valdy.GainIFrames(); }
     public void LoseIFrames() { valdy.LoseIFrames(); }
 
+    public void DoDodge() { valdy.DodgeBurst(); }
+
+
     public void BeginActing() { valdy.BeginActing(); }
     public void EndActing() { valdy.EndActing(); }
 
