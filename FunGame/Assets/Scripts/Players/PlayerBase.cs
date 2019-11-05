@@ -81,9 +81,6 @@ public abstract class PlayerBase : BlankMono
             else { anim.SetFloat("Movement", 0); }
         }
 
-        print(dir * speed + " is the current input");
-        print(gameObject.transform.position + " is the current position");
-
         if (acting)
         {
             print(dir); 
@@ -107,7 +104,20 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); 
+    
+        if(FindObjectsOfType<EnemyBase>() != null)
+        {
+            for(int i = 0; i < FindObjectsOfType<EnemyBase>().Length; i++)
+            {
+
+
+
+            }
+        }
+
+    
+    }
     public virtual void Knockback(int power, Vector3 direction)
     {
         knockbackForce = true;

@@ -42,24 +42,28 @@ public abstract class EnemyBase : MonoBehaviour
     public float attackThreeTimer;
     protected bool attackThreeOnCooldown;
 
-    public void SetStats(Transform target, ScoreTracker scoreTracker)
+    public void SetStats(ScoreTracker scoreTracker)
     {
         maxHealth = health;
         tracker = scoreTracker;
-        targetPlayer = target;
         agent = GetComponent<NavMeshAgent>();
-        playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
         agent.speed = speed;
         distanceGoal = new Vector3(UnityEngine.Random.Range(-safeDistance, safeDistance), 0, UnityEngine.Random.Range(-safeDistance, safeDistance));
         homeSpot = transform.position;
+
+        targetPlayer = GameObject.FindGameObjectWithTag("Player" + UnityEngine.Random.Range(1, 3)).transform;
+        playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
+
     }
 
     public virtual void Update()
     {
+        //print(targetPlayer);
         if (Vector3.Distance(transform.position, targetPlayer.position) <= aggroRange)
         {
             aggro = true;
         }
+        else { aggro = false; }
 
         if (aggro)
         {
@@ -79,6 +83,4 @@ public abstract class EnemyBase : MonoBehaviour
     public virtual void TakeDamage(int damage, string player) { health -= Mathf.RoundToInt(damage * defMult); if (health <= 0) { tracker.EnemyDeath(player, enemyID); } }
 
     public void ReTarget(string newTarget) { targetPlayer = GameObject.FindGameObjectWithTag(newTarget).transform; }
-
-
 }

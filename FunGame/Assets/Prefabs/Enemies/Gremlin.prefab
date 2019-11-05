@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7725752933372580894}
   m_Layer: 11
   m_Name: Gremlin
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,19 +115,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8307d9a62c76c6643b8fcfb04bc0a54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyID: 0
+  enemyID: 1
   health: 10
   maxHealth: 0
   speed: 6
-  attackPower: 1
+  attackPower: 2
   atkMult: 1
   defMult: 1
-  attackRange: 5
-  attackTimer: 4
   safeDistance: 1
-  aggroRange: 4
-  aggro: 0
+  aggroRange: 25
   targetPlayer: {fileID: 0}
+  aggro: 0
+  attackOneRange: 5
+  attackOneTimer: 4
+  attackTwoRange: 0
+  attackTwoTimer: 0
+  attackThreeRange: 0
+  attackThreeTimer: 0
 --- !u!136 &7847473801797854453
 CapsuleCollider:
   m_ObjectHideFlags: 0
