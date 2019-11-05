@@ -7,14 +7,28 @@ public class BossBase : EnemyBase
 
 
 
+    int objsLeft = 3;
+
+    public List<GameObject> entourage = new List<GameObject>();
 
 
-
-    public void BeginActive(Transform target)
+    public void BeginActive()
     {
         gameObject.SetActive(true);
         aggroRange = 100;
-        targetPlayer = target;
+
+        PlayerBase[] players = GameObject.FindObjectsOfType<PlayerBase>();
+        targetPlayer = players[Random.Range(0, 2)].gameObject.transform;
+
+
+        if (entourage != null)
+        {
+            for (int i = 0; i < entourage.Count; i++)
+            {
+                entourage[i].SetActive(true);
+                entourage[i].GetComponent<EnemyBase>().aggro = true;
+            }
+        }
     }
 
     public override void TakeDamage(int damage, string player)
@@ -24,4 +38,13 @@ public class BossBase : EnemyBase
         universe.Invoke("BossDeath()", 5);
     }
 
+    public void ObjectiveDestroyed()
+    {
+        objsLeft--;
+        if (objsLeft <= 0)
+        {
+            BeginActive();
+        }
+
+    }
 }

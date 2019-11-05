@@ -22,14 +22,14 @@ public abstract class EnemyBase : MonoBehaviour
     public float safeDistance;
     public float aggroRange;
     public Transform targetPlayer;
-    protected bool aggro;
+    public bool aggro;
     protected Vector3 distanceGoal;
     protected NavMeshAgent agent;
     protected PlayerBase playerCode;
     protected ScoreTracker tracker;
     protected Vector3 homeSpot;
 
-    [Header("AttackStats")]    
+    [Header("AttackStats")]
     public float attackOneRange;
     public float attackOneTimer;
     protected bool attackOneOnCooldown;
@@ -55,8 +55,8 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     public virtual void Update()
-    {        
-        if(Vector3.Distance(transform.position, targetPlayer.position) <= aggroRange)
+    {
+        if (Vector3.Distance(transform.position, targetPlayer.position) <= aggroRange)
         {
             aggro = true;
         }
@@ -77,6 +77,8 @@ public abstract class EnemyBase : MonoBehaviour
     private void EndThreeCooldown() { attackThreeOnCooldown = false; }
 
     public virtual void TakeDamage(int damage, string player) { health -= Mathf.RoundToInt(damage * defMult); if (health <= 0) { tracker.EnemyDeath(player, enemyID); } }
+
+    public void ReTarget(string newTarget) { targetPlayer = GameObject.FindGameObjectWithTag(newTarget).transform; }
 
 
 }
