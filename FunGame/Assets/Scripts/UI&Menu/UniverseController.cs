@@ -79,6 +79,14 @@ public class UniverseController : BlankMono
                 SceneManager.LoadScene("MainMenu");
             }
         }
+        else if (SceneManager.GetActiveScene().name.Contains("ArenaSel"))
+        {
+            if (Input.GetButtonDown("AllBButton"))
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+
+        }
     }
 
     public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelectorPVP"); numOfPlayers = 2; }
@@ -109,14 +117,14 @@ public class UniverseController : BlankMono
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner;
         }
-        else if(level == 5)
+        else if (level == 5)
         {
             Text p1Text = GameObject.Find("ScoreInt1").GetComponent<Text>();
             p1Text.text = finalScore[0].ToString();
             Text p2Text = GameObject.Find("ScoreInt2").GetComponent<Text>();
             p2Text.text = finalScore[1].ToString();
         }
-        else if (level >= levelCount - PVPLevelCount - PVELevelCount)
+        else if (level > levelCount - PVPLevelCount - PVELevelCount)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
@@ -129,16 +137,16 @@ public class UniverseController : BlankMono
             p1.GetComponent<PlayerBase>().thisPlayer = "P1";
             p1.tag = "Player1";
             p1.transform.SetParent(GameObject.Find("CentreBase").transform);
-            print("CentreBase set");
+            //print("CentreBase set");
 
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
-            p1.transform.position = allSpawnPositions[level - levelCount].spawnPos[0];
+            p1.transform.position = new Vector3(-15, 0, 0);
+            p1.transform.localScale = Vector3.one;
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
-            p1.transform.localScale = Vector3.one;
 
             #endregion
 
@@ -152,7 +160,7 @@ public class UniverseController : BlankMono
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
-            p2.transform.position = allSpawnPositions[level - levelCount].spawnPos[1];
+            p2.transform.position = new Vector3(15, 0, 0);
             p2.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
@@ -164,11 +172,13 @@ public class UniverseController : BlankMono
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
             }
         }
-        if (level >= levelCount - PVELevelCount)
+        if (level > levelCount - PVELevelCount)
         {
             generator.CreateZone(level - levelCount);
         }
     }
+
+
 
     public void CheckReady(int arrayIndex, GameObject gobject, string character, string skin)
     {
@@ -251,8 +261,6 @@ public class UniverseController : BlankMono
 
     public void BossDeath()
     {
-
-
         generator.rowsToSpawn += 1;
         generator.columnsToSpawn += 1;
         generator.DestroyZones();
@@ -260,8 +268,6 @@ public class UniverseController : BlankMono
         tracker.EnemyDeath("both", 0);
         playersAlive[0].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[0];
         playersAlive[1].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[1];
-
-
     }
 
 
