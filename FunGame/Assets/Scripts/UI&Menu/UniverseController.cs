@@ -240,7 +240,7 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForSeconds(respawnTimer);
         player.Respawn();
-        player.gameObject.transform.position = allSpawnPositions[currentLevel - 7].spawnPos[playerInt];
+        player.gameObject.transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[playerInt];
     }
     public void ReturnToMenu()
     {
@@ -255,7 +255,7 @@ public class UniverseController : BlankMono
         generator.DestroyZones();
         generator.CreateZone(currentLevel);
         tracker.EnemyDeath("both", 0);
-
+        
 
 
     }

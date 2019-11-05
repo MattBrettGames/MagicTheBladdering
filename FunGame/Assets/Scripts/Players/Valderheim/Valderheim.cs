@@ -34,7 +34,6 @@ public class Valderheim : PlayerBase
     [Header("Passives")]
     public int growingRageDiv;
 
-
     public override void XAction()
     {
         if (!comboTime)
@@ -43,8 +42,10 @@ public class Valderheim : PlayerBase
         }
         else
         {
+            Vector3 dir = visuals.transform.forward;
             anim.SetBool("Comboing", true);
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward);
+
         }
         anim.SetTrigger("XAttack");
     }

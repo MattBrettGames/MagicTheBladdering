@@ -5,12 +5,19 @@ using UnityEngine;
 public class RandomCharacterPicker : MonoBehaviour
 {
 
-    public GameObject[] chars = new GameObject[2];
+    public GameObjects[] chars = new GameObjects[2];
        
     void Start()
     {
-        chars[Random.Range(0, chars.Length)].SetActive(true);
+        int rando = Random.Range(0, chars.Length);
+        chars[rando].background.SetActive(true);
+        chars[rando].characters.SetActive(true);
     }
-
+    
+    public struct GameObjects
+    {
+        public GameObject characters;
+        public GameObject background;
+    }
 
 }
