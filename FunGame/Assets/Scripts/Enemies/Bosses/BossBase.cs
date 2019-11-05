@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class BossBase : EnemyBase
 {
-    // Start is called before the first frame update
-    void Start()
+
+
+
+
+
+
+    public void BeginActive(Transform target)
     {
-        
+        gameObject.SetActive(true);
+        aggroRange = 100;
+        targetPlayer = target;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void TakeDamage(int damage, string player)
     {
-        
+        base.TakeDamage(damage, player);
+        UniverseController universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
+        universe.Invoke("BossDeath()", 5);
     }
+
 }

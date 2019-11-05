@@ -17,22 +17,27 @@ public class AreaGen : BlankMono
     public float xIncrease;
     public float zIncrease;
 
-    public void CreateZone(int areaType)
+    IEnumerator SpawnWalls(int areaType, Vector3 bossRoom)
     {
-        //loadingImage.SetActive(true);
-        Vector3 spawnPos = Vector3.zero;
-
-        //Northern Wall
-        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 23, 0, rowsToSpawn * 60), new Quaternion(0, 0, 0, 0), gameObject.transform);
-
+        yield return new WaitForEndOfFrame();
         //Southern Wall
         Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 23, 0, -175), new Quaternion(0, 0, 0, 0), gameObject.transform);
-
+             
         //Western Wall
-        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(-175, 0, rowsToSpawn * 24.415f), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3 (0,90,0));
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(-175, 0, rowsToSpawn * 24.415f), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3(0, 90, 0));
+
+        //Northern Wall
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 23, 0, bossRoom.z + 170), new Quaternion(0, 0, 0, 0), gameObject.transform);
 
         //Eastern Wall
-        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 60, 0, rowsToSpawn * 23), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3(0, 90, 0));
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(bossRoom.x + 170, 0, rowsToSpawn * 23), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3(0, 90, 0));
+
+    }
+
+    public void CreateZone(int areaType)
+    {
+        Vector3 spawnPos = Vector3.zero;
+
 
         for (int i = 0; i < rowsToSpawn; i++)
         {
@@ -60,6 +65,8 @@ public class AreaGen : BlankMono
             Instantiate<GameObject>(areaTypes[areaType].objectiveRoom, newPos, Quaternion.identity);
         }
 
+        StartCoroutine(SpawnWalls(areaType, bossHome.transform.position));
+
         NavMeshPath path = new NavMeshPath();
 
         //print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
@@ -68,7 +75,6 @@ public class AreaGen : BlankMono
             DestroyZones();
             CreateZone(areaType);
         }
-
     }
 
     public void DestroyZones()

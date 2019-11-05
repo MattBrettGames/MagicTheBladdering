@@ -31,7 +31,4 @@ public class ScoreTracker : MonoBehaviour
         int[] vs = { p1Score, p2Score };
         return vs;
     }
-
-
-
 }
