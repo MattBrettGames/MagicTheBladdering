@@ -57,10 +57,9 @@ MonoBehaviour:
       type: 3}
     objectiveRoom: {fileID: 9205451136962167316, guid: 358771d4470e040459d7a85dedbd0671,
       type: 3}
+    outerWall: {fileID: 0}
   xIncrease: 0
   zIncrease: 0
-  navMap: {fileID: 0}
-  loadingImage: {fileID: 0}
 --- !u!1 &6659488529868548436
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,11 +100,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6659488529868548436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07cb025299d5604489fe0d6694698cf0, type: 3}
+  m_Script: {fileID: 11500000, guid: bfc06ca772338d147925591ddc19d18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - pointValue: 10
+  enemyValues: e803000019000000
 --- !u!1 &7378513281623828792
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,12 +217,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa54a441ebcf8394ea3252013c24e57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelCount: 0
+  PVPLevelCount: 0
+  PVELevelCount: 0
   charSelector1: {fileID: 0}
   charSelector2: {fileID: 0}
   charSelector3: {fileID: 0}
   charSelector4: {fileID: 0}
   analytics: {fileID: 299718564}
   generator: {fileID: 0}
+  tracker: {fileID: 0}
   selectedChars:
   - {fileID: 0}
   - {fileID: 0}

@@ -13,6 +13,7 @@ public abstract class PlayerBase : BlankMono
     public float speed;
     private float baseSpeed;
     protected float moving;
+    protected Vector3 dir;
 
     [Header("Common Stats")]
     public int currentHealth;
@@ -60,7 +61,7 @@ public abstract class PlayerBase : BlankMono
     {
         if (!prone && !knockbackForce && !acting)
         {
-            Vector3 dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
+            dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
             //Rotating the Character Model
             aimTarget.position = transform.position + dir * 5;
             visuals.transform.LookAt(aimTarget);
@@ -78,6 +79,15 @@ public abstract class PlayerBase : BlankMono
 
             if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
             else { anim.SetFloat("Movement", 0); }
+        }
+
+        print(dir * speed + " is the current input");
+        print(gameObject.transform.position + " is the current position");
+
+        if (acting)
+        {
+            print(dir); 
+            dir = Vector3.zero;
         }
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
