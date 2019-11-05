@@ -16,11 +16,23 @@ public class AreaGen : BlankMono
     [Header("Position Info")]
     public float xIncrease;
     public float zIncrease;
-     
+
     public void CreateZone(int areaType)
     {
         //loadingImage.SetActive(true);
         Vector3 spawnPos = Vector3.zero;
+
+        //Northern Wall
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 23, 0, rowsToSpawn * 60), new Quaternion(0, 0, 0, 0), gameObject.transform);
+
+        //Southern Wall
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 23, 0, -175), new Quaternion(0, 0, 0, 0), gameObject.transform);
+
+        //Western Wall
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(-175, 0, rowsToSpawn * 24.415f), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3 (0,90,0));
+
+        //Eastern Wall
+        Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 60, 0, rowsToSpawn * 23), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3(0, 90, 0));
 
         for (int i = 0; i < rowsToSpawn; i++)
         {
@@ -76,6 +88,7 @@ public class AreaGen : BlankMono
         public GameObject playerHub;
         public GameObject bossRoom;
         public GameObject objectiveRoom;
+        public GameObject outerWall;
     }
 
 }
