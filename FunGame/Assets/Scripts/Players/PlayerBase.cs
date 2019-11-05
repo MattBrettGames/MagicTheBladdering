@@ -81,6 +81,9 @@ public abstract class PlayerBase : BlankMono
             else { anim.SetFloat("Movement", 0); }
         }
 
+        print(dir * speed + " is the current input");
+        print(gameObject.transform.position + " is the current position");
+
         if (acting)
         {
             print(dir); 
