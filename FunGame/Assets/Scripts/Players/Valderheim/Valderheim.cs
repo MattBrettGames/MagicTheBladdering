@@ -30,6 +30,7 @@ public class Valderheim : PlayerBase
 
     [Header("Charge!")]
     public int dodgeForce;
+    public float dodgeDur;
 
     [Header("Passives")]
     public int growingRageDiv;
@@ -89,10 +90,10 @@ public class Valderheim : PlayerBase
     public override void AAction()
     {
         anim.SetTrigger("AAction");
-        Invoke("StopKnockback", 0.4f);
+        Invoke("StopKnockback", dodgeDur);
     }
 
-    public void DodgeBurst() { rb2d.AddForce(visuals.transform.forward * dodgeForce * 10, ForceMode.Impulse); }
+    public void DodgeBurst() { rb2d.AddForce(visuals.transform.forward * dodgeForce*10, ForceMode.Force); }
 
 
     //Passive Effects - Surefooted & Building Rage

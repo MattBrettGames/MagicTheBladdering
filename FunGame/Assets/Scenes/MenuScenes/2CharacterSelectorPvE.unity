@@ -2140,7 +2140,12 @@ PrefabInstance:
     - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: dodgeForce
-      value: 20
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: dodgeDur
+      value: 4.13
       objectReference: {fileID: 0}
     - target: {fileID: 6370844271881647923, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
@@ -16478,6 +16483,7 @@ MonoBehaviour:
   frenzyDuration: 6
   frenzyBonus: 1
   dodgeForce: 3
+  dodgeDur: 0
   growingRageDiv: 1
 --- !u!136 &1414950365180919014
 CapsuleCollider:
@@ -16998,6 +17004,7 @@ MonoBehaviour:
   frenzyDuration: 6
   frenzyBonus: 1
   dodgeForce: 3
+  dodgeDur: 0
   growingRageDiv: 0
 --- !u!54 &5294485740794724442
 Rigidbody:
