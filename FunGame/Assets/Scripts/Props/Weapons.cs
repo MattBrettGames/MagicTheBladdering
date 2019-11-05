@@ -43,7 +43,7 @@ public class Weapons : BlankMono
         {
         print("Collided with " + other + ", dealt "+damageFull+" damage");
             EnemyBase target = other.transform.GetComponent<EnemyBase>();
-            target.TakeDamage(damageFull);            
+            target.TakeDamage(damageFull, tag);            
         }
     }
 

@@ -6,6 +6,8 @@ using System;
 
 public abstract class EnemyBase : MonoBehaviour
 {
+    [SerializeField] int enemyID;
+
     [Header("RPG Stats")]
     public int health;
     public int maxHealth;
@@ -17,44 +19,68 @@ public abstract class EnemyBase : MonoBehaviour
     public float defMult;
 
     [Header("AI Controls")]
-    public float attackRange;
-    public float attackTimer;
     public float safeDistance;
-    protected Vector3 distanceGoal;
-    public bool aggro;
+    public float aggroRange;
     public Transform targetPlayer;
+    public bool aggro;
+    protected Vector3 distanceGoal;
     protected NavMeshAgent agent;
-    protected bool attackOnCooldown;
     protected PlayerBase playerCode;
-    protected EnemyDealer dealer;
+    protected ScoreTracker tracker;
+    protected Vector3 homeSpot;
 
-    public void SetStats(Transform target, EnemyDealer gainDealer)
+    [Header("AttackStats")]
+    public float attackOneRange;
+    public float attackOneTimer;
+    protected bool attackOneOnCooldown;
+    [Space]
+    public float attackTwoRange;
+    public float attackTwoTimer;
+    protected bool attackTwoOnCooldown;
+    [Space]
+    public float attackThreeRange;
+    public float attackThreeTimer;
+    protected bool attackThreeOnCooldown;
+
+    public void SetStats(ScoreTracker scoreTracker)
     {
         maxHealth = health;
-        dealer = gainDealer;
-        targetPlayer = target;
+        tracker = scoreTracker;
         agent = GetComponent<NavMeshAgent>();
-        playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
         agent.speed = speed;
         distanceGoal = new Vector3(UnityEngine.Random.Range(-safeDistance, safeDistance), 0, UnityEngine.Random.Range(-safeDistance, safeDistance));
+        homeSpot = transform.position;
+
+        targetPlayer = GameObject.FindGameObjectWithTag("Player" + UnityEngine.Random.Range(1, 3)).transform;
+        playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
+
     }
 
     public virtual void Update()
     {
-        distanceGoal = new Vector3(UnityEngine.Random.Range(-safeDistance, safeDistance), 0, UnityEngine.Random.Range(-safeDistance, safeDistance));
+        //print(targetPlayer);
+        if (Vector3.Distance(transform.position, targetPlayer.position) <= aggroRange)
+        {
+            aggro = true;
+        }
+        else { aggro = false; }
+
         if (aggro)
         {
-            if (Vector3.Distance(transform.position, targetPlayer.position) < attackRange && !attackOnCooldown) { actionOne(); }
+            if (Vector3.Distance(transform.position, targetPlayer.position) < attackOneRange && !attackOneOnCooldown) { actionOne(); }
             agent.SetDestination(targetPlayer.position + distanceGoal);
         }
+        else { agent.SetDestination(homeSpot); }
     }
 
-    public virtual void Beginwave() { aggro = true; }
-    public virtual void actionOne() { Invoke("EndCooldown", attackTimer); attackOnCooldown = true; } // playerCode.TakeDamage(Mathf.RoundToInt(attackPower * atkMult)); }
-    public virtual void actionTwo() { }
-    public virtual void actionThree() { }
-    private void EndCooldown() { attackOnCooldown = false; }
-    public virtual void TakeDamage(int damage) { health -= Mathf.RoundToInt(damage * defMult); if (health <= 0) { dealer.EnemyDeath(gameObject); } }
+    public virtual void actionOne() { Invoke("EndOneCooldown", attackOneTimer); attackOneOnCooldown = true; } // playerCode.TakeDamage(Mathf.RoundToInt(attackPower * atkMult)); }
+    public virtual void actionTwo() { Invoke("EndTwoCooldown", attackTwoTimer); attackTwoOnCooldown = true; }
+    public virtual void actionThree() { Invoke("EndThreeCooldown", attackThreeTimer); attackThreeOnCooldown = true; }
+    private void EndOneCooldown() { attackOneOnCooldown = false; }
+    private void EndTwoCooldown() { attackTwoOnCooldown = false; }
+    private void EndThreeCooldown() { attackThreeOnCooldown = false; }
 
+    public virtual void TakeDamage(int damage, string player) { health -= Mathf.RoundToInt(damage * defMult); if (health <= 0) { tracker.EnemyDeath(player, enemyID); } }
 
+    public void ReTarget(string newTarget) { targetPlayer = GameObject.FindGameObjectWithTag(newTarget).transform; }
 }

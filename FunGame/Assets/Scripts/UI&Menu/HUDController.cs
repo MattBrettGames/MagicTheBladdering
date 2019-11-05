@@ -17,25 +17,22 @@ public class HUDController : BlankMono
     public GameObject image;
 
 
-    [Header("Character Specific")]
-    public GameObject commonBar;
-    [Space]
-    public GameObject songCounter;
-
-
+    /*
     public void Start()
     {
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
-    }
+    }*/
 
     public void SetStats(int imageInt)
     {
         //targetPlayer = GameObject.FindGameObjectWithTag("Player" + thisPlayerInt).GetComponent<PlayerBase>();
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
+        //print(targetPlayer);
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
-
+        
+        /*
         commonBar.transform.localScale = new Vector3(targetPlayer.AccessUniqueFeature(1) * 20, 0.2f, 1);
 
         if (targetPlayer.name.Contains("ongbir"))
@@ -43,7 +40,7 @@ public class HUDController : BlankMono
             commonBar.SetActive(true);
             songCounter.SetActive(true);
             songCounter.transform.localScale = new Vector3(targetPlayer.AccessUniqueFeature(1)*0.5f, 0.2f, 1);
-        }
+        }*/
 
         image.SetActive(false);
         image = images[imageInt];
@@ -57,6 +54,6 @@ public class HUDController : BlankMono
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
         if (targetPlayer.currentHealth < 0) { targetPlayer.currentHealth = 0; }
 
-        commonBar.transform.localScale = Vector3.Lerp(commonBar.transform.localScale, new Vector3(targetPlayer.AccessUniqueFeature(1)*0.4f, 0.2f, 1), 0.3f);
+        //commonBar.transform.localScale = Vector3.Lerp(commonBar.transform.localScale, new Vector3(targetPlayer.AccessUniqueFeature(1)*0.4f, 0.2f, 1), 0.3f);
     }
 }

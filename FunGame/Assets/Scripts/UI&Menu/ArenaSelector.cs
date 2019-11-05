@@ -50,6 +50,13 @@ public class ArenaSelector : BlankMono
             UniverseController universe = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
             universe.ChooseArena(displays[currentDisplay].name);
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            UniverseController universe = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
+            universe.ChooseArena("RuinedVillage");
+        }
+
     }
 
     void EndCooldown()

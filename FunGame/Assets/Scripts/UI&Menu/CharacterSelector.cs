@@ -128,8 +128,15 @@ public class CharacterSelector : BlankMono
         }
         if (Input.GetButtonDown(thisPlayer + "BButton"))
         {
-            locked = false;
-            universe.Unlock();
+            if (!locked)
+            {
+                universe.ReturnToMenu();
+            }
+            else
+            {
+                locked = false;
+                universe.Unlock();
+            }
         }
     }
 
