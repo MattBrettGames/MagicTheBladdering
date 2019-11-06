@@ -22,7 +22,7 @@ public class AreaGen : BlankMono
         yield return new WaitForEndOfFrame();
         //Southern Wall
         Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(columnsToSpawn * 23, 0, -175), new Quaternion(0, 0, 0, 0), gameObject.transform);
-             
+
         //Western Wall
         Instantiate<GameObject>(areaTypes[areaType].outerWall, new Vector3(-175, 0, rowsToSpawn * 24.415f), new Quaternion(0, 0, 0, 1), gameObject.transform).transform.Rotate(new Vector3(0, 90, 0));
 
@@ -43,7 +43,7 @@ public class AreaGen : BlankMono
         {
             for (int c = 0; c < columnsToSpawn; c++)
             {
-                Instantiate<GameObject>(areaTypes[areaType].zones[UnityEngine.Random.Range(0, areaTypes[areaType].zones.Length)], spawnPos, Quaternion.identity, gameObject.transform);
+                Instantiate<GameObject>(areaTypes[areaType].zones[UnityEngine.Random.Range(0, areaTypes[areaType].zones.Length)], spawnPos, Quaternion.identity, gameObject.transform).transform.Rotate(new Vector3(0, UnityEngine.Random.Range(1, 5) * 90, 0));
                 spawnPos.x += xIncrease;
             }
             spawnPos.z += zIncrease;
@@ -66,7 +66,11 @@ public class AreaGen : BlankMono
         }
 
         StartCoroutine(SpawnWalls(areaType, bossHome.transform.position));
+        StartCoroutine(SetStatLoop());
 
+
+
+        /*
         NavMeshPath path = new NavMeshPath();
 
         //print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
@@ -75,8 +79,21 @@ public class AreaGen : BlankMono
             DestroyZones();
             CreateZone(areaType);
         }
+        */
     }
 
+    private IEnumerator SetStatLoop()
+    {
+        yield return new WaitForSeconds(1);
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            print(enemies[i]);
+            enemies[i].GetComponent<EnemyBase>().SetStats(GameObject.Find("ScoreTracker").GetComponent<ScoreTracker>());
+        }
+    }
+    
     public void DestroyZones()
     {
         GameObject[] zones = GameObject.FindGameObjectsWithTag("Zone");
@@ -86,11 +103,11 @@ public class AreaGen : BlankMono
         }
     }
 
-
     [Serializable]
     public struct areaInfo
     {
         public GameObject[] zones;
+        [Space]
         public GameObject playerHub;
         public GameObject bossRoom;
         public GameObject objectiveRoom;

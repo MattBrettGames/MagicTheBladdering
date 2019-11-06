@@ -6,7 +6,6 @@ public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
     public Weapons hammer;
-    public Weapons chest;
 
     [Header("Wide Swing")]
     public int xAttack;
@@ -19,14 +18,16 @@ public class Valderheim : PlayerBase
     [Header("Ground Slam")]
     public int slamAttack;
     public int slamKnockback;
+
+    [Header("Kick Up")]
     public int kickAttack;
     public int kickKnockback;
-    private bool comboTime;
 
     [Header("Frenzy")]
     public int frenzyDuration;
     public int frenzyBonus;
     private bool frenzy;
+    public ParticleSystem frenzyEffects;
 
     [Header("Charge!")]
     public int dodgeForce;
@@ -34,19 +35,19 @@ public class Valderheim : PlayerBase
 
     [Header("Passives")]
     public int growingRageDiv;
+    private bool comboTime;
 
     public override void XAction()
     {
         if (!comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward);
+            hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
         }
         else
         {
             Vector3 dir = visuals.transform.forward;
             anim.SetBool("Comboing", true);
-            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward);
-
+            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp);
         }
         anim.SetTrigger("XAttack");
     }
@@ -55,14 +56,14 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward);
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
             anim.SetBool("Comboing", true);
             anim.SetTrigger("YAttack");
         }
         else
         {
             anim.SetBool("Comboing", false);
-            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward);
+            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
             anim.SetTrigger("YAttack");
         }
     }
@@ -78,6 +79,7 @@ public class Valderheim : PlayerBase
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
             frenzy = true;
+            frenzyEffects.Play();
         }
     }
     private void StopFrenzy()
@@ -85,6 +87,7 @@ public class Valderheim : PlayerBase
         damageMult -= frenzyBonus;
         incomingMult -= frenzyBonus;
         frenzy = false;
+        frenzyEffects.Pause();
     }
 
     public override void AAction()
@@ -93,7 +96,7 @@ public class Valderheim : PlayerBase
         Invoke("StopKnockback", dodgeDur);
     }
 
-    public void DodgeBurst() { rb2d.AddForce(visuals.transform.forward * dodgeForce*10, ForceMode.Force); }
+    public void DodgeBurst() { rb2d.AddForce(visuals.transform.forward * dodgeForce * 10, ForceMode.Force); }
 
 
     //Passive Effects - Surefooted & Building Rage

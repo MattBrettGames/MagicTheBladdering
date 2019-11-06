@@ -177,7 +177,7 @@ public class UniverseController : BlankMono
             generator.CreateZone(level - levelCount);
         }
     }
-       
+    
     public void CheckReady(int arrayIndex, GameObject gobject, string character, string skin)
     {
         selectedChars[arrayIndex] = gobject;
