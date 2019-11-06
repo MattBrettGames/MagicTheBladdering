@@ -35,11 +35,11 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        if (currentVial == 0) { weapon.poisonActive = true; weapon.GainInfo(baseXDamage, 0, visuals.transform.forward); }
+        if (currentVial == 0) { weapon.poisonActive = true; weapon.GainInfo(baseXDamage, 0, visuals.transform.forward, pvp); }
         else { weapon.poisonActive = false; }
 
-        if (currentVial == 1) { weapon.GainInfo(adrenXDamage, 0, visuals.transform.forward); }
-        if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward); }
+        if (currentVial == 1) { weapon.GainInfo(adrenXDamage, 0, visuals.transform.forward, pvp); }
+        if (currentVial == 2) { weapon.GainInfo(baseXDamage, boomXKnockback, visuals.transform.forward, pvp); }
     }
 
     public override void YAction() { anim.SetTrigger("YAction"); }
@@ -86,7 +86,6 @@ public class SongBird : PlayerBase
             anim.SetTrigger("AAction");
             rb2d.AddForce(visuals.transform.forward * dodgeForce, ForceMode.VelocityChange);
 
-//            transform.position = Vector3.Slerp(transform.position, dodgeTarget.position, 0.5f);
             Invoke("StopKnockback", 0.2f);
             for (int i = 0; i < smokeTicks; i++)
             {

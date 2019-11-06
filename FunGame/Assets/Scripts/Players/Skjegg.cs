@@ -40,19 +40,19 @@ public class Skjegg : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAction");
-        fist.GainInfo(tacheDamage, tacheKnockback, visuals.transform.forward);
+        fist.GainInfo(tacheDamage, tacheKnockback, visuals.transform.forward, pvp);
     }
 
     public override void YAction()
     {
         anim.SetTrigger("YAction");
-        dagger.GainInfo(deadlockDamage, deadlockKnockback, visuals.transform.forward);
+        dagger.GainInfo(deadlockDamage, deadlockKnockback, visuals.transform.forward, pvp);
     }
 
     public void HairLine()
     {
         anim.SetTrigger("HairLine");
-        hairline.GainInfo(0, hairlineKnockback, visuals.transform.forward);
+        hairline.GainInfo(0, hairlineKnockback, visuals.transform.forward, pvp);
     }
 
     public void FurtherBurn()
@@ -61,39 +61,4 @@ public class Skjegg : PlayerBase
         Knockback(boosterSpeed, visuals.transform.forward);
         Invoke("StopKnockback", 0.4f);
     }
-
-
-
-    /*public override void Update()
-    {
-        float hori = Input.GetAxis(horiPlayerInput);
-        float vert = Input.GetAxis(vertPlayerInput);
-        if (!prone)
-        {
-            //Rotating the Character Model
-            aimTarget.position = transform.position + new Vector3(hori, 0, vert).normalized * 3;
-            visuals.transform.LookAt(aimTarget);
-
-            transform.position = Vector3.Slerp(transform.position, aimTarget.position, speed);
-            //transform.Translate(new Vector3(hori, 0, vert).normalized * speed);
-            if (Input.GetAxisRaw(horiPlayerInput) != 0 || Input.GetAxisRaw(vertPlayerInput) != 0) { anim.SetFloat("Movement", 1); }
-
-            //Standard Inputs
-            if (Input.GetButtonDown(aPlayerInput) && !burning) { AAction(); }
-            if (Input.GetButtonDown(bPlayerInput)) { BAction(); }
-            if (Input.GetButtonDown(xPlayerInput)) { XAction(); }
-            if (Input.GetButtonDown(yPlayerInput)) { YAction(); }
-
-            if (Input.GetButtonDown(aPlayerInput) && burning)
-            {
-                EndBurn();
-            }
-        }
-
-        if (poison > 0) { poison -= Time.deltaTime; }
-        if (curseTimer <= 0) { LoseCurse(); }
-        else { curseTimer -= Time.deltaTime; }
-
-    }*/
-
 }

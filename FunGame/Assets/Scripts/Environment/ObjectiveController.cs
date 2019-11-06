@@ -7,13 +7,6 @@ public class ObjectiveController : MonoBehaviour
 
     public int healthPool;
 
-
-
-    void OnCollisionEnter(Collision other)
-    { 
-
-    }
-
     public void TakeDamage(int damage)
     {
         healthPool -= damage;
