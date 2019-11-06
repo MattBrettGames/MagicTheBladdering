@@ -6,7 +6,6 @@ public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
     public Weapons hammer;
-    public Weapons chest;
 
     [Header("Wide Swing")]
     public int xAttack;
