@@ -87,13 +87,13 @@ public class AreaGen : BlankMono
         yield return new WaitForSeconds(1);
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length-1; i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
+            print(enemies[i]);
             enemies[i].GetComponent<EnemyBase>().SetStats(GameObject.Find("ScoreTracker").GetComponent<ScoreTracker>());
         }
     }
-
-
+    
     public void DestroyZones()
     {
         GameObject[] zones = GameObject.FindGameObjectsWithTag("Zone");
@@ -103,11 +103,11 @@ public class AreaGen : BlankMono
         }
     }
 
-
     [Serializable]
     public struct areaInfo
     {
         public GameObject[] zones;
+        [Space]
         public GameObject playerHub;
         public GameObject bossRoom;
         public GameObject objectiveRoom;
