@@ -10,7 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     [Header("RPG Stats")]
     public int health;
-    public int maxHealth;
+    [HideInInspector] public int maxHealth;
     public float speed;
     public int attackPower;
 
@@ -54,6 +54,8 @@ public abstract class EnemyBase : MonoBehaviour
         targetPlayer = GameObject.FindGameObjectWithTag("Player" + UnityEngine.Random.Range(1, 3)).transform;
         playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
 
+        ReTarget();
+
     }
 
     public virtual void Update()
@@ -82,5 +84,13 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual void TakeDamage(int damage, string player) { health -= Mathf.RoundToInt(damage * defMult); if (health <= 0) { tracker.EnemyDeath(player, enemyID); } }
 
-    public void ReTarget(string newTarget) { targetPlayer = GameObject.FindGameObjectWithTag(newTarget).transform; }
+    public virtual void ReTarget()
+    {
+        targetPlayer = GameObject.FindGameObjectWithTag("Player" + UnityEngine.Random.Range(1, 3)).transform;
+        playerCode = targetPlayer.gameObject.GetComponent<PlayerBase>();
+        if (playerCode.currentHealth <= 0)
+        {
+            ReTarget();
+        }
+    }
 }

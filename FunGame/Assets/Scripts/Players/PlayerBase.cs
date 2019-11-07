@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+
 public abstract class PlayerBase : BlankMono
 {
     [Header("GameMode Stuff")]
     public string thisPlayer;
     public int playerID;
-    public int numOfDeaths = 0;
+    [HideInInspector] public int numOfDeaths = 0;
     public bool pvp;
 
     [Header("Movement Stats")]
@@ -18,13 +19,9 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Common Stats")]
     public int currentHealth;
-    public int healthMax;
+    [HideInInspector] public int healthMax;
     public float damageMult = 1;
     public float incomingMult = 1;
-
-    [Header("Probably should be lower")]
-    public int throwDist;
-    public int dodgeDist;
 
     [Header("Status Effects")]
     public bool cursed;
@@ -39,8 +36,6 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Components")]
     public Transform aimTarget;
-    public Transform rangeTarget;
-    public Transform dodgeTarget;
     public GameObject visuals;
     protected Animator anim;
     protected Rigidbody rb2d;
@@ -67,9 +62,6 @@ public abstract class PlayerBase : BlankMono
             aimTarget.position = transform.position + dir * 5;
             visuals.transform.LookAt(aimTarget);
 
-            rangeTarget.position = transform.position + dir * throwDist;
-            dodgeTarget.position = transform.position + dir * dodgeDist;
-
             if (!knockbackForce) { rb2d.velocity = dir * speed; }
 
             //Standard Inputs
@@ -84,7 +76,6 @@ public abstract class PlayerBase : BlankMono
 
         if (acting)
         {
-            print(dir); 
             dir = Vector3.zero;
         }
         if (poison > 0) { poison -= Time.deltaTime; }
@@ -105,20 +96,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); 
-    
-        if(FindObjectsOfType<EnemyBase>() != null)
-        {
-            for(int i = 0; i < FindObjectsOfType<EnemyBase>().Length; i++)
-            {
-
-
-
-            }
-        }
-
-    
-    }
+    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
     public virtual void Knockback(int power, Vector3 direction)
     {
         knockbackForce = true;

@@ -20,7 +20,6 @@ public class MenuSelector : MonoBehaviour
     {
         if (Input.GetAxis("AllVertical") >= 0.4 && !inputOnCooldown)
         {
-            print(currentSel);
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
             if (currentSel >= options.Length - 1) { currentSel = 0; }
@@ -29,7 +28,6 @@ public class MenuSelector : MonoBehaviour
         }
         if (Input.GetAxis("AllVertical") <= -0.4 && !inputOnCooldown)
         {
-            print(currentSel);
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
             if (currentSel <= 0) { currentSel = options.Length-1; }
