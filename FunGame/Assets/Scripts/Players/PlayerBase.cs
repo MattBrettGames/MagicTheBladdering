@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+
 public abstract class PlayerBase : BlankMono
 {
     [Header("GameMode Stuff")]

@@ -429,6 +429,7 @@ MonoBehaviour:
   thisPlayer: P2
   playerID: 1
   numOfDeaths: 0
+  pvp: 0
   speed: 0.3
   currentHealth: 100
   healthMax: 0
@@ -1453,6 +1454,7 @@ MonoBehaviour:
   thisPlayer: P2
   playerID: 1
   numOfDeaths: 0
+  pvp: 0
   speed: 0.3
   currentHealth: 100
   healthMax: 0
@@ -3313,6 +3315,7 @@ MonoBehaviour:
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
+  pvp: 0
   speed: 0.3
   currentHealth: 100
   healthMax: 0
@@ -4989,20 +4992,11 @@ PrefabInstance:
       propertyPath: slamKnockback
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
-      propertyPath: _playerId
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6011535050463820550, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 82fe2c4c70294a74994ee154227b35ad, type: 2}
-    - target: {fileID: 6370844271867684425, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 69fe5c25f97240d4685a9078691acb67, type: 2}
     - target: {fileID: 6370844271867684427, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5029,6 +5023,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: e57ffad95160a124da9d5133b2b39e68, type: 2}
     - target: {fileID: 6370844271867684423, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 69fe5c25f97240d4685a9078691acb67, type: 2}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _playerId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370844271867684425, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -7079,6 +7082,7 @@ MonoBehaviour:
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
+  pvp: 0
   speed: 10
   currentHealth: 100
   healthMax: 0
@@ -16841,6 +16845,7 @@ MonoBehaviour:
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
+  pvp: 0
   speed: 10
   currentHealth: 140
   healthMax: 140
@@ -16856,7 +16861,6 @@ MonoBehaviour:
   dodgeTarget: {fileID: 965470213}
   visuals: {fileID: 5407055048571938992}
   hammer: {fileID: 4615413021099632639}
-  chest: {fileID: 1396255485160600068}
   xAttack: 15
   xKnockback: 2
   spinDamage: 0
@@ -16867,6 +16871,7 @@ MonoBehaviour:
   kickKnockback: 4
   frenzyDuration: 6
   frenzyBonus: 1
+  frenzyEffects: {fileID: 0}
   dodgeForce: 3
   dodgeDur: 0
   growingRageDiv: 1
@@ -17362,6 +17367,7 @@ MonoBehaviour:
   thisPlayer: P2
   playerID: 1
   numOfDeaths: 0
+  pvp: 0
   speed: 0.2
   currentHealth: 140
   healthMax: 140
@@ -17377,7 +17383,6 @@ MonoBehaviour:
   dodgeTarget: {fileID: 2054584597}
   visuals: {fileID: 1284252179750114317}
   hammer: {fileID: 1933766998588726082}
-  chest: {fileID: 5312943066182192825}
   xAttack: 15
   xKnockback: 2
   spinDamage: 0
@@ -17388,6 +17393,7 @@ MonoBehaviour:
   kickKnockback: 4
   frenzyDuration: 6
   frenzyBonus: 1
+  frenzyEffects: {fileID: 0}
   dodgeForce: 3
   dodgeDur: 0
   growingRageDiv: 0
