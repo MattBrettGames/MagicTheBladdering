@@ -6,13 +6,9 @@ public class ValdyEventHandler : BlankMono
 {
     public Valderheim valdy;
     public Weapons hammer;
-    public Weapons chestBox;
 
-    public void ChestBoxOn() { chestBox.gameObject.GetComponent<BoxCollider>().enabled = true; }
-    public void ChestBoxOff() { chestBox.gameObject.GetComponent<BoxCollider>().enabled = true; }
-
-    public void HammerBoxOn() { hammer.gameObject.GetComponent<BoxCollider>().enabled = true; }
-    public void HammerBoxOff() { hammer.gameObject.GetComponent<BoxCollider>().enabled = false; }
+    public void HammerBoxOn() { hammer.StartAttack(); }
+    public void HammerBoxOff() { hammer.EndAttack(); }
 
     public void OpenKickCombo() { valdy.OpenComboKick(); }
     public void CloseKickCombo() { valdy.CloseComboKick(); }
@@ -24,8 +20,7 @@ public class ValdyEventHandler : BlankMono
     public void LoseIFrames() { valdy.LoseIFrames(); }
 
     public void DoDodge() { valdy.DodgeBurst(); }
-
-
+    
     public void BeginActing() { valdy.BeginActing(); }
     public void EndActing() { valdy.EndActing(); }
 

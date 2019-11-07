@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class GremlinChief : EnemyBase
 {
-    [Header("Uniques")]
     private GameObject warBanner;
-    public float bannerBuff;
     private ObjectPooler pooler;
 
     public override void Update()

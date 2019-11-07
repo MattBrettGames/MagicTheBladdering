@@ -254,7 +254,6 @@ public class UniverseController : BlankMono
         charSelector1.locked = false;
         charSelector2.locked = false;
         SceneManager.LoadScene("MainMenu");
-
     }
 
     public void BossDeath()

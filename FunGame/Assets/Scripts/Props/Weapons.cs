@@ -10,8 +10,7 @@ public class Weapons : BlankMono
     private BoxCollider hitBox;
     private TrailRenderer trails;
     private bool pvpTrue;
-
-
+    
     public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp)
     {
         damageFull = damage;
@@ -23,21 +22,21 @@ public class Weapons : BlankMono
     private void Start()
     {
         hitBox = gameObject.GetComponent<BoxCollider>();
-        //trails = gameObject.GetComponentInChildren<TrailRenderer>();
-        //trails.enabled = false;
         hitBox.enabled = false;
+        trails = gameObject.GetComponentInChildren<TrailRenderer>();
+        trails.enabled = false;
     }
 
     public void StartAttack()
     {
         hitBox.enabled = true;
-        //trails.enabled = true;
+        trails.enabled = true;
     }
 
     public void EndAttack()
     {
         hitBox.enabled = false;
-        //trails.enabled = false;
+        trails.enabled = false;
     }
 
     public virtual void OnTriggerEnter(Collider other)
