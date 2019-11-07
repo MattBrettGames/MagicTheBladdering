@@ -70,16 +70,17 @@ public class AreaGen : BlankMono
 
 
 
-        /*
+        
         NavMeshPath path = new NavMeshPath();
 
-        //print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
+        print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
+        /*
         if (NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path))
         {
             DestroyZones();
             CreateZone(areaType);
-        }
-        */
+        }*/
+        
     }
 
     private IEnumerator SetStatLoop()
