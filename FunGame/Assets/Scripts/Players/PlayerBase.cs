@@ -8,6 +8,7 @@ public abstract class PlayerBase : BlankMono
     public string thisPlayer;
     public int playerID;
     public int numOfDeaths = 0;
+    public bool pvp;
 
     [Header("Movement Stats")]
     public float speed;

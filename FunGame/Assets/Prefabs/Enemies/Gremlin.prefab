@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1871737323084004313}
+  - component: {fileID: 3996186509006344525}
   - component: {fileID: 1871737323084004314}
   - component: {fileID: 1871737323084004315}
   - component: {fileID: 1871737323084004324}
-  - component: {fileID: 3996186509006344525}
   - component: {fileID: 7847473801797854453}
   - component: {fileID: 7725752933372580894}
   m_Layer: 11
@@ -36,6 +36,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3996186509006344525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871737323084004326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8307d9a62c76c6643b8fcfb04bc0a54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyID: 1
+  health: 10
+  maxHealth: 0
+  speed: 6
+  attackPower: 2
+  atkMult: 1
+  defMult: 1
+  safeDistance: 1
+  aggroRange: 25
+  targetPlayer: {fileID: 0}
+  aggro: 0
+  attackOneRange: 5
+  attackOneTimer: 4
+  attackTwoRange: 0
+  attackTwoTimer: 0
+  attackThreeRange: 0
+  attackThreeTimer: 0
 --- !u!195 &1871737323084004314
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -103,35 +132,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871737323084004326}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3996186509006344525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871737323084004326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8307d9a62c76c6643b8fcfb04bc0a54f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyID: 1
-  health: 10
-  maxHealth: 0
-  speed: 6
-  attackPower: 2
-  atkMult: 1
-  defMult: 1
-  safeDistance: 1
-  aggroRange: 25
-  targetPlayer: {fileID: 0}
-  aggro: 0
-  attackOneRange: 5
-  attackOneTimer: 4
-  attackTwoRange: 0
-  attackTwoTimer: 0
-  attackThreeRange: 0
-  attackThreeTimer: 0
 --- !u!136 &7847473801797854453
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -142,10 +142,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1
+  m_Radius: 0.5
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7725752933372580894
 Rigidbody:
   m_ObjectHideFlags: 0

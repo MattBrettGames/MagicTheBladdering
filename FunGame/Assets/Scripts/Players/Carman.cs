@@ -26,7 +26,7 @@ public class Carman : PlayerBase
     [Header("DemonSlayer")]
     public int slayerDamage;
     private bool canComboToSlayer;
-    
+
 
     public override void Start()
     {
@@ -37,8 +37,8 @@ public class Carman : PlayerBase
     public override void XAction()
     {
         //anim.SetTrigger("XAction");
-        weapons[0].GainInfo(xDamage, 0, visuals.transform.forward);
-        weapons[1].GainInfo(xDamage, 0, visuals.transform.forward);
+        weapons[0].GainInfo(xDamage, 0, visuals.transform.forward, pvp);
+        weapons[1].GainInfo(xDamage, 0, visuals.transform.forward, pvp);
     }
     public void OpenComboToDaggerSlash() { canDaggerSlash = true; }
     public void CloseComboToDaggerSlash() { canDaggerSlash = false; }
@@ -48,7 +48,7 @@ public class Carman : PlayerBase
         if (curseHunter == 0)
         {
             anim.SetTrigger("Headbutt");
-            weapons[2].GainInfo(0, headbuttKnockback, visuals.transform.forward);
+            weapons[2].GainInfo(0, headbuttKnockback, visuals.transform.forward, pvp);
         }
         else if (curseHunter != 0)
         {
@@ -88,7 +88,7 @@ public class Carman : PlayerBase
         Knockback(dodgeForce, visuals.transform.forward);
         Invoke("StopKnockback", 0.4f);
     }
-    
+
     private void ShadowStep()
     {
         float dis = Vector3.Distance(transform.position, curseList[0].transform.position);
@@ -102,7 +102,7 @@ public class Carman : PlayerBase
         ShadowStep();
         anim.SetTrigger("DemonSlayer");
         visuals.transform.LookAt(curseList[0].transform);
-        weapons[0].GainInfo(slayerDamage, 0, visuals.transform.forward); //This only applies to one of Carman's weapons.
+        weapons[0].GainInfo(slayerDamage, 0, visuals.transform.forward, pvp); //This only applies to one of Carman's weapons.
     }
     public void openToDemonSlayer() { canComboToSlayer = true; }
     public void closeToDemonSlayer() { canComboToSlayer = false; }

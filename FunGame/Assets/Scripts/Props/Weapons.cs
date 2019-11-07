@@ -9,18 +9,21 @@ public class Weapons : BlankMono
     private Vector3 knockDir;
     private BoxCollider hitBox;
     private TrailRenderer trails;
+    private bool pvpTrue;
 
-    public void GainInfo(int damage, int knockback, Vector3 forward)
+
+    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp)
     {
         damageFull = damage;
         knockFull = knockback;
         knockDir = forward;
+        pvpTrue = pvp;
     }
 
     private void Start()
     {
         hitBox = gameObject.GetComponent<BoxCollider>();
-        //trails = gameObject.GetComponent<TrailRenderer>();
+        //trails = gameObject.GetComponentInChildren<TrailRenderer>();
         //trails.enabled = false;
         hitBox.enabled = false;
     }
@@ -39,11 +42,25 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EnemyBase>() != null)
+        if (pvpTrue)
         {
-        print("Collided with " + other + ", dealt "+damageFull+" damage");
-            EnemyBase target = other.transform.GetComponent<EnemyBase>();
-            target.TakeDamage(damageFull, tag);            
+            if(other.transform.tag != tag)
+            {
+                other.GetComponent<PlayerBase>().TakeDamage(damageFull);
+            }
+        }
+        else
+        {
+            if (other.transform.tag == "Enemy")
+            {
+                EnemyBase target = other.transform.GetComponent<EnemyBase>();
+                target.TakeDamage(damageFull, tag);
+            }
+            else if (other.transform.tag == "Objective")
+            {
+                ObjectiveController target = other.GetComponent<ObjectiveController>();
+                target.TakeDamage(damageFull);
+            }
         }
     }
 
