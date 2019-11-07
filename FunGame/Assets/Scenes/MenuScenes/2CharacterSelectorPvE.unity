@@ -435,8 +435,6 @@ MonoBehaviour:
   healthMax: 0
   damageMult: 1
   incomingMult: 1
-  throwDist: 30
-  dodgeDist: 10
   cursed: 0
   prone: 0
   poison: 0
@@ -1460,8 +1458,6 @@ MonoBehaviour:
   healthMax: 0
   damageMult: 1
   incomingMult: 1
-  throwDist: 30
-  dodgeDist: 10
   cursed: 0
   prone: 0
   poison: 0
@@ -3023,36 +3019,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Angle: {x: 0, y: 1, z: 0}
   speed: 0.5
---- !u!1 &965470212
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 965470213}
-  m_Layer: 0
-  m_Name: DodgeTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &965470213
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 965470212}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6707473204896158968}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1058148179
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,8 +3337,6 @@ MonoBehaviour:
   healthMax: 0
   damageMult: 1
   incomingMult: 1
-  throwDist: 30
-  dodgeDist: 10
   cursed: 0
   prone: 0
   poison: 0
@@ -7138,8 +7102,6 @@ MonoBehaviour:
   healthMax: 0
   damageMult: 1
   incomingMult: 1
-  throwDist: 30
-  dodgeDist: 10
   cursed: 0
   prone: 0
   poison: 0
@@ -13052,36 +13014,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Angle: {x: 0, y: 1, z: 0}
   speed: -0.5
---- !u!1 &2052358550
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2052358551}
-  m_Layer: 0
-  m_Name: Rangetarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2052358551
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052358550}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6707473204896158968}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2053487162
 GameObject:
   m_ObjectHideFlags: 0
@@ -16746,63 +16678,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.298729, y: -0.2080599, z: -0.020316795}
     m_Extent: {x: 1.3552635, y: 0.86538875, z: 0.38437074}
   m_DirtyAABB: 0
---- !u!65 &1396255485160600067
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396255485160600070}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1396255485160600068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396255485160600070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1396255485160600069
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396255485160600070}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.09, z: 1.71}
-  m_LocalScale: {x: 8.9388, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6707473204896158968}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1396255485160600070
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1396255485160600069}
-  - component: {fileID: 1396255485160600067}
-  - component: {fileID: 1396255485160600068}
-  m_Layer: 0
-  m_Name: ChestBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &1396255485371875581
 Transform:
   m_ObjectHideFlags: 0
@@ -16901,14 +16776,12 @@ MonoBehaviour:
   healthMax: 140
   damageMult: 1
   incomingMult: 1
-  throwDist: 0
-  dodgeDist: 0
   cursed: 0
   prone: 0
   poison: 0
   aimTarget: {fileID: 1396255485371875581}
-  rangeTarget: {fileID: 2052358551}
-  dodgeTarget: {fileID: 965470213}
+  rangeTarget: {fileID: 0}
+  dodgeTarget: {fileID: 0}
   visuals: {fileID: 5407055048571938992}
   hammer: {fileID: 4615413021099632639}
   xAttack: 15
@@ -17422,8 +17295,6 @@ MonoBehaviour:
   healthMax: 140
   damageMult: 1
   incomingMult: 1
-  throwDist: 0
-  dodgeDist: 0
   cursed: 0
   prone: 0
   poison: 0
@@ -21124,9 +20995,6 @@ Transform:
   m_Children:
   - {fileID: 1396255485371875581}
   - {fileID: 5407055048571843728}
-  - {fileID: 1396255485160600069}
-  - {fileID: 2052358551}
-  - {fileID: 965470213}
   m_Father: {fileID: 1745534212}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
