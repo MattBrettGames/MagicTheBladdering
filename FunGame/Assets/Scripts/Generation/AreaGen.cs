@@ -74,12 +74,12 @@ public class AreaGen : BlankMono
         NavMeshPath path = new NavMeshPath();
 
         print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
-        /*
+        
         if (NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path))
         {
             DestroyZones();
             CreateZone(areaType);
-        }*/
+        }
         
     }
 
@@ -89,8 +89,7 @@ public class AreaGen : BlankMono
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
-        {
-            print(enemies[i]);
+        {            
             enemies[i].GetComponent<EnemyBase>().SetStats(GameObject.Find("ScoreTracker").GetComponent<ScoreTracker>());
         }
     }
