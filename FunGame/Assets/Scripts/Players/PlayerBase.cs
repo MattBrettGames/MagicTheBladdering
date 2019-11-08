@@ -35,7 +35,7 @@ public abstract class PlayerBase : BlankMono
     private bool hyperArmour;
     protected bool iFrames;
     protected bool counterFrames;
-    protected bool knockbackForce;
+    protected Vector3 knockbackForce;
     protected bool acting;
     [HideInInspector] public State state;
     [HideInInspector]
@@ -74,13 +74,13 @@ public abstract class PlayerBase : BlankMono
         {
             case State.normal:
 
-                if (!prone && !knockbackForce && !acting)
+                if (!prone && !acting)
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
                     visuals.transform.LookAt(aimTarget);
 
-                    if (!knockbackForce) { rb2d.velocity = dir * speed; }
+                    rb2d.velocity = dir * speed;
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
@@ -106,7 +106,7 @@ public abstract class PlayerBase : BlankMono
                 break;
 
             case State.knockback:
-                //DodgeSliding();
+                KnockbackContinual();
                 break;
         }
     }
@@ -128,13 +128,17 @@ public abstract class PlayerBase : BlankMono
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void KnockbackContinual()
+    {
+        transform.position += knockbackForce * Time.deltaTime;
+    }
     public virtual void Knockback(int power, Vector3 direction)
     {
-        knockbackForce = true;
-        rb2d.AddForce(direction * power * 10, ForceMode.Impulse);
-        Invoke("StopKnockback", power / 10f); knockbackForce = true;
+        knockbackForce = direction;
+        state = State.knockback;
+        Invoke("StopKnockback", power / 10f);
     }
-    public void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
+    public void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = Vector3.zero; state = State.normal; }
     #endregion
 
     #region Utility Functions
