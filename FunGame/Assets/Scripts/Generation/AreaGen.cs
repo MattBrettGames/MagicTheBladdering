@@ -42,27 +42,12 @@ public class AreaGen : BlankMono
         {
             for (int c = 0; c < columnsToSpawn; c++)
             {
-<<<<<<< Updated upstream
                 Instantiate<GameObject>(areaTypes[areaType].zones[UnityEngine.Random.Range(0, areaTypes[areaType].zones.Length)], spawnPos, Quaternion.identity, gameObject.transform).transform.Rotate(new Vector3(0, UnityEngine.Random.Range(1, 5) * 90, 0));
-=======
-                int z = UnityEngine.Random.Range(0, areaTypes[areaType].zones.Length);
-
-                GameObject place = Instantiate<GameObject>(areaTypes[areaType].zones[z].zone, spawnPos, Quaternion.identity, gameObject.transform);
-
-                place.name = i.ToString() + "/" + c.ToString() + "/" + areaTypes[areaType].zones[z].type;
->>>>>>> Stashed changes
                 spawnPos.x += xIncrease;
             }
             spawnPos.z += zIncrease;
             spawnPos.x = 0;
         }
-
-        /*
-        string[] pos = transform.GetChild(1).name.Split((char)92);
-        if (pos[2] == "1")
-        {
-            GameObject.Find(pos[0]);
-        }*/
 
 
         Destroy(gameObject.transform.GetChild(0).gameObject);
@@ -85,17 +70,17 @@ public class AreaGen : BlankMono
 
 
 
-        
+
         NavMeshPath path = new NavMeshPath();
 
         print(NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path));
-        
+
         if (NavMesh.CalculatePath(playerHome.transform.position, bossHome.transform.position, 1, path))
         {
             DestroyZones();
             CreateZone(areaType);
         }
-        
+
     }
 
     private IEnumerator SetStatLoop()
@@ -104,11 +89,11 @@ public class AreaGen : BlankMono
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
-        {            
+        {
             enemies[i].GetComponent<EnemyBase>().SetStats(GameObject.Find("ScoreTracker").GetComponent<ScoreTracker>());
         }
     }
-    
+
     public void DestroyZones()
     {
         GameObject[] zones = GameObject.FindGameObjectsWithTag("Zone");
