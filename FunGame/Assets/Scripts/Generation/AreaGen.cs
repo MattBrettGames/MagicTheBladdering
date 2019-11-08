@@ -49,13 +49,6 @@ public class AreaGen : BlankMono
             spawnPos.x = 0;
         }
 
-        /*
-        string[] pos = transform.GetChild(1).name.Split((char)92);
-        if (pos[2] == "1")
-        {
-            GameObject.Find(pos[0]);
-        }*/
-
 
         Destroy(gameObject.transform.GetChild(0).gameObject);
         GameObject playerHome = Instantiate<GameObject>(areaTypes[areaType].playerHub, Vector3.zero, Quaternion.identity);
