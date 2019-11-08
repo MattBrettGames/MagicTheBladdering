@@ -40,6 +40,7 @@ public class MenuSelector : MonoBehaviour
         }
     }
 
+    void Quit() { Application.Quit(); }
     void Duel() { universe.SelectedPlay(); }
     void Bios() { universe.SelectedBios(); }
     void Adventure() { universe.SelectedAdventure(); }

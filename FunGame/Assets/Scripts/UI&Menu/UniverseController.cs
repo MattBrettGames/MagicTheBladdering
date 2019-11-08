@@ -68,7 +68,7 @@ public class UniverseController : BlankMono
         if (Input.GetKeyDown(KeyCode.O)) { generator.CreateZone(0); }
 
 
-        if (SceneManager.GetActiveScene().name == "Bio")
+        if (SceneManager.GetActiveScene().name == "Bios")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
         }
@@ -115,7 +115,7 @@ public class UniverseController : BlankMono
         else if (level == 4)
         {
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
-            victoryText.text = winner;
+            victoryText.text = winner + " Won!";
         }
         else if (level == 5)
         {
