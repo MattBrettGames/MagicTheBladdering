@@ -15,13 +15,13 @@ public static class ToolSet
     [MenuItem("ToolSet/Workflow/Open Main Menu %F2")]
     static void ReturnToMenu()
     {
-        EditorSceneManager.OpenScene("Assets/Scenes/MainMenu");
+        EditorSceneManager.OpenScene("Assets/Scenes/MainMenu.unity");
     }
 
     [MenuItem("ToolSet/Workflow/Open PvP Characters %F3")]
     static void PVPMenu()
     {
-        EditorSceneManager.OpenScene("2CharacterselectorPvP");
+        EditorSceneManager.OpenScene("Assets/Scenes/MenuScenes/2CharacterselectorPvP.unity");
 
     }
 }

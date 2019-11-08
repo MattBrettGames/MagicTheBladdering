@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+
 public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
@@ -87,7 +88,8 @@ public class Valderheim : PlayerBase
         damageMult -= frenzyBonus;
         incomingMult -= frenzyBonus;
         frenzy = false;
-        frenzyEffects.Pause();
+        frenzyEffects.Clear();
+        frenzyEffects.Stop();
     }
 
     public override void AAction()

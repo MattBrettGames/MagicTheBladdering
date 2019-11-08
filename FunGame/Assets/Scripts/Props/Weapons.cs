@@ -18,7 +18,6 @@ public class Weapons : BlankMono
         knockDir = forward;
         pvpTrue = pvp;
     }
-
     private void Start()
     {
         hitBox = gameObject.GetComponent<BoxCollider>();
