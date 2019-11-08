@@ -205,7 +205,7 @@ public class UniverseController : BlankMono
         analytics.character2 = characters[1];
         analytics.skin1 = skins[0];
         analytics.skin2 = skins[1];
-        analytics.CreateCSV();
+        //analytics.CreateCSV();
         SceneManager.LoadScene(arena);
     }
 
