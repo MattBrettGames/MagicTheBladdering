@@ -30,10 +30,6 @@ public class Valderheim : PlayerBase
     private bool frenzy;
     public ParticleSystem frenzyEffects;
 
-    [Header("Charge!")]
-    public int dodgeForce;
-    public float dodgeDur;
-
     [Header("Passives")]
     public int growingRageDiv;
     private bool comboTime;
@@ -95,10 +91,12 @@ public class Valderheim : PlayerBase
     public override void AAction()
     {
         anim.SetTrigger("AAction");
-        Invoke("StopKnockback", dodgeDur);
+        dodgeTimer = dodgeTimer;
+        state = State.dodging;
+        Invoke("EndDodge", dodgeDur);
     }
 
-    public void DodgeBurst() { rb2d.AddForce(visuals.transform.forward * dodgeForce * 10, ForceMode.Force); }
+    public void EndDodge() { state = State.normal; }
 
 
     //Passive Effects - Surefooted & Building Rage

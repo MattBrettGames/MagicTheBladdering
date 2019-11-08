@@ -668,6 +668,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.3
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -675,6 +678,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1778804851}
   visuals: {fileID: 1183062861}
   weapon: {fileID: 1827658055}
@@ -5925,7 +5929,7 @@ PrefabInstance:
     - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Name
-      value: ValderheimPrefab
+      value: Classic Valderheim
       objectReference: {fileID: 0}
     - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
@@ -6020,7 +6024,7 @@ PrefabInstance:
     - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: dodgeDur
-      value: 4.13
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
@@ -6031,6 +6035,16 @@ PrefabInstance:
         type: 3}
       propertyPath: pvp
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: dodgeSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 54772356566482642, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: dodgeCooldown
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6370844271881349767, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
@@ -7021,6 +7035,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.3
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -7028,6 +7045,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1778804851}
   visuals: {fileID: 1183062861}
   weapon: {fileID: 2075774474}
@@ -7787,7 +7805,7 @@ GameObject:
   - component: {fileID: 580759810}
   - component: {fileID: 580759809}
   m_Layer: 0
-  m_Name: SongbirdNormal
+  m_Name: Classic Songbird
   m_TagString: Common
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7810,6 +7828,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 10
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -7817,6 +7838,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1206177872}
   visuals: {fileID: 63528422}
   weapon: {fileID: 1881664752}
@@ -8137,7 +8159,7 @@ GameObject:
   - component: {fileID: 703314795}
   - component: {fileID: 703314794}
   m_Layer: 0
-  m_Name: SongbirdShaded
+  m_Name: Toxic Songbird
   m_TagString: Common
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8178,6 +8200,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 0.3
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -8185,6 +8210,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1206177872}
   visuals: {fileID: 63528422}
   weapon: {fileID: 1559773}
@@ -20418,7 +20444,7 @@ GameObject:
   - component: {fileID: 1899241626}
   - component: {fileID: 1899241625}
   m_Layer: 0
-  m_Name: ValderheimUndies
+  m_Name: Naked Valderheim
   m_TagString: Common
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20458,6 +20484,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 15
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 140
   healthMax: 140
   damageMult: 1
@@ -20465,6 +20494,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1783076170}
   visuals: {fileID: 1902643323}
   hammer: {fileID: 1477473298}
@@ -20479,8 +20509,6 @@ MonoBehaviour:
   frenzyDuration: 6
   frenzyBonus: 1
   frenzyEffects: {fileID: 1333453327}
-  dodgeForce: 3
-  dodgeDur: 0
   growingRageDiv: 1
 --- !u!114 &1899241625
 MonoBehaviour:
@@ -30077,6 +30105,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.2
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 140
   healthMax: 140
   damageMult: 1
@@ -30084,6 +30115,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 5312943066092551232}
   visuals: {fileID: 1284252179750114317}
   hammer: {fileID: 1933766998588726082}
@@ -30098,8 +30130,6 @@ MonoBehaviour:
   frenzyDuration: 6
   frenzyBonus: 1
   frenzyEffects: {fileID: 0}
-  dodgeForce: 3
-  dodgeDur: 0
   growingRageDiv: 0
 --- !u!54 &5294485740794724442
 Rigidbody:
