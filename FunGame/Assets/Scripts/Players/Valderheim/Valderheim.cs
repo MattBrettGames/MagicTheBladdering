@@ -7,6 +7,7 @@ public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
     public Weapons hammer;
+    public ParticleSystem comboTimeParticles;
 
     [Header("Wide Swing")]
     public int xAttack;
@@ -64,8 +65,8 @@ public class Valderheim : PlayerBase
             anim.SetTrigger("YAttack");
         }
     }
-    public void OpenComboKick() { comboTime = true; }
-    public void CloseComboKick() { comboTime = false; }
+    public void OpenComboKick() { comboTime = true; comboTimeParticles.Play(); }
+    public void CloseComboKick() { comboTime = false; comboTimeParticles.Clear(); comboTimeParticles.Stop(); }
 
     public override void BAction()
     {

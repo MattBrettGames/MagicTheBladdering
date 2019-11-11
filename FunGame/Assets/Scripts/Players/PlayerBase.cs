@@ -119,7 +119,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); Time.timeScale = 0.5f; Invoke("EndTimeScale", 0.02f); } }
+    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); Time.timeScale = 0.5f; Invoke("EndTimeScale", 0.1f); } }
     private void EndTimeScale() { Time.timeScale = 1; }
 
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
@@ -151,7 +151,7 @@ public abstract class PlayerBase : BlankMono
     public void GainIFrames() { iFrames = true; }
     public void LoseIFrames() { iFrames = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); }
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); anim.SetTrigger("Respawn"); }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
     public void BeginActing() { acting = true; }
