@@ -91,8 +91,7 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
-        anim.SetTrigger("AAction");
-        dodgeTimer = dodgeTimer;
+        anim.SetTrigger("AAction");        
         state = State.dodging;
         Invoke("EndDodge", dodgeDur);
     }
