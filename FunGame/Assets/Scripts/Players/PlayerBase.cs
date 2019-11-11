@@ -126,7 +126,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); GainIFrames(); }
     public virtual void KnockbackContinual()
     {
         transform.position += knockbackForce * knockBackPower * Time.deltaTime;
@@ -134,9 +134,9 @@ public abstract class PlayerBase : BlankMono
     public virtual void Knockback(int power, Vector3 direction)
     {
         knockbackForce = direction;
-        knockBackPower = power;
+        knockBackPower = power * 10;
         state = State.knockback;
-        Invoke("StopKnockback", power * 0.1f);
+        Invoke("StopKnockback", power * 0.01f);
     }
     public void StopKnockback() { knockbackForce = Vector3.zero; state = State.normal; }
     #endregion
@@ -153,7 +153,7 @@ public abstract class PlayerBase : BlankMono
     public void GainIFrames() { iFrames = true; }
     public void LoseIFrames() { iFrames = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); anim.SetTrigger("Respawn"); }
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); anim.SetTrigger("Respawn"); LoseIFrames(); }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
     public void BeginActing() { acting = true; }
