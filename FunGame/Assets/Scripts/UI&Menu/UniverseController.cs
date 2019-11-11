@@ -214,8 +214,7 @@ public class UniverseController : BlankMono
     public void PlayerDeath(GameObject player)
     {
         if (gameMode == "PvP")
-        {
-            player.SetActive(false);
+        {           
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
 
             playerCode.numOfDeaths++;
