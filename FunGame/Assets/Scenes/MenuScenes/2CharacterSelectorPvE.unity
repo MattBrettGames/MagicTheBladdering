@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: c244bddcee04ed84595a11cf90041141, type: 2}
   m_HaloStrength: 0.5
@@ -431,6 +431,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.3
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -438,6 +441,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1778804851}
   visuals: {fileID: 1183062861}
   weapon: {fileID: 1827658055}
@@ -5208,6 +5212,8 @@ MonoBehaviour:
   - name: Carman
     skins:
     - name: Original
+      Skin: {fileID: 1113814911}
+    - name: Wild Hunter
       Skin: {fileID: 6344558193315219144}
   - name: Jester
     skins:
@@ -5624,6 +5630,107 @@ Transform:
   m_Father: {fileID: 60019350}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &257295246
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2017372587}
+    m_Modifications:
+    - target: {fileID: 4172373035777819614, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_Name
+      value: Carmen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777819614, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: baf3610bb3c8ba243948c9d67ece8a0e, type: 3}
+--- !u!4 &257295247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 257295246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &257295248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4172373035777819614, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 257295246}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &270380372
 GameObject:
   m_ObjectHideFlags: 0
@@ -5943,6 +6050,8 @@ MonoBehaviour:
   - name: Carman
     skins:
     - name: Original
+      Skin: {fileID: 257295248}
+    - name: Wild Hunter
       Skin: {fileID: 762561054}
   - name: Jester
     skins:
@@ -6150,6 +6259,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.3
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -6157,6 +6269,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1778804851}
   visuals: {fileID: 1183062861}
   weapon: {fileID: 2075774474}
@@ -7866,6 +7979,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Angle: {x: 0, y: 1, z: 0}
   speed: -0.5
+--- !u!1001 &1113814909
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1661708056}
+    m_Modifications:
+    - target: {fileID: 4172373035777819614, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_Name
+      value: Carmen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777819614, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: baf3610bb3c8ba243948c9d67ece8a0e, type: 3}
+--- !u!4 &1113814910 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4172373035777728510, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1113814909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1113814911 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4172373035777819614, guid: baf3610bb3c8ba243948c9d67ece8a0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1113814909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1115804682
 GameObject:
   m_ObjectHideFlags: 0
@@ -8032,6 +8246,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.3
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -8039,6 +8256,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 474465086}
   visuals: {fileID: 1887843816}
   weapon: {fileID: 187126933}
@@ -9611,7 +9829,7 @@ PrefabInstance:
     - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 54772356566482639, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
@@ -9703,11 +9921,20 @@ PrefabInstance:
       propertyPath: slamKnockback
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
+      propertyPath: _playerId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6011535050463820550, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 82fe2c4c70294a74994ee154227b35ad, type: 2}
+    - target: {fileID: 6370844271867684425, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 69fe5c25f97240d4685a9078691acb67, type: 2}
     - target: {fileID: 6370844271867684427, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -9734,15 +9961,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: e57ffad95160a124da9d5133b2b39e68, type: 2}
     - target: {fileID: 6370844271867684423, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 69fe5c25f97240d4685a9078691acb67, type: 2}
-    - target: {fileID: 550240729, guid: dc32be0dbbf4fb8418ea03f135ff2d2b, type: 3}
-      propertyPath: _playerId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370844271867684425, guid: dc32be0dbbf4fb8418ea03f135ff2d2b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -11590,7 +11808,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.3820755, g: 0.98738134, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -11600,7 +11818,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
@@ -11625,13 +11843,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630760980}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.95674235, y: -0, z: -0, w: 0.29093662}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -146.172, y: 0, z: 0}
 --- !u!1 &1631663610
 GameObject:
   m_ObjectHideFlags: 0
@@ -11795,6 +12013,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 10
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -11802,6 +12023,7 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 474465086}
   visuals: {fileID: 1887843816}
   weapon: {fileID: 196729852}
@@ -11982,6 +12204,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 6344558193315584744}
+  - {fileID: 1113814910}
   m_Father: {fileID: 327939057}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17692,6 +17915,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 762561053}
+  - {fileID: 257295247}
   m_Father: {fileID: 1744345611}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26165,6 +26389,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 10
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 140
   healthMax: 140
   damageMult: 1
@@ -26172,9 +26399,11 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 1396255485371875581}
   visuals: {fileID: 5407055048571938992}
   hammer: {fileID: 4615413021099632639}
+  comboTimeParticles: {fileID: 0}
   xAttack: 15
   xKnockback: 2
   spinDamage: 0
@@ -26186,8 +26415,6 @@ MonoBehaviour:
   frenzyDuration: 6
   frenzyBonus: 1
   frenzyEffects: {fileID: 139217957}
-  dodgeForce: 3
-  dodgeDur: 0
   growingRageDiv: 1
 --- !u!136 &1414950365180919014
 CapsuleCollider:
@@ -26682,6 +26909,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 0
   speed: 0.2
+  dodgeSpeed: 0
+  dodgeDur: 0
+  dodgeCooldown: 0
   currentHealth: 140
   healthMax: 140
   damageMult: 1
@@ -26689,9 +26919,11 @@ MonoBehaviour:
   cursed: 0
   prone: 0
   poison: 0
+  state: 0
   aimTarget: {fileID: 5312943066092551232}
   visuals: {fileID: 1284252179750114317}
   hammer: {fileID: 1933766998588726082}
+  comboTimeParticles: {fileID: 0}
   xAttack: 15
   xKnockback: 2
   spinDamage: 0
@@ -26703,8 +26935,6 @@ MonoBehaviour:
   frenzyDuration: 6
   frenzyBonus: 1
   frenzyEffects: {fileID: 0}
-  dodgeForce: 3
-  dodgeDur: 0
   growingRageDiv: 0
 --- !u!54 &5294485740794724442
 Rigidbody:
