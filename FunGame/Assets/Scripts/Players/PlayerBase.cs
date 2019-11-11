@@ -13,6 +13,10 @@ public abstract class PlayerBase : BlankMono
 
     [Header("Movement Stats")]
     public float speed;
+    public float dodgeSpeed;
+    public float dodgeDur;
+    public float dodgeCooldown;
+    protected float dodgeTimer;
     private float baseSpeed;
     protected float moving;
     protected Vector3 dir;
@@ -31,8 +35,16 @@ public abstract class PlayerBase : BlankMono
     private bool hyperArmour;
     protected bool iFrames;
     protected bool counterFrames;
-    protected bool knockbackForce;
+    protected Vector3 knockbackForce;
     protected bool acting;
+    [HideInInspector] public State state;
+    [HideInInspector]
+    public enum State
+    {
+        normal,
+        dodging,
+        knockback,
+    }
 
     [Header("Components")]
     public Transform aimTarget;
@@ -46,7 +58,7 @@ public abstract class PlayerBase : BlankMono
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-
+        dodgeCooldown = dodgeTimer;
         baseSpeed = speed;
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
@@ -55,32 +67,48 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Update()
     {
-        if (!prone && !knockbackForce && !acting)
+        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
+        dodgeTimer -= Time.deltaTime;
+
+        switch (state)
         {
-            dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
-            //Rotating the Character Model
-            aimTarget.position = transform.position + dir * 5;
-            visuals.transform.LookAt(aimTarget);
+            case State.normal:
 
-            if (!knockbackForce) { rb2d.velocity = dir * speed; }
+                if (!prone && !acting)
+                {
+                    //Rotating the Character Model
+                    aimTarget.position = transform.position + dir * 5;
+                    visuals.transform.LookAt(aimTarget);
 
-            //Standard Inputs
-            if (player.GetButtonDown("AAction")) { AAction(); }
-            if (player.GetButtonDown("BAttack")) { BAction(); }
-            if (player.GetButtonDown("XAttack")) { XAction(); }
-            if (player.GetButtonDown("YAttack")) { YAction(); }
+                    rb2d.velocity = dir * speed;
 
-            if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
-            else { anim.SetFloat("Movement", 0); }
+                    //Standard Inputs
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+                }
+
+                if (acting)
+                {
+                    dir = Vector3.zero;
+                }
+                if (poison > 0) { poison -= Time.deltaTime; }
+                if (curseTimer <= 0) { LoseCurse(); }
+                else { curseTimer -= Time.deltaTime; }
+                break;
+
+            case State.dodging:
+                if (dodgeTimer <= 0) { DodgeSliding(dir); }
+                break;
+
+            case State.knockback:
+                KnockbackContinual();
+                break;
         }
-
-        if (acting)
-        {
-            dir = Vector3.zero;
-        }
-        if (poison > 0) { poison -= Time.deltaTime; }
-        if (curseTimer <= 0) { LoseCurse(); }
-        else { curseTimer -= Time.deltaTime; }
     }
 
     #region Input Actions
@@ -97,13 +125,17 @@ public abstract class PlayerBase : BlankMono
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
+    public virtual void KnockbackContinual()
+    {
+        transform.position += knockbackForce * Time.deltaTime;
+    }
     public virtual void Knockback(int power, Vector3 direction)
     {
-        knockbackForce = true;
-        rb2d.AddForce(direction * power * 10, ForceMode.Impulse);
-        Invoke("StopKnockback", power / 10f); knockbackForce = true;
+        knockbackForce = direction;
+        state = State.knockback;
+        Invoke("StopKnockback", power / 10f);
     }
-    public void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = false; }
+    public void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = Vector3.zero; state = State.normal; }
     #endregion
 
     #region Utility Functions
@@ -118,12 +150,13 @@ public abstract class PlayerBase : BlankMono
     public void GainIFrames() { iFrames = true; }
     public void LoseIFrames() { iFrames = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 4); }// numOfDeaths++; }
+    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
     public void BeginActing() { acting = true; }
     public void EndActing() { acting = false; }
 
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; }
 
     #endregion
 

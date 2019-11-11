@@ -10,7 +10,7 @@ public class Weapons : BlankMono
     private BoxCollider hitBox;
     private TrailRenderer trails;
     private bool pvpTrue;
-    
+
     public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp)
     {
         damageFull = damage;
@@ -42,9 +42,12 @@ public class Weapons : BlankMono
     {
         if (pvpTrue)
         {
-            if(other.transform.tag != tag)
+            if (other.transform.tag != tag)
             {
-                other.GetComponent<PlayerBase>().TakeDamage(damageFull);
+                PlayerBase player = other.GetComponent<PlayerBase>();
+                player.TakeDamage(damageFull);
+                player.Knockback(knockFull, knockDir);
+
             }
         }
         else
