@@ -35,8 +35,9 @@ public abstract class PlayerBase : BlankMono
     private bool hyperArmour;
     protected bool iFrames;
     protected bool counterFrames;
-    protected Vector3 knockbackForce;
     protected bool acting;
+    protected Vector3 knockbackForce;
+    private float knockBackPower;
     [HideInInspector] public State state;
     [HideInInspector]
     public enum State
@@ -128,15 +129,16 @@ public abstract class PlayerBase : BlankMono
     public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); }
     public virtual void KnockbackContinual()
     {
-        transform.position += knockbackForce * Time.deltaTime;
+        transform.position += knockbackForce * knockBackPower * Time.deltaTime;
     }
     public virtual void Knockback(int power, Vector3 direction)
     {
         knockbackForce = direction;
+        knockBackPower = power;
         state = State.knockback;
-        Invoke("StopKnockback", power / 10f);
+        Invoke("StopKnockback", power * 0.1f);
     }
-    public void StopKnockback() { rb2d.velocity = Vector3.zero; knockbackForce = Vector3.zero; state = State.normal; }
+    public void StopKnockback() { knockbackForce = Vector3.zero; state = State.normal; }
     #endregion
 
     #region Utility Functions
