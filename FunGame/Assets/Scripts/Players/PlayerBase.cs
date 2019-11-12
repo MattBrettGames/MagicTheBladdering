@@ -87,6 +87,7 @@ public abstract class PlayerBase : BlankMono
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
+        //transform.position.x = 0;
 
         switch (state)
         {
