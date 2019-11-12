@@ -182,10 +182,10 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CheckReady(int arrayIndex, GameObject gobject, string character, string skin)
+    public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
     {
         selectedChars[arrayIndex] = gobject;
-        characters[arrayIndex] = character;
+        characters[arrayIndex] = character.name;
         skins[arrayIndex] = skin;
 
         lockedInPlayers++;

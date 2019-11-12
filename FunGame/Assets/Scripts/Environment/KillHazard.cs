@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class KillHazard : MonoBehaviour
 {
-
+    [Header("Damage")]
     public int damageToEnemy;
     public int damageToPlayer;
+
+    [Header("Knockback")]
+    public Vector3 dir;
+    public int force;
 
     void OnCollisionEnter(Collision other)
     {
@@ -14,7 +18,10 @@ public class KillHazard : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PlayerBase>() != null)
             {
-                other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageToPlayer);
+                PlayerBase code = other.gameObject.GetComponent<PlayerBase>();
+                code.TakeDamage(damageToPlayer);
+                code.Knockback(force, dir);
+
             }
             else if (other.gameObject.GetComponent<EnemyBase>() != null)
             {

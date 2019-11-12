@@ -84,7 +84,7 @@ public class Valderheim : PlayerBase
 
             case State.lockedOn:
 
-                dir = Vector3.RotateTowards(dir, visuals.transform.forward, 1, 0);
+                dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
                 print(dir);
 
                 anim.SetBool("LockOn", true);
