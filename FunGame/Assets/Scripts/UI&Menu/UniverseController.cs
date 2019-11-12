@@ -133,8 +133,10 @@ public class UniverseController : BlankMono
 
             #region Player 1
             GameObject p1 = selectedChars[0];
-            p1.GetComponent<PlayerBase>().enabled = true;
-            p1.GetComponent<PlayerBase>().thisPlayer = "P1";
+            PlayerBase playerCode = p1.GetComponent<PlayerBase>();
+            playerCode.enabled = true;
+            playerCode.thisPlayer = "P1";
+            playerCode.SetInfo();
             p1.tag = "Player1";
             p1.transform.SetParent(GameObject.Find("CentreBase").transform);
             //print("CentreBase set");
@@ -152,8 +154,10 @@ public class UniverseController : BlankMono
 
             #region Player 2
             GameObject p2 = selectedChars[1];
-            p2.GetComponent<PlayerBase>().enabled = true;
-            p2.GetComponent<PlayerBase>().thisPlayer = "P2";
+            playerCode = p2.GetComponent<PlayerBase>();
+            playerCode.enabled = true;
+            playerCode.thisPlayer = "P2";
+            playerCode.SetInfo();
             p2.tag = "Player2";
             p2.transform.parent = GameObject.Find("CentreBase").transform;
 
@@ -177,7 +181,7 @@ public class UniverseController : BlankMono
             generator.CreateZone(level - levelCount);
         }
     }
-    
+
     public void CheckReady(int arrayIndex, GameObject gobject, string character, string skin)
     {
         selectedChars[arrayIndex] = gobject;
@@ -214,7 +218,7 @@ public class UniverseController : BlankMono
     public void PlayerDeath(GameObject player)
     {
         if (gameMode == "PvP")
-        {           
+        {
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
 
             playerCode.numOfDeaths++;
