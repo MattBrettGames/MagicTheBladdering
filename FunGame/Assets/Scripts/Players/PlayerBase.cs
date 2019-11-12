@@ -87,7 +87,7 @@ public abstract class PlayerBase : BlankMono
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
-        //transform.position.x = 0;
+        transform.position = new Vector3(transform.position.x, 0, transform.position.y);
 
         switch (state)
         {
@@ -97,7 +97,7 @@ public abstract class PlayerBase : BlankMono
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
-                    visuals.transform.LookAt(lookAtTarget.position+lookAtVariant);
+                    visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
 
                     rb2d.velocity = dir * speed;
 
