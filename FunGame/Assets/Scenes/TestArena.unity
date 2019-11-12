@@ -1411,6 +1411,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageToEnemy: 3000
   damageToPlayer: 3000
+  dir: {x: 0, y: 0, z: 0}
+  force: 0
 --- !u!4 &1073249456
 Transform:
   m_ObjectHideFlags: 0
@@ -2831,7 +2833,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698029566}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.9
@@ -2850,6 +2852,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageToEnemy: 20
   damageToPlayer: 0
+  dir: {x: -2, y: 0, z: -10}
+  force: 0
 --- !u!1001 &1792072565
 PrefabInstance:
   m_ObjectHideFlags: 0
