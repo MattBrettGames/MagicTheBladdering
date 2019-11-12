@@ -40,44 +40,73 @@ public class Valderheim : PlayerBase
         base.Start();
         hammer.gameObject.tag = tag;
     }
-    
-    public override void Update()
+
+    public virtual void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
+
+        if (poison > 0) { poison -= Time.deltaTime; }
+        if (curseTimer <= 0) { LoseCurse(); }
+        else { curseTimer -= Time.deltaTime; }
+
+        aimTarget.position = transform.position + dir * 5;
 
         switch (state)
         {
             case State.normal:
 
-                if (player.GetButtonDown("BAttack")) { BAction(); }
+                anim.SetBool("LockOn", false);
 
                 if (!prone && !acting)
                 {
                     //Rotating the Character Model
-                    aimTarget.position = transform.position + dir * 5;
-                    if (Vector3.Distance(transform.position, lookAtTarget.position) <= lockOnDistance) { visuals.transform.LookAt(lookAtTarget.position + lookAtVariant); }
+
+                    if (Vector3.Distance(transform.position, lookAtTarget.position) <= lockOnDistance) { state = State.lockedOn; }
                     else { visuals.transform.LookAt(aimTarget); }
 
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
                 }
-
-                if (acting)
+                else
                 {
                     dir = Vector3.zero;
                 }
-                if (poison > 0) { poison -= Time.deltaTime; }
-                if (curseTimer <= 0) { LoseCurse(); }
-                else { curseTimer -= Time.deltaTime; }
                 break;
+
+            case State.lockedOn:
+
+                print(thisPlayer + " is currently lock on");
+
+                anim.SetBool("LockOn", true);
+
+                rb2d.velocity = dir * speed;
+
+                if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)
+                {
+                    state = State.normal;
+                }
+
+                if (player.GetButtonDown("AAction")) { AAction(); }
+                if (player.GetButtonDown("BAttack")) { BAction(); }
+                if (player.GetButtonDown("XAttack")) { XAction(); }
+                if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                anim.SetFloat("Movement_X", dir.x);
+                anim.SetFloat("Movement_ZY", dir.z);
+
+                visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+
+                break;
+
 
             case State.dodging:
                 if (dodgeTimer <= 0) { DodgeSliding(dir); }

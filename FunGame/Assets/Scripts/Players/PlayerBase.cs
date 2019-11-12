@@ -63,12 +63,11 @@ public abstract class PlayerBase : BlankMono
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-        dodgeCooldown = dodgeTimer;
+        dodgeTimer = dodgeCooldown;
         baseSpeed = speed;
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
-
     }
 
     public void SetInfo()
@@ -91,6 +90,8 @@ public abstract class PlayerBase : BlankMono
         switch (state)
         {
             case State.normal:
+
+                anim.SetBool("LockOn", false);
 
                 if (!prone && !acting)
                 {
@@ -118,6 +119,10 @@ public abstract class PlayerBase : BlankMono
 
             case State.lockedOn:
 
+                print(thisPlayer + " is currently lock on");
+
+                anim.SetBool("LockOn", true);
+                
                 rb2d.velocity = dir * speed;
 
                 if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)
