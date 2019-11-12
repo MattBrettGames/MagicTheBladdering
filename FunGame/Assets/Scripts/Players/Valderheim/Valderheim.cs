@@ -52,7 +52,7 @@ public class Valderheim : PlayerBase
 
         aimTarget.position = transform.position + dir * 5;
 
-        if (player.GetAxis("") >= 0.4) { state = State.lockedOn; }
+        if (player.GetAxis("LockOn") >= 0.4) { state = State.lockedOn; }
         else { state = State.normal; }
 
         switch (state)
@@ -93,7 +93,7 @@ public class Valderheim : PlayerBase
 
                 rb2d.velocity = dir * speed * 0.5f;
 
-                //if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)                {                    state = State.normal;                }
+                //if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance) { state = State.normal; }
 
                 if (player.GetButtonDown("AAction")) { AAction(); }
                 if (player.GetButtonDown("BAttack")) { BAction(); }
