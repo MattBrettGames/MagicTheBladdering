@@ -16,6 +16,7 @@ public abstract class PlayerBase : BlankMono
     public float dodgeSpeed;
     public float dodgeDur;
     public float dodgeCooldown;
+    public float lockOnDistance;
     protected float dodgeTimer;
     private float baseSpeed;
     protected float moving;
@@ -66,6 +67,7 @@ public abstract class PlayerBase : BlankMono
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
+
     }
 
     public void SetInfo()
@@ -73,7 +75,7 @@ public abstract class PlayerBase : BlankMono
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }
     }
-    
+
     public virtual void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
@@ -87,7 +89,9 @@ public abstract class PlayerBase : BlankMono
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
-                    visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+
+                    if (Vector3.Distance(transform.position, lookAtTarget.position) >= lockOnDistance) { visuals.transform.LookAt(lookAtTarget.position + lookAtVariant); }
+                    else { visuals.transform.LookAt(aimTarget); }
 
                     rb2d.velocity = dir * speed;
 
