@@ -41,7 +41,7 @@ public class Valderheim : PlayerBase
         hammer.gameObject.tag = tag;
     }
 
-    public virtual void Update()
+    public override void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
@@ -51,6 +51,9 @@ public class Valderheim : PlayerBase
         else { curseTimer -= Time.deltaTime; }
 
         aimTarget.position = transform.position + dir * 5;
+
+        if (player.GetAxis("") >= 0.4) { state = State.lockedOn; }
+        else { state = State.normal; }
 
         switch (state)
         {
@@ -62,9 +65,11 @@ public class Valderheim : PlayerBase
                 {
                     //Rotating the Character Model
 
+                    visuals.transform.LookAt(aimTarget);
+                    /*
                     if (Vector3.Distance(transform.position, lookAtTarget.position) <= lockOnDistance) { state = State.lockedOn; }
-                    else { visuals.transform.LookAt(aimTarget); }
-
+                    else {  }
+                    */
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
@@ -84,16 +89,11 @@ public class Valderheim : PlayerBase
 
             case State.lockedOn:
 
-                print(thisPlayer + " is currently lock on");
-
                 anim.SetBool("LockOn", true);
 
-                rb2d.velocity = dir * speed;
+                rb2d.velocity = dir * speed * 0.5f;
 
-                if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)
-                {
-                    state = State.normal;
-                }
+                //if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)                {                    state = State.normal;                }
 
                 if (player.GetButtonDown("AAction")) { AAction(); }
                 if (player.GetButtonDown("BAttack")) { BAction(); }

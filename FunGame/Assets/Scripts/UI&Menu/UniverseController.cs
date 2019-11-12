@@ -136,8 +136,8 @@ public class UniverseController : BlankMono
             PlayerBase playerCode = p1.GetComponent<PlayerBase>();
             playerCode.enabled = true;
             playerCode.thisPlayer = "P1";
-            playerCode.SetInfo();
             p1.tag = "Player1";
+            playerCode.SetInfo();
             p1.transform.SetParent(GameObject.Find("CentreBase").transform);
             //print("CentreBase set");
 

@@ -40,8 +40,6 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-
-        print(pvpTrue);
         if (pvpTrue)
         {
             if (other.transform.tag != tag)
@@ -49,7 +47,6 @@ public class Weapons : BlankMono
                 PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
                 player.TakeDamage(damageFull);
                 player.Knockback(knockFull, knockDir);
-
             }
         }
         else
