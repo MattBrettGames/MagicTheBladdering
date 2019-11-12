@@ -51,7 +51,6 @@ public class Valderheim : PlayerBase
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
                     visuals.transform.LookAt(aimTarget);
-                    print(visuals.transform.rotation.y + " rotation z");
 
                     rb2d.velocity = dir * speed;
 
@@ -140,12 +139,10 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
-        if (dodgeCooldown >= 0)
-        {
-            anim.SetTrigger("AAction");
-            state = State.dodging;
-            Invoke("EndDodge", dodgeDur);
-        }
+        dodgeTimer = dodgeCooldown;
+        anim.SetTrigger("AAction");
+        state = State.dodging;
+        Invoke("EndDodge", dodgeDur);
     }
 
     public void EndDodge() { state = State.normal; }
