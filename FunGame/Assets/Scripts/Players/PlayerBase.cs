@@ -54,6 +54,10 @@ public abstract class PlayerBase : BlankMono
     protected Rigidbody rb2d;
     protected PlayerController playerCont;
     protected Player player;
+    protected Transform lookAtTarget;
+
+    protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
+
 
     public virtual void Start()
     {
@@ -65,6 +69,19 @@ public abstract class PlayerBase : BlankMono
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
     }
+
+    public void SetInfo()
+    {
+        if (playerID == 0)
+        {
+            lookAtTarget = GameObject.Find("Player2Base").transform;
+        }
+        else
+        {
+            lookAtTarget = GameObject.Find("Player1Base").transform;
+        }
+    }
+
 
     public virtual void Update()
     {
@@ -79,7 +96,7 @@ public abstract class PlayerBase : BlankMono
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
-                    visuals.transform.LookAt(aimTarget);
+                    visuals.transform.LookAt(lookAtTarget.position+lookAtVariant);
 
                     rb2d.velocity = dir * speed;
 

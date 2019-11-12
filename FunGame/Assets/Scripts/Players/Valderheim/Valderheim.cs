@@ -50,7 +50,7 @@ public class Valderheim : PlayerBase
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
-                    visuals.transform.LookAt(aimTarget);
+                    visuals.transform.LookAt(lookAtTarget);
 
                     rb2d.velocity = dir * speed;
 
