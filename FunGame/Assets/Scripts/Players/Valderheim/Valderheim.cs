@@ -40,8 +40,7 @@ public class Valderheim : PlayerBase
         base.Start();
         hammer.gameObject.tag = tag;
     }
-
-
+    
     public override void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
@@ -57,7 +56,7 @@ public class Valderheim : PlayerBase
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
-                    if (Vector3.Distance(transform.position, lookAtTarget.position) >= lockOnDistance) { visuals.transform.LookAt(lookAtTarget.position + lookAtVariant); }
+                    if (Vector3.Distance(transform.position, lookAtTarget.position) <= lockOnDistance) { visuals.transform.LookAt(lookAtTarget.position + lookAtVariant); }
                     else { visuals.transform.LookAt(aimTarget); }
 
                     rb2d.velocity = dir * speed;
@@ -92,6 +91,7 @@ public class Valderheim : PlayerBase
 
     public override void XAction()
     {
+        print(pvp);
         if (!comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
@@ -106,6 +106,7 @@ public class Valderheim : PlayerBase
 
     public override void YAction()
     {
+        print(pvp);
         if (comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
@@ -143,6 +144,7 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
+        print(dodgeTimer + " is the current dodgeTimer");
         dodgeTimer = dodgeCooldown;
         anim.SetTrigger("AAction");
         state = State.dodging;
