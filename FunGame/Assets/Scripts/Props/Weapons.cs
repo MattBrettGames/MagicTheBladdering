@@ -40,11 +40,13 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
+
+        print(pvpTrue);
         if (pvpTrue)
         {
             if (other.transform.tag != tag)
             {
-                PlayerBase player = other.GetComponent<PlayerBase>();
+                PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
                 player.TakeDamage(damageFull);
                 player.Knockback(knockFull, knockDir);
 
