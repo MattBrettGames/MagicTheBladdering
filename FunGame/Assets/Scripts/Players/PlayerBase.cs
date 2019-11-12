@@ -55,9 +55,7 @@ public abstract class PlayerBase : BlankMono
     protected PlayerController playerCont;
     protected Player player;
     protected Transform lookAtTarget;
-
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
-
 
     public virtual void Start()
     {
@@ -72,22 +70,14 @@ public abstract class PlayerBase : BlankMono
 
     public void SetInfo()
     {
-        if (playerID == 0)
-        {
-            lookAtTarget = GameObject.Find("Player2Base").transform;
-        }
-        else
-        {
-            lookAtTarget = GameObject.Find("Player1Base").transform;
-        }
+        if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
+        else { lookAtTarget = GameObject.Find("Player1Base").transform; }
     }
-
-
+    
     public virtual void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
-        transform.position = new Vector3(transform.position.x, 0, transform.position.y);
 
         switch (state)
         {
@@ -131,10 +121,10 @@ public abstract class PlayerBase : BlankMono
     }
 
     #region Input Actions
-    public virtual void AAction() { anim.SetTrigger("AAction"); }
-    public virtual void BAction() { anim.SetTrigger("BAttack"); }
-    public virtual void XAction() { anim.SetTrigger("XAttack"); }
-    public virtual void YAction() { anim.SetTrigger("YAttack"); }
+    public virtual void AAction() { }
+    public virtual void BAction() { }
+    public virtual void XAction() { }
+    public virtual void YAction() { }
     #endregion
 
     #region Common Events

@@ -39,6 +39,7 @@ public class Valderheim : PlayerBase
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
+        print("comboTime Time is " + comboTime);
 
         switch (state)
         {
@@ -50,7 +51,7 @@ public class Valderheim : PlayerBase
                 {
                     //Rotating the Character Model
                     aimTarget.position = transform.position + dir * 5;
-                    visuals.transform.LookAt(lookAtTarget);
+                    visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
 
                     rb2d.velocity = dir * speed;
 
@@ -87,31 +88,28 @@ public class Valderheim : PlayerBase
         if (!comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetTrigger("XAttack");
         }
         else
         {
-            Vector3 dir = visuals.transform.forward;
-            anim.SetBool("Comboing", true);
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetTrigger("Spin");
         }
-        anim.SetTrigger("XAttack");
     }
 
     public override void YAction()
     {
-        if (!comboTime)
+        print("Y Attack pressed & Combo time is " + comboTime);
+        if (comboTime)
         {
-            print("Hammer Slam");
-            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
-            anim.SetBool("Comboing", false);
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetTrigger("ComboKick");
         }
         else
         {
-            print("Combo Kick");
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
-            anim.SetBool("Comboing", true);
+            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetTrigger("YAttack");
         }
-        anim.SetTrigger("YAttack");
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); }
     public void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
