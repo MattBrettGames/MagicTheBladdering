@@ -64,12 +64,7 @@ public class Valderheim : PlayerBase
                 if (!prone && !acting)
                 {
                     //Rotating the Character Model
-
                     visuals.transform.LookAt(aimTarget);
-                    /*
-                    if (Vector3.Distance(transform.position, lookAtTarget.position) <= lockOnDistance) { state = State.lockedOn; }
-                    else {  }
-                    */
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
@@ -89,11 +84,12 @@ public class Valderheim : PlayerBase
 
             case State.lockedOn:
 
+                dir = Vector3.RotateTowards(dir, visuals.transform.forward, 1, 0);
+                print(dir);
+
                 anim.SetBool("LockOn", true);
 
-                rb2d.velocity = dir * speed * 0.5f;
-
-                //if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance) { state = State.normal; }
+                rb2d.velocity = dir * speed;
 
                 if (player.GetButtonDown("AAction")) { AAction(); }
                 if (player.GetButtonDown("BAttack")) { BAction(); }
@@ -120,7 +116,6 @@ public class Valderheim : PlayerBase
 
     public override void XAction()
     {
-        print(pvp);
         if (!comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
@@ -135,7 +130,6 @@ public class Valderheim : PlayerBase
 
     public override void YAction()
     {
-        print(pvp);
         if (comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
