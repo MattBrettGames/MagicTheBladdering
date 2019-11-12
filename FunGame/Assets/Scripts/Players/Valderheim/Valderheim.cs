@@ -90,7 +90,7 @@ public class Valderheim : PlayerBase
             hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
         }
         else
-        {            
+        {
             Vector3 dir = visuals.transform.forward;
             anim.SetBool("Comboing", true);
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp);
@@ -100,19 +100,19 @@ public class Valderheim : PlayerBase
 
     public override void YAction()
     {
-        if (comboTime)
+        if (!comboTime)
+        {
+            print("Hammer Slam");
+            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetBool("Comboing", false);
+        }
+        else
         {
             print("Combo Kick");
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
             anim.SetBool("Comboing", true);
         }
-        else
-        {
-            print("Hammer Slam");
-            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
-            anim.SetBool("Comboing", false);            
-        }
-            anim.SetTrigger("YAttack");
+        anim.SetTrigger("YAttack");
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); }
     public void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
@@ -140,9 +140,12 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
-        anim.SetTrigger("AAction");
-        state = State.dodging;
-        Invoke("EndDodge", dodgeDur);
+        if (dodgeCooldown >= 0)
+        {
+            anim.SetTrigger("AAction");
+            state = State.dodging;
+            Invoke("EndDodge", dodgeDur);
+        }
     }
 
     public void EndDodge() { state = State.normal; }
