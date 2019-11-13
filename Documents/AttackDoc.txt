@@ -3,10 +3,11 @@
 1. anim
 2. animation tree
 3. stick Weapon (or child) script on relevants weapon(s)
-4. jam characterEventHandler on the gameObject that has the animator on it
+4. jam characterEventHandler on the gameObject that has the animator on it (probably the skelemesh)
 5. set up the BeginAttack & EndAttack anim events
 6. set up the BeginActing & EndActing anim events
-7. add other anim events (such as Songbird's VialThrow())
-8. apply other bonuses, such as hyper armour
+7.Any other inputs (such as comboing) MUST be done outside of the Begin/End Acting events, since these cause inputs to be ignored
+8. add other anim events
+9. apply other bonuses, such as hyper armour & iFrames
 
 

@@ -25,7 +25,7 @@ public class CharacterSelector : BlankMono
     public UniverseController universe;
 
     [Header("UI Elements")]
-    public Text characterText;
+    public GameObject characterText;
     public Text skinText;
     public GameObject displayChar;
 
@@ -41,7 +41,7 @@ public class CharacterSelector : BlankMono
         displayChar.SetActive(true);
         displayImage.SetActive(true);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
-        characterText.text = characters[currentChar].name.ToString();
+        characterText = characters[currentChar].name;
     }
 
     void Update()
@@ -147,13 +147,15 @@ public class CharacterSelector : BlankMono
     }
     private void SpinJuice(float angle)
     {
-        displayChar.transform.Rotate(new Vector3(0, angle, 0));
+        gameObject.transform.Rotate(new Vector3(0, angle, 0));
     }
 
     public void UpdateDisplay()
     {
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
-        characterText.text = characters[currentChar].name.ToString();
+        characterText.SetActive(false);
+        characterText = characters[currentChar].name;
+        characterText.SetActive(true);
 
         displayImage.SetActive(false);
         displayImage = backImages[currentChar];
@@ -177,7 +179,7 @@ public class CharacterSelector : BlankMono
     [Serializable]
     public struct ModelList
     {
-        public string name;
+        public GameObject name;
         public List<SkinFo> skins;
     }
 

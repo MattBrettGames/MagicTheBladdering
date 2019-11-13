@@ -44,10 +44,9 @@ public class Weapons : BlankMono
         {
             if (other.transform.tag != tag)
             {
-                PlayerBase player = other.GetComponent<PlayerBase>();
+                PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
                 player.TakeDamage(damageFull);
                 player.Knockback(knockFull, knockDir);
-
             }
         }
         else

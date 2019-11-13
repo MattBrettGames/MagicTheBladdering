@@ -7,6 +7,7 @@ public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
     public Weapons hammer;
+    public Outline outline;
 
     [Header("Wide Swing")]
     public int xAttack;
@@ -34,19 +35,97 @@ public class Valderheim : PlayerBase
     public int growingRageDiv;
     private bool comboTime;
 
+    public override void Start()
+    {
+        base.Start();
+        hammer.gameObject.tag = tag;
+    }
+
+    public override void Update()
+    {
+        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
+        dodgeTimer -= Time.deltaTime;
+
+        if (poison > 0) { poison -= Time.deltaTime; }
+        if (curseTimer <= 0) { LoseCurse(); }
+        else { curseTimer -= Time.deltaTime; }
+
+        aimTarget.position = transform.position + dir * 5;
+
+        if (player.GetAxis("LockOn") >= 0.4) { state = State.lockedOn; }
+        else { state = State.normal; }
+
+        switch (state)
+        {
+            case State.normal:
+
+                anim.SetBool("LockOn", false);
+
+                if (!prone && !acting)
+                {
+                    //Rotating the Character Model
+                    visuals.transform.LookAt(aimTarget);
+                    rb2d.velocity = dir * speed;
+
+                    //Standard Inputs
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+                }
+                else
+                {
+                    dir = Vector3.zero;
+                }
+                break;
+
+            case State.lockedOn:
+
+                dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
+                print(dir);
+
+                anim.SetBool("LockOn", true);
+
+                rb2d.velocity = dir * speed;
+
+                if (player.GetButtonDown("AAction")) { AAction(); }
+                if (player.GetButtonDown("BAttack")) { BAction(); }
+                if (player.GetButtonDown("XAttack")) { XAction(); }
+                if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                anim.SetFloat("Movement_X", dir.x);
+                anim.SetFloat("Movement_ZY", dir.z);
+
+                visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+
+                break;
+
+
+            case State.dodging:
+                if (dodgeTimer <= 0) { DodgeSliding(dir); }
+                break;
+
+            case State.knockback:
+                KnockbackContinual();
+                break;
+        }
+    }
+
     public override void XAction()
     {
         if (!comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetTrigger("XAttack");
         }
         else
         {
-            Vector3 dir = visuals.transform.forward;
-            anim.SetBool("Comboing", true);
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp);
+            anim.SetTrigger("Spin");
         }
-        anim.SetTrigger("XAttack");
     }
 
     public override void YAction()
@@ -54,18 +133,16 @@ public class Valderheim : PlayerBase
         if (comboTime)
         {
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
-            anim.SetBool("Comboing", true);
-            anim.SetTrigger("YAttack");
+            anim.SetTrigger("ComboKick");
         }
         else
         {
-            anim.SetBool("Comboing", false);
             hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
             anim.SetTrigger("YAttack");
         }
     }
-    public void OpenComboKick() { comboTime = true; }
-    public void CloseComboKick() { comboTime = false; }
+    public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); }
+    public void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
     public override void BAction()
     {
@@ -90,8 +167,9 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
+        print(dodgeTimer + " is the current dodgeTimer");
+        dodgeTimer = dodgeCooldown;
         anim.SetTrigger("AAction");
-        dodgeTimer = dodgeTimer;
         state = State.dodging;
         Invoke("EndDodge", dodgeDur);
     }
