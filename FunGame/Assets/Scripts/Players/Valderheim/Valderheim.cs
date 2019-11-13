@@ -84,8 +84,11 @@ public class Valderheim : PlayerBase
 
             case State.lockedOn:
 
-                dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
-                print(dir);
+                walkDirection.localPosition = (dir);
+
+
+                //dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
+                //print(dir);
 
                 anim.SetBool("LockOn", true);
 
@@ -96,8 +99,8 @@ public class Valderheim : PlayerBase
                 if (player.GetButtonDown("XAttack")) { XAction(); }
                 if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                anim.SetFloat("Movement_X", dir.x);
-                anim.SetFloat("Movement_ZY", dir.z);
+                anim.SetFloat("Movement_X", walkDirection.localPosition.x);
+                anim.SetFloat("Movement_ZY", walkDirection.localPosition.z);
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
 
