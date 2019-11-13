@@ -58,6 +58,7 @@ public abstract class PlayerBase : BlankMono
     protected Player player;
     protected Transform lookAtTarget;
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
+    protected Transform walkDirection;
 
     public virtual void Start()
     {
@@ -65,6 +66,8 @@ public abstract class PlayerBase : BlankMono
         rb2d = gameObject.GetComponent<Rigidbody>();
         dodgeTimer = dodgeCooldown;
         baseSpeed = speed;
+
+        walkDirection = GameObject.Find("WalkDirector").transform;
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
