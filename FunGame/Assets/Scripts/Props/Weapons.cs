@@ -42,7 +42,7 @@ public class Weapons : BlankMono
     {
         if (pvpTrue)
         {
-            if (other.transform.tag != tag)
+            if (other.GetComponent<PlayerBase>() != null)
             {
                 PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
                 player.TakeDamage(damageFull);

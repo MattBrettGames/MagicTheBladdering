@@ -82,29 +82,39 @@ public class Valderheim : PlayerBase
                 }
                 break;
 
+
             case State.lockedOn:
 
-                /*if(transform.position >= lookAtTarget.position)
-                {
-
-                }
-                */
-                walkDirection.localPosition = dir; 
-
-                //dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
-                //print(dir);
+                walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
 
-                rb2d.velocity = dir * speed;
+                //print(Vector3.Angle(visuals.transform.forward, dir));
+                //print(prone + "|" + acting);
 
-                if (player.GetButtonDown("AAction")) { AAction(); }
-                if (player.GetButtonDown("BAttack")) { BAction(); }
-                if (player.GetButtonDown("XAttack")) { XAction(); }
-                if (player.GetButtonDown("YAttack")) { YAction(); }
+                if (!prone && !acting)
+                {
+                    rb2d.velocity = dir * speed;
 
-                anim.SetFloat("Movement_X", walkDirection.localPosition.x);
-                anim.SetFloat("Movement_ZY", walkDirection.localPosition.z);
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (Vector3.Angle(visuals.transform.forward, dir) >= 130)
+                    {
+                        anim.SetFloat("Movement_ZY", -1);
+                    }
+                    else if (Vector3.Angle(visuals.transform.forward, dir) <= 50)
+                    {
+                        anim.SetFloat("Movement_ZY", 1);
+                    }
+                    if(Vector3.Angle(visuals.transform.forward, dir) < 130 && Vector3.Angle(visuals.transform.forward, dir) > 50)
+                    {
+
+                    }
+                    anim.SetFloat("Movement_X", 1);
+                }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
 
