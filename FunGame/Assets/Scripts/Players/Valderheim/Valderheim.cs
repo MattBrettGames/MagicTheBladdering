@@ -82,12 +82,15 @@ public class Valderheim : PlayerBase
                 }
                 break;
 
+
             case State.lockedOn:
 
                 walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
-                anim.SetFloat("Movement", 0);
+
+                //print(Vector3.Angle(visuals.transform.forward, dir));
+                //print(prone + "|" + acting);
 
                 if (!prone && !acting)
                 {
@@ -98,8 +101,19 @@ public class Valderheim : PlayerBase
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                    anim.SetFloat("Movement_X", walkDirection.localPosition.x);
-                    anim.SetFloat("Movement_ZY", walkDirection.localPosition.z);
+                    if (Vector3.Angle(visuals.transform.forward, dir) >= 130)
+                    {
+                        anim.SetFloat("Movement_ZY", -1);
+                    }
+                    else if (Vector3.Angle(visuals.transform.forward, dir) <= 50)
+                    {
+                        anim.SetFloat("Movement_ZY", 1);
+                    }
+                    if(Vector3.Angle(visuals.transform.forward, dir) < 130 && Vector3.Angle(visuals.transform.forward, dir) > 50)
+                    {
+
+                    }
+                    anim.SetFloat("Movement_X", 1);
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
