@@ -84,27 +84,23 @@ public class Valderheim : PlayerBase
 
             case State.lockedOn:
 
-                /*if(transform.position >= lookAtTarget.position)
-                {
-
-                }
-                */
-                walkDirection.localPosition = dir; 
-
-                //dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
-                //print(dir);
+                walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
+                anim.SetFloat("Movement", 0);
 
-                rb2d.velocity = dir * speed;
+                if (!prone && !acting)
+                {
+                    rb2d.velocity = dir * speed;
 
-                if (player.GetButtonDown("AAction")) { AAction(); }
-                if (player.GetButtonDown("BAttack")) { BAction(); }
-                if (player.GetButtonDown("XAttack")) { XAction(); }
-                if (player.GetButtonDown("YAttack")) { YAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                anim.SetFloat("Movement_X", walkDirection.localPosition.x);
-                anim.SetFloat("Movement_ZY", walkDirection.localPosition.z);
+                    anim.SetFloat("Movement_X", walkDirection.localPosition.x);
+                    anim.SetFloat("Movement_ZY", walkDirection.localPosition.z);
+                }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
 
