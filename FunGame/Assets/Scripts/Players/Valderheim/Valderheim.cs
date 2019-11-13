@@ -109,11 +109,15 @@ public class Valderheim : PlayerBase
                     {
                         anim.SetFloat("Movement_ZY", 1);
                     }
-                    if(Vector3.Angle(visuals.transform.forward, dir) < 130 && Vector3.Angle(visuals.transform.forward, dir) > 50)
+                    if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < 130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > 50)
                     {
-
+                        anim.SetFloat("Movement_X", 1);
                     }
-                    anim.SetFloat("Movement_X", 1);
+                    else if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < -130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > -50)
+                    {
+                        anim.SetFloat("Movement_X", -1);
+                    }
+
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
