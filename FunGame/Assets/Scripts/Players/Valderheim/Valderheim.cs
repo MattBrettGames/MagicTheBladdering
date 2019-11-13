@@ -84,8 +84,12 @@ public class Valderheim : PlayerBase
 
             case State.lockedOn:
 
-                walkDirection.localPosition = (dir);
+                /*if(transform.position >= lookAtTarget.position)
+                {
 
+                }
+                */
+                walkDirection.localPosition = dir; 
 
                 //dir = Vector3.RotateTowards(dir, visuals.transform.forward, 0.5f, 0);
                 //print(dir);
