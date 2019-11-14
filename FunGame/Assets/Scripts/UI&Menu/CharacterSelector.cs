@@ -120,7 +120,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (player.GetButtonDown("AAction"))
+            if (player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
             {
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                 universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
@@ -165,7 +165,11 @@ public class CharacterSelector : BlankMono
 
         displayChar.SetActive(false);
         displayChar = characters[currentChar].skins[currentSkin].Skin;
-        displayChar.GetComponent<CapsuleCollider>().isTrigger = true;
+        if (displayChar.GetComponent<CapsuleCollider>() != null)
+        {
+            displayChar.GetComponent<CapsuleCollider>().isTrigger = true;
+        }
+
         displayChar.SetActive(true);
     }
 

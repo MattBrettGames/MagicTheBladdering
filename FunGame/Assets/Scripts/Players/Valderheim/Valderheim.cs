@@ -88,9 +88,6 @@ public class Valderheim : PlayerBase
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
-                //print(Vector3.Angle(visuals.transform.forward, dir));
-                //print(prone + "|" + acting);
-
                 if (!prone && !acting)
                 {
                     rb2d.velocity = dir * speed;
@@ -124,8 +121,7 @@ public class Valderheim : PlayerBase
 
 
             case State.dodging:
-                print("In dodging state");
-                if (dodgeTimer <= 0) { DodgeSliding(dir); }
+                if (dodgeTimer < 0) DodgeSliding(dir);
                 break;
 
             case State.knockback:
@@ -187,14 +183,17 @@ public class Valderheim : PlayerBase
 
     public override void AAction()
     {
-        print(dodgeTimer + " is the current dodgeTimer");
-        dodgeTimer = dodgeCooldown;
         anim.SetTrigger("AAction");
         state = State.dodging;
         Invoke("EndDodge", dodgeDur);
     }
 
-    public void EndDodge() { state = State.normal; }
+    public void EndDodge()
+    {
+        state = State.normal;
+        dodgeTimer = dodgeCooldown;
+
+    }
 
 
     //Passive Effects - Surefooted & Building Rage

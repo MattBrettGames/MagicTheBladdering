@@ -16,7 +16,6 @@ public abstract class PlayerBase : BlankMono
     public float dodgeSpeed;
     public float dodgeDur;
     public float dodgeCooldown;
-    public float lockOnDistance;
     protected float dodgeTimer;
     private float baseSpeed;
     protected float moving;
@@ -95,14 +94,12 @@ public abstract class PlayerBase : BlankMono
             case State.normal:
 
                 anim.SetBool("LockOn", false);
+                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
 
                 if (!prone && !acting)
                 {
                     //Rotating the Character Model
-
-                    if (Vector3.Distance(transform.position, lookAtTarget.position) >= lockOnDistance) { state = State.lockedOn; }
-                    else { visuals.transform.LookAt(aimTarget); }
-
+                    visuals.transform.LookAt(aimTarget);
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
@@ -120,26 +117,40 @@ public abstract class PlayerBase : BlankMono
                 }
                 break;
 
+
             case State.lockedOn:
 
-                print(thisPlayer + " is currently lock on");
+                walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
+                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
-                rb2d.velocity = dir * speed;
-
-                if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)
+                if (!prone && !acting)
                 {
-                    state = State.normal;
+                    rb2d.velocity = dir * speed;
+
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (Vector3.Angle(visuals.transform.forward, dir) >= 130)
+                    {
+                        anim.SetFloat("Movement_ZY", -1);
+                    }
+                    else if (Vector3.Angle(visuals.transform.forward, dir) <= 50)
+                    {
+                        anim.SetFloat("Movement_ZY", 1);
+                    }
+                    if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < 130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > 50)
+                    {
+                        anim.SetFloat("Movement_X", 1);
+                    }
+                    else if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < -130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > -50)
+                    {
+                        anim.SetFloat("Movement_X", -1);
+                    }
                 }
-
-                if (player.GetButtonDown("AAction")) { AAction(); }
-                if (player.GetButtonDown("BAttack")) { BAction(); }
-                if (player.GetButtonDown("XAttack")) { XAction(); }
-                if (player.GetButtonDown("YAttack")) { YAction(); }
-
-                anim.SetFloat("Movement_X", dir.x);
-                anim.SetFloat("Movement_ZY", dir.z);
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
 
@@ -147,7 +158,7 @@ public abstract class PlayerBase : BlankMono
 
 
             case State.dodging:
-                if (dodgeTimer <= 0) { DodgeSliding(dir); }
+                if (dodgeTimer < 0) DodgeSliding(dir);
                 break;
 
             case State.knockback:
@@ -203,7 +214,7 @@ public abstract class PlayerBase : BlankMono
     public void BeginActing() { acting = true; }
     public void EndActing() { acting = false; }
 
-    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; print("Dodging"); }
+    public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; }
 
     #endregion
 
