@@ -40,6 +40,85 @@ public class Valderheim : PlayerBase
         base.Start();
         hammer.gameObject.tag = tag;
     }
+    public virtual void Update()
+    {
+        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
+        dodgeTimer -= Time.deltaTime;
+
+        if (poison > 0) { poison -= Time.deltaTime; }
+        if (curseTimer <= 0) { LoseCurse(); }
+        else { curseTimer -= Time.deltaTime; }
+
+        aimTarget.position = transform.position + dir * 5;
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
+        if (player.GetButtonDown("BAttack")) { BAction(); }
+        
+        switch (state)
+        {
+            case State.attack:
+                break;
+
+            case State.normal:
+
+                anim.SetBool("LockOn", false);
+                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+
+                if (!prone && !acting)
+                {
+                    //Rotating the Character Model
+                    visuals.transform.LookAt(aimTarget);
+                    rb2d.velocity = dir * speed;
+
+                    //Standard Inputs
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+                }
+                else
+                {
+                    dir = Vector3.zero;
+                }
+                break;
+
+            case State.lockedOn:
+
+                walkDirection.position = dir + transform.position;
+
+                anim.SetBool("LockOn", true);
+                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
+
+                if (!prone && !acting)
+                {
+                    rb2d.velocity = dir * speed;
+
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+
+                    anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
+                    anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
+                }
+
+                visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+                break;
+
+            case State.dodging:
+                if (dodgeTimer < 0) DodgeSliding(dir);
+                break;
+
+            case State.knockback:
+                KnockbackContinual();
+                break;
+        }
+    }
 
     public override void XAction()
     {

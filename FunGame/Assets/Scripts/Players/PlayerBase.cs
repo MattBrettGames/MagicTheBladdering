@@ -141,38 +141,9 @@ public abstract class PlayerBase : BlankMono
 
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
-
-                    /*  if (Vector3.Angle(visuals.transform.forward, dir) >= 130)
-                      {
-                          anim.SetFloat("Movement_ZY", -1);
-                      }
-                      else if (Vector3.Angle(visuals.transform.forward, dir) <= 50)
-                      {
-                          anim.SetFloat("Movement_ZY", 1);
-                      }
-                      else
-                      {
-                          anim.SetFloat("Movement_ZY", 0);
-                      }
-
-                      if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < 130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > 50)
-                      {
-                          anim.SetFloat("Movement_X", 1);
-                      }
-                      else if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < -130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > -50)
-                      {
-                          anim.SetFloat("Movement_X", -1);
-                      }
-                      else
-                      {
-                          anim.SetFloat("Movement_X", 0);
-                      }*/
-
+                  
                     anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                     anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
-
-
-
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
