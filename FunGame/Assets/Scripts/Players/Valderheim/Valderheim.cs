@@ -40,7 +40,8 @@ public class Valderheim : PlayerBase
         base.Start();
         hammer.gameObject.tag = tag;
     }
-    public virtual void Update()
+
+    public override void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         dodgeTimer -= Time.deltaTime;
