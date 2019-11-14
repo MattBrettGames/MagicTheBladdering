@@ -250,7 +250,7 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForSeconds(respawnTimer);
         player.Respawn();
-        player.gameObject.transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[playerInt];
+        player.gameObject.transform.position = allSpawnPositions[currentLevel - levelCount].spawnPos[playerInt];
     }
     public void ReturnToMenu()
     {
