@@ -20,8 +20,5 @@ public class DualObjectiveCamera : MonoBehaviour
             distanceBetweenTargets,
             centerPosition.z + 10
             );
-
-        //        transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(this.gameObject.transform.position.z, -15, 1000));
-
     }
 }
