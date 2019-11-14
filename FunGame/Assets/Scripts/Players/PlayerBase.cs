@@ -125,7 +125,7 @@ public abstract class PlayerBase : BlankMono
                 print(thisPlayer + " is currently lock on");
 
                 anim.SetBool("LockOn", true);
-                
+
                 rb2d.velocity = dir * speed;
 
                 if (Vector3.Distance(transform.position, lookAtTarget.position) > lockOnDistance)
@@ -203,7 +203,7 @@ public abstract class PlayerBase : BlankMono
     public void BeginActing() { acting = true; }
     public void EndActing() { acting = false; }
 
-    public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; }
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; print("Dodging"); }
 
     #endregion
 

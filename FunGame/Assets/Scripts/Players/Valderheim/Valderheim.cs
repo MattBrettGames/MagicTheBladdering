@@ -52,14 +52,12 @@ public class Valderheim : PlayerBase
 
         aimTarget.position = transform.position + dir * 5;
 
-        if (player.GetAxis("LockOn") >= 0.4) { state = State.lockedOn; }
-        else { state = State.normal; }
-
         switch (state)
         {
             case State.normal:
 
                 anim.SetBool("LockOn", false);
+                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
 
                 if (!prone && !acting)
                 {
@@ -88,6 +86,7 @@ public class Valderheim : PlayerBase
                 walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
+                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
                 //print(Vector3.Angle(visuals.transform.forward, dir));
                 //print(prone + "|" + acting);
@@ -117,7 +116,6 @@ public class Valderheim : PlayerBase
                     {
                         anim.SetFloat("Movement_X", -1);
                     }
-
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
@@ -126,6 +124,7 @@ public class Valderheim : PlayerBase
 
 
             case State.dodging:
+                print("In dodging state");
                 if (dodgeTimer <= 0) { DodgeSliding(dir); }
                 break;
 
