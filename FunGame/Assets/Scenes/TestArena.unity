@@ -870,7 +870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftTarget: {fileID: 959098730}
   rightTarget: {fileID: 2124279137}
-  minDistance: 0
+  height: 10
 --- !u!1001 &653667443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1206,7 +1206,7 @@ GameObject:
   - component: {fileID: 1073249455}
   - component: {fileID: 1073249454}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: FallDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1239,8 +1239,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageToEnemy: 3000
   damageToPlayer: 3000
-  dir: {x: 0, y: 0, z: 0}
-  force: 0
+  dir: {x: 2, y: -10, z: 2}
+  force: 50
 --- !u!4 &1073249456
 Transform:
   m_ObjectHideFlags: 0
@@ -2650,7 +2650,7 @@ MonoBehaviour:
   damageToEnemy: 20
   damageToPlayer: 0
   dir: {x: -2, y: 0, z: -10}
-  force: 0
+  force: 50
 --- !u!4 &1698029569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1233333557802612971, guid: b5edbf614f2db8f45a6aab2234fbed06,

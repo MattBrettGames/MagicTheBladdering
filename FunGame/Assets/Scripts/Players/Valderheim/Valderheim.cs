@@ -52,13 +52,15 @@ public class Valderheim : PlayerBase
 
         aimTarget.position = transform.position + dir * 5;
 
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
         if (player.GetButtonDown("BAttack")) { BAction(); }
-
-        print(acting  + "is the current acting value");
-        //print(  + "is the current acting anim value");
-
+        
         switch (state)
         {
+            case State.attack:
+                break;
+
             case State.normal:
 
                 anim.SetBool("LockOn", false);
@@ -99,22 +101,11 @@ public class Valderheim : PlayerBase
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                    if (Vector3.Angle(visuals.transform.forward, dir) >= 130)
-                    {
-                        anim.SetFloat("Movement_ZY", -1);
-                    }
-                    else if (Vector3.Angle(visuals.transform.forward, dir) <= 50)
-                    {
-                        anim.SetFloat("Movement_ZY", 1);
-                    }
-                    if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < 130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > 50)
-                    {
-                        anim.SetFloat("Movement_X", 1);
-                    }
-                    else if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < -130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > -50)
-                    {
-                        anim.SetFloat("Movement_X", -1);
-                    }
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+
+                    anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
+                    anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
@@ -127,11 +118,8 @@ public class Valderheim : PlayerBase
             case State.knockback:
                 KnockbackContinual();
                 break;
-
         }
     }
-
-
 
     public override void XAction()
     {
@@ -197,7 +185,6 @@ public class Valderheim : PlayerBase
         dodgeTimer = dodgeCooldown;
 
     }
-
 
     //Passive Effects - Surefooted & Building Rage
     public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageDiv) + 1; }

@@ -46,6 +46,7 @@ public abstract class PlayerBase : BlankMono
         lockedOn,
         dodging,
         knockback,
+        attack
     }
 
     [Header("Components")]
@@ -93,6 +94,9 @@ public abstract class PlayerBase : BlankMono
 
         switch (state)
         {
+            case State.attack:
+                break;
+
             case State.normal:
 
                 anim.SetBool("LockOn", false);
@@ -119,11 +123,9 @@ public abstract class PlayerBase : BlankMono
                 }
                 break;
 
-
             case State.lockedOn:
 
                 walkDirection.position = dir + transform.position;
-
 
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
@@ -137,22 +139,11 @@ public abstract class PlayerBase : BlankMono
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                    if (Vector3.Angle(visuals.transform.forward, dir) >= 130)
-                    {
-                        anim.SetFloat("Movement_ZY", -1);
-                    }
-                    else if (Vector3.Angle(visuals.transform.forward, dir) <= 50)
-                    {
-                        anim.SetFloat("Movement_ZY", 1);
-                    }
-                    if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < 130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > 50)
-                    {
-                        anim.SetFloat("Movement_X", 1);
-                    }
-                    else if (Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) < -130 && Vector3.SignedAngle(visuals.transform.forward, dir, Vector3.up) > -50)
-                    {
-                        anim.SetFloat("Movement_X", -1);
-                    }
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+                  
+                    anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
+                    anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
@@ -210,11 +201,29 @@ public abstract class PlayerBase : BlankMono
     public void GainIFrames() { iFrames = true; }
     public void LoseIFrames() { iFrames = false; }
 
-    public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); anim.SetTrigger("Respawn"); LoseIFrames(); }
+    public virtual void Respawn()
+    {
+        currentHealth = healthMax;
+        cursed = false;
+        curseTimer = 0;
+        poison = 0;
+        prone = false;
+        gameObject.SetActive(true);
+        GainIFrames();
+        Invoke("LoseIFrames", 3);
+        anim.SetTrigger("Respawn");
+        LoseIFrames();
+        damageMult = 1;
+        incomingMult = 1;
+
+        state = State.normal;
+        anim.SetFloat("Movement", 0);
+
+    }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
-    public void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }
-    public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; }
+    public void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
+    public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
     public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; }
 
