@@ -227,6 +227,7 @@ public class UniverseController : BlankMono
             if (playerCode.numOfDeaths != numOfRespawns)
             {
                 StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
+                playerCode.enabled = true;
             }
             else
             {
@@ -251,7 +252,7 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForSeconds(respawnTimer);
         player.Respawn();
-        player.gameObject.transform.position = new Vector3(0, 0, 15);
+        player.gameObject.transform.position = new Vector3(15, 0, 0);
     }
     public void ReturnToMenu()
     {
