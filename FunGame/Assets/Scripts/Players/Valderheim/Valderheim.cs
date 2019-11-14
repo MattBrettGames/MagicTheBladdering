@@ -52,6 +52,11 @@ public class Valderheim : PlayerBase
 
         aimTarget.position = transform.position + dir * 5;
 
+        if (player.GetButtonDown("BAttack")) { BAction(); }
+
+        print(acting  + "is the current acting value");
+        //print(  + "is the current acting anim value");
+
         switch (state)
         {
             case State.normal:
@@ -67,7 +72,6 @@ public class Valderheim : PlayerBase
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
@@ -79,7 +83,6 @@ public class Valderheim : PlayerBase
                     dir = Vector3.zero;
                 }
                 break;
-
 
             case State.lockedOn:
 
@@ -93,7 +96,6 @@ public class Valderheim : PlayerBase
                     rb2d.velocity = dir * speed;
 
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
@@ -116,9 +118,7 @@ public class Valderheim : PlayerBase
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
-
                 break;
-
 
             case State.dodging:
                 if (dodgeTimer < 0) DodgeSliding(dir);
@@ -127,8 +127,11 @@ public class Valderheim : PlayerBase
             case State.knockback:
                 KnockbackContinual();
                 break;
+
         }
     }
+
+
 
     public override void XAction()
     {

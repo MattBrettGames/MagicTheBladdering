@@ -89,6 +89,8 @@ public abstract class PlayerBase : BlankMono
 
         aimTarget.position = transform.position + dir * 5;
 
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
         switch (state)
         {
             case State.normal:
@@ -122,6 +124,7 @@ public abstract class PlayerBase : BlankMono
 
                 walkDirection.position = dir + transform.position;
 
+
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
@@ -153,9 +156,7 @@ public abstract class PlayerBase : BlankMono
                 }
 
                 visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
-
                 break;
-
 
             case State.dodging:
                 if (dodgeTimer < 0) DodgeSliding(dir);
@@ -185,6 +186,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockbackContinual()
     {
         transform.position += knockbackForce * knockBackPower * Time.deltaTime;
+        visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
     }
     public virtual void Knockback(int power, Vector3 direction)
     {
@@ -211,8 +213,8 @@ public abstract class PlayerBase : BlankMono
     public void Respawn() { currentHealth = healthMax; cursed = false; curseTimer = 0; poison = 0; prone = false; gameObject.SetActive(true); GainIFrames(); Invoke("LoseIFrames", 3); anim.SetTrigger("Respawn"); LoseIFrames(); }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
-    public void BeginActing() { acting = true; }
-    public void EndActing() { acting = false; }
+    public void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }
+    public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; }
 
     public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; }
 
