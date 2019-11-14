@@ -11,7 +11,7 @@ public class CharacterSelector : BlankMono
 
     private string horiPlayerInput;
     private string vertPlayerInput;
-
+    private Player player;
     int currentChar;
     int currentSkin;
 
@@ -42,14 +42,16 @@ public class CharacterSelector : BlankMono
         displayImage.SetActive(true);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
         characterText = characters[currentChar].name;
+        player = ReInput.players.GetPlayer(thisPInt);
     }
 
     void Update()
     {
         if (!locked)
         {
-            if (Input.GetAxis(horiPlayerInput) >= 0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.RightArrow))
+            if (player.GetAxis("HoriMove") >= 0.4f && !inputCooldown)
             {
+                print("Pressed right");
                 currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
@@ -67,7 +69,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
                 currentSkin = 0;
             }
-            if (Input.GetAxis(horiPlayerInput) <= -0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (player.GetAxis("HoriMove") <= -0.4f && !inputCooldown)
             {
                 inputCooldown = true;
                 if (currentChar != 0)
@@ -87,7 +89,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (Input.GetAxis(vertPlayerInput) >= 0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.UpArrow))
+            if (player.GetAxis("VertMove") >= 0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 inputCooldown = true;
                 if (currentSkin < characters[currentChar].skins.Count - 1)
@@ -102,7 +104,7 @@ public class CharacterSelector : BlankMono
                 }
                 Invoke("EndCooldown", 0.3f);
             }
-            if (Input.GetAxis(vertPlayerInput) <= -0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.DownArrow))
+            if (player.GetAxis("VertMove") <= -0.4f && !inputCooldown || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 inputCooldown = true;
                 if (currentSkin != 0)
@@ -118,7 +120,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (Input.GetButtonDown(thisPlayer + "XButton"))
+            if (player.GetButtonDown("AAction"))
             {
                 displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                 universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
@@ -126,7 +128,7 @@ public class CharacterSelector : BlankMono
                 locked = true;
             }
         }
-        if (Input.GetButtonDown(thisPlayer + "BButton"))
+        if (player.GetButtonDown("BAttack"))
         {
             if (!locked)
             {
@@ -163,6 +165,7 @@ public class CharacterSelector : BlankMono
 
         displayChar.SetActive(false);
         displayChar = characters[currentChar].skins[currentSkin].Skin;
+        displayChar.GetComponent<CapsuleCollider>().isTrigger = true;
         displayChar.SetActive(true);
     }
 

@@ -139,7 +139,7 @@ public class UniverseController : BlankMono
             p1.tag = "Player1";
             playerCode.SetInfo();
             p1.transform.SetParent(GameObject.Find("CentreBase").transform);
-            //print("CentreBase set");
+            p1.GetComponent<CapsuleCollider>().isTrigger = true;
 
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
@@ -160,6 +160,7 @@ public class UniverseController : BlankMono
             playerCode.SetInfo();
             p2.tag = "Player2";
             p2.transform.parent = GameObject.Find("CentreBase").transform;
+            p2.GetComponent<CapsuleCollider>().isTrigger = true;
 
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
