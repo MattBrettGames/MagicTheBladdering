@@ -6,25 +6,24 @@ public class Cannister : BlankMono
 {
     private GameObject smokeTrue;
 
-    public void TriggerBurst(GameObject smoke, int damage, int tick)
+    public void TriggerBurst(GameObject smoke, int damage, int tick, int size)
     {
         smokeTrue = smoke;
         smoke.SetActive(true);
         smoke.transform.position = transform.position;
 
         smoke.GetComponent<SmokeBase>().Begin(damage, tick);
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < size; i++)
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smokeTrue));
-            print(i * 0.01f);
         }
-
-        gameObject.SetActive(false);
+        Invoke("Vanish", 0.5f);
     }
-    
+
+    void Vanish() { gameObject.SetActive(false); }
+
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
     {
-        print("SmokeGrowth");
         yield return new WaitForSeconds(time);
         smokecloud.transform.localScale += Vector3.one;
     }

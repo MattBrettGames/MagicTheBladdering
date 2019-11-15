@@ -7,8 +7,10 @@ public class BioSelector : BlankMono
 {
 
     public List<GameObject> displays = new List<GameObject>();
+    public List<GameObject> movesetDisplays = new List<GameObject>();
     private int currentDisplay;
     private bool inputCooldown;
+    private bool onMovesets;
 
     private void Start()
     {
@@ -17,9 +19,16 @@ public class BioSelector : BlankMono
 
     void Update()
     {
+        if (Input.GetButtonDown("AllAbutton") && !inputCooldown)
+        {
+            displays[currentDisplay].SetActive(!onMovesets);
+            movesetDisplays[currentDisplay].SetActive(onMovesets);
+            onMovesets = !onMovesets;
+        }
+
         if (Input.GetAxis("AllVertical") >= 0.4f && !inputCooldown)
         {
-            if (currentDisplay < displays.Count-1)
+            if (currentDisplay < displays.Count - 1)
             {
                 displays[currentDisplay].SetActive(false);
                 currentDisplay++;

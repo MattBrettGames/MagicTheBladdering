@@ -17,6 +17,7 @@ public class SongBird : PlayerBase
     [Header("Vial Stats")]
     public int smokeburstDamage;
     public int smokePoisonTicks;
+    public int cannisterCloudSize;
     private bool hasCannister;
 
     public override void SetInfo()
@@ -60,7 +61,7 @@ public class SongBird : PlayerBase
         }
         else
         {
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize);
             hasCannister = true;
         }
     }
