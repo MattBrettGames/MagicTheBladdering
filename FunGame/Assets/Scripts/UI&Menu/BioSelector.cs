@@ -19,7 +19,7 @@ public class BioSelector : BlankMono
 
     void Update()
     {
-        if (Input.GetButtonDown("AllAbutton") && !inputCooldown)
+        if (Input.GetButtonDown("AllAButton") && !inputCooldown)
         {
             displays[currentDisplay].SetActive(!onMovesets);
             movesetDisplays[currentDisplay].SetActive(onMovesets);
