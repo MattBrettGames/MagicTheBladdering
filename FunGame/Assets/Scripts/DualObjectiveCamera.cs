@@ -6,7 +6,7 @@ public class DualObjectiveCamera : MonoBehaviour
 {
     public Transform leftTarget;
     public Transform rightTarget;
-    public float height;
+    public Vector3 offset;
 
     // Update is called once per frame
     void Update()
@@ -16,8 +16,8 @@ public class DualObjectiveCamera : MonoBehaviour
 
         transform.position = new Vector3(
             centerPosition.x,
-            distanceBetweenTargets + height,
+            distanceBetweenTargets,
             centerPosition.z
-            );
+            )+offset;
     }
 }

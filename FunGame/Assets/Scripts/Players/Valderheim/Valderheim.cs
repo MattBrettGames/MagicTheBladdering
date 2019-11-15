@@ -141,6 +141,7 @@ public class Valderheim : PlayerBase
         {
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
             anim.SetTrigger("ComboKick");
+            comboTime = false;
         }
         else
         {
@@ -153,6 +154,7 @@ public class Valderheim : PlayerBase
 
     public override void BAction()
     {
+        comboTime = false;
         if (!frenzy)
         {
             Invoke("StopFrenzy", frenzyDuration);
