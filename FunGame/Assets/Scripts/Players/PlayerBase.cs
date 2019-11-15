@@ -72,8 +72,8 @@ public abstract class PlayerBase : BlankMono
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
     }
-
-    public void SetInfo()
+    
+    public virtual void SetInfo()
     {
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }

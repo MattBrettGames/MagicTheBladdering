@@ -136,7 +136,6 @@ public class UniverseController : BlankMono
             playerCode.enabled = true;
             playerCode.thisPlayer = "P1";
             p1.tag = "Player1";
-            playerCode.SetInfo();
             p1.transform.SetParent(GameObject.Find("CentreBase").transform);
             p1.GetComponent<CapsuleCollider>().isTrigger = false;
 
@@ -148,6 +147,7 @@ public class UniverseController : BlankMono
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
+            playerCode.SetInfo(); 
 
             #endregion
 
@@ -156,7 +156,6 @@ public class UniverseController : BlankMono
             playerCode = p2.GetComponent<PlayerBase>();
             playerCode.enabled = true;
             playerCode.thisPlayer = "P2";
-            playerCode.SetInfo();
             p2.tag = "Player2";
             p2.transform.parent = GameObject.Find("CentreBase").transform;
             p2.GetComponent<CapsuleCollider>().isTrigger = false;
@@ -169,6 +168,7 @@ public class UniverseController : BlankMono
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
             p2.transform.localScale = targetScale;
+            playerCode.SetInfo(); 
             #endregion          
 
             for (int i = 0; i < 2; i++)

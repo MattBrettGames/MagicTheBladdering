@@ -9,6 +9,6 @@ public class CorvidDagger : Weapons
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (poisonActive) { other.GetComponent<PlayerBase>().poison *= 2; }
+        other.GetComponent<PlayerBase>().poison *= 2;
     }
 }

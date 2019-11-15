@@ -7,15 +7,13 @@ public class ObjectPooler : BlankMono
     #region Songbird
     [Header("Songbird Inputs")]
     public GameObject poisonSmokeModel;
-    public GameObject adrenalineSmokeModel;
-    public GameObject boomSmokeModel;
+    public GameObject cannister;
 
-   [HideInInspector] public List<GameObject> poisonSmoke = new List<GameObject>();
-    [HideInInspector] public List<GameObject> adrenalineSmoke = new List<GameObject>();
-    [HideInInspector] public List<GameObject> boomSmoke = new List<GameObject>();
+//    [HideInInspector] 
+    public List<GameObject> poisonSmoke = new List<GameObject>();
+    [HideInInspector] public List<GameObject> cannisters = new List<GameObject>();
+
     public void ReturnToPoisonSmokePool(GameObject gameobject) { poisonSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
-    public void ReturnToAdrenalineSmokePool(GameObject gameobject) { adrenalineSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
-    public void ReturnToBoomSmokePool(GameObject gameobject) { boomSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
 
     #endregion
 
@@ -24,7 +22,7 @@ public class ObjectPooler : BlankMono
     public GameObject curseCircle;
     public GameObject curseTrap;
 
-   [HideInInspector] public List<GameObject> curseCircleList = new List<GameObject>();
+    [HideInInspector] public List<GameObject> curseCircleList = new List<GameObject>();
     [HideInInspector] public List<GameObject> curseTrapList = new List<GameObject>();
     public void ReturnToCurseCircleList(GameObject gameobject) { curseCircleList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     public void ReturnToCurseTrapList(GameObject gameobject) { curseTrapList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
@@ -50,14 +48,11 @@ public class ObjectPooler : BlankMono
         for (int i = 0; i < 5; i++)
         {
             #region Songbird Props
-            poisonSmoke.Add(Instantiate<GameObject>(poisonSmokeModel, transform.position, Quaternion.identity));
+            poisonSmoke.Add(Instantiate<GameObject>(poisonSmokeModel, transform.position, Quaternion.identity, transform));
             poisonSmoke[i].SetActive(false);
 
-            adrenalineSmoke.Add(Instantiate<GameObject>(adrenalineSmokeModel, transform.position, Quaternion.identity));
-            adrenalineSmoke[i].SetActive(false);
-
-            boomSmoke.Add(Instantiate<GameObject>(boomSmokeModel, transform.position, Quaternion.identity));
-            boomSmoke[i].SetActive(false);
+            cannisters.Add(Instantiate<GameObject>(cannister, transform.position, Quaternion.identity, transform));
+            cannisters[i].SetActive(false);
             #endregion
 
             #region Carman Props
@@ -82,4 +77,8 @@ public class ObjectPooler : BlankMono
         }
     }
 
+    public GameObject ReturnSmokeCloud(int listIndex)
+    {
+        return poisonSmoke[listIndex];
+    }
 }

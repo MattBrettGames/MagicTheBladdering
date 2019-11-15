@@ -52,7 +52,6 @@ public class CharacterSelector : BlankMono
         {
             if (player.GetAxis("HoriMove") >= 0.4f && !inputCooldown)
             {
-                print("Pressed right");
                 currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
