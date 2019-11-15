@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class MenuSelector : MonoBehaviour
 {
@@ -10,31 +11,41 @@ public class MenuSelector : MonoBehaviour
 
     [Header("Components")]
     public UniverseController universe;
+    private Player player1;
+    private Player player2;
 
     private bool inputOnCooldown;
-    int currentSel;
+    private int currentSel;
 
-    void Start() { cursor.transform.position = options[currentSel].transform.position; }
+    void Start()
+    {
+        cursor.transform.position = options[currentSel].transform.position;
+        player1 = ReInput.players.GetPlayer(0);
+        player2 = ReInput.players.GetPlayer(1);
+        
+    }
 
     void Update()
     {
-        if (Input.GetAxis("AllVertical") >= 0.4 && !inputOnCooldown)
+        if (player1.GetAxis("VertMove") <= -0.4 && !inputOnCooldown || player2.GetAxis("VertMove") <= -0.4 && !inputOnCooldown)
         {
+            print("INPUTGET");
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
             if (currentSel >= options.Length - 1) { currentSel = 0; }
             else { currentSel++; }
             cursor.transform.position = options[currentSel].transform.position;
         }
-        if (Input.GetAxis("AllVertical") <= -0.4 && !inputOnCooldown)
+        if (player1.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player2.GetAxis("VertMove") >= 0.4 && !inputOnCooldown)
         {
+            print("INPUTGET");
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
-            if (currentSel <= 0) { currentSel = options.Length-1; }
+            if (currentSel <= 0) { currentSel = options.Length - 1; }
             else { currentSel--; }
             cursor.transform.position = options[currentSel].transform.position;
         }
-        if (Input.GetButtonDown("AllAButton"))
+        if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
         {
             Invoke(options[currentSel].name, 0);
         }

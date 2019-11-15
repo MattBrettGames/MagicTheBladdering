@@ -94,12 +94,11 @@ public class SongBird : PlayerBase
             }
         }
     }
-        
+    
     public void EndDodge()
     {
         state = State.normal;
         dodgeTimer = dodgeCooldown;
-
     }
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
@@ -110,9 +109,6 @@ public class SongBird : PlayerBase
 
     private void RegainSmoke()
     {
-        //print(smokeCount + " - smokeCount.");
-        //print(string.Format("Pool Poison - {0}, adren {1}, boom {2}", pooler.poisonSmoke.Count, pooler.adrenalineSmoke.Count, pooler.boomSmoke.Count));
-
         if (smokeCount < 3)
         {
             smokeCount++;

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Rewired;
+
 public class CharacterSelector : BlankMono
 {
     public string thisPlayer;

@@ -85,7 +85,6 @@ public class UniverseController : BlankMono
             {
                 SceneManager.LoadScene("MainMenu");
             }
-
         }
     }
 

@@ -183,7 +183,6 @@ public class Valderheim : PlayerBase
     {
         state = State.normal;
         dodgeTimer = dodgeCooldown;
-
     }
 
     //Passive Effects - Surefooted & Building Rage
