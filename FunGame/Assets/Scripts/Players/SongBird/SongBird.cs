@@ -84,14 +84,22 @@ public class SongBird : PlayerBase
             smokeCount++;
 
             anim.SetTrigger("AAction");
-            rb2d.AddForce(visuals.transform.forward * dodgeForce, ForceMode.VelocityChange);
+            state = State.dodging;
 
-            Invoke("StopKnockback", 0.2f);
+            Invoke("EndDodge", dodgeDur);
+
             for (int i = 0; i < smokeTicks; i++)
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
             }
         }
+    }
+        
+    public void EndDodge()
+    {
+        state = State.normal;
+        dodgeTimer = dodgeCooldown;
+
     }
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
@@ -138,7 +146,6 @@ public class SongBird : PlayerBase
                 pooler.boomSmoke.Remove(smokeCloud);
                 smokeTicks = boomTickDist;
             }
-            print("Selected Smoke");
 
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
@@ -147,7 +154,6 @@ public class SongBird : PlayerBase
 
             for (int i = 0; i < smokeTicks; i++)
             {
-                print(i + " is the current loop");
                 StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
             }
         }
