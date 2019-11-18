@@ -55,7 +55,7 @@ public class Valderheim : PlayerBase
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
         if (player.GetButtonDown("BAttack")) { BAction(); }
-        
+
         switch (state)
         {
             case State.attack:
@@ -172,19 +172,6 @@ public class Valderheim : PlayerBase
         frenzy = false;
         frenzyEffects.Clear();
         frenzyEffects.Stop();
-    }
-
-    public override void AAction()
-    {
-        anim.SetTrigger("AAction");
-        state = State.dodging;
-        Invoke("EndDodge", dodgeDur);
-    }
-
-    public void EndDodge()
-    {
-        state = State.normal;
-        dodgeTimer = dodgeCooldown;
     }
 
     //Passive Effects - Surefooted & Building Rage

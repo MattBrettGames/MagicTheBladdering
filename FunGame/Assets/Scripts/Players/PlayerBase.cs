@@ -160,7 +160,18 @@ public abstract class PlayerBase : BlankMono
     }
 
     #region Input Actions
-    public virtual void AAction() { }
+    public virtual void AAction()
+    {
+        anim.SetTrigger("AAction");
+        state = State.dodging;
+        Invoke("EndDodge", dodgeDur);
+    }
+    private void EndDodge()
+    {
+        state = State.normal;
+        dodgeTimer = dodgeCooldown;
+    }
+
     public virtual void BAction() { }
     public virtual void XAction() { }
     public virtual void YAction() { }
