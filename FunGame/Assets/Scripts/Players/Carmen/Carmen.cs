@@ -9,11 +9,19 @@ public class Carmen : PlayerBase
     public Weapons leftDagger;
     public Weapons rightDagger;
 
-    [Header("Dagger Slash")]
+    [Header("Dagger Stab")]
+    public int stabDamage;
+    public int stabKnockback;
+
+    [Header("Dash-Slash")]
     public int slashDamage;
     public int slashKnockback;
 
-    
+    [Header("Dig")]
+    public int digDistance;
+
+    [Header("Backstab")]
+    public int backstabAngle;
 
     public override void XAction() { }
 
