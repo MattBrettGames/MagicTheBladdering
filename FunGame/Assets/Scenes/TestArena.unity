@@ -2630,7 +2630,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698029566}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.9
@@ -2648,15 +2648,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToEnemy: 20
-  damageToPlayer: 0
+  damageToPlayer: 20
   dir: {x: -2, y: 0, z: -10}
-  force: 50
+  force: 2
 --- !u!4 &1698029569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1233333557802612971, guid: b5edbf614f2db8f45a6aab2234fbed06,
     type: 3}
   m_PrefabInstance: {fileID: 1698029550}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1698029570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698029551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f30076668ffe3b4f80c8d947c558a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToEnemy: 0
+  damageToPlayer: 15
+  dir: {x: 10, y: 0, z: 5}
+  force: 1
 --- !u!1 &1778773331
 GameObject:
   m_ObjectHideFlags: 0

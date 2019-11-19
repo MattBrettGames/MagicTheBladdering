@@ -147,7 +147,7 @@ public class UniverseController : BlankMono
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
-            playerCode.SetInfo(); 
+            playerCode.SetInfo();
 
             #endregion
 
@@ -168,8 +168,8 @@ public class UniverseController : BlankMono
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
             p2.transform.localScale = targetScale;
-            playerCode.SetInfo(); 
-            #endregion          
+            playerCode.SetInfo();
+            #endregion
 
             for (int i = 0; i < 2; i++)
             {
@@ -230,6 +230,16 @@ public class UniverseController : BlankMono
             }
             else
             {
+                if (playerCode.playerID == 1)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player1");
+                }
+                else
+                {
+                    player = GameObject.FindGameObjectWithTag("Player2");
+
+                }
+
                 winner = player.name;
                 SceneManager.LoadScene("GameOver");
             }

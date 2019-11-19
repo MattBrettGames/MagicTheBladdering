@@ -12,10 +12,10 @@ public class SmokeBase : BlankMono
         ticksTrue = ticks;
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         target = other.gameObject.GetComponent<PlayerBase>();
-
+        print(target);
         if (target != null)
         {
             if (other.transform.tag != tag)
@@ -32,7 +32,7 @@ public class SmokeBase : BlankMono
         }
     }
 
-    void OnCollsiionExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         target = other.GetComponent<PlayerBase>();
 

@@ -54,13 +54,14 @@ public class SongBird : PlayerBase
     {
         if (hasCannister)
         {
-            anim.SetTrigger("BAttack");
             cannister.transform.position = transform.position;
             cannister.SetActive(true);
             hasCannister = false;
+            anim.SetTrigger("BAttack");
         }
         else
         {
+            smokeCloudCannister.transform.localScale = Vector3.one;
             cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize);
             hasCannister = true;
         }

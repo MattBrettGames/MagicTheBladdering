@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillHazard : MonoBehaviour
+public class KillHazard : BlankMono
 {
     [Header("Damage")]
     public int damageToEnemy;
