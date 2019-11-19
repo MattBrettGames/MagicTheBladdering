@@ -74,9 +74,7 @@ public class UniverseController : BlankMono
         else if (SceneManager.GetActiveScene().name.Contains("GameOver"))
         {
             if (Input.GetButtonDown("AllBButton"))
-            {
-                SceneManager.UnloadScene("TestArena");
-                SceneManager.UnloadScene("2CharacterSelectorPVP");
+            { 
                 SceneManager.LoadScene("MainMenu");
             }
         }
