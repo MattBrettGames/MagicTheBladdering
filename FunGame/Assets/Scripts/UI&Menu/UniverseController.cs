@@ -66,8 +66,7 @@ public class UniverseController : BlankMono
 
         if (Input.GetKeyDown(KeyCode.P)) { generator.DestroyZones(); }
         if (Input.GetKeyDown(KeyCode.O)) { generator.CreateZone(0); }
-
-
+        
         if (SceneManager.GetActiveScene().name == "Bios")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }

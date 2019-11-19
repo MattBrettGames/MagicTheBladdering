@@ -438,9 +438,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 36
-  dodgeSpeed: 0
-  dodgeDur: 0
-  dodgeCooldown: 0
+  dodgeSpeed: 25
+  dodgeDur: 0.5
+  dodgeCooldown: 0.9
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -453,9 +453,11 @@ MonoBehaviour:
   visuals: {fileID: 1489347810}
   weapon: {fileID: 0}
   baseXDamage: 7
-  smokeburstDamage: 0
-  smokePoisonTicks: 0
-  cannisterCloudSize: 0
+  smokeburstDamage: 16
+  smokePoisonTicks: 11
+  thrownCloudSize: 20
+  dodgeCloudSize: 10
+  cannisterCloudSize: 15
 --- !u!54 &39097594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14306,10 +14308,10 @@ MonoBehaviour:
   playerID: 1
   numOfDeaths: 0
   pvp: 1
-  speed: 10
-  dodgeSpeed: 0
-  dodgeDur: 0
-  dodgeCooldown: 0
+  speed: 36
+  dodgeSpeed: 25
+  dodgeDur: 0.5
+  dodgeCooldown: 0.9
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -14322,9 +14324,11 @@ MonoBehaviour:
   visuals: {fileID: 1489347810}
   weapon: {fileID: 0}
   baseXDamage: 7
-  smokeburstDamage: 0
-  smokePoisonTicks: 0
-  cannisterCloudSize: 0
+  smokeburstDamage: 16
+  smokePoisonTicks: 11
+  thrownCloudSize: 20
+  dodgeCloudSize: 10
+  cannisterCloudSize: 15
 --- !u!54 &347531065
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21043,7 +21047,9 @@ MonoBehaviour:
   baseXDamage: 7
   smokeburstDamage: 16
   smokePoisonTicks: 11
-  cannisterCloudSize: 10
+  thrownCloudSize: 20
+  dodgeCloudSize: 10
+  cannisterCloudSize: 15
 --- !u!54 &580759809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22684,7 +22690,9 @@ MonoBehaviour:
   baseXDamage: 7
   smokeburstDamage: 16
   smokePoisonTicks: 11
-  cannisterCloudSize: 0
+  thrownCloudSize: 20
+  dodgeCloudSize: 10
+  cannisterCloudSize: 15
 --- !u!54 &703314794
 Rigidbody:
   m_ObjectHideFlags: 0

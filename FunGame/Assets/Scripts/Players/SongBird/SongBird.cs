@@ -17,6 +17,8 @@ public class SongBird : PlayerBase
     [Header("Vial Stats")]
     public int smokeburstDamage;
     public int smokePoisonTicks;
+    public int thrownCloudSize;
+    public int dodgeCloudSize;
     public int cannisterCloudSize;
     private bool hasCannister;
 
@@ -78,7 +80,7 @@ public class SongBird : PlayerBase
 
         Invoke("EndDodge", dodgeDur);
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < dodgeCloudSize; i++)
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
         }
@@ -103,7 +105,7 @@ public class SongBird : PlayerBase
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < thrownCloudSize; i++)
         {
             StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
         }
