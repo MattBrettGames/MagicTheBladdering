@@ -46,7 +46,8 @@ public abstract class PlayerBase : BlankMono
         lockedOn,
         dodging,
         knockback,
-        attack
+        attack, 
+        unique
     }
 
     [Header("Components")]
@@ -178,7 +179,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); Time.timeScale = 0.5f; Invoke("EndTimeScale", 0.1f); } }
+    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); } }
     private void EndTimeScale() { Time.timeScale = 1; }
 
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
