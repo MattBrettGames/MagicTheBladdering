@@ -215,21 +215,38 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Respawn()
     {
+        print("Respawn 0");
         currentHealth = healthMax;
+        print("Respawn 1");
         cursed = false;
+        print("Respawn 2");
         curseTimer = 0;
+        print("Respawn 3");
         poison = 0;
+        print("Respawn 4");
         prone = false;
+        print("Respawn 5");
         gameObject.SetActive(true);
+        print("Respawn 6");
         GainIFrames();
+        print("Respawn 7");
         Invoke("LoseIFrames", 3);
+        print("Respawn 8");
         anim.SetTrigger("Respawn");
-        LoseIFrames();
+        print("Respawn 9");
         damageMult = 1;
+        print("Respawn 10");
         incomingMult = 1;
+        print("Respawn 11");
 
         state = State.normal;
+        print("Respawn 12");
         anim.SetFloat("Movement", 0);
+        print("Respawn 13");
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
+        print("Respawn 14");
+        visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        print("Respawn 15");
 
     }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
@@ -237,7 +254,7 @@ public abstract class PlayerBase : BlankMono
     public void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; }
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; }
 
     #endregion
 

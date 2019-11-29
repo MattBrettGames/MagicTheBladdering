@@ -13,6 +13,7 @@ public class SongBird : PlayerBase
 
     [Header("Dagger Swipe")]
     public int baseXDamage;
+    public int baseXKnockback; 
 
     [Header("Vial Stats")]
     public int smokeburstDamage;
@@ -47,7 +48,7 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, 0, visuals.transform.forward, pvp);
+        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp);
     }
 
     public override void YAction() { anim.SetTrigger("YAction"); }
@@ -73,6 +74,7 @@ public class SongBird : PlayerBase
     {
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
+        smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
 
         anim.SetTrigger("AAction");
@@ -102,6 +104,7 @@ public class SongBird : PlayerBase
     {
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
+        smokeCloud.transform.rotation = new Quaternion(0, 0,180, 0);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks);
 
