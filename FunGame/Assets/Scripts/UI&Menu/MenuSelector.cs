@@ -29,7 +29,6 @@ public class MenuSelector : MonoBehaviour
     {
         if (player1.GetAxis("VertMove") <= -0.4 && !inputOnCooldown || player2.GetAxis("VertMove") <= -0.4 && !inputOnCooldown)
         {
-            print("INPUTGET");
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
             if (currentSel >= options.Length - 1) { currentSel = 0; }
@@ -38,7 +37,6 @@ public class MenuSelector : MonoBehaviour
         }
         if (player1.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player2.GetAxis("VertMove") >= 0.4 && !inputOnCooldown)
         {
-            print("INPUTGET");
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
             if (currentSel <= 0) { currentSel = options.Length - 1; }

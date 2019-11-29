@@ -10,11 +10,11 @@ public class WiosnaEventHandler : BlankMono
     public Weapons shotgun;
     public Weapons explosion;
 
-    public void FlameJetBeginAttack() { flameJet.StartAttack(); }
-    public void FlameJetEndAttack() { flameJet.EndAttack(); }
+    public void FlameJetBeginAttack() { flameJet.StartAttack(); wiosna.FlameJetOn(); }
+    public void FlameJetEndAttack() { flameJet.EndAttack(); wiosna.FlameJetOff(); }
 
-    public void ShotgunBeginAttack() { shotgun.StartAttack(); }
-    public void ShotgunEndAttack() { shotgun.EndAttack(); }
+    public void ShotgunBeginAttack() { shotgun.StartAttack(); wiosna.ShotgunOn(); }
+    public void ShotgunEndAttack() { shotgun.EndAttack(); wiosna.ShotgunOff(); }
 
     public void ExplosionBeginAttack() { explosion.StartAttack(); }
     public void ExplosionEndAttack() { explosion.EndAttack(); }

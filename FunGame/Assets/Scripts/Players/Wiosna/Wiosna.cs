@@ -115,7 +115,12 @@ public class Wiosna : PlayerBase
             case State.unique:
                 currentCharge += chargePerSecond * Time.deltaTime;
                 if (player.GetButtonUp("BAttack")) { state = State.normal; anim.SetBool("Charging", false); }
-                if(currentCharge <= maximumCharge) { Explosion(); }
+                if (currentCharge <= maximumCharge)
+                {
+                    Explosion();
+                    Knockback(explosionKnockback, new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)));
+                    TakeDamage(explosionDamage);
+                }
                 break;
 
         }
@@ -123,7 +128,14 @@ public class Wiosna : PlayerBase
 
     private void Explosion()
     {
+        explosionSphere.gameObject.SetActive(true);
+        anim.SetTrigger("Explosion");
         explosionSphere.GainInfo(explosionDamage, explosionKnockback, visuals.transform.forward, pvp);
+        Invoke("EndExplsion", 0.3f);
+    }
+    void EndExplsion()
+    {
+        explosionSphere.gameObject.SetActive(false);
     }
 
     public override void BAction()
@@ -143,13 +155,17 @@ public class Wiosna : PlayerBase
         flameJet.GainInfo(Mathf.RoundToInt(flameJetDamage + currentCharge), flameJetKnockback, visuals.transform.forward, pvp);
         currentCharge -= flameJetCost;
     }
+    public void FlameJetOn() { flameJet.gameObject.SetActive(true); }
+    public void FlameJetOff() { flameJet.gameObject.SetActive(false); }
 
     public override void YAction()
     {
         anim.SetTrigger("YAttack");
-        shotgunCone.GainInfo(shotgunDamage,Mathf.RoundToInt(shotgunKnockback + currentCharge), visuals.transform.forward, pvp);
+        shotgunCone.GainInfo(shotgunDamage, Mathf.RoundToInt(shotgunKnockback + currentCharge), visuals.transform.forward, pvp);
         currentCharge -= shotgunCost;
     }
 
-
+    public void ShotgunOn() { shotgunCone.gameObject.SetActive(true); }
+    public void ShotgunOff() { shotgunCone.gameObject.SetActive(false); }
+    
 }
