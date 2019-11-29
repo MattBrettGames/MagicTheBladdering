@@ -5,14 +5,17 @@ using System;
 
 public class RandomCharacterPicker : MonoBehaviour
 {
-
+    public MenuSelector menu;
+    [Space]
     public GameObjects[] chars = new GameObjects[2];
+
 
     void Start()
     {
         int rando = UnityEngine.Random.Range(0, chars.Length);
         chars[rando].characters.SetActive(true);
         chars[rando].background.SetActive(true);
+        menu.cursor = menu.cursors[rando];
     }
 
     [Serializable]

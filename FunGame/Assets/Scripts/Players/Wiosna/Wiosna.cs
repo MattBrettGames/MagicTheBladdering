@@ -25,6 +25,7 @@ public class Wiosna : PlayerBase
     float currentCharge;
     public int chargePerSecond;
     public int maximumCharge;
+    public ParticleSystem chargeDisplay;
 
     [Header("Explosion")]
     public int explosionDamage;
@@ -114,6 +115,7 @@ public class Wiosna : PlayerBase
 
             case State.unique:
                 currentCharge += chargePerSecond * Time.deltaTime;
+                chargeDisplay.emissionRate = Mathf.RoundToInt(currentCharge);
                 if (player.GetButtonUp("BAttack")) { state = State.normal; anim.SetBool("Charging", false); }
                 if (currentCharge <= maximumCharge)
                 {
@@ -122,7 +124,6 @@ public class Wiosna : PlayerBase
                     TakeDamage(explosionDamage);
                 }
                 break;
-
         }
     }
 

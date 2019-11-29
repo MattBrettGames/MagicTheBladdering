@@ -7,7 +7,8 @@ public class MenuSelector : MonoBehaviour
 {
     [Header("Options")]
     public GameObject[] options = new GameObject[2];
-    public GameObject cursor;
+    public GameObject[] cursors = new GameObject[0];
+   [HideInInspector] public GameObject cursor;
 
     [Header("Components")]
     public UniverseController universe;
@@ -21,8 +22,13 @@ public class MenuSelector : MonoBehaviour
     {
         cursor.transform.position = options[currentSel].transform.position;
         player1 = ReInput.players.GetPlayer(0);
-        player2 = ReInput.players.GetPlayer(1);
+        player2 = ReInput.players.GetPlayer(1);      
         
+        for (int i = 0; i < cursors.Length; i++)
+        {
+            cursors[i].SetActive(false);
+        }
+        cursor.SetActive(true);
     }
 
     void Update()
