@@ -61,28 +61,32 @@ public class UniverseController : BlankMono
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Q)) { SceneManager.LoadScene("2CharacterSelectorPvE"); }
         if (Input.GetKeyDown(KeyCode.W)) { SceneManager.LoadScene("2CharacterSelectorPvP"); }
 
         if (Input.GetKeyDown(KeyCode.P)) { generator.DestroyZones(); }
         if (Input.GetKeyDown(KeyCode.O)) { generator.CreateZone(0); }
-        
+        */
+
         if (SceneManager.GetActiveScene().name == "Bios")
         {
-            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
+            if (Input.GetButtonDown("AllBButton")) { ReturnToMenu(); }
         }
         else if (SceneManager.GetActiveScene().name.Contains("GameOver"))
         {
             if (Input.GetButtonDown("AllBButton"))
-            { 
+            {
                 SceneManager.LoadScene("MainMenu");
+                selectedChars[0] = null;
+                selectedChars[1] = null;
             }
         }
         else if (SceneManager.GetActiveScene().name.Contains("ArenaSel"))
         {
             if (Input.GetButtonDown("AllBButton"))
             {
-                SceneManager.LoadScene("MainMenu");
+                ReturnToMenu();
             }
         }
     }
@@ -94,15 +98,8 @@ public class UniverseController : BlankMono
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
+
         if (level == 2)
-        {
-            gameMode = "PvE";
-            charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
-            charSelector1.SetUniverse(this);
-            charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
-            charSelector2.SetUniverse(this);
-        }
-        else if (level == 3)
         {
             gameMode = "PvP";
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
@@ -110,12 +107,12 @@ public class UniverseController : BlankMono
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
             charSelector2.SetUniverse(this);
         }
-        else if (level == 4)
+        else if (level == 3)
         {
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
         }
-        else if (level == 5)
+        else if (level == 3)
         {
             Text p1Text = GameObject.Find("ScoreInt1").GetComponent<Text>();
             p1Text.text = finalScore[0].ToString();
@@ -192,7 +189,7 @@ public class UniverseController : BlankMono
 
         if (lockedInPlayers == numOfPlayers)
         {
-            SceneManager.LoadScene("ArenaSelector" + gameMode);
+            SceneManager.LoadScene("ArenaSelectorPvP");
         }
     }
 
@@ -267,6 +264,8 @@ public class UniverseController : BlankMono
         charSelector1.locked = false;
         charSelector2.locked = false;
         SceneManager.LoadScene("MainMenu");
+        selectedChars[0] = null;
+        selectedChars[1] = null;
     }
 
     public void BossDeath()
