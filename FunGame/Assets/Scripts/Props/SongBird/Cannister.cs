@@ -11,6 +11,7 @@ public class Cannister : BlankMono
         smokeTrue = smoke;
         smoke.SetActive(true);
         smoke.transform.position = transform.position;
+        smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
         smoke1.Begin(damage, tick);
@@ -27,7 +28,6 @@ public class Cannister : BlankMono
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
     {
-        print("REsizing");
         yield return new WaitForSeconds(time);
         smokecloud.transform.localScale += Vector3.one;
     }

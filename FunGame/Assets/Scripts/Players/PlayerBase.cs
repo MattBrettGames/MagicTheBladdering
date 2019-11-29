@@ -224,12 +224,12 @@ public abstract class PlayerBase : BlankMono
         GainIFrames();
         Invoke("LoseIFrames", 3);
         anim.SetTrigger("Respawn");
-        LoseIFrames();
         damageMult = 1;
         incomingMult = 1;
 
         state = State.normal;
         anim.SetFloat("Movement", 0);
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
 
     }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
@@ -237,7 +237,7 @@ public abstract class PlayerBase : BlankMono
     public void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; }
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; }
 
     #endregion
 

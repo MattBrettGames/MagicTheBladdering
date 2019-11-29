@@ -15,7 +15,6 @@ public class SmokeBase : BlankMono
     void OnTriggerEnter(Collider other)
     {
         target = other.gameObject.GetComponent<PlayerBase>();
-        print(target);
         if (target != null)
         {
             if (other.transform.tag != tag)
