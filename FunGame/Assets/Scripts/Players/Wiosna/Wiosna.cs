@@ -22,8 +22,8 @@ public class Wiosna : PlayerBase
     public int shotgunCost;
 
     [Header("Charge")]
-    float currentCharge;
     public int chargePerSecond;
+    float currentCharge;
     public int maximumCharge;
     public ParticleSystem chargeDisplay;
 
@@ -32,7 +32,7 @@ public class Wiosna : PlayerBase
     public int explosionKnockback;
 
     [Header("Vanishing Act")]
-    float travelDistance;
+    public float travelDistance;
 
 
     public override void Update()
@@ -155,6 +155,7 @@ public class Wiosna : PlayerBase
         anim.SetTrigger("XAttack");
         flameJet.GainInfo(Mathf.RoundToInt(flameJetDamage + currentCharge), flameJetKnockback, visuals.transform.forward, pvp);
         currentCharge -= flameJetCost;
+        if (currentCharge < 0) currentCharge = 0;
     }
     public void FlameJetOn() { flameJet.gameObject.SetActive(true); }
     public void FlameJetOff() { flameJet.gameObject.SetActive(false); }
@@ -164,6 +165,7 @@ public class Wiosna : PlayerBase
         anim.SetTrigger("YAttack");
         shotgunCone.GainInfo(shotgunDamage, Mathf.RoundToInt(shotgunKnockback + currentCharge), visuals.transform.forward, pvp);
         currentCharge -= shotgunCost;
+        if (currentCharge < 0) currentCharge = 0;
     }
 
     public void ShotgunOn() { shotgunCone.gameObject.SetActive(true); }
