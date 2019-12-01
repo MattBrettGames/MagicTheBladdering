@@ -147,6 +147,10 @@ public class Wiosna : PlayerBase
 
     public override void AAction()
     {
+        anim.SetTrigger("AAction");
+    }
+    public void DoTheTeleport()
+    {
         transform.position += dir * travelDistance;
     }
 

@@ -25,5 +25,6 @@ public class WiosnaEventHandler : BlankMono
     public void GainIFrmaes() { wiosna.GainIFrames(); }
     public void LoseIFrmaes() { wiosna.LoseIFrames(); }
 
+    public void DoTheDash() { wiosna.DoTheTeleport(); }
 
 }
