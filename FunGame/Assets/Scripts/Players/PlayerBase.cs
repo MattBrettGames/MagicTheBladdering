@@ -46,7 +46,7 @@ public abstract class PlayerBase : BlankMono
         lockedOn,
         dodging,
         knockback,
-        attack, 
+        attack,
         unique
     }
 
@@ -73,7 +73,7 @@ public abstract class PlayerBase : BlankMono
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
     }
-    
+
     public virtual void SetInfo()
     {
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
@@ -142,7 +142,7 @@ public abstract class PlayerBase : BlankMono
 
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
-                  
+
                     anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                     anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                 }
@@ -151,7 +151,7 @@ public abstract class PlayerBase : BlankMono
                 break;
 
             case State.dodging:
-                if (dodgeTimer < 0) DodgeSliding(dir);
+                DodgeSliding(dir);
                 break;
 
             case State.knockback:
@@ -163,9 +163,12 @@ public abstract class PlayerBase : BlankMono
     #region Input Actions
     public virtual void AAction()
     {
-        anim.SetTrigger("AAction");
-        state = State.dodging;
-        Invoke("EndDodge", dodgeDur);
+        if (dodgeTimer < 0)
+        {
+            anim.SetTrigger("AAction");
+            state = State.dodging;
+            Invoke("EndDodge", dodgeDur);
+        }
     }
     private void EndDodge()
     {

@@ -33,7 +33,7 @@ public class Wiosna : PlayerBase
 
     [Header("Vanishing Act")]
     public float travelDistance;
-
+    public float vanishingActCoodlown;
 
     public override void Update()
     {
