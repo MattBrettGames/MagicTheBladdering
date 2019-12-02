@@ -106,6 +106,7 @@ public class Wiosna : PlayerBase
                 break;
 
             case State.knockback:
+                anim.SetBool("Charging", false);
                 KnockbackContinual();
                 break;
 
