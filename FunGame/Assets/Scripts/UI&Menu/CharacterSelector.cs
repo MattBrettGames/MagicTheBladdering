@@ -140,7 +140,7 @@ public class CharacterSelector : BlankMono
             }
             else
             {
-                locked = false;
+                locked = false;                
                 universe.Unlock();
             }
         }

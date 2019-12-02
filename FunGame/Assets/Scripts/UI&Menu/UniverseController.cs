@@ -195,6 +195,7 @@ public class UniverseController : BlankMono
 
     public void Unlock()
     {
+
         lockedInPlayers--;
     }
 
@@ -263,9 +264,11 @@ public class UniverseController : BlankMono
     {
         charSelector1.locked = false;
         charSelector2.locked = false;
-        SceneManager.LoadScene("MainMenu");
         selectedChars[0] = null;
         selectedChars[1] = null;
+        selectedChars[3] = null;
+        selectedChars[4] = null;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void BossDeath()
