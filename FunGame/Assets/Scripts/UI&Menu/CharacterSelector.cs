@@ -123,10 +123,13 @@ public class CharacterSelector : BlankMono
 
             if (player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
             {
-                displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
-                universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
+                if (!characters[currentChar].skins[currentSkin].lockedChar)
+                {
+                    displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
 
-                locked = true;
+                    locked = true;
+                }
             }
         }
         if (player.GetButtonDown("BAttack"))
