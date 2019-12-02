@@ -163,8 +163,11 @@ public class CharacterSelector : BlankMono
         displayImage = backImages[currentChar];
         displayImage.SetActive(true);
 
+
+
+
         displayChar.SetActive(false);
-        displayChar = characters[currentChar].skins[currentSkin].Skin;
+        displayChar = characters[currentChar].skins[currentSkin].Skin[0];
         if (displayChar.GetComponent<CapsuleCollider>() != null)
         {
             displayChar.GetComponent<CapsuleCollider>().isTrigger = true;
@@ -194,8 +197,7 @@ public class CharacterSelector : BlankMono
     public struct SkinFo
     {
         public string name;
-        public GameObject Skin;
-        public GameObject lockedSymbol;
+        public GameObject[] Skin;
     }
 
 }
