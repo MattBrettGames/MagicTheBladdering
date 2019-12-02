@@ -29,6 +29,7 @@ public class CharacterSelector : BlankMono
     public GameObject characterText;
     public Text skinText;
     public GameObject displayChar;
+    public GameObject characterCover;
 
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
@@ -163,6 +164,8 @@ public class CharacterSelector : BlankMono
         displayImage = backImages[currentChar];
         displayImage.SetActive(true);
 
+        characterCover.SetActive(characters[currentChar].skins[currentSkin].lockedChar);
+
         displayChar.SetActive(false);
         displayChar = characters[currentChar].skins[currentSkin].Skin;
         if (displayChar.GetComponent<CapsuleCollider>() != null)
@@ -195,7 +198,7 @@ public class CharacterSelector : BlankMono
     {
         public string name;
         public GameObject Skin;
-        public GameObject lockedSymbol;
+        public bool lockedChar;
     }
 
 }
