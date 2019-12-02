@@ -195,6 +195,7 @@ public class CharacterSelector : BlankMono
     {
         public string name;
         public GameObject Skin;
+        public GameObject lockedSymbol;
     }
 
 }

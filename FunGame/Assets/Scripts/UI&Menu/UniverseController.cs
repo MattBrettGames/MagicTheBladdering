@@ -71,7 +71,7 @@ public class UniverseController : BlankMono
 
         if (SceneManager.GetActiveScene().name == "Bios")
         {
-            if (Input.GetButtonDown("AllBButton")) { ReturnToMenu(); }
+            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
         }
         else if (SceneManager.GetActiveScene().name.Contains("GameOver"))
         {
