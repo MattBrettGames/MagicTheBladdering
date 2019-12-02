@@ -5,11 +5,13 @@ public class SmokeBase : BlankMono
     private PlayerBase target;
     private int damageTrue;
     private int ticksTrue;
+    private int forceTrue;
 
-    virtual public void Begin(int damage, int ticks)
+    virtual public void Begin(int damage, int ticks, int force)
     {
         damageTrue = damage;
         ticksTrue = ticks;
+        forceTrue = force;
     }
 
     void OnTriggerEnter(Collider other)
@@ -21,6 +23,7 @@ public class SmokeBase : BlankMono
             {
                 target.TakeDamage(damageTrue);
                 target.poison += ticksTrue;
+                target.Knockback(forceTrue, transform.position - other.transform.position);
             }
             else
             {

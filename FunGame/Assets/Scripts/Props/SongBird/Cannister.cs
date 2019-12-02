@@ -6,7 +6,7 @@ public class Cannister : BlankMono
 {
     private GameObject smokeTrue;
 
-    public void TriggerBurst(GameObject smoke, int damage, int tick, int size)
+    public void TriggerBurst(GameObject smoke, int damage, int tick, int size, int knockback)
     {
         smokeTrue = smoke;
         smoke.SetActive(true);
@@ -14,9 +14,9 @@ public class Cannister : BlankMono
         smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
-        smoke1.Begin(damage, tick);
+        smoke1.Begin(damage, tick, knockback);
 
-        smoke.GetComponent<SmokeBase>().Begin(damage, tick);
+        //smoke.GetComponent<SmokeBase>().Begin(damage, tick, knockback);
         for (int i = 0; i < size; i++)
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smokeTrue));

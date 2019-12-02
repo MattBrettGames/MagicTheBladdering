@@ -1,10 +1,11 @@
-﻿    /*
+﻿    
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
 public static class ToolSet 
 {
+
     [MenuItem("ToolSet/Analytics/Export to CSV %F1")]
 
     static void DEV_AppendToReport()
@@ -24,7 +25,4 @@ public static class ToolSet
         EditorSceneManager.OpenScene("Assets/Scenes/MenuScenes/2CharacterselectorPvP.unity");
 
     }
-    
 }
-
-*/

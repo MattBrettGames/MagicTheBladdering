@@ -21,6 +21,7 @@ public class SongBird : PlayerBase
     public int thrownCloudSize;
     public int dodgeCloudSize;
     public int cannisterCloudSize;
+    public int smokeKnockback;
     private bool hasCannister;
 
     public override void SetInfo()
@@ -65,7 +66,7 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
             hasCannister = true;
         }
     }
@@ -106,7 +107,7 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0,180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks);
+        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
