@@ -45,7 +45,7 @@ public class ArenaSelector : BlankMono
             Invoke("EndCooldown", 0.3f);
         }
 
-        if (Input.GetButtonDown("AllXButton"))
+        if (Input.GetButtonDown("AllAButton"))
         {
             UniverseController universe = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
             universe.ChooseArena(displays[currentDisplay].name);
