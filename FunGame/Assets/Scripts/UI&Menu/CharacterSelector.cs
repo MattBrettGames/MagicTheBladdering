@@ -34,12 +34,24 @@ public class CharacterSelector : BlankMono
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
     public GameObject displayImage;
-
+    
+    void Awake()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            for(int z = 0; z < characters[i].skins.Count; z++)
+            {
+                characters[i].skins[z].Skin.SetActive(true);
+                characters[i].skins[z].Skin.SetActive(false);
+            }
+        }
+    }
+    
     void Start()
     {
         transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
-        vertPlayerInput = thisPlayer + "Vertical";
+        vertPlayerInput = thisPlayer + "Vertical";               
         displayChar.SetActive(true);
         displayImage.SetActive(true);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
