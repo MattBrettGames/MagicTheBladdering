@@ -111,14 +111,12 @@ public class Wiosna : PlayerBase
 
             case State.unique:
                 currentCharge += chargePerSecond * Time.deltaTime;
-                chargeDisplay.emissionRate = Mathf.RoundToInt(currentCharge);
-                if (player.GetButtonUp("BAttack")) { state = State.normal; anim.SetBool("Charging", false); }
+                if (player.GetButtonUp("BAttack")) { print(currentCharge + " is Wiosna's currentCharge"); state = State.normal; anim.SetBool("Charging", false); }
                 if (currentCharge <= maximumCharge)
                 {
                     Explosion();
-                    Knockback(explosionKnockback, new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)));
-                    TakeDamage(explosionDamage);
                 }
+                chargeDisplay.emission.rateOverTime.Equals(currentCharge * 10);
                 break;
 
         }
@@ -128,8 +126,10 @@ public class Wiosna : PlayerBase
 
     private void Explosion()
     {
-        explosionSphere.gameObject.SetActive(true);
         anim.SetTrigger("Explosion");
+        explosionSphere.gameObject.SetActive(true);
+        Knockback(explosionKnockback, new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)));
+        TakeDamage(explosionDamage);
         explosionSphere.GainInfo(explosionDamage, explosionKnockback, visuals.transform.forward, pvp);
         Invoke("EndExplsion", 0.3f);
     }
