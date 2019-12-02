@@ -7,7 +7,7 @@ public class Weapons : BlankMono
     private int damageFull;
     private int knockFull;
     private Vector3 knockDir;
-    private BoxCollider hitBox;
+    private Collider hitBox;
     private TrailRenderer trails;
     private bool pvpTrue;
 
@@ -20,7 +20,7 @@ public class Weapons : BlankMono
     }
     private void Start()
     {
-        hitBox = gameObject.GetComponent<BoxCollider>();
+        hitBox = gameObject.GetComponent<Collider>();
         hitBox.enabled = false;
         trails = gameObject.GetComponentInChildren<TrailRenderer>();
         trails.enabled = false;

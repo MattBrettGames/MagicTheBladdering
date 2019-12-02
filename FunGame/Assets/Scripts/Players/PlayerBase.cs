@@ -239,7 +239,7 @@ public abstract class PlayerBase : BlankMono
     }
     protected void PoisonTick() { if (poison > 0) { currentHealth--; print("PoisonTick"); } }
 
-    public void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
+    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; }

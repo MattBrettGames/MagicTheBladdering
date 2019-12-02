@@ -34,7 +34,7 @@ public class CharacterSelector : BlankMono
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
     public GameObject displayImage;
-    
+    /*
     void Awake()
     {
         for (int i = 0; i < characters.Count; i++)
@@ -46,7 +46,7 @@ public class CharacterSelector : BlankMono
             }
         }
     }
-    
+    */
     void Start()
     {
         transform.tag = thisPlayer + "Selector";

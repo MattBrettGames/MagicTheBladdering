@@ -73,10 +73,6 @@ public class Wiosna : PlayerBase
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
                 }
-                else
-                {
-                    dir = Vector3.zero;
-                }
                 break;
 
             case State.lockedOn:
@@ -124,7 +120,10 @@ public class Wiosna : PlayerBase
                     TakeDamage(explosionDamage);
                 }
                 break;
+
         }
+
+        print("Wiosna is " + state);
     }
 
     private void Explosion()
@@ -161,7 +160,7 @@ public class Wiosna : PlayerBase
         currentCharge -= flameJetCost;
         if (currentCharge < 0) currentCharge = 0;
     }
-    public void FlameJetOn() { flameJet.gameObject.SetActive(true); }
+    public void FlameJetOn() { flameJet.gameObject.SetActive(true); flameJet.GetComponentInChildren<ParticleSystem>().Play(); }
     public void FlameJetOff() { flameJet.gameObject.SetActive(false); }
 
     public override void YAction()
@@ -174,5 +173,9 @@ public class Wiosna : PlayerBase
 
     public void ShotgunOn() { shotgunCone.gameObject.SetActive(true); }
     public void ShotgunOff() { shotgunCone.gameObject.SetActive(false); }
-    
+
+
+
+    public override void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }
+
 }
