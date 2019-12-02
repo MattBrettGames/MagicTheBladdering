@@ -7,17 +7,27 @@ public class WiosnaEventHandler : BlankMono
 
     public Wiosna wiosna;
     public Weapons flameJet;
+    MeshRenderer jetMesh;
     public Weapons shotgun;
+    MeshRenderer shotgunMesh;
     public Weapons explosion;
+    MeshRenderer explosionMesh;
 
-    public void FlameJetBeginAttack() { flameJet.StartAttack(); wiosna.FlameJetOn(); }
-    public void FlameJetEndAttack() { flameJet.EndAttack(); wiosna.FlameJetOff(); }
+    void Start()
+    {
+        jetMesh = flameJet.gameObject.GetComponent<MeshRenderer>();
+        shotgunMesh = shotgun.gameObject.GetComponent<MeshRenderer>();
+        explosionMesh = explosion.gameObject.GetComponent<MeshRenderer>();
+    }
 
-    public void ShotgunBeginAttack() { shotgun.StartAttack(); wiosna.ShotgunOn(); }
-    public void ShotgunEndAttack() { shotgun.EndAttack(); wiosna.ShotgunOff(); }
+    public void FlameJetBeginAttack() { jetMesh.enabled = true; flameJet.StartAttack(); wiosna.FlameJetOn(); }
+    public void FlameJetEndAttack() { jetMesh.enabled = false; flameJet.EndAttack(); wiosna.FlameJetOff(); }
 
-    public void ExplosionBeginAttack() { explosion.StartAttack(); }
-    public void ExplosionEndAttack() { explosion.EndAttack(); }
+    public void ShotgunBeginAttack() { shotgunMesh.enabled = true; shotgun.StartAttack(); wiosna.ShotgunOn(); }
+    public void ShotgunEndAttack() { shotgunMesh.enabled = false; shotgun.EndAttack(); wiosna.ShotgunOff(); }
+
+    public void ExplosionBeginAttack() { explosionMesh.enabled = true; explosion.StartAttack(); }
+    public void ExplosionEndAttack() { explosionMesh.enabled = false; explosion.EndAttack(); }
 
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
