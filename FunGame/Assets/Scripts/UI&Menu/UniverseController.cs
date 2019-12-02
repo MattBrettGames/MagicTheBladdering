@@ -266,6 +266,7 @@ public class UniverseController : BlankMono
         charSelector2.locked = false;
         selectedChars[0] = null;
         selectedChars[1] = null;
+        transform.GetChild(3).SetParent(null);
         SceneManager.LoadScene("MainMenu");
     }
 
