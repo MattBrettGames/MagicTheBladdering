@@ -143,11 +143,7 @@ public class UniverseController : BlankMono
             p1.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
-            else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
-            else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
-            print("Made it this far");
             playerCode.SetInfo();
-            print("Made it this far, but further");
 
             #endregion
 
@@ -167,8 +163,6 @@ public class UniverseController : BlankMono
             p2.transform.rotation = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[1] = 1; }
-            else if (p1.name.Contains("Carmen")) { charInts[1] = 2; }
-            else if (p1.name.Contains("Wiosna")) { charInts[1] = 3; }
             p2.transform.localScale = targetScale;
             playerCode.SetInfo();
             #endregion

@@ -21,13 +21,12 @@ public class HUDController : BlankMono
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
-        /*
+
         image.SetActive(false);
         image = images[imageInt];
         image.SetActive(true);
 
         image.transform.position = imagePos[imageInt];
-        */
     }
 
     public void Update()
