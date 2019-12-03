@@ -145,7 +145,7 @@ public class CharacterSelector : BlankMono
             }
         }
         if (player.GetButtonDown("BAttack"))
-        {
+        {            
             if (!locked)
             {
                 universe.ReturnToMenu();
@@ -154,7 +154,7 @@ public class CharacterSelector : BlankMono
             {
                 locked = false;                
                 universe.Unlock();
-            }
+            }            
         }
     }
 

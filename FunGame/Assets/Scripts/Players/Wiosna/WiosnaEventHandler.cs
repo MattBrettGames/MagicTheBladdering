@@ -18,6 +18,10 @@ public class WiosnaEventHandler : BlankMono
         jetMesh = flameJet.gameObject.GetComponent<MeshRenderer>();
         shotgunMesh = shotgun.gameObject.GetComponent<MeshRenderer>();
         explosionMesh = explosion.gameObject.GetComponent<MeshRenderer>();
+
+        jetMesh.enabled = false;
+        shotgunMesh.enabled = false;
+        explosionMesh.enabled = false;
     }
 
     public void FlameJetBeginAttack() { jetMesh.enabled = true; flameJet.StartAttack(); wiosna.FlameJetOn(); }

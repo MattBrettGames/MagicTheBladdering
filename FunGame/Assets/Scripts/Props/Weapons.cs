@@ -42,9 +42,9 @@ public class Weapons : BlankMono
     {
         if (pvpTrue)
         {
-            if (other.GetComponent<PlayerBase>() != null)
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
+            if (player != null)
             {
-                PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
                 player.TakeDamage(damageFull);
                 player.Knockback(knockFull, knockDir);
             }

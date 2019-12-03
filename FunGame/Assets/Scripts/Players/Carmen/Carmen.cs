@@ -29,7 +29,7 @@ public class Carmen : PlayerBase
     public override void SetInfo()
     {
         base.SetInfo();
-        enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
+        //enemyVisual = lookAtTarget.parent.GetChild(0).gameObject;
     }
 
     public override void XAction()
@@ -43,7 +43,7 @@ public class Carmen : PlayerBase
 
     public override void YAction()
     {
-        float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
+        /*float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
 
         if (lookDif <= backstabAngle)
         {
@@ -55,6 +55,8 @@ public class Carmen : PlayerBase
             leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
             rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
         }
+        */
+        leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
         anim.SetTrigger("YAttack");
     }
 
