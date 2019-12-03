@@ -68,8 +68,6 @@ public abstract class PlayerBase : BlankMono
         dodgeTimer = dodgeCooldown;
         baseSpeed = speed;
 
-        walkDirection = GameObject.Find("WalkDirector").transform;
-
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
     }
