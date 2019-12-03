@@ -37,13 +37,6 @@ public class Wiosna : PlayerBase
     public float travelDistance;
     public float vanishingActCoodlown;
 
-    
-
-    void Start()
-    {
-        base.Start();
-    }
-
     public override void Update()
     {
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
@@ -59,10 +52,7 @@ public class Wiosna : PlayerBase
 
         switch (state)
         {
-
             case State.attack:
-        var newEmission = chargeDisplay.emission;
-                newEmission.rateOverTime = new ParticleSystem.MinMaxCurve(currentCharge * 100);
                 break;
 
             case State.normal:
@@ -85,9 +75,6 @@ public class Wiosna : PlayerBase
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
                 }
-
-                var newEmission2 = chargeDisplay.emission;
-                newEmission2.rateOverTime = new ParticleSystem.MinMaxCurve(currentCharge * 100);
                 break;
 
             case State.lockedOn:
@@ -132,31 +119,26 @@ public class Wiosna : PlayerBase
                 {
                     Explosion();
                 }
-                var newEmission3 = chargeDisplay.emission;
-                newEmission3.rateOverTime = new ParticleSystem.MinMaxCurve(currentCharge * 100);
+                var newEmission = chargeDisplay.emission;
+                newEmission.rateOverTime = new ParticleSystem.MinMaxCurve(currentCharge * 100);
 
                 break;
 
         }
-        //print(currentCharge + " is Wiosna's currentCharge");
+        print(currentCharge + " is Wiosna's currentCharge");
     }
 
     private void Explosion()
     {
-        //   anim.SetTrigger("Explosion");
+        anim.SetTrigger("Explosion");
         explosionSphere.gameObject.SetActive(true);
         Knockback(explosionKnockback, new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)));
-        TakeDamage(Mathf.RoundToInt(explosionDamage * 0.5f));
-
-        var force = chargeDisplay.velocityOverLifetime.xMultiplier;
-        force = 10;
-        var force2 = chargeDisplay.velocityOverLifetime.zMultiplier;
-        force2 = 10;
+        TakeDamage(explosionDamage);
+        explosionSphere.GainInfo(explosionDamage, explosionKnockback, visuals.transform.forward, pvp);
 
         if (Vector3.Distance(lookAtTarget.transform.position, transform.position) <= explosionRadius)
         {
-            PlayerBase target = lookAtTarget.gameObject.GetComponentInParent<PlayerBase>();
-            print("found " + target);
+            PlayerBase target =  aimTarget.GetComponentInParent<PlayerBase>();
             target.TakeDamage(explosionDamage);
             target.Knockback(explosionKnockback, lookAtTarget.transform.position - transform.position);
         }
@@ -165,10 +147,7 @@ public class Wiosna : PlayerBase
     }
     void EndExplsion()
     {
-        var force = chargeDisplay.velocityOverLifetime.xMultiplier;
-        force = 1;
-        var force2 = chargeDisplay.velocityOverLifetime.zMultiplier;
-        force2 = 1;
+        explosionSphere.gameObject.SetActive(false);
     }
 
     public override void BAction()
