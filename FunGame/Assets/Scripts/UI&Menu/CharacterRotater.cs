@@ -16,6 +16,6 @@ public class CharacterRotater : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(0, 1 * speed, 0);
+        transform.Rotate(0, player.GetAxis("CharRotate") * speed, 0);
     }
 }
