@@ -150,7 +150,7 @@ public abstract class PlayerBase : BlankMono
                 break;
 
             case State.dodging:
-                DodgeSliding(dir);
+                if (dodgeTimer < 0) DodgeSliding(dir);
                 break;
 
             case State.knockback:

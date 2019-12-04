@@ -14,7 +14,6 @@ public class RandomCharacterPicker : MonoBehaviour
     {
         int rando = UnityEngine.Random.Range(0, chars.Length);
         chars[rando].characters.SetActive(true);
-        chars[rando].background.SetActive(true);
         menu.cursor = menu.cursors[rando];
     }
 
@@ -22,7 +21,6 @@ public class RandomCharacterPicker : MonoBehaviour
     public struct GameObjects
     {
         public GameObject characters;
-        public GameObject background;
     }
 
 }

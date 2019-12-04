@@ -30,16 +30,13 @@ public class Carmen : PlayerBase
     {
         base.SetInfo();
         StartCoroutine(GainBack());
-        /*
-        print(lookAtTarget.parent);
-        enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
-        */
     }
 
     IEnumerator GainBack()
     {
         yield return new WaitForEndOfFrame();
         enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
+        print(enemyVisual);
     }
 
     public override void XAction()
