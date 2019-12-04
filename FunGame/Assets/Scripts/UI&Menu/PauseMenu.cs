@@ -9,25 +9,29 @@ public class PauseMenu : MonoBehaviour
     Player players;
 
     [SerializeField] GameObject[] options;
+    [Space]
+    [SerializeField] string[] optionStrings;
+    [Space]
     [SerializeField] GameObject selector;
     int currentDisplay;
-
-    [SerializeField] string[] optionStrings;
+    [Space]
+    [SerializeField] GameObject visuals;
 
     void Start()
     {
-        gameObject.SetActive(false);
+        visuals.SetActive(false);
+        players = ReInput.players.SystemPlayer;
     }
 
     void Update()
     {
         if (players.GetButtonDown("Pause"))
         {
-            gameObject.SetActive(true);
+            visuals.SetActive(true);
             Time.timeScale = Mathf.Epsilon;
         }
 
-        if (gameObject.activeSelf)
+        if (visuals.activeSelf)
         {
             if (players.GetAxis("HoriMove") >= 0.4f)
             {
@@ -50,13 +54,14 @@ public class PauseMenu : MonoBehaviour
 
     void Resume()
     {
-        gameObject.SetActive(false);
+        visuals.SetActive(false);
         Time.timeScale = 1;
     }
 
     void Quit()
     {
-
+        UniverseController universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
+        universe.ReturnToMenu();
     }
 
 }
