@@ -79,7 +79,7 @@ public class Wiosna : PlayerBase
 
             case State.lockedOn:
 
-                walkDirection.position = dir + transform.position;
+               // walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
