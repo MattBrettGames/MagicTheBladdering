@@ -29,8 +29,6 @@ public class BioSelector : BlankMono
         {
             onMovesets = !onMovesets;
         }
-        print(currentDisplay);
-        print(onMovesets);
 
         if (Input.GetAxis("AllVertical") >= 0.4f && !inputCooldown)
         {
@@ -66,8 +64,6 @@ public class BioSelector : BlankMono
         }
         movesetDisplays[currentDisplay].SetActive(onMovesets);
     }
-
-    void EndCooldownButton() { inputCooldownButton = false; }
 
     void EndCooldown()
     {
