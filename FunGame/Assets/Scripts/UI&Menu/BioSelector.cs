@@ -25,6 +25,7 @@ public class BioSelector : BlankMono
         {
             displays[currentDisplay].SetActive(!onMovesets);
             movesetDisplays[currentDisplay].SetActive(onMovesets);
+            print(onMovesets);
             onMovesets = !onMovesets;
         }
 
@@ -33,6 +34,7 @@ public class BioSelector : BlankMono
             if (currentDisplay < displays.Count - 1)
             {
                 movesetDisplays[currentDisplay].SetActive(false);
+                onMovesets = true;
                 displays[currentDisplay].SetActive(false);
                 currentDisplay++;
                 displays[currentDisplay].SetActive(true);
@@ -40,6 +42,7 @@ public class BioSelector : BlankMono
             else
             {
                 movesetDisplays[currentDisplay].SetActive(false);
+                onMovesets = true;
                 displays[currentDisplay].SetActive(false);
                 currentDisplay = 0;
                 displays[currentDisplay].SetActive(true);
@@ -52,6 +55,7 @@ public class BioSelector : BlankMono
             if (currentDisplay != 0)
             {
                 movesetDisplays[currentDisplay].SetActive(false);
+                onMovesets = true;
                 displays[currentDisplay].SetActive(false);
                 currentDisplay--;
                 displays[currentDisplay].SetActive(true);
@@ -59,6 +63,7 @@ public class BioSelector : BlankMono
             else
             {
                 movesetDisplays[currentDisplay].SetActive(false);
+                onMovesets = true;
                 displays[currentDisplay].SetActive(false);
                 currentDisplay = displays.Count - 1;
                 displays[currentDisplay].SetActive(true);
