@@ -50,6 +50,8 @@ public class Wiosna : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
+        if (!player.GetAnyButton()) { state = State.normal; anim.SetBool("Charging", false);  }
+
         switch (state)
         {
             case State.attack:

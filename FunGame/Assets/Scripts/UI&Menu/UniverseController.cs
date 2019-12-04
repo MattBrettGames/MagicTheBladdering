@@ -78,6 +78,8 @@ public class UniverseController : BlankMono
         {
             if (Input.GetButtonDown("AllBButton"))
             {
+                Unlock(0);
+                Unlock(1);
                 ReturnToMenu();
             }
         }
@@ -187,10 +189,10 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void Unlock()
+    public void Unlock(int player)
     {
-
         lockedInPlayers--;
+        selectedChars[player].transform.SetParent(GameObject.Find("Player" + (player + 1) + "GameObjectStore").transform);
     }
 
     public void ChooseArena(string arena)
