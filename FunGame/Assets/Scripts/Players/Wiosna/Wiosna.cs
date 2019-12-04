@@ -26,7 +26,6 @@ public class Wiosna : PlayerBase
     float currentCharge;
     public int maximumCharge;
     public ParticleSystem chargeDisplay;
-    private Vector3 lookAdjust = new Vector3(0, -0.9f, 0);
 
     [Header("Explosion")]
     public int explosionDamage;
@@ -35,7 +34,7 @@ public class Wiosna : PlayerBase
 
     [Header("Vanishing Act")]
     public float travelDistance;
-    public float vanishingActCoodlown;
+    public float vanishingActCooldown;
 
     public override void Update()
     {
@@ -65,7 +64,7 @@ public class Wiosna : PlayerBase
                 if (!prone && !acting)
                 {
                     //Rotating the Character Model
-                    visuals.transform.LookAt(aimTarget.position);// + lookAdjust);
+                    visuals.transform.LookAt(aimTarget.position);
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
@@ -127,12 +126,12 @@ public class Wiosna : PlayerBase
                 break;
 
         }
-        print(currentCharge + " is Wiosna's currentCharge");
     }
 
     private void Explosion()
     {
         anim.SetTrigger("Explosion");
+        currentCharge = 1;
         explosionSphere.gameObject.SetActive(true);
         Knockback(explosionKnockback, new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)));
         TakeDamage(explosionDamage);
@@ -189,7 +188,11 @@ public class Wiosna : PlayerBase
     public void ShotgunOff() { shotgunCone.gameObject.SetActive(false); }
 
 
-
+    public override void Respawn()
+    {
+        base.Respawn();
+        currentCharge = 1;
+    }
     public override void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }
 
 }
