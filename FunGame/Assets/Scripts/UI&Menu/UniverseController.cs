@@ -192,7 +192,17 @@ public class UniverseController : BlankMono
     public void Unlock(int player)
     {
         lockedInPlayers--;
+        if(SceneManager.GetActiveScene().name  == "ArenaSelector")
+        {
+            selectedChars[0].transform.SetParent(Camera.main.transform);
+            selectedChars[0] = null;
+            selectedChars[1].transform.SetParent(Camera.main.transform);
+            selectedChars[1] = null;
+        }
+        else
+        {
         selectedChars[player].transform.SetParent(GameObject.Find("Player" + (player + 1) + "GameObjectStore").transform);
+        }
     }
 
     public void ChooseArena(string arena)
