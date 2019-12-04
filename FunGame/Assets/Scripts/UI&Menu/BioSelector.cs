@@ -11,15 +11,17 @@ public class BioSelector : BlankMono
     private int currentDisplay;
     private bool inputCooldown;
     private bool onMovesets;
-
+    [SerializeField] string inputButtonCaps = "A";
+    string inputToSwitch;
     private void Start()
     {
         displays[currentDisplay].SetActive(true);
+        inputToSwitch = "All" + inputButtonCaps + "Button";
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("AllAButton") && !inputCooldown)
+        if (Input.GetButtonDown(inputToSwitch) && !inputCooldown)
         {
             displays[currentDisplay].SetActive(!onMovesets);
             movesetDisplays[currentDisplay].SetActive(onMovesets);
@@ -30,12 +32,14 @@ public class BioSelector : BlankMono
         {
             if (currentDisplay < displays.Count - 1)
             {
+                movesetDisplays[currentDisplay].SetActive(false);
                 displays[currentDisplay].SetActive(false);
                 currentDisplay++;
                 displays[currentDisplay].SetActive(true);
             }
             else
             {
+                movesetDisplays[currentDisplay].SetActive(false);
                 displays[currentDisplay].SetActive(false);
                 currentDisplay = 0;
                 displays[currentDisplay].SetActive(true);
@@ -47,12 +51,14 @@ public class BioSelector : BlankMono
         {
             if (currentDisplay != 0)
             {
+                movesetDisplays[currentDisplay].SetActive(false);
                 displays[currentDisplay].SetActive(false);
                 currentDisplay--;
                 displays[currentDisplay].SetActive(true);
             }
             else
             {
+                movesetDisplays[currentDisplay].SetActive(false);
                 displays[currentDisplay].SetActive(false);
                 currentDisplay = displays.Count - 1;
                 displays[currentDisplay].SetActive(true);
