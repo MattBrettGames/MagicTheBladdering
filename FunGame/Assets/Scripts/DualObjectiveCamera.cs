@@ -8,10 +8,11 @@ public class DualObjectiveCamera : MonoBehaviour
     public Transform rightTarget;
     public Vector3 offset;
     Vector3 centerPosition;
+    [SerializeField] float closeness;
 
     void Update()
     {
-        float distanceBetweenTargets = Vector3.Distance(leftTarget.position, rightTarget.position);
+        float distanceBetweenTargets = Vector3.Distance(leftTarget.position, rightTarget.position)-closeness;
         centerPosition = (leftTarget.position + rightTarget.position) / 2;
 
         transform.position = new Vector3(
