@@ -23,73 +23,48 @@ public class BioSelector : BlankMono
         inputToSwitch = "All" + inputButtonCaps + "Button";
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (Input.GetButtonDown(inputToSwitch))
         {
             onMovesets = !onMovesets;
-            //UpdateMoveset();
         }
+        print(currentDisplay);
+        print(onMovesets);
 
         if (Input.GetAxis("AllVertical") >= 0.4f && !inputCooldown)
         {
-            if (currentDisplay < displays.Count - 1)
-            {
-                if (onMovesets) onMovesets = false;
-                displays[currentDisplay].SetActive(false);
-                currentDisplay++;
-                displays[currentDisplay].SetActive(true);
-            }
-            else
-            {
-                if (onMovesets) onMovesets = false;
-                displays[currentDisplay].SetActive(false);
-                currentDisplay = 0;
-                displays[currentDisplay].SetActive(true);
-            }
+            onMovesets = false;
+            displays[currentDisplay].SetActive(false);
+
+            if (currentDisplay < displays.Count - 1) currentDisplay++;
+            else currentDisplay = 0;
+
+            displays[currentDisplay].SetActive(true);
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);
         }
         if (Input.GetAxis("AllVertical") <= -0.4f && !inputCooldown)
         {
-            if (currentDisplay != 0)
-            {
-                if (onMovesets) onMovesets = false;
-                displays[currentDisplay].SetActive(false);
-                currentDisplay--;
-                displays[currentDisplay].SetActive(true);
-            }
-            else
-            {
-                if (onMovesets) onMovesets = false;
-                displays[currentDisplay].SetActive(false);
-                currentDisplay = displays.Count - 1;
-                displays[currentDisplay].SetActive(true);
-            }
+            onMovesets = false;
+            displays[currentDisplay].SetActive(false);
+
+            if (currentDisplay != 0) currentDisplay--;
+            else currentDisplay = displays.Count - 1;
+
+            displays[currentDisplay].SetActive(true);
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);
         }
-        if (onMovesets)
-        {
-            movesetDisplays[currentDisplay].SetActive(true);
-        }
-        else
-        {
-            movesetDisplays[currentDisplay].SetActive(false);
-        }
     }
 
-    private void UpdateMoveset()
+    private void Update()
     {
-        if (!inputCooldownButton)
+        for(int i = 0; i < movesetDisplays.Count; i++)
         {
-            displays[currentDisplay].SetActive(!onMovesets);
-            movesetDisplays[currentDisplay].SetActive(onMovesets);
-            //print(onMovesets);
-            onMovesets = !onMovesets;
-            inputCooldownButton = true;
-            Invoke("EndCooldownButton", 0.3f);
+            movesetDisplays[i].SetActive(false);
         }
+        movesetDisplays[currentDisplay].SetActive(onMovesets);
     }
 
     void EndCooldownButton() { inputCooldownButton = false; }

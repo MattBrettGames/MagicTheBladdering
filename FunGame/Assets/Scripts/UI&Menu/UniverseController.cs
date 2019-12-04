@@ -61,14 +61,6 @@ public class UniverseController : BlankMono
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Q)) { SceneManager.LoadScene("2CharacterSelectorPvE"); }
-        if (Input.GetKeyDown(KeyCode.W)) { SceneManager.LoadScene("2CharacterSelectorPvP"); }
-
-        if (Input.GetKeyDown(KeyCode.P)) { generator.DestroyZones(); }
-        if (Input.GetKeyDown(KeyCode.O)) { generator.CreateZone(0); }
-        */
-
         if (SceneManager.GetActiveScene().name == "Bios")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
@@ -190,6 +182,7 @@ public class UniverseController : BlankMono
         if (lockedInPlayers == numOfPlayers)
         {
             SceneManager.LoadScene("ArenaSelectorPvP");
+            lockedInPlayers = 0;
         }
     }
 
