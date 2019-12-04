@@ -29,6 +29,7 @@ public class Carmen : PlayerBase
     public override void SetInfo()
     {
         base.SetInfo();
+        print(lookAtTarget.parent);
         enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
     }
 
