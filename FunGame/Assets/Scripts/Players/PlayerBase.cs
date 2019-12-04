@@ -70,6 +70,7 @@ public abstract class PlayerBase : BlankMono
 
         InvokeRepeating("PoisonTick", 0, 0.5f);
         player = ReInput.players.GetPlayer(playerID);
+        walkDirection = Instantiate<GameObject>(aimTarget.gameObject, Vector3.zero, Quaternion.identity, gameObject.transform).transform;
     }
 
     public virtual void SetInfo()

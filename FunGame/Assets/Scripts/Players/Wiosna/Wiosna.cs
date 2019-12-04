@@ -63,7 +63,7 @@ public class Wiosna : PlayerBase
                 if (!prone && !acting)
                 {
                     //Rotating the Character Model
-                    visuals.transform.LookAt(aimTarget.position + lookAdjust);
+                    visuals.transform.LookAt(aimTarget.position);// + lookAdjust);
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
@@ -79,7 +79,7 @@ public class Wiosna : PlayerBase
 
             case State.lockedOn:
 
-               // walkDirection.position = dir + transform.position;
+                walkDirection.position = dir + transform.position;
 
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
