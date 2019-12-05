@@ -57,7 +57,7 @@ MonoBehaviour:
   dodgeSpeed: 25
   dodgeDur: 0.5
   dodgeCooldown: 0.9
-  currentHealth: 100
+  currentHealth: 120
   healthMax: 0
   damageMult: 1
   incomingMult: 1
@@ -65,17 +65,17 @@ MonoBehaviour:
   prone: 0
   poison: 0
   state: 0
-  aimTarget: {fileID: 3672090908981924634}
-  visuals: {fileID: 3672090909023432592}
-  weapon: {fileID: 3672090909329855606}
-  baseXDamage: 9
-  baseXKnockback: 0
-  smokeburstDamage: 13
-  smokePoisonTicks: 18
-  thrownCloudSize: 20
-  dodgeCloudSize: 10
-  cannisterCloudSize: 20
-  smokeKnockback: 5
+  aimTarget: {fileID: 0}
+  visuals: {fileID: 0}
+  weapon: {fileID: 0}
+  baseXDamage: 10
+  baseXKnockback: 2
+  smokeburstDamage: 10
+  smokePoisonTicks: 10
+  thrownCloudSize: 10
+  dodgeCloudSize: 5
+  cannisterCloudSize: 10
+  smokeKnockback: 1
 --- !u!114 &3672090907512359685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,10 +564,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3672090909023925176}
     m_Modifications:
-    - target: {fileID: 100002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
-      propertyPath: m_Name
-      value: Cane
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0021
@@ -623,6 +619,10 @@ PrefabInstance:
     - target: {fileID: 400002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
+      propertyPath: m_Name
+      value: Cane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
