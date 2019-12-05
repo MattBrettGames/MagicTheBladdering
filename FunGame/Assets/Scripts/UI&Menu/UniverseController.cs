@@ -286,6 +286,4 @@ public class UniverseController : BlankMono
         playersAlive[0].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[0];
         playersAlive[1].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[1];
     }
-
-
 }
