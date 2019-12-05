@@ -28,10 +28,11 @@ public abstract class PlayerBase : BlankMono
     public float incomingMult = 1;
 
     [Header("Status Effects")]
-    [SerializeField]private int poisonPerSec;
-    [HideInInspector]public bool cursed;
+    [SerializeField] private int poisonPerSec;
+    [SerializeField] private float secsBetweenTicks;
+    [HideInInspector] public bool cursed;
     protected float curseTimer;
-    [HideInInspector]public bool prone;
+    [HideInInspector] public bool prone;
     [HideInInspector] public float poison;
     private bool hyperArmour;
     protected bool iFrames;
@@ -70,7 +71,7 @@ public abstract class PlayerBase : BlankMono
         baseSpeed = speed;
 
         healthMax = currentHealth;
-        InvokeRepeating("PoisonTick", 0, 0.5f);
+        InvokeRepeating("PoisonTick", 0, secsBetweenTicks);
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = Instantiate<GameObject>(aimTarget.gameObject, Vector3.zero, Quaternion.identity, gameObject.transform).transform;
     }
@@ -238,7 +239,7 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth=poisonPerSec; print("PoisonTick"); } }
+    protected void PoisonTick() { if (poison > 0) { currentHealth = poisonPerSec; print("PoisonTick"); } }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
