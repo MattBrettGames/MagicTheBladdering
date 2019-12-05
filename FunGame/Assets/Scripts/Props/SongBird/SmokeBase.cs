@@ -26,11 +26,11 @@ public class SmokeBase : BlankMono
         {
             if (other.transform.tag != tag)
             {
-                target.TakeDamage(damageTrue);
                 target.poison += ticksTrue;
                 if (exploding)
                 {
-                    target.Knockback(forceTrue, other.transform.position - transform.position);
+                    target.TakeDamage(damageTrue);
+                    target.Knockback(forceTrue, new Vector3(other.transform.position.x - transform.position.x, 0, other.transform.position.z - transform.position.z));
                 }
             }
             else
