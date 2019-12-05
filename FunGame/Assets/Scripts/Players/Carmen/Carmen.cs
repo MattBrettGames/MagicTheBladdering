@@ -54,13 +54,11 @@ public class Carmen : PlayerBase
 
         if (lookDif <= backstabAngle)
         {
-            print("did the backstab thing");
             leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp);
             rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp);
         }
         else
         {
-            print("did not the stabbing of the back");
             leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
             rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
         }
