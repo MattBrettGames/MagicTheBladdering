@@ -57,29 +57,29 @@ MonoBehaviour:
   dodgeSpeed: 10
   dodgeDur: 0.4
   dodgeCooldown: 0.4
-  currentHealth: 140
+  currentHealth: 160
   healthMax: 140
   damageMult: 1
-  incomingMult: 1
+  incomingMult: 1.2
   cursed: 0
   prone: 0
   poison: 0
   state: 0
-  aimTarget: {fileID: 4251015901460911307}
-  visuals: {fileID: 7104267251637402758}
-  hammer: {fileID: 7607678422022517705}
-  outline: {fileID: 4251015901703853573}
-  xAttack: 15
-  xKnockback: 5
-  spinDamage: 25
+  aimTarget: {fileID: 0}
+  visuals: {fileID: 0}
+  hammer: {fileID: 0}
+  outline: {fileID: 0}
+  xAttack: 10
+  xKnockback: 2
+  spinDamage: 20
   spinKnockback: 0
   slamAttack: 30
-  slamKnockback: 15
+  slamKnockback: 10
   kickAttack: 5
   kickKnockback: 25
   frenzyDuration: 5
   frenzyBonus: 1
-  frenzyEffects: {fileID: 4251015902634562612}
+  frenzyEffects: {fileID: 0}
   growingRageDiv: 1
 --- !u!136 &4196285421342140624
 CapsuleCollider:
@@ -280,38 +280,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4251015901460911304}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &364040711234919837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7104267251637402758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fac231dcf3c6f042920e40f7cbb12d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  valdy: {fileID: 4196285421342140627}
-  hammer: {fileID: 7607678422022517705}
---- !u!114 &4251015901703853573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7104267251637402758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 4
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &4251015902277332936
 GameObject:
   m_ObjectHideFlags: 0
@@ -5145,6 +5113,38 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &364040711234919837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104267251637402758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fac231dcf3c6f042920e40f7cbb12d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valdy: {fileID: 4196285421342140627}
+  hammer: {fileID: 7607678422022517705}
+--- !u!114 &4251015901703853573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104267251637402758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7607678422022517703
 GameObject:
   m_ObjectHideFlags: 0

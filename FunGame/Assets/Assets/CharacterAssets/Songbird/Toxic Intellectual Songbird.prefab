@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3715204310687702952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093613118188766629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &3715204310687702953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093613118188766629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4533e7efc1c8640b7aab59155f9a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songBird: {fileID: 3715204309916796919}
+  weapon: {fileID: 3715204310687702951}
 --- !u!1 &3715204308841346010
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +254,7 @@ MonoBehaviour:
   dodgeSpeed: 25
   dodgeDur: 0.5
   dodgeCooldown: 0.9
-  currentHealth: 100
+  currentHealth: 120
   healthMax: 0
   damageMult: 1
   incomingMult: 1
@@ -230,17 +262,17 @@ MonoBehaviour:
   prone: 0
   poison: 0
   state: 0
-  aimTarget: {fileID: 3715204308841346013}
-  visuals: {fileID: 3093613118188766629}
-  weapon: {fileID: 3715204310687702951}
-  baseXDamage: 9
-  baseXKnockback: 0
-  smokeburstDamage: 13
-  smokePoisonTicks: 18
-  thrownCloudSize: 20
-  dodgeCloudSize: 10
-  cannisterCloudSize: 20
-  smokeKnockback: 5
+  aimTarget: {fileID: 0}
+  visuals: {fileID: 0}
+  weapon: {fileID: 0}
+  baseXDamage: 10
+  baseXKnockback: 2
+  smokeburstDamage: 10
+  smokePoisonTicks: 10
+  thrownCloudSize: 10
+  dodgeCloudSize: 5
+  cannisterCloudSize: 10
+  smokeKnockback: 1
 --- !u!114 &3715204309916796920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,38 +425,6 @@ Transform:
   m_Father: {fileID: 3715204309916796916}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3715204310687702953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3093613118188766629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef4533e7efc1c8640b7aab59155f9a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  songBird: {fileID: 3715204309916796919}
-  weapon: {fileID: 3715204310687702951}
---- !u!114 &3715204310687702952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3093613118188766629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 4
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!65 &3715204310687702950
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -873,6 +873,16 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d0a05f0d8358bab4483ac13c2323173b, type: 2}
+    - target: {fileID: 1828943169836521103, guid: 8d20ebd2ed4216246845627d848e775c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828943169836521103, guid: 8d20ebd2ed4216246845627d848e775c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 36730a6807a9c54438db4986eb4a4bb1, type: 2}
     - target: {fileID: 1828943169836521089, guid: 8d20ebd2ed4216246845627d848e775c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -889,16 +899,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 7f1ecc875f30b81449d4696d92c28022, type: 2}
     - target: {fileID: 1828943169836521097, guid: 8d20ebd2ed4216246845627d848e775c,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 36730a6807a9c54438db4986eb4a4bb1, type: 2}
-    - target: {fileID: 1828943169836521103, guid: 8d20ebd2ed4216246845627d848e775c,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1828943169836521103, guid: 8d20ebd2ed4216246845627d848e775c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
