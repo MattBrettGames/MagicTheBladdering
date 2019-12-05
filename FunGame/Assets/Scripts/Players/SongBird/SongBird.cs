@@ -36,10 +36,11 @@ public class SongBird : PlayerBase
         print("Started Gain Smokes");
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
-
+               
         smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (1 - playerID));
         smokeCloudCannister.tag = tag;
 
+        print(pooler.cannisters[playerID]);
         cannister = pooler.cannisters[playerID];
         cannister.tag = tag;
         hasCannister = true;
