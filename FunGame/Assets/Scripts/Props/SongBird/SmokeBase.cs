@@ -2,6 +2,7 @@
 
 public class SmokeBase : BlankMono
 {
+    private bool exploding;
     private PlayerBase target;
     private int damageTrue;
     private int ticksTrue;
@@ -12,7 +13,11 @@ public class SmokeBase : BlankMono
         damageTrue = damage;
         ticksTrue = ticks;
         forceTrue = force;
+        exploding = true;
+        Invoke("EndForce", 0.2f);
     }
+
+    void EndForce() { exploding = false; }
 
     void OnTriggerEnter(Collider other)
     {
@@ -23,7 +28,10 @@ public class SmokeBase : BlankMono
             {
                 target.TakeDamage(damageTrue);
                 target.poison += ticksTrue;
-                target.Knockback(-forceTrue, transform.position - other.transform.position);
+                if (exploding)
+                {
+                    target.Knockback(forceTrue, other.transform.position - transform.position);
+                }
             }
             else
             {
