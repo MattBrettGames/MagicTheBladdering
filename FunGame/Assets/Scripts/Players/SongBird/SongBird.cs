@@ -13,7 +13,7 @@ public class SongBird : PlayerBase
 
     [Header("Dagger Swipe")]
     public int baseXDamage;
-    public int baseXKnockback;
+    public int baseXKnockback; 
 
     [Header("Vial Stats")]
     public int smokeburstDamage;
@@ -28,23 +28,27 @@ public class SongBird : PlayerBase
     {
         base.SetInfo();
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
-        Invoke("GainSmokes", 0.1f);
+        Invoke("GainSmokes", 0.1f);                
     }
 
     void GainSmokes()
     {
+        print("Started Gain Smokes");
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
-
-        smokeCloudCannister = pooler.ReturnSmokeCloud((pooler.poisonSmoke.Count - playerID)-1);
+               
+        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (1 - playerID));
         smokeCloudCannister.tag = tag;
 
         print(pooler.cannisters[playerID]);
         cannister = pooler.cannisters[playerID];
         cannister.tag = tag;
         hasCannister = true;
-    }
 
+        print("I've finished getting smoke, I got " + cannister);
+
+    }
+    
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
@@ -104,7 +108,7 @@ public class SongBird : PlayerBase
     {
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
-        smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
+        smokeCloud.transform.rotation = new Quaternion(0, 0,180, 0);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback);
 
