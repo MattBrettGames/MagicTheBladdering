@@ -28,10 +28,10 @@ public abstract class PlayerBase : BlankMono
     public float incomingMult = 1;
 
     [Header("Status Effects")]
-    public bool cursed;
+    [HideInInspector]public bool cursed;
     protected float curseTimer;
-    public bool prone;
-    public float poison;
+    [HideInInspector]public bool prone;
+    [HideInInspector] public float poison;
     [SerializeField]private int poisonPerSec;
     private bool hyperArmour;
     protected bool iFrames;
