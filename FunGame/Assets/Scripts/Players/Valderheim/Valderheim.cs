@@ -175,6 +175,6 @@ public class Valderheim : PlayerBase
     }
 
     //Passive Effects - Surefooted & Building Rage
-    public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageDiv) + 1; }
+  //  public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageDiv) + 1; }
 
 }

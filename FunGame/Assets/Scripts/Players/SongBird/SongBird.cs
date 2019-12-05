@@ -26,15 +26,14 @@ public class SongBird : PlayerBase
 
     public override void SetInfo()
     {
-        pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
-
         base.SetInfo();
-
+        pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);                
     }
 
     void GainSmokes()
     {
+        print("Started Gain Smokes");
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
 
@@ -44,6 +43,9 @@ public class SongBird : PlayerBase
         cannister = pooler.cannisters[playerID];
         cannister.tag = tag;
         hasCannister = true;
+
+        print("I've finished getting smoke, I got " + cannister);
+
     }
     
     public override void XAction()
