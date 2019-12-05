@@ -17,7 +17,7 @@ public class DualObjectiveCamera : MonoBehaviour
 
         transform.position = new Vector3(
             centerPosition.x,
-            distanceBetweenTargets,
+            Mathf.Abs(Mathf.Clamp(distanceBetweenTargets, 1, 50)),
             centerPosition.z
             )+offset;
     }
