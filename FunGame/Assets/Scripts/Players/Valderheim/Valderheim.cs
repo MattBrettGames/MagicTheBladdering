@@ -173,8 +173,4 @@ public class Valderheim : PlayerBase
         frenzyEffects.Clear();
         frenzyEffects.Stop();
     }
-
-    //Passive Effects - Surefooted & Building Rage
-  //  public override void HealthChange(int healthChange) { base.HealthChange(healthChange); damageMult = Mathf.RoundToInt((healthMax - currentHealth) / growingRageDiv) + 1; }
-
 }
