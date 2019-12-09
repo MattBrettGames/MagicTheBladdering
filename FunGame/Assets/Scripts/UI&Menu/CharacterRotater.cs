@@ -7,8 +7,8 @@ public class CharacterRotater : MonoBehaviour
 {
     Player player;
     [SerializeField] int thisPInt;
-
     [SerializeField] float speed;
+
     void Start()
     {
         player = ReInput.players.GetPlayer(thisPInt);
