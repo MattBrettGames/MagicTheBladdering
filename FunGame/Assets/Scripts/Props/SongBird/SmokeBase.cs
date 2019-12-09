@@ -35,9 +35,7 @@ public class SmokeBase : BlankMono
             }
             else
             {
-                target.damageMult += 1;
-                target.dodgeDur += 0.5f;
-                target.dodgeSpeed += 5;
+                target.damageMult += 1;                
             }
         }
     }
@@ -50,9 +48,7 @@ public class SmokeBase : BlankMono
         {
             if (other.tag == tag)
             {
-                target.damageMult -= 1;
-                target.dodgeDur -= 0.5f;
-                target.dodgeSpeed -= 5;
+                target.damageMult -= 1;                
             }
         }
     }
