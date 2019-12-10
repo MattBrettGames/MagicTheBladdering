@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject visuals;
     private PlayerBase playerCode1;
     private PlayerBase playerCode2;
+    bool inputOnCooldown;
 
     void Start()
     {
@@ -41,24 +42,34 @@ public class PauseMenu : MonoBehaviour
 
         if (visuals.activeSelf)
         {
-            print(optionStrings[currentDisplay] +" IS THE CURRENT OPTION" + currentDisplay);
-            if (players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f)
+            if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
             {
                 if (currentDisplay < options.Length - 1) currentDisplay++;
                 else currentDisplay = 0;
-                selector.transform.localPosition = options[currentDisplay].transform.position;
+                StartCoroutine(EndCooldown());              
+                inputOnCooldown = true;
             }
-            if (players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f)
+            if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
             {
                 if (currentDisplay != 0) currentDisplay--;
                 else currentDisplay = options.Length - 1;
-                selector.transform.localPosition = options[currentDisplay].transform.position;
+                StartCoroutine(EndCooldown());
+                inputOnCooldown = true;
             }
+
+            selector.transform.position = options[currentDisplay].transform.position;
+
         }
         if (players.GetButtonDown("AAction"))
         {
             Invoke(optionStrings[currentDisplay], 0);
         }
+    }
+
+    IEnumerator EndCooldown()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        inputOnCooldown = false;        
     }
 
     void Resume()
@@ -71,6 +82,7 @@ public class PauseMenu : MonoBehaviour
 
     void Quit()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
 
