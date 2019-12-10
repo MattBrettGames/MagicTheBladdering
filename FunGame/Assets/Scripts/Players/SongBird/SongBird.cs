@@ -36,10 +36,10 @@ public class SongBird : PlayerBase
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
 
-        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (1 - playerID));
+        print(pooler.poisonSmoke.Count - (playerID+1) + " is the thing you need");
+        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID+1 ));
         smokeCloudCannister.tag = tag;
 
-        print(pooler.cannisters[playerID]);
         cannister = pooler.cannisters[playerID];
         cannister.tag = tag;
         hasCannister = true;
@@ -60,7 +60,7 @@ public class SongBird : PlayerBase
             cannister.transform.position = transform.position;
             cannister.SetActive(true);
             hasCannister = false;
-            anim.SetTrigger("BAttack");
+            anim.SetTrigger("BAction");
         }
         else
         {
