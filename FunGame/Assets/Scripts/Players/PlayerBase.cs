@@ -165,7 +165,7 @@ public abstract class PlayerBase : BlankMono
     #region Input Actions
     public virtual void AAction()
     {
-        if (dodgeTimer < 0)
+        if (dodgeTimer < 0 && dir != Vector3.zero)
         {
             anim.SetTrigger("AAction");
             state = State.dodging;
@@ -190,7 +190,14 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() { anim.SetTrigger("Death"); this.enabled = false; GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject); GainIFrames(); }
+    public virtual void Death() 
+    {
+        anim.SetTrigger("Death");
+        GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject);
+        GainIFrames();
+
+        print(gameObject.name + " has successfuly died");
+    }
     public virtual void KnockbackContinual()
     {
         transform.position += knockbackForce * knockBackPower * Time.deltaTime;

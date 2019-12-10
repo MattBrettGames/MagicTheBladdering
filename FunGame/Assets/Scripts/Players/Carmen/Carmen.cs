@@ -36,7 +36,6 @@ public class Carmen : PlayerBase
     {
         yield return new WaitForEndOfFrame();
         enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
-        print(enemyVisual);
     }
 
     public override void XAction()
