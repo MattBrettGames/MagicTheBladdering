@@ -42,19 +42,18 @@ public class PauseMenu : MonoBehaviour
 
         if (visuals.activeSelf)
         {
-            print(optionStrings[currentDisplay] + " IS THE CURRENT OPTION" + currentDisplay);
             if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
             {
                 if (currentDisplay < options.Length - 1) currentDisplay++;
                 else currentDisplay = 0;
-                Invoke("EndCooldown", 0.3f);
+                StartCoroutine(EndCooldown());              
                 inputOnCooldown = true;
             }
             if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
             {
                 if (currentDisplay != 0) currentDisplay--;
                 else currentDisplay = options.Length - 1;
-                Invoke("EndCooldown", 0.3f);
+                StartCoroutine(EndCooldown());
                 inputOnCooldown = true;
             }
 
@@ -67,11 +66,11 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void Endcooldown()
+    IEnumerator EndCooldown()
     {
-        inputOnCooldown = false;
+        yield return new WaitForSecondsRealtime(0.3f);
+        inputOnCooldown = false;        
     }
-
 
     void Resume()
     {
