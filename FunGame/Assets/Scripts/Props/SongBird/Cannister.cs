@@ -16,7 +16,6 @@ public class Cannister : BlankMono
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
         smoke1.Begin(damage, tick, knockback);
 
-        //smoke.GetComponent<SmokeBase>().Begin(damage, tick, knockback);
         for (int i = 0; i < size; i++)
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smokeTrue));
