@@ -17,7 +17,7 @@ public class DualObjectiveCamera : MonoBehaviour
 
         transform.position = new Vector3(
             centerPosition.x,
-            distanceBetweenTargets,
+            distanceBetweenTargets+5,
             centerPosition.z
             )+offset;
     }

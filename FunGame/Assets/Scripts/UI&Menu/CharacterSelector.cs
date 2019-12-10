@@ -27,6 +27,10 @@ public class CharacterSelector : BlankMono
     public Camera cam;
     public float camFOVLocked;
     private float camFOVBase;
+    Vector3 camOffsetBase;
+    [SerializeField] Vector3 camOffsetLocked;
+    GameObject store;
+    GameObject backStore;
 
     [Header("UI Elements")]
     public GameObject characterText;
@@ -40,6 +44,9 @@ public class CharacterSelector : BlankMono
 
     void Start()
     {
+        store = transform.GetChild(0).gameObject;
+        backStore = transform.parent.GetChild(1).gameObject;
+        camOffsetBase = store.transform.position;
         camFOVBase = cam.fieldOfView;
         transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
@@ -129,7 +136,10 @@ public class CharacterSelector : BlankMono
             {
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
-                    cam.fieldOfView= Mathf.Lerp(cam.fieldOfView, camFOVLocked, 0.17f);
+                    backStore.transform.position += camOffsetLocked;
+                    //store.transform.position += camOffsetLocked;
+                    cam.fieldOfView = camFOVLocked;
+
                     displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                     universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
 
@@ -154,7 +164,9 @@ public class CharacterSelector : BlankMono
 
     private void Unlock()
     {
-       cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, camFOVBase, 0.17f);
+        store.transform.position = camOffsetBase;
+        //backStore.transform.position = camOffsetBase;
+        cam.fieldOfView = camFOVBase;
     }
 
     private IEnumerator SpinTrigger(float angle, float time)
