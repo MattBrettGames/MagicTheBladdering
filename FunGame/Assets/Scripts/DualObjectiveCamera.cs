@@ -9,8 +9,6 @@ public class DualObjectiveCamera : MonoBehaviour
     public Vector3 offset;
     Vector3 centerPosition;
     [SerializeField] float closeness;
-    [SerializeField] float minHeight = 0;
-    [SerializeField] float maxHeight = 50;
 
     void Update()
     {
@@ -19,7 +17,7 @@ public class DualObjectiveCamera : MonoBehaviour
 
         transform.position = new Vector3(
             centerPosition.x,
-            Mathf.Abs(Mathf.Clamp(distanceBetweenTargets, minHeight, maxHeight)),
+            distanceBetweenTargets,
             centerPosition.z
             )+offset;
     }
