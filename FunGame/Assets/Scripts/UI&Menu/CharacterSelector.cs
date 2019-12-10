@@ -23,7 +23,10 @@ public class CharacterSelector : BlankMono
 
     [Header("Readying Up")]
     public bool locked;
-    public UniverseController universe;
+    [HideInInspector] public UniverseController universe;
+    public Camera cam;
+    public float camFOVLocked;
+    private float camFOVBase;
 
     [Header("UI Elements")]
     public GameObject characterText;
@@ -37,9 +40,10 @@ public class CharacterSelector : BlankMono
 
     void Start()
     {
+        camFOVBase = cam.fieldOfView;
         transform.tag = thisPlayer + "Selector";
         horiPlayerInput = thisPlayer + "Horizontal";
-        vertPlayerInput = thisPlayer + "Vertical";               
+        vertPlayerInput = thisPlayer + "Vertical";
         displayChar.SetActive(true);
         displayImage.SetActive(true);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
@@ -125,6 +129,7 @@ public class CharacterSelector : BlankMono
             {
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
+                    cam.fieldOfView= Mathf.Lerp(cam.fieldOfView, camFOVLocked, 0.17f);
                     displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
                     universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
 
@@ -133,17 +138,23 @@ public class CharacterSelector : BlankMono
             }
         }
         if (player.GetButtonDown("BAttack"))
-        {            
+        {
             if (!locked)
             {
                 universe.ReturnToMenu();
             }
             else
             {
-                locked = false;                
+                locked = false;
                 universe.Unlock(thisPInt);
-            }            
+                Unlock();
+            }
         }
+    }
+
+    private void Unlock()
+    {
+       cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, camFOVBase, 0.17f);
     }
 
     private IEnumerator SpinTrigger(float angle, float time)

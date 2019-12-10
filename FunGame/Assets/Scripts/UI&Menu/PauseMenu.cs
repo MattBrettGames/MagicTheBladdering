@@ -27,7 +27,6 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        print("I exist");
         if (players.GetButtonDown("Pause") || player2.GetButtonDown("Pause"))
         {
             print("Pause button has been received");

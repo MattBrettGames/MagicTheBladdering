@@ -5,13 +5,47 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: Cloud_City
+    100004: Cloud1_Rope
+    100006: Cloud1_Rope1
+    100008: Cloud:Cloud_City_Cloud1
     400000: //RootNode
     400002: Cloud_City
+    400004: Cloud1_Rope
+    400006: Cloud1_Rope1
+    400008: Cloud:Cloud_City_Cloud1
     2100000: initialShadingGroup
+    2100002: Cloud_initialShadingGroup
+    2100004: Cloud1_RopeMat
+    2100006: Cloud1_Rope1Mat
+    2100008: Cloud_Cloud_City_Cloud1Mat
     2300000: Cloud_City
+    2300002: Cloud1_Rope
+    2300004: Cloud1_Rope1
+    2300006: Cloud:Cloud_City_Cloud1
     3300000: Cloud_City
+    3300002: Cloud1_Rope
+    3300004: Cloud1_Rope1
+    3300006: Cloud:Cloud_City_Cloud1
     4300000: Cloud_City
-  externalObjects: {}
+    4300002: Cloud1_Rope
+    4300004: Cloud1_Rope1
+    4300006: Cloud:Cloud_City_Cloud1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cloud1_Rope1Mat
+    second: {fileID: 2100000, guid: 8258e875e32145649b2129c65196f9bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cloud1_RopeMat
+    second: {fileID: 2100000, guid: 8258e875e32145649b2129c65196f9bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cloud_Cloud_City_Cloud1Mat
+    second: {fileID: 2100000, guid: 8258e875e32145649b2129c65196f9bd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -62,7 +96,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
@@ -73,7 +107,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

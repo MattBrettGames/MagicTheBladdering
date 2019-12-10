@@ -108,7 +108,8 @@ public class Valderheim : PlayerBase
                     anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                 }
 
-                visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                visuals.transform.forward =  Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
                 break;
 
             case State.dodging:
