@@ -149,7 +149,9 @@ public abstract class PlayerBase : BlankMono
                     anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
                 }
 
-                visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+
                 break;
 
             case State.dodging:
@@ -190,13 +192,14 @@ public abstract class PlayerBase : BlankMono
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
 
-    public virtual void Death() 
+    public virtual void Death()
     {
         anim.SetTrigger("Death");
         GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject);
         GainIFrames();
+        state = State.attack;
 
-        print(gameObject.name + " has successfuly died");
+        print(gameObject.name + " has successfuly died, is now in state - " + state);
     }
     public virtual void KnockbackContinual()
     {
@@ -240,7 +243,6 @@ public abstract class PlayerBase : BlankMono
         damageMult = 1;
         incomingMult = 1;
 
-
         EndActing();
         anim.SetFloat("Movement", 0);
         transform.localRotation = new Quaternion(0, 0, 0, 0);
@@ -251,7 +253,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; }
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
     #endregion
 
