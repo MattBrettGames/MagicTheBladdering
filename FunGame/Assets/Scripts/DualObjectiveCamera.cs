@@ -25,7 +25,6 @@ public class DualObjectiveCamera : MonoBehaviour
     void LateUpdate()
     {
         transform.LookAt(centerPosition);
-        //transform.position = new Vector3(transform.position.x, offset.y, transform.position.z);
     }
 
 }
