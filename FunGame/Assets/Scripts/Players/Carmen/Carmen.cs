@@ -40,6 +40,7 @@ public class Carmen : PlayerBase
 
     public override void XAction()
     {
+        Debug.Log("XPRESS");
         anim.SetTrigger("XAttack");
         leftDagger.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp);
         rightDagger.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp);

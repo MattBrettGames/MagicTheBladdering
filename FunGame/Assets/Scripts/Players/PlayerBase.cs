@@ -40,7 +40,8 @@ public abstract class PlayerBase : BlankMono
     protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
-    [HideInInspector] public State state;
+    [HideInInspector]
+    public State state;
     [HideInInspector]
     public enum State
     {
@@ -155,7 +156,11 @@ public abstract class PlayerBase : BlankMono
                 break;
 
             case State.dodging:
-                if (dodgeTimer < 0) DodgeSliding(dir);
+
+                if (dodgeTimer < 0)
+                {
+                    DodgeSliding(dir);
+                }
                 break;
 
             case State.knockback:
@@ -170,10 +175,13 @@ public abstract class PlayerBase : BlankMono
         if (dodgeTimer < 0 && dir != Vector3.zero)
         {
             anim.SetTrigger("AAction");
+
             state = State.dodging;
+
             Invoke("EndDodge", dodgeDur);
         }
     }
+
     private void EndDodge()
     {
         state = State.normal;
@@ -198,8 +206,6 @@ public abstract class PlayerBase : BlankMono
         GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject);
         GainIFrames();
         state = State.attack;
-
-        print(gameObject.name + " has successfuly died, is now in state - " + state);
     }
     public virtual void KnockbackContinual()
     {
@@ -253,7 +259,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
+    public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
     #endregion
 
