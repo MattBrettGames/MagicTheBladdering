@@ -7616,17 +7616,17 @@ PrefabInstance:
         type: 3}
       propertyPath: flameJet
       value: 
-      objectReference: {fileID: 951551453}
+      objectReference: {fileID: 0}
     - target: {fileID: 8225030482519881782, guid: b537482ca58290940bf4a00682fc0dab,
         type: 3}
       propertyPath: shotgun
       value: 
-      objectReference: {fileID: 951551454}
+      objectReference: {fileID: 0}
     - target: {fileID: 8225030482519881782, guid: b537482ca58290940bf4a00682fc0dab,
         type: 3}
       propertyPath: explosion
       value: 
-      objectReference: {fileID: 951551452}
+      objectReference: {fileID: 0}
     - target: {fileID: 8838867831370795115, guid: b537482ca58290940bf4a00682fc0dab,
         type: 3}
       propertyPath: m_IsActive
@@ -7697,42 +7697,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 951551448}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &951551452 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6316320967035933173, guid: b537482ca58290940bf4a00682fc0dab,
-    type: 3}
-  m_PrefabInstance: {fileID: 951551448}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &951551453 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5211191277364604714, guid: b537482ca58290940bf4a00682fc0dab,
-    type: 3}
-  m_PrefabInstance: {fileID: 951551448}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &951551454 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6529868174890540746, guid: b537482ca58290940bf4a00682fc0dab,
-    type: 3}
-  m_PrefabInstance: {fileID: 951551448}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &951551455 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
@@ -30178,6 +30142,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jester Royale Wiosna
       objectReference: {fileID: 0}
+    - target: {fileID: 1135336309872034400, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1135336309871681088, guid: b537482ca58290940bf4a00682fc0dab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -30232,6 +30201,76 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: xDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: xKnockback
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: vanishDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: radiusOfStun
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: stunDur
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: radiusOfPull
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: pullImpact
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: bCooldown
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: beamDamage
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: beamKnockback
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: beamDur
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: explosionDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: explosionKnockback
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1728972231120312074, guid: b537482ca58290940bf4a00682fc0dab,
+        type: 3}
+      propertyPath: explosionDur
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b537482ca58290940bf4a00682fc0dab, type: 3}
