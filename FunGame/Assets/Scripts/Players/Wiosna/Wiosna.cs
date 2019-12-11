@@ -150,7 +150,7 @@ public class Wiosna : PlayerBase
     #region Y Attacks
     private void YActionLock()
     {
-        anim.SetTrigger("YActionLock");
+        anim.SetTrigger("YAttackLock");
         if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfStun)
         {
             lookAtTarget.GetComponentInParent<PlayerBase>().BecomeStunned(stunDur);
