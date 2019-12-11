@@ -50,7 +50,8 @@ public abstract class PlayerBase : BlankMono
         dodging,
         knockback,
         attack,
-        unique
+        unique,
+        stun
     }
 
     [Header("Components")]
@@ -98,6 +99,9 @@ public abstract class PlayerBase : BlankMono
 
         switch (state)
         {
+            case State.stun:
+                break;
+
             case State.attack:
                 break;
 
@@ -196,6 +200,16 @@ public abstract class PlayerBase : BlankMono
     #region Common Events
     public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); } }
     private void EndTimeScale() { Time.timeScale = 1; }
+
+    public void BecomeStunned(float duration)
+    {
+        state = State.stun;
+        Invoke("EndStun", duration);
+    }
+    void EndStun()
+    {
+        state = State.normal;
+    }
 
     public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
     public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }

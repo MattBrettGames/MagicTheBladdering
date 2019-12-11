@@ -156,7 +156,7 @@ public class Valderheim : PlayerBase
     public override void BAction()
     {
         comboTime = false;
-        if (!frenzy)
+        if (!frenzy && state == State.stun)
         {
             Invoke("StopFrenzy", frenzyDuration);
             anim.SetTrigger("BAttack");
