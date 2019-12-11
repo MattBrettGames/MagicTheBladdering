@@ -27,16 +27,19 @@ public class ArenaSelector : BlankMono
         {
             print(displays[i].GetComponent<Outline>());
             displayOutlines.Add(displays[i].GetComponent<Outline>());
-            displayOutlines[i].OutlineWidth = 0;
+            displayOutlines[i].enabled = false;
         }
+        displayOutlines[currentDisplay].enabled = true;
+        arenaName.text = displays[currentDisplay].name;
+
         universe = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
     }
 
 
     void Update()
     {
-        Camera.main.transform.LookAt(displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay]);
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos[currentDisplay], 0.16f);
+        Camera.main.transform.LookAt(Vector3.Lerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay], 0.3f));
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos[currentDisplay], 0.4f);
 
         if (Input.GetAxis("AllHorizontal") >= 0.4f && !inputCooldown)
         {
@@ -57,7 +60,7 @@ public class ArenaSelector : BlankMono
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);
         }
-        if (Input.GetAxis("AllVertical") <= -0.4f && !inputCooldown)
+        if (Input.GetAxis("AllHorizontal") <= -0.4f && !inputCooldown)
         {
             if (currentDisplay != 0)
             {
