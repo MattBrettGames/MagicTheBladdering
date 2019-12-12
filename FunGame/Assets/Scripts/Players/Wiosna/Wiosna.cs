@@ -15,9 +15,13 @@ public class Wiosna : PlayerBase
     [Header("X Attack")]
     [SerializeField] int xDamage;
     [SerializeField] int xKnockback;
+    [SerializeField] float xCooldown = 0.8f;
+    float xTimer;
 
     [Header("Vanishing Act")]
     [SerializeField] float vanishDistance;
+    [SerializeField] float actCooldown = 1;
+    float actTimer;
 
     [Header("Y Action")]
     [SerializeField] float radiusOfStun;
@@ -26,9 +30,12 @@ public class Wiosna : PlayerBase
     [Space]
     [SerializeField] float radiusOfPull;
     [SerializeField] int pullImpact;
+    [Space]
+    [SerializeField] float yCooldown = 1.1f;
+    float yTimer;
 
     [Header("BAttacks")]
-    [SerializeField] float bCooldown;
+    [SerializeField] float bCooldown = 14;
     float bTimer;
     [Space]
     [SerializeField] int beamDamage;
@@ -53,7 +60,11 @@ public class Wiosna : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
+
         bTimer -= Time.deltaTime;
+        actTimer -= Time.deltaTime;
+        yTimer -= Time.deltaTime;
+        xTimer -= Time.deltaTime;
 
         switch (state)
         {
@@ -137,8 +148,12 @@ public class Wiosna : PlayerBase
     #region X Attacks
     public override void XAction()
     {
-        anim.SetTrigger("XAttack");
-        basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0);
+        if (xTimer < 0)
+        {
+            anim.SetTrigger("XAttack");
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0);
+            xTimer = xCooldown;
+        }
     }
     #endregion
 
@@ -157,20 +172,22 @@ public class Wiosna : PlayerBase
     private void YActionLock()
     {
         anim.SetTrigger("YAttack");
-        if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfStun)
+        if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfStun && yTimer < 0)
         {
             stunParts.Emit(30);
             lookAtTarget.GetComponentInParent<PlayerBase>().BecomeStunned(stunDur);
+            yTimer = yCooldown;
         }
     }
     public override void YAction()
     {
         anim.SetTrigger("YAttack");
-        if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfPull)
+        if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfPull && yTimer < 0)
         {
             stunParts.startColor = Color.red;
             stunParts.Emit(10);
             lookAtTarget.GetComponentInParent<PlayerBase>().Knockback(pullImpact, transform.position - (lookAtTarget.position) - lookAtVariant);
+            yTimer = yCooldown;
         }
     }
     #endregion

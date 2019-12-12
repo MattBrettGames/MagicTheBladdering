@@ -271,7 +271,7 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth = poisonPerSec; print("PoisonTick"); } }
+    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; print("PoisonTick"); }  }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }

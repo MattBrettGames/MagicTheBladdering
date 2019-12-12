@@ -18,10 +18,15 @@ public class SongBird : PlayerBase
     [Header("Vial Stats")]
     public int smokeburstDamage;
     public int smokePoisonTicks;
+    [Space]
     public int thrownCloudSize;
     public int dodgeCloudSize;
     public int cannisterCloudSize;
+    [Space]
     public int smokeKnockback;
+    [SerializeField] float bCooldown = 10;
+    float bTimer;
+
     private bool hasCannister;
 
     public override void SetInfo()
@@ -30,6 +35,13 @@ public class SongBird : PlayerBase
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }
+
+    public override void Update()
+    {
+        base.Update();
+        bTimer -= Time.deltaTime;
+    }
+
 
     void GainSmokes()
     {
@@ -55,18 +67,22 @@ public class SongBird : PlayerBase
 
     public override void BAction()
     {
-        if (hasCannister)
+        if (bTimer < 0)
         {
-            cannister.transform.position = transform.position;
-            cannister.SetActive(true);
-            hasCannister = false;
-            anim.SetTrigger("BAction");
-        }
-        else
-        {
-            smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
-            hasCannister = true;
+            if (hasCannister)
+            {
+                cannister.transform.position = transform.position;
+                cannister.SetActive(true);
+                hasCannister = false;
+                anim.SetTrigger("BAction");
+                bTimer = bCooldown;
+            }
+            else
+            {
+                smokeCloudCannister.transform.localScale = Vector3.one;
+                cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
+                hasCannister = true;
+            }
         }
     }
 

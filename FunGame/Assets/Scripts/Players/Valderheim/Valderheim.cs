@@ -21,6 +21,8 @@ public class Valderheim : PlayerBase
     public int slamAttack;
     public int slamKnockback;
     [SerializeField] private float overheadStun;
+    [SerializeField] float yCooldown = 4;
+    float yTimer;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -56,6 +58,8 @@ public class Valderheim : PlayerBase
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
         if (player.GetButtonDown("BAttack")) { BAction(); }
+
+        yTimer -= Time.deltaTime;
 
         switch (state)
         {
@@ -139,16 +143,20 @@ public class Valderheim : PlayerBase
 
     public override void YAction()
     {
-        if (comboTime)
+        if (yTimer < 0)
         {
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0);
-            anim.SetTrigger("ComboKick");
-            comboTime = false;
-        }
-        else
-        {
-            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun);
-            anim.SetTrigger("YAttack");
+            if (comboTime)
+            {
+                hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0);
+                anim.SetTrigger("ComboKick");
+                comboTime = false;
+                yTimer = yCooldown;
+            }
+            else
+            {
+                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun);
+                anim.SetTrigger("YAttack");
+            }
         }
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); }
@@ -157,7 +165,7 @@ public class Valderheim : PlayerBase
     public override void BAction()
     {
         comboTime = false;
-        if (!frenzy && state == State.stun)
+        if (!frenzy && state != State.stun)
         {
             Invoke("StopFrenzy", frenzyDuration);
             anim.SetTrigger("BAttack");
