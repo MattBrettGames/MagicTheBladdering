@@ -20,6 +20,8 @@ public class Carmen : PlayerBase
     public int slashKnockback;
     public float slashTravelDuration;
     [SerializeField] float xCooldown = 1;
+    [SerializeField] Weapons spinSphere;
+    [SerializeField] float spinRadius;
     float xTimer;
 
     [Header("Dig")]
@@ -36,6 +38,7 @@ public class Carmen : PlayerBase
     {
         base.SetInfo();
         StartCoroutine(GainBack());
+        spinSphere.GetComponent<SphereCollider>().radius = spinRadius;
     }
 
     public override void Update()
@@ -57,8 +60,7 @@ public class Carmen : PlayerBase
         if (xTimer < 0)
         {
             anim.SetTrigger("XAttack");
-            leftDagger.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
-            rightDagger.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
