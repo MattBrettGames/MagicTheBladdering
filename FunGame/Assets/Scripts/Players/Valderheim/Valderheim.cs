@@ -55,7 +55,7 @@ public class Valderheim : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-        if (player.GetButtonDown("BAttack")) { BAction(); }
+        if (player.GetButtonDown("BAttack")) { BAction(); print("B, 'm I right?"); }
 
         switch (state)
         {
@@ -157,7 +157,7 @@ public class Valderheim : PlayerBase
     public override void BAction()
     {
         comboTime = false;
-        if (!frenzy && state == State.stun)
+        if (!frenzy && state != State.stun)
         {
             Invoke("StopFrenzy", frenzyDuration);
             anim.SetTrigger("BAttack");
