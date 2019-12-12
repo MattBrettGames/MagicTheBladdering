@@ -20,6 +20,7 @@ public class Valderheim : PlayerBase
     [Header("Ground Slam")]
     public int slamAttack;
     public int slamKnockback;
+    [SerializeField] private float overheadStun;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -109,7 +110,7 @@ public class Valderheim : PlayerBase
                 }
 
                 aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
-                visuals.transform.forward =  Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
                 break;
 
             case State.dodging:
@@ -126,12 +127,12 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp);
+            hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0);
             anim.SetTrigger("XAttack");
         }
         else
         {
-            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp);
+            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0);
             anim.SetTrigger("Spin");
         }
     }
@@ -140,13 +141,13 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp);
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0);
             anim.SetTrigger("ComboKick");
             comboTime = false;
         }
         else
         {
-            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp);
+            hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun);
             anim.SetTrigger("YAttack");
         }
     }

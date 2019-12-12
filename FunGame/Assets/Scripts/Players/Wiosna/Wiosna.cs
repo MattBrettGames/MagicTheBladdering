@@ -132,7 +132,7 @@ public class Wiosna : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp);
+        basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0);
     }
     #endregion
 
@@ -172,7 +172,7 @@ public class Wiosna : PlayerBase
         if (bCooldown < 0)
         {
             anim.SetTrigger("BAttack");
-            explosionSphere.GainInfo(explosionDamage, explosionKnockback, lookAtTarget.position - transform.position, pvp);
+            explosionSphere.GainInfo(explosionDamage, explosionKnockback, lookAtTarget.position - transform.position, pvp, 0);
         }
     }
     public void BeginExplosion() { explosionSphere.gameObject.SetActive(true); Invoke("EndExplosion", explosionDur); explosionSphere.StartAttack(); }
@@ -183,7 +183,7 @@ public class Wiosna : PlayerBase
         if (bCooldown < 0)
         {
             anim.SetTrigger("BAttackLock");
-            finalBeam.GainInfo(beamDamage, beamKnockback, visuals.transform.forward, pvp);
+            finalBeam.GainInfo(beamDamage, beamKnockback, visuals.transform.forward, pvp, 0);
         }
     }
     public void BeginBeam() { finalBeam.gameObject.SetActive(true); Invoke("EndBeam", beamDur); finalBeam.StartAttack(); }

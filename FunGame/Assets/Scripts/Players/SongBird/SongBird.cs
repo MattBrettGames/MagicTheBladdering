@@ -36,8 +36,8 @@ public class SongBird : PlayerBase
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
 
-        print(pooler.poisonSmoke.Count - (playerID+1) + " is the thing you need");
-        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID+1 ));
+        print(pooler.poisonSmoke.Count - (playerID + 1) + " is the thing you need");
+        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID + 1));
         smokeCloudCannister.tag = tag;
 
         cannister = pooler.cannisters[playerID];
@@ -48,7 +48,7 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp);
+        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0);
     }
 
     public override void YAction() { anim.SetTrigger("YAction"); }
