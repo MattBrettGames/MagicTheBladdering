@@ -22,6 +22,7 @@ public class Wiosna : PlayerBase
     [Header("Y Action")]
     [SerializeField] float radiusOfStun;
     [SerializeField] float stunDur;
+    [SerializeField] ParticleSystem stunParts;
     [Space]
     [SerializeField] float radiusOfPull;
     [SerializeField] int pullImpact;
@@ -37,6 +38,7 @@ public class Wiosna : PlayerBase
     [SerializeField] int explosionDamage;
     [SerializeField] int explosionKnockback;
     [SerializeField] float explosionDur;
+
 
     public override void Update()
     {
@@ -56,9 +58,11 @@ public class Wiosna : PlayerBase
         switch (state)
         {
             case State.stun:
+                //anim.SetBool("Stunned", true);
                 break;
 
             case State.attack:
+                state = State.normal;
                 break;
 
             case State.normal:
@@ -128,10 +132,6 @@ public class Wiosna : PlayerBase
                 break;
         }
 
-
-        print("Wisona is currently in satte - " + state);
-
-
     }
 
     #region X Attacks
@@ -159,6 +159,7 @@ public class Wiosna : PlayerBase
         anim.SetTrigger("YAttack");
         if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfStun)
         {
+            stunParts.Emit(30);
             lookAtTarget.GetComponentInParent<PlayerBase>().BecomeStunned(stunDur);
         }
     }
@@ -167,6 +168,8 @@ public class Wiosna : PlayerBase
         anim.SetTrigger("YAttack");
         if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfPull)
         {
+            stunParts.startColor = Color.red;
+            stunParts.Emit(10);
             lookAtTarget.GetComponentInParent<PlayerBase>().Knockback(pullImpact, transform.position - (lookAtTarget.position) - lookAtVariant);
         }
     }
