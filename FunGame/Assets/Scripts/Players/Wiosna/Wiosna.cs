@@ -28,6 +28,7 @@ public class Wiosna : PlayerBase
 
     [Header("BAttacks")]
     [SerializeField] float bCooldown;
+    float bTimer;
     [Space]
     [SerializeField] int beamDamage;
     [SerializeField] int beamKnockback;
@@ -50,7 +51,7 @@ public class Wiosna : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-        bCooldown -= Time.deltaTime;
+        bTimer -= Time.deltaTime;
 
         switch (state)
         {
@@ -126,6 +127,11 @@ public class Wiosna : PlayerBase
                 KnockbackContinual();
                 break;
         }
+
+
+        print("Wisona is currently in satte - " + state);
+
+
     }
 
     #region X Attacks
@@ -150,7 +156,7 @@ public class Wiosna : PlayerBase
     #region Y Attacks
     private void YActionLock()
     {
-        anim.SetTrigger("YAttackLock");
+        anim.SetTrigger("YAttack");
         if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfStun)
         {
             lookAtTarget.GetComponentInParent<PlayerBase>().BecomeStunned(stunDur);
@@ -161,7 +167,7 @@ public class Wiosna : PlayerBase
         anim.SetTrigger("YAttack");
         if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfPull)
         {
-            lookAtTarget.GetComponentInParent<PlayerBase>().Knockback(pullImpact, transform.position - lookAtTarget.position);
+            lookAtTarget.GetComponentInParent<PlayerBase>().Knockback(pullImpact, transform.position - (lookAtTarget.position) - lookAtVariant);
         }
     }
     #endregion
@@ -169,24 +175,27 @@ public class Wiosna : PlayerBase
     #region B Attacks
     public override void BAction()
     {
-        if (bCooldown < 0)
+        if (bTimer < 0)
         {
+            bTimer = bCooldown;
             anim.SetTrigger("BAttack");
-            explosionSphere.GainInfo(explosionDamage, explosionKnockback, lookAtTarget.position - transform.position, pvp, 0);
+            Vector3 hitDir = new Vector3(lookAtTarget.position.x - transform.position.x, 0, lookAtTarget.position.z - transform.position.z);
+            explosionSphere.GainInfo(explosionDamage, explosionKnockback, hitDir, pvp, 0);
         }
     }
-    public void BeginExplosion() { explosionSphere.gameObject.SetActive(true); Invoke("EndExplosion", explosionDur); explosionSphere.StartAttack(); }
+    public void BeginExplosion() { print("I did an explosion"); explosionSphere.gameObject.SetActive(true); Invoke("EndExplosion", explosionDur); explosionSphere.StartAttack(); }
     private void EndExplosion() { explosionSphere.gameObject.SetActive(false); explosionSphere.EndAttack(); }
 
     public void BActionLock()
     {
-        if (bCooldown < 0)
+        if (bTimer < 0)
         {
-            anim.SetTrigger("BAttackLock");
+            bTimer = bCooldown;
+            anim.SetTrigger("BAttack");
             finalBeam.GainInfo(beamDamage, beamKnockback, visuals.transform.forward, pvp, 0);
         }
     }
-    public void BeginBeam() { finalBeam.gameObject.SetActive(true); Invoke("EndBeam", beamDur); finalBeam.StartAttack(); }
+    public void BeginBeam() { finalBeam.gameObject.SetActive(true); print("beam doed"); Invoke("EndBeam", beamDur); finalBeam.StartAttack(); }
     public void EndBeam() { finalBeam.gameObject.SetActive(false); finalBeam.EndAttack(); }
     #endregion
 }

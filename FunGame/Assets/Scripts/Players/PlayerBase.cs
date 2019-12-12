@@ -203,6 +203,7 @@ public abstract class PlayerBase : BlankMono
 
     public void BecomeStunned(float duration)
     {
+        print(gameObject.name + " has just become Stunned");
         state = State.stun;
         Invoke("EndStun", duration);
     }

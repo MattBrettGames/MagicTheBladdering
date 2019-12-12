@@ -42,14 +42,14 @@ public class PauseMenu : MonoBehaviour
 
         if (visuals.activeSelf)
         {
-            if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
+            if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
             {
                 if (currentDisplay < options.Length - 1) currentDisplay++;
                 else currentDisplay = 0;
                 StartCoroutine(EndCooldown());
                 inputOnCooldown = true;
             }
-            if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
+            if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
             {
                 if (currentDisplay != 0) currentDisplay--;
                 else currentDisplay = options.Length - 1;
@@ -74,6 +74,7 @@ public class PauseMenu : MonoBehaviour
 
     void Resume()
     {
+        print("Resumed");
         visuals.SetActive(false);
         Time.timeScale = 1;
         playerCode1.EndActing();
@@ -82,6 +83,8 @@ public class PauseMenu : MonoBehaviour
 
     void Fix()
     {
+        print("Fixed");
+        Resume();
         playerCode1.gameObject.transform.position = new Vector3(playerCode1.gameObject.transform.position.x, 0, playerCode1.gameObject.transform.position.y);
         playerCode2.gameObject.transform.position = new Vector3(playerCode2.gameObject.transform.position.x, 0, playerCode2.gameObject.transform.position.y);
     }
