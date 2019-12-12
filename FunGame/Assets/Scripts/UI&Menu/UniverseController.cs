@@ -123,6 +123,7 @@ public class UniverseController : BlankMono
 
             #region Player 1
             GameObject p1 = selectedChars[0];
+            p1.SetActive(true);
             PlayerBase playerCode = p1.GetComponent<PlayerBase>();
             playerCode.enabled = true;
             playerCode.thisPlayer = "P1";
@@ -144,6 +145,7 @@ public class UniverseController : BlankMono
 
             #region Player 2
             GameObject p2 = selectedChars[1];
+            p2.SetActive(true);
             playerCode = p2.GetComponent<PlayerBase>();
             playerCode.enabled = true;
             playerCode.thisPlayer = "P2";
@@ -184,6 +186,8 @@ public class UniverseController : BlankMono
 
         if (lockedInPlayers == numOfPlayers)
         {
+            selectedChars[0].SetActive(false);
+            selectedChars[1].SetActive(false);
             SceneManager.LoadScene("ArenaSelectorPvP");
             lockedInPlayers = 0;
         }

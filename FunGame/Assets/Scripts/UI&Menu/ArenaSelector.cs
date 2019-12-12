@@ -6,26 +6,24 @@ using UnityEngine.UI;
 public class ArenaSelector : BlankMono
 {
     private bool inputCooldown;
+    [SerializeField] float speed;
     public List<GameObject> displays;
     public List<Vector3> camPos;
     public List<Vector3> camAnglesOffset;
-    [Space]
-    [SerializeField] float targetWidth;
-
 
     [Header("UI")]
     public Text arenaName;
 
-
+    GameObject cam;
     private int currentDisplay;
     List<Outline> displayOutlines = new List<Outline>();
     private UniverseController universe;
 
     void Start()
     {
+        cam = Camera.main.gameObject;
         for (int i = 0; i < displays.Count; i++)
         {
-            print(displays[i].GetComponent<Outline>());
             displayOutlines.Add(displays[i].GetComponent<Outline>());
             displayOutlines[i].enabled = false;
         }
@@ -35,11 +33,10 @@ public class ArenaSelector : BlankMono
         universe = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
     }
 
-
     void Update()
     {
-        Camera.main.transform.LookAt(Vector3.Lerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay], 0.3f));
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos[currentDisplay], 0.4f);
+        cam.transform.LookAt(Vector3.Lerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay],Time.deltaTime * speed));
+        cam.transform.position = Vector3.Slerp(cam.transform.position, camPos[currentDisplay], Time.deltaTime * speed) ;
 
         if (Input.GetAxis("AllHorizontal") >= 0.4f && !inputCooldown)
         {
