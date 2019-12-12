@@ -24,7 +24,7 @@ public class SongBird : PlayerBase
     public int cannisterCloudSize;
     [Space]
     public int smokeKnockback;
-    [SerializeField] float bCooldown;
+    [SerializeField] float bCooldown = 10;
     float bTimer;
 
     private bool hasCannister;

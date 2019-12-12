@@ -12,19 +12,19 @@ public class Carmen : PlayerBase
     [Header("Dagger Stab")]
     public int stabDamage;
     public int stabKnockback;
-    [SerializeField] float yCooldown;
+    [SerializeField] float yCooldown = 2;
     float yTimer;
 
     [Header("Dash-Slash")]
     public int slashDamage;
     public int slashKnockback;
     public float slashTravelDuration;
-    [SerializeField] float xCooldown;
+    [SerializeField] float xCooldown = 1;
     float xTimer;
 
     [Header("Dig")]
     public int digDistance;
-    [SerializeField] float bCooldown;
+    [SerializeField] float bCooldown = 3;
     float btimer;
 
     [Header("Backstab")]

@@ -21,7 +21,7 @@ public class Valderheim : PlayerBase
     public int slamAttack;
     public int slamKnockback;
     [SerializeField] private float overheadStun;
-    [SerializeField] float yCooldown;
+    [SerializeField] float yCooldown = 4;
     float yTimer;
 
     [Header("Kick Up")]
@@ -57,7 +57,7 @@ public class Valderheim : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-        if (player.GetButtonDown("BAttack")) { BAction();  }
+        if (player.GetButtonDown("BAttack")) { BAction(); }
 
         yTimer -= Time.deltaTime;
 
