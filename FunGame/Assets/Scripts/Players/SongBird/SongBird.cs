@@ -67,9 +67,9 @@ public class SongBird : PlayerBase
 
     public override void BAction()
     {
-        if (bTimer < 0)
+        if (hasCannister)
         {
-            if (hasCannister)
+            if (bTimer < 0)
             {
                 cannister.transform.position = transform.position;
                 cannister.SetActive(true);
@@ -77,12 +77,12 @@ public class SongBird : PlayerBase
                 anim.SetTrigger("BAction");
                 bTimer = bCooldown;
             }
-            else
-            {
-                smokeCloudCannister.transform.localScale = Vector3.one;
-                cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
-                hasCannister = true;
-            }
+        }
+        else
+        {
+            smokeCloudCannister.transform.localScale = Vector3.one;
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
+            hasCannister = true;
         }
     }
 
