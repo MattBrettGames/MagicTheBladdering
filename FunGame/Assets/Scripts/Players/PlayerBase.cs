@@ -100,6 +100,7 @@ public abstract class PlayerBase : BlankMono
         switch (state)
         {
             case State.stun:
+                anim.SetBool("Stunned", true);
                 break;
 
             case State.attack:
@@ -206,6 +207,7 @@ public abstract class PlayerBase : BlankMono
         print(gameObject.name + " has just become Stunned");
         state = State.stun;
         Invoke("EndStun", duration);
+        anim.SetBool("Stunned", false);
     }
     void EndStun()
     {
