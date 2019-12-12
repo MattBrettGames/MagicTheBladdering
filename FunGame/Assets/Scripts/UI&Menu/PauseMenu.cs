@@ -80,6 +80,13 @@ public class PauseMenu : MonoBehaviour
         playerCode2.EndActing();
     }
 
+    void Fix()
+    {
+        playerCode1.gameObject.transform.position = new Vector3(playerCode1.gameObject.transform.position.x, 0, playerCode1.gameObject.transform.position.y);
+        playerCode2.gameObject.transform.position = new Vector3(playerCode2.gameObject.transform.position.x, 0, playerCode2.gameObject.transform.position.y);
+    }
+
+
     void Quit()
     {
         Time.timeScale = 1;

@@ -10,6 +10,14 @@ public class WiosnaEventHandler : BlankMono
     public Weapons explosion;
     public Weapons melee;
 
+    void Start()
+    {
+        beam.gameObject.SetActive(false);
+        melee.gameObject.SetActive(false);
+        explosion.gameObject.SetActive(false);
+    }
+
+
     public void ExplosionBeginAttack() { wiosna.BeginExplosion(); }
     public void BeamBeginAttack() { wiosna.BeginBeam(); }
 
