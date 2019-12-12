@@ -35,7 +35,7 @@ public class ArenaSelector : BlankMono
 
     void FixedUpdate()
     {
-        cam.transform.LookAt(Vector3.Lerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay],Time.deltaTime * speed));
+        cam.transform.LookAt(Vector3.Slerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay],Time.deltaTime * speed));
         cam.transform.position = Vector3.Slerp(cam.transform.position, camPos[currentDisplay], Time.deltaTime * speed) ;
 
         if (Input.GetAxis("AllHorizontal") >= 0.4f && !inputCooldown)
