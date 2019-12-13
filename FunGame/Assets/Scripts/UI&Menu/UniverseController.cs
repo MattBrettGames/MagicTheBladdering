@@ -95,6 +95,7 @@ public class UniverseController : BlankMono
         currentLevel = level;
         if (level == 0)
         {
+            print(lockedInPlayers);
             lockedInPlayers = 0;
         }
         if (level == 2)
