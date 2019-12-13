@@ -10,8 +10,7 @@ public class UniverseController : BlankMono
 {
     [Header("Level Counts")]
     public int levelCount;
-    public int PVPLevelCount;
-    public int PVELevelCount;
+    public int firstArenaID;
 
     [Header("GameObjects")]
     public CharacterSelector charSelector1;
@@ -114,7 +113,7 @@ public class UniverseController : BlankMono
             Text p2Text = GameObject.Find("ScoreInt2").GetComponent<Text>();
             p2Text.text = finalScore[1].ToString();
         }
-        else if (level > levelCount - PVPLevelCount - PVELevelCount)
+        else if (level >= firstArenaID)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
@@ -168,11 +167,7 @@ public class UniverseController : BlankMono
             {
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
             }
-        }
-        if (level > levelCount - PVELevelCount)
-        {
-            generator.CreateZone(level - levelCount);
-        }
+        }        
     }
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
