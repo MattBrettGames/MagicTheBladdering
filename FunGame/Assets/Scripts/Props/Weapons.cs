@@ -45,6 +45,7 @@ public class Weapons : BlankMono
         if (pvpTrue)
         {
             PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
+            print(player.name + " has been hit");
             if (player != null)
             {
                 player.TakeDamage(damageFull);

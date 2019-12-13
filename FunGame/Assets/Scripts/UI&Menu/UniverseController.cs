@@ -97,8 +97,8 @@ public class UniverseController : BlankMono
         currentLevel = level;
         if (level == 0)
         {
-            print(lockedInPlayers);
-            //lockedInPlayers = 0;
+            //print(lockedInPlayers);
+            lockedInPlayers = 0;
         }
         if (level == 2)
         {
@@ -187,6 +187,8 @@ public class UniverseController : BlankMono
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
     {
+        print(lockedInPlayers + " is the current amount of players");
+
         selectedChars[arrayIndex] = gobject;
         characters[arrayIndex] = character.name;
         skins[arrayIndex] = skin;
