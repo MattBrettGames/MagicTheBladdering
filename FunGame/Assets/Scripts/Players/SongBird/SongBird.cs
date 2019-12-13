@@ -38,6 +38,7 @@ public class SongBird : PlayerBase
 
     public override void Update()
     {
+        print(state + " is a Songstate");
         base.Update();
         bTimer -= Time.deltaTime;
     }
