@@ -6,32 +6,24 @@ public class WiosnaEventHandler : BlankMono
 {
 
     public Wiosna wiosna;
-    public Weapons flameJet;
-    MeshRenderer jetMesh;
-    public Weapons shotgun;
-    MeshRenderer shotgunMesh;
+    public Weapons beam;
     public Weapons explosion;
-    MeshRenderer explosionMesh;
+    public Weapons melee;
 
     void Start()
     {
-        jetMesh = flameJet.gameObject.GetComponent<MeshRenderer>();
-        shotgunMesh = shotgun.gameObject.GetComponent<MeshRenderer>();
-        explosionMesh = explosion.gameObject.GetComponent<MeshRenderer>();
-
-        jetMesh.enabled = false;
-        shotgunMesh.enabled = false;
-        explosionMesh.enabled = false;
+        print(melee + " is Wiosna's melee");
+        beam.gameObject.SetActive(false);
+        melee.gameObject.SetActive(false);
+        explosion.gameObject.SetActive(false);
     }
 
-    public void FlameJetBeginAttack() { jetMesh.enabled = true; flameJet.StartAttack(); wiosna.FlameJetOn(); }
-    public void FlameJetEndAttack() { jetMesh.enabled = false; flameJet.EndAttack(); wiosna.FlameJetOff(); }
 
-    public void ShotgunBeginAttack() { shotgunMesh.enabled = true; shotgun.StartAttack(); wiosna.ShotgunOn(); }
-    public void ShotgunEndAttack() { shotgunMesh.enabled = false; shotgun.EndAttack(); wiosna.ShotgunOff(); }
+    public void ExplosionBeginAttack() { wiosna.BeginExplosion(); }
+    public void BeamBeginAttack() { wiosna.BeginBeam(); }
 
-    public void ExplosionBeginAttack() { explosionMesh.enabled = true; explosion.StartAttack(); }
-    public void ExplosionEndAttack() { explosionMesh.enabled = false; explosion.EndAttack(); }
+    public void BeginMelee() { melee.gameObject.SetActive(true); melee.StartAttack(); }
+    public void EndMelee() { melee.EndAttack(); melee.gameObject.SetActive(false); }
 
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
@@ -40,5 +32,4 @@ public class WiosnaEventHandler : BlankMono
     public void LoseIFrmaes() { wiosna.LoseIFrames(); }
 
     public void DoTheDash() { wiosna.DoTheTeleport(); }
-
 }

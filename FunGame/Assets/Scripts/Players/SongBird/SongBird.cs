@@ -18,10 +18,15 @@ public class SongBird : PlayerBase
     [Header("Vial Stats")]
     public int smokeburstDamage;
     public int smokePoisonTicks;
+    [Space]
     public int thrownCloudSize;
     public int dodgeCloudSize;
     public int cannisterCloudSize;
+    [Space]
     public int smokeKnockback;
+    [SerializeField] float bCooldown = 10;
+    float bTimer;
+
     private bool hasCannister;
 
     public override void SetInfo()
@@ -31,13 +36,21 @@ public class SongBird : PlayerBase
         Invoke("GainSmokes", 0.1f);
     }
 
+    public override void Update()
+    {
+        print(state + " is a Songstate");
+        base.Update();
+        bTimer -= Time.deltaTime;
+    }
+
+
     void GainSmokes()
     {
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
 
-        print(pooler.poisonSmoke.Count - (playerID+1) + " is the thing you need");
-        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID+1 ));
+        print(pooler.poisonSmoke.Count - (playerID + 1) + " is the thing you need");
+        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID + 1));
         smokeCloudCannister.tag = tag;
 
         cannister = pooler.cannisters[playerID];
@@ -48,7 +61,7 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp);
+        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0);
     }
 
     public override void YAction() { anim.SetTrigger("YAction"); }
@@ -57,10 +70,14 @@ public class SongBird : PlayerBase
     {
         if (hasCannister)
         {
-            cannister.transform.position = transform.position;
-            cannister.SetActive(true);
-            hasCannister = false;
-            anim.SetTrigger("BAction");
+            if (bTimer < 0)
+            {
+                cannister.transform.position = transform.position;
+                cannister.SetActive(true);
+                hasCannister = false;
+                anim.SetTrigger("BAction");
+                bTimer = bCooldown;
+            }
         }
         else
         {

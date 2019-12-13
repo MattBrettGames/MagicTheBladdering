@@ -62,7 +62,7 @@ MonoBehaviour:
   damageMult: 1
   incomingMult: 1.2
   poisonPerSec: 3
-  secsBetweenTicks: 0
+  secsBetweenTicks: 1
   cursed: 0
   prone: 0
   poison: 0
@@ -77,6 +77,8 @@ MonoBehaviour:
   spinKnockback: 5
   slamAttack: 45
   slamKnockback: 0
+  overheadStun: 0
+  yCooldown: 4
   kickAttack: 20
   kickKnockback: 20
   frenzyDuration: 5
@@ -254,7 +256,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100002, guid: 985141fa56bc1574ea98e8496cd5ea0d, type: 3}
+  - {fileID: 2100000, guid: 61a5f0df1c736c54c8d173ee2d2e631b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

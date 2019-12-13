@@ -12,14 +12,22 @@ public class Carmen : PlayerBase
     [Header("Dagger Stab")]
     public int stabDamage;
     public int stabKnockback;
+    [SerializeField] float yCooldown = 2;
+    float yTimer;
 
     [Header("Dash-Slash")]
     public int slashDamage;
     public int slashKnockback;
     public float slashTravelDuration;
+    [SerializeField] float xCooldown = 1;
+    [SerializeField] Weapons spinSphere;
+    [SerializeField] float spinRadius;
+    float xTimer;
 
     [Header("Dig")]
     public int digDistance;
+    [SerializeField] float bCooldown = 3;
+    float btimer;
 
     [Header("Backstab")]
     public int backstabAngle;
@@ -30,6 +38,15 @@ public class Carmen : PlayerBase
     {
         base.SetInfo();
         StartCoroutine(GainBack());
+        spinSphere.GetComponent<SphereCollider>().radius = spinRadius;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        yTimer -= Time.deltaTime;
+        xTimer -= Time.deltaTime;
+        btimer -= Time.deltaTime;
     }
 
     IEnumerator GainBack()
@@ -40,33 +57,47 @@ public class Carmen : PlayerBase
 
     public override void XAction()
     {
-        anim.SetTrigger("XAttack");
-        leftDagger.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp);
-        rightDagger.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp);
-        state = State.dodging;
-        Invoke("StopKnockback", slashTravelDuration);
+        if (xTimer < 0)
+        {
+            anim.SetTrigger("XAttack");
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
+            state = State.dodging;
+            Invoke("StopKnockback", slashTravelDuration);
+
+            xTimer = xCooldown;
+        }
     }
 
     public override void YAction()
     {
-        float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
+        if (yTimer < 0)
+        {
 
-        if (lookDif <= backstabAngle)
-        {
-            leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp);
-            rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp);
+            float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
+
+            if (lookDif <= backstabAngle)
+            {
+                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0);
+                rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0);
+            }
+            else
+            {
+                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0);
+                rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0);
+            }
+            anim.SetTrigger("YAttack");
+
+            yTimer = yCooldown;
         }
-        else
-        {
-            leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
-            rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp);
-        }
-        anim.SetTrigger("YAttack");
     }
 
     public override void BAction()
     {
-        anim.SetTrigger("BAttack");
+        if (btimer < 0)
+        {
+            btimer = bCooldown;
+            anim.SetTrigger("BAttack");
+        }
     }
     public void DigTravel()
     {

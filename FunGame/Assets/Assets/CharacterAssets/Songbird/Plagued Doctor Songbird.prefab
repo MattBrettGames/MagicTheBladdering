@@ -278,11 +278,12 @@ MonoBehaviour:
   dodgeSpeed: 25
   dodgeDur: 0.5
   dodgeCooldown: 0.9
-  currentHealth: 120
+  currentHealth: 80
   healthMax: 0
   damageMult: 1
   incomingMult: 1
   poisonPerSec: 3
+  secsBetweenTicks: 1
   cursed: 0
   prone: 0
   poison: 0
@@ -298,6 +299,7 @@ MonoBehaviour:
   dodgeCloudSize: 10
   cannisterCloudSize: 10
   smokeKnockback: 1
+  bCooldown: 10
 --- !u!114 &5395824972024106338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,6 +536,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1828943169832249413, guid: 8d20ebd2ed4216246845627d848e775c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d0a05f0d8358bab4483ac13c2323173b, type: 2}
+    - target: {fileID: 1828943169839728569, guid: 8d20ebd2ed4216246845627d848e775c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 2.1245232
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828943169839728569, guid: 8d20ebd2ed4216246845627d848e775c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 86.30256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828943169839728569, guid: 8d20ebd2ed4216246845627d848e775c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 79.250374
+      objectReference: {fileID: 0}
     - target: {fileID: 1828943169839728161, guid: 8d20ebd2ed4216246845627d848e775c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -653,21 +675,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -4.396651
-      objectReference: {fileID: 0}
-    - target: {fileID: 1828943169839728569, guid: 8d20ebd2ed4216246845627d848e775c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 2.1245232
-      objectReference: {fileID: 0}
-    - target: {fileID: 1828943169839728569, guid: 8d20ebd2ed4216246845627d848e775c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 86.30256
-      objectReference: {fileID: 0}
-    - target: {fileID: 1828943169839728569, guid: 8d20ebd2ed4216246845627d848e775c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 79.250374
       objectReference: {fileID: 0}
     - target: {fileID: 1828943169839728513, guid: 8d20ebd2ed4216246845627d848e775c,
         type: 3}
@@ -864,11 +871,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 3.6393883
       objectReference: {fileID: 0}
-    - target: {fileID: 1828943169832249413, guid: 8d20ebd2ed4216246845627d848e775c,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: d0a05f0d8358bab4483ac13c2323173b, type: 2}
     - target: {fileID: 1828943169836521103, guid: 8d20ebd2ed4216246845627d848e775c,
         type: 3}
       propertyPath: m_CastShadows

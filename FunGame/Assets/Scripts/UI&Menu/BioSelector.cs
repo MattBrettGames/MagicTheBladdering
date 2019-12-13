@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Rewired;
 
 public class BioSelector : BlankMono
 {
@@ -11,26 +12,28 @@ public class BioSelector : BlankMono
     public List<GameObject> movesetDisplays = new List<GameObject>();
     private int currentDisplay;
     private bool inputCooldown;
-    private bool inputCooldownButton;
     private bool onMovesets;
-    [SerializeField] string inputButtonCaps = "A";
-    string inputToSwitch;
+
+    Player player;
+    Player player2;
 
     private void Start()
     {
+        player = ReInput.players.GetPlayer(0);
+        player2 = ReInput.players.GetPlayer(1);
+
         displays[currentDisplay].SetActive(true);
         onMovesets = false;
-        inputToSwitch = "All" + inputButtonCaps + "Button";
     }
 
     void LateUpdate()
     {
-        if (Input.GetButtonDown(inputToSwitch))
+        if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
         {
             onMovesets = !onMovesets;
         }
 
-        if (Input.GetAxis("AllVertical") >= 0.4f && !inputCooldown)
+        if ((player.GetAxis("VertMove") >= 0.4f && !inputCooldown) || (player2.GetAxis("VertMove") >= 0.4f && !inputCooldown))
         {
             onMovesets = false;
             displays[currentDisplay].SetActive(false);
@@ -42,7 +45,7 @@ public class BioSelector : BlankMono
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);
         }
-        if (Input.GetAxis("AllVertical") <= -0.4f && !inputCooldown)
+        if ((player.GetAxis("VertMove") <= -0.4f && !inputCooldown)||(player2.GetAxis("VertMove") <= -0.4f && !inputCooldown))
         {
             onMovesets = false;
             displays[currentDisplay].SetActive(false);

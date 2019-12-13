@@ -10,13 +10,15 @@ public class Weapons : BlankMono
     private Collider hitBox;
     private TrailRenderer trails;
     private bool pvpTrue;
+    private float stunDurTrue;
 
-    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp)
+    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur)
     {
         damageFull = damage;
         knockFull = knockback;
         knockDir = forward;
         pvpTrue = pvp;
+        stunDurTrue = stunDur;
     }
     private void Start()
     {

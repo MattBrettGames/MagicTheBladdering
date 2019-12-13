@@ -7,34 +7,45 @@ public class Wiosna : PlayerBase
 {
 
     [Header("More Components")]
-    public Weapons shotgunCone;
-    public Weapons flameJet;
+    public Weapons basicMelee;
     public Weapons explosionSphere;
+    public Weapons finalBeam;
 
-    [Header("Flame Jet")]
-    public int flameJetDamage;
-    public int flameJetKnockback;
-    public int flameJetCost;
 
-    [Header("Shotgun Burst")]
-    public int shotgunDamage;
-    public int shotgunKnockback;
-    public int shotgunCost;
-
-    [Header("Charge")]
-    public int chargePerSecond;
-    float currentCharge;
-    public int maximumCharge;
-    public ParticleSystem chargeDisplay;
-
-    [Header("Explosion")]
-    public int explosionDamage;
-    public int explosionKnockback;
-    public int explosionRadius;
+    [Header("X Attack")]
+    [SerializeField] int xDamage;
+    [SerializeField] int xKnockback;
+    [SerializeField] float xCooldown = 0.8f;
+    float xTimer;
 
     [Header("Vanishing Act")]
-    public float travelDistance;
-    public float vanishingActCooldown;
+    [SerializeField] float vanishDistance;
+    [SerializeField] float actCooldown = 1;
+    float actTimer;
+
+    [Header("Y Action")]
+    [SerializeField] float radiusOfStun;
+    [SerializeField] float stunDur;
+    [SerializeField] ParticleSystem stunParts;
+    [Space]
+    [SerializeField] float radiusOfPull;
+    [SerializeField] int pullImpact;
+    [Space]
+    [SerializeField] float yCooldown = 1.1f;
+    float yTimer;
+
+    [Header("BAttacks")]
+    [SerializeField] float bCooldown = 14;
+    float bTimer;
+    [Space]
+    [SerializeField] int beamDamage;
+    [SerializeField] int beamKnockback;
+    [SerializeField] float beamDur;
+    [Space]
+    [SerializeField] int explosionDamage;
+    [SerializeField] int explosionKnockback;
+    [SerializeField] float explosionDur;
+
 
     public override void Update()
     {
@@ -49,11 +60,20 @@ public class Wiosna : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-        if (!player.GetAnyButton()) { state = State.normal; anim.SetBool("Charging", false);  }
+
+        bTimer -= Time.deltaTime;
+        actTimer -= Time.deltaTime;
+        yTimer -= Time.deltaTime;
+        xTimer -= Time.deltaTime;
 
         switch (state)
         {
+            case State.stun:
+                //anim.SetBool("Stunned", true);
+                break;
+
             case State.attack:
+                state = State.normal;
                 break;
 
             case State.normal:
@@ -64,7 +84,7 @@ public class Wiosna : PlayerBase
                 if (!prone && !acting)
                 {
                     //Rotating the Character Model
-                    visuals.transform.LookAt(aimTarget.position);
+                    visuals.transform.LookAt(aimTarget);
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
@@ -75,6 +95,10 @@ public class Wiosna : PlayerBase
 
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
+                }
+                else
+                {
+                    dir = Vector3.zero;
                 }
                 break;
 
@@ -90,9 +114,9 @@ public class Wiosna : PlayerBase
                     rb2d.velocity = dir * speed;
 
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("BAttack")) { BActionLock(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack")) { YAction(); }
+                    if (player.GetButtonDown("YAttack")) { YActionLock(); }
 
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
@@ -103,97 +127,95 @@ public class Wiosna : PlayerBase
 
                 aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
                 visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+
                 break;
 
             case State.dodging:
-                if (dodgeTimer < 0) DodgeSliding(dir);
+
+                if (dodgeTimer < 0)
+                {
+                    DodgeSliding(dir);
+                }
                 break;
 
             case State.knockback:
-                anim.SetBool("Charging", false);
                 KnockbackContinual();
                 break;
-
-            case State.unique:
-                currentCharge += chargePerSecond * Time.deltaTime;
-                if (player.GetButtonUp("BAttack")) { print(currentCharge + " is Wiosna's currentCharge"); state = State.normal; anim.SetBool("Charging", false); }
-                if (currentCharge >= maximumCharge)
-                {
-                    Explosion();
-                }
-                var newEmission = chargeDisplay.emission;
-                newEmission.rateOverTime = new ParticleSystem.MinMaxCurve(currentCharge * 100);
-
-                break;
-
         }
+
     }
 
-    private void Explosion()
+    #region X Attacks
+    public override void XAction()
     {
-        anim.SetTrigger("Explosion");
-        currentCharge = 1;
-        explosionSphere.gameObject.SetActive(true);
-        Knockback(explosionKnockback, new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)));
-        TakeDamage(explosionDamage);
-        explosionSphere.GainInfo(explosionDamage, explosionKnockback, visuals.transform.forward, pvp);
-
-        if (Vector3.Distance(lookAtTarget.transform.position, transform.position) <= explosionRadius)
+        if (xTimer < 0)
         {
-            PlayerBase target =  aimTarget.GetComponentInParent<PlayerBase>();
-            target.TakeDamage(explosionDamage);
-            target.Knockback(explosionKnockback, lookAtTarget.transform.position - transform.position);
+            anim.SetTrigger("XAttack");
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0);
+            xTimer = xCooldown;
         }
-
-        Invoke("EndExplsion", 0.3f);
     }
-    void EndExplsion()
-    {
-        explosionSphere.gameObject.SetActive(false);
-    }
+    #endregion
 
-    public override void BAction()
-    {
-        anim.SetBool("Charging", true);
-        state = State.unique;
-    }
-
+    #region A Actions
     public override void AAction()
     {
         anim.SetTrigger("AAction");
     }
     public void DoTheTeleport()
     {
-        transform.position += dir * travelDistance;
+        transform.position += dir * vanishDistance;
     }
+    #endregion
 
-    public override void XAction()
+    #region Y Attacks
+    private void YActionLock()
     {
-        anim.SetTrigger("XAttack");
-        flameJet.GainInfo(Mathf.RoundToInt(flameJetDamage + currentCharge), flameJetKnockback, visuals.transform.forward, pvp);
-        currentCharge -= flameJetCost;
-        if (currentCharge < 0) currentCharge = 0;
+        anim.SetTrigger("YAttack");
+        if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfStun && yTimer < 0)
+        {
+            stunParts.Emit(30);
+            lookAtTarget.GetComponentInParent<PlayerBase>().BecomeStunned(stunDur);
+            yTimer = yCooldown;
+        }
     }
-    public void FlameJetOn() { flameJet.gameObject.SetActive(true); flameJet.GetComponentInChildren<ParticleSystem>().Play(); }
-    public void FlameJetOff() { flameJet.gameObject.SetActive(false); }
-
     public override void YAction()
     {
         anim.SetTrigger("YAttack");
-        shotgunCone.GainInfo(shotgunDamage, Mathf.RoundToInt(shotgunKnockback + currentCharge), visuals.transform.forward, pvp);
-        currentCharge -= shotgunCost;
-        if (currentCharge < 0) currentCharge = 0;
+        if (Vector3.Distance(lookAtTarget.position, gameObject.transform.position) <= radiusOfPull && yTimer < 0)
+        {
+            stunParts.startColor = Color.red;
+            stunParts.Emit(10);
+            lookAtTarget.GetComponentInParent<PlayerBase>().Knockback(pullImpact, transform.position - (lookAtTarget.position) - lookAtVariant);
+            yTimer = yCooldown;
+        }
     }
+    #endregion
 
-    public void ShotgunOn() { shotgunCone.gameObject.SetActive(true); }
-    public void ShotgunOff() { shotgunCone.gameObject.SetActive(false); }
-
-
-    public override void Respawn()
+    #region B Attacks
+    public override void BAction()
     {
-        base.Respawn();
-        currentCharge = 1;
+        if (bTimer < 0)
+        {
+            bTimer = bCooldown;
+            anim.SetTrigger("BAttack");
+            Vector3 hitDir = new Vector3(lookAtTarget.position.x - transform.position.x, 0, lookAtTarget.position.z - transform.position.z);
+            explosionSphere.GainInfo(explosionDamage, explosionKnockback, hitDir, pvp, 0);
+        }
     }
-    public override void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }
+    public void BeginExplosion() { print("I did an explosion"); explosionSphere.gameObject.SetActive(true); Invoke("EndExplosion", explosionDur); explosionSphere.StartAttack(); }
+    private void EndExplosion() { explosionSphere.gameObject.SetActive(false); explosionSphere.EndAttack(); }
 
+    public void BActionLock()
+    {
+        if (bTimer < 0)
+        {
+            bTimer = bCooldown;
+            anim.SetTrigger("BAttack");
+            finalBeam.GainInfo(beamDamage, beamKnockback, visuals.transform.forward, pvp, 0);
+        }
+    }
+    public void BeginBeam() { finalBeam.gameObject.SetActive(true); print("beam doed"); Invoke("EndBeam", beamDur); finalBeam.StartAttack(); }
+    public void EndBeam() { finalBeam.gameObject.SetActive(false); finalBeam.EndAttack(); }
+    #endregion
 }

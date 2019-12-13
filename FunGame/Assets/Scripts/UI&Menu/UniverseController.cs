@@ -10,8 +10,7 @@ public class UniverseController : BlankMono
 {
     [Header("Level Counts")]
     public int levelCount;
-    public int PVPLevelCount;
-    public int PVELevelCount;
+    public int firstArenaID;
 
     [Header("GameObjects")]
     public CharacterSelector charSelector1;
@@ -22,6 +21,7 @@ public class UniverseController : BlankMono
     public Player player;
     public AreaGen generator;
     public ScoreTracker tracker;
+    DualObjectiveCamera camCode;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -93,7 +93,10 @@ public class UniverseController : BlankMono
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
-
+        if(level == 0)
+        {
+            lockedInPlayers = 0;
+        }
         if (level == 2)
         {
             gameMode = "PvP";
@@ -114,7 +117,7 @@ public class UniverseController : BlankMono
             Text p2Text = GameObject.Find("ScoreInt2").GetComponent<Text>();
             p2Text.text = finalScore[1].ToString();
         }
-        else if (level > levelCount - PVPLevelCount - PVELevelCount)
+        else if (level >= firstArenaID)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
             Quaternion targetLook = new Quaternion(0, 0, 0, 0);
@@ -123,6 +126,7 @@ public class UniverseController : BlankMono
 
             #region Player 1
             GameObject p1 = selectedChars[0];
+            p1.SetActive(true);
             PlayerBase playerCode = p1.GetComponent<PlayerBase>();
             playerCode.enabled = true;
             playerCode.thisPlayer = "P1";
@@ -144,6 +148,7 @@ public class UniverseController : BlankMono
 
             #region Player 2
             GameObject p2 = selectedChars[1];
+            p2.SetActive(true);
             playerCode = p2.GetComponent<PlayerBase>();
             playerCode.enabled = true;
             playerCode.thisPlayer = "P2";
@@ -166,11 +171,7 @@ public class UniverseController : BlankMono
             {
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
             }
-        }
-        if (level > levelCount - PVELevelCount)
-        {
-            generator.CreateZone(level - levelCount);
-        }
+        }        
     }
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
@@ -184,6 +185,8 @@ public class UniverseController : BlankMono
 
         if (lockedInPlayers == numOfPlayers)
         {
+            selectedChars[0].SetActive(false);
+            selectedChars[1].SetActive(false);
             SceneManager.LoadScene("ArenaSelectorPvP");
             lockedInPlayers = 0;
         }
@@ -220,6 +223,8 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player)
     {
+        camCode.Death();
+
         if (gameMode == "PvP")
         {
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
@@ -263,6 +268,7 @@ public class UniverseController : BlankMono
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(respawnTimer);
+        camCode.RespawnedAPlayer();
         player.Respawn();
         player.gameObject.transform.position = new Vector3(15, 0, 0);
     }
@@ -286,4 +292,7 @@ public class UniverseController : BlankMono
         playersAlive[0].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[0];
         playersAlive[1].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[1];
     }
+
+    public void GetCam(DualObjectiveCamera newCam) { camCode = newCam; }
+
 }
