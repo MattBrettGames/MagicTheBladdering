@@ -92,11 +92,13 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
+
+        print("The level is " + level);
         currentLevel = level;
         if (level == 0)
         {
             print(lockedInPlayers);
-            lockedInPlayers = 0;
+            //lockedInPlayers = 0;
         }
         if (level == 2)
         {
@@ -190,7 +192,7 @@ public class UniverseController : BlankMono
             selectedChars[0].SetActive(false);
             selectedChars[1].SetActive(false);
             SceneManager.LoadScene("ArenaSelectorPvP");
-            lockedInPlayers = 0;
+            //lockedInPlayers = 0;
         }
     }
 

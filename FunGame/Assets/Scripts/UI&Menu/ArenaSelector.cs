@@ -41,6 +41,10 @@ public class ArenaSelector : BlankMono
         player = ReInput.players.GetPlayer(0);
         player2 = ReInput.players.GetPlayer(1);
 
+        inputCooldown = true;
+        Invoke("EndCooldown", 0.2f);
+
+
     }
 
     void FixedUpdate()
