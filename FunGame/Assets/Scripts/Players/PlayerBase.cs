@@ -221,6 +221,7 @@ public abstract class PlayerBase : BlankMono
     {
         anim.SetTrigger("Death");
         GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject);
+        anim.SetFloat("Movement", 0);
         GainIFrames();
         state = State.attack;
     }
