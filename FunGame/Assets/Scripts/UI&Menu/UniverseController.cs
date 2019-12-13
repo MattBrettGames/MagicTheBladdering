@@ -109,6 +109,7 @@ public class UniverseController : BlankMono
         {
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
+            GameObject.Find(winner).SetActive(true);
         }
         else if (level == 3)
         {
