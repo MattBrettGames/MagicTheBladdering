@@ -21,6 +21,7 @@ public class UniverseController : BlankMono
     public Player player;
     public AreaGen generator;
     public ScoreTracker tracker;
+    DualObjectiveCamera camCode;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -219,6 +220,8 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player)
     {
+        camCode.Death();
+
         if (gameMode == "PvP")
         {
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
@@ -262,6 +265,7 @@ public class UniverseController : BlankMono
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(respawnTimer);
+        camCode.RespawnedAPlayer();
         player.Respawn();
         player.gameObject.transform.position = new Vector3(15, 0, 0);
     }
@@ -285,4 +289,7 @@ public class UniverseController : BlankMono
         playersAlive[0].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[0];
         playersAlive[1].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[1];
     }
+
+    public void GetCam(DualObjectiveCamera newCam) { camCode = newCam; }
+
 }
