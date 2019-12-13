@@ -36,7 +36,6 @@ public class PauseMenu : MonoBehaviour
 
         for (int i = 0; i < options.Length; i++) { texts.Add(options[i].GetComponent<Text>()); }
         options[currentDisplay].transform.localScale += sizeChange;
-        texts[currentDisplay].color = activeColour;
     }
 
     void Update()
