@@ -132,18 +132,12 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (player.GetButtonDown("AAction")|| Input.GetKeyDown(KeyCode.H))
+            if (player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
             {
+                print("Yup, input got");
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
-                    backStore.transform.position += camOffsetLocked;
-                    //store.transform.position += camOffsetLocked;
-                    cam.fieldOfView = camFOVLocked;
-
-                    displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
-                    universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
-
-                    locked = true;
+                    LockInCharacter();
                 }
             }
         }
@@ -161,6 +155,26 @@ public class CharacterSelector : BlankMono
             }
         }
     }
+
+    private void LockInCharacter()
+    {
+        backStore.transform.position += camOffsetLocked;
+        //store.transform.position += camOffsetLocked;
+        cam.fieldOfView = camFOVLocked;
+
+        displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+        StartCoroutine(StartLoad());
+
+        locked = true;
+    }
+
+    IEnumerator StartLoad()
+    {
+        yield return new WaitForSeconds(2);
+        universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
+    }
+
 
     private void Unlock()
     {
