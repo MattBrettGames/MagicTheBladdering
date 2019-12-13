@@ -134,7 +134,6 @@ public class CharacterSelector : BlankMono
 
             if (player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
             {
-                print("Yup, input got");
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
                     LockInCharacter();

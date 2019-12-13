@@ -54,12 +54,12 @@ public class PauseMenu : MonoBehaviour
             if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
             {
                 texts[currentDisplay].color = Color.white;
-                options[currentDisplay].transform.localScale -= sizeChange;
+                options[currentDisplay].transform.localScale = Vector3.one - sizeChange;
 
                 if (currentDisplay < options.Length - 1) currentDisplay++;
                 else currentDisplay = 0;
 
-                options[currentDisplay].transform.localScale += sizeChange;
+                options[currentDisplay].transform.localScale = Vector3.one + sizeChange;
                 texts[currentDisplay].color = activeColour;
 
                 StartCoroutine(EndCooldown());
@@ -68,12 +68,12 @@ public class PauseMenu : MonoBehaviour
             if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
             {
                 texts[currentDisplay].color = Color.white;
-                options[currentDisplay].transform.localScale -= sizeChange;
+                options[currentDisplay].transform.localScale = Vector3.one - sizeChange;
 
                 if (currentDisplay != 0) currentDisplay--;
                 else currentDisplay = options.Length - 1;
 
-                options[currentDisplay].transform.localScale += sizeChange;
+                options[currentDisplay].transform.localScale = Vector3.one + sizeChange;
                 texts[currentDisplay].color = activeColour;
 
                 StartCoroutine(EndCooldown());
@@ -82,8 +82,9 @@ public class PauseMenu : MonoBehaviour
             if (players.GetButtonDown("AAction"))
             {
                 texts[currentDisplay].color = selectedColour;
-                options[currentDisplay].transform.localScale -= sizeChange * 2;
+                options[currentDisplay].transform.localScale = Vector3.one - (sizeChange * 2);
                 Invoke(optionStrings[currentDisplay], 0);
+                currentDisplay = 0;
             }
         }
     }
@@ -96,7 +97,6 @@ public class PauseMenu : MonoBehaviour
 
     void Resume()
     {
-        print("Resumed");
         visuals.SetActive(false);
         Time.timeScale = 1;
         playerCode1.EndActing();
@@ -105,7 +105,6 @@ public class PauseMenu : MonoBehaviour
 
     void Fix()
     {
-        print("Fixed");
         Resume();
         playerCode1.gameObject.transform.position = new Vector3(-15, 0, 0);
         playerCode2.gameObject.transform.position = new Vector3(15, 0, 0);

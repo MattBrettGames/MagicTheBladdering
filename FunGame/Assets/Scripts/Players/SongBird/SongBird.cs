@@ -38,7 +38,6 @@ public class SongBird : PlayerBase
 
     public override void Update()
     {
-        print(state + " is a Songstate");
         base.Update();
         bTimer -= Time.deltaTime;
     }
@@ -48,8 +47,6 @@ public class SongBird : PlayerBase
     {
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
-
-        print(pooler.poisonSmoke.Count - (playerID + 1) + " is the thing you need");
         smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID + 1));
         smokeCloudCannister.tag = tag;
 

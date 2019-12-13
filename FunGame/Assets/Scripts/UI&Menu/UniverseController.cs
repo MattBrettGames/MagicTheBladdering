@@ -92,13 +92,10 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
-
-        print("The level is " + level);
         currentLevel = level;
         if (level == 0)
         {
-            print(lockedInPlayers);
-            //lockedInPlayers = 0;
+            lockedInPlayers = 0;
         }
         if (level == 2)
         {
@@ -112,7 +109,13 @@ public class UniverseController : BlankMono
         {
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
-            GameObject.Find(winner).SetActive(true);
+
+            GameObject[] gams = GameObject.FindGameObjectsWithTag("Boss");
+
+            for (int i = 0; i < gams.Length; i++)
+            {
+                if (gams[i].name != winner) { gams[i].SetActive(false); }
+            }
         }
         else if (level == 3)
         {
@@ -175,7 +178,7 @@ public class UniverseController : BlankMono
             {
                 GameObject.Find("HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i]);
             }
-        }        
+        }
     }
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
@@ -192,14 +195,13 @@ public class UniverseController : BlankMono
             selectedChars[0].SetActive(false);
             selectedChars[1].SetActive(false);
             SceneManager.LoadScene("ArenaSelectorPvP");
-            //lockedInPlayers = 0;
         }
     }
 
     public void Unlock(int player)
     {
         lockedInPlayers--;
-        if(SceneManager.GetActiveScene().name  == "ArenaSelector")
+        if (SceneManager.GetActiveScene().name == "ArenaSelector")
         {
             selectedChars[0].transform.SetParent(Camera.main.transform);
             selectedChars[0] = null;
@@ -208,7 +210,7 @@ public class UniverseController : BlankMono
         }
         else
         {
-        selectedChars[player].transform.SetParent(GameObject.Find("Player" + (player + 1) + "GameObjectStore").transform);
+            selectedChars[player].transform.SetParent(GameObject.Find("Player" + (player + 1) + "GameObjectStore").transform);
         }
     }
 
