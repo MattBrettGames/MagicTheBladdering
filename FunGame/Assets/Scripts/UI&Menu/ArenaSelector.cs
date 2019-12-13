@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Rewired;
 
 public class ArenaSelector : BlankMono
 {
+    [SerializeField] GameObject loadingScreen;
+
     private bool inputCooldown;
     [SerializeField] float speed;
     public List<GameObject> displays;
@@ -19,8 +22,12 @@ public class ArenaSelector : BlankMono
     List<Outline> displayOutlines = new List<Outline>();
     private UniverseController universe;
 
+    Player player;
+    Player player2;
+
     void Start()
     {
+        loadingScreen.SetActive(false);
         cam = Camera.main.gameObject;
         for (int i = 0; i < displays.Count; i++)
         {
@@ -31,14 +38,17 @@ public class ArenaSelector : BlankMono
         arenaName.text = displays[currentDisplay].name;
 
         universe = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
+        player = ReInput.players.GetPlayer(0);
+        player2 = ReInput.players.GetPlayer(1);
+
     }
 
     void FixedUpdate()
     {
-        cam.transform.LookAt(Vector3.Slerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay],Time.deltaTime * speed));
-        cam.transform.position = Vector3.Slerp(cam.transform.position, camPos[currentDisplay], Time.deltaTime * speed) ;
+        cam.transform.LookAt(Vector3.Slerp(Camera.main.transform.forward, displays[currentDisplay].transform.position + camAnglesOffset[currentDisplay], Time.deltaTime * speed));
+        cam.transform.position = Vector3.Slerp(cam.transform.position, camPos[currentDisplay], Time.deltaTime * speed);
 
-        if (Input.GetAxis("AllHorizontal") >= 0.4f && !inputCooldown)
+        if ((player.GetAxis("HoriMove") >= 0.4f && !inputCooldown) || (player2.GetAxis("HoriMove") >= 0.4f && !inputCooldown))
         {
             if (currentDisplay < displays.Count - 1)
             {
@@ -57,7 +67,7 @@ public class ArenaSelector : BlankMono
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);
         }
-        if (Input.GetAxis("AllHorizontal") <= -0.4f && !inputCooldown)
+        if ((player.GetAxis("HoriMove") <= -0.4f && !inputCooldown) || (player2.GetAxis("HoriMove") <= -0.4f && !inputCooldown))
         {
             if (currentDisplay != 0)
             {
@@ -77,21 +87,15 @@ public class ArenaSelector : BlankMono
             Invoke("EndCooldown", 0.3f);
         }
 
-        if (Input.GetButtonDown("AllAButton"))
+        if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
         {
+            loadingScreen.SetActive(true);
             universe.ChooseArena(displays[currentDisplay].name);
         }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            universe.ChooseArena(displays[currentDisplay].name);
-        }
-
     }
 
     void EndCooldown()
     {
         inputCooldown = false;
     }
-
 }

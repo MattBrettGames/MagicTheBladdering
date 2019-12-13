@@ -93,7 +93,10 @@ public class UniverseController : BlankMono
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
-
+        if(level == 0)
+        {
+            lockedInPlayers = 0;
+        }
         if (level == 2)
         {
             gameMode = "PvP";
