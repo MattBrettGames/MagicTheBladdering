@@ -95,6 +95,7 @@ public class UniverseController : BlankMono
         currentLevel = level;
         if (level == 0)
         {
+            print(lockedInPlayers);
             lockedInPlayers = 0;
         }
         if (level == 2)
@@ -109,6 +110,7 @@ public class UniverseController : BlankMono
         {
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
+            GameObject.Find(winner).SetActive(true);
         }
         else if (level == 3)
         {
