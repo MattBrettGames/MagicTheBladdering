@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
 
         if (visuals.activeSelf)
         {
-            if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
+            if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
             {
                 texts[currentDisplay].color = Color.white;
                 options[currentDisplay].transform.localScale -= sizeChange;
@@ -64,7 +64,7 @@ public class PauseMenu : MonoBehaviour
                 StartCoroutine(EndCooldown());
                 inputOnCooldown = true;
             }
-            if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
+            if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
             {
                 texts[currentDisplay].color = Color.white;
                 options[currentDisplay].transform.localScale -= sizeChange;
