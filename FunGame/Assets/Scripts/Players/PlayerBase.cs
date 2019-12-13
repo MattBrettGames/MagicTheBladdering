@@ -204,7 +204,6 @@ public abstract class PlayerBase : BlankMono
 
     public void BecomeStunned(float duration)
     {
-        print(gameObject.name + " has just become Stunned");
         state = State.stun;
         Invoke("EndStun", duration);
         anim.SetBool("Stunned", false);
@@ -272,12 +271,12 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; print("PoisonTick"); } }
+    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec;  } }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) { print("Dodging"); transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
+    public virtual void DodgeSliding(Vector3 dir) {  transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
     #endregion
 

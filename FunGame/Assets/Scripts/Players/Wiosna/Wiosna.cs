@@ -203,7 +203,7 @@ public class Wiosna : PlayerBase
             explosionSphere.GainInfo(explosionDamage, explosionKnockback, hitDir, pvp, 0);
         }
     }
-    public void BeginExplosion() { print("I did an explosion"); explosionSphere.gameObject.SetActive(true); Invoke("EndExplosion", explosionDur); explosionSphere.StartAttack(); }
+    public void BeginExplosion() {  explosionSphere.gameObject.SetActive(true); Invoke("EndExplosion", explosionDur); explosionSphere.StartAttack(); }
     private void EndExplosion() { explosionSphere.gameObject.SetActive(false); explosionSphere.EndAttack(); }
 
     public void BActionLock()
@@ -215,7 +215,7 @@ public class Wiosna : PlayerBase
             finalBeam.GainInfo(beamDamage, beamKnockback, visuals.transform.forward, pvp, 0);
         }
     }
-    public void BeginBeam() { finalBeam.gameObject.SetActive(true); print("beam doed"); Invoke("EndBeam", beamDur); finalBeam.StartAttack(); }
+    public void BeginBeam() { finalBeam.gameObject.SetActive(true);  Invoke("EndBeam", beamDur); finalBeam.StartAttack(); }
     public void EndBeam() { finalBeam.gameObject.SetActive(false); finalBeam.EndAttack(); }
     #endregion
 }

@@ -12,7 +12,6 @@ public class WiosnaEventHandler : BlankMono
 
     void Start()
     {
-        print(melee + " is Wiosna's melee");
         beam.gameObject.SetActive(false);
         melee.gameObject.SetActive(false);
         explosion.gameObject.SetActive(false);
