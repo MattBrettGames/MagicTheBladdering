@@ -8,8 +8,6 @@ public class Wiosna : PlayerBase
 
     [Header("More Components")]
     public Weapons basicMelee;
-    public Weapons explosionSphere;
-    public Weapons finalBeam;
     private ObjectPooler objectPooler;
 
     [Header("X Attack")]
@@ -51,6 +49,13 @@ public class Wiosna : PlayerBase
         flamingClone = objectPooler.cloneList[playerID];
     }
 
+    public override void Update()
+    {
+        base.Update();
+
+        bTimer -= Time.deltaTime;
+        actTimer -= Time.deltaTime;
+    }
 
     #region X Attacks
     public override void XAction()
@@ -89,8 +94,11 @@ public class Wiosna : PlayerBase
     #region B Attacks
     public override void BAction()
     {
+        print(bTimer);
+
         if (bTimer <= 0)
         {
+            print(flamingClone.name);
             flamingClone.transform.position = transform.position + dir;
             flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
             flamingClone.SetActive(true);

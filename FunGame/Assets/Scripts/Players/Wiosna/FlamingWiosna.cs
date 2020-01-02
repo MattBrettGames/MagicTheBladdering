@@ -27,8 +27,9 @@ public class FlamingWiosna : MonoBehaviour
     {
         PlayerBase player = other.GetComponent<PlayerBase>();
 
-        if (player != null && player.playerID != thisID)
+        if (player != null && player.thisPlayer != thisID)
         {
+            print(player.thisPlayer);
             player.TakeDamage(damage);
             particles.Play();
             Invoke("Disappear", 0.4f);
