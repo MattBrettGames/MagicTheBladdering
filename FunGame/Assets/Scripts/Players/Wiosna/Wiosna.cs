@@ -42,13 +42,14 @@ public class Wiosna : PlayerBase
     public override void SetInfo()
     {
         base.SetInfo();
-
-        objectPooler = GameObject.Find("ObjectPooler").GetComponent<ObjectPooler>();
-
-        flamingClone = objectPooler.cloneList[playerID];
-
+        Invoke("GainClone", 0.1f);
     }
 
+    void GainClone()
+    {
+        objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
+        flamingClone = objectPooler.cloneList[playerID];
+    }
 
 
     #region X Attacks
@@ -88,9 +89,13 @@ public class Wiosna : PlayerBase
     #region B Attacks
     public override void BAction()
     {
-        flamingClone.transform.position = transform.position + dir;
-        flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget);
-        flamingClone.SetActive(true);
+        if (bTimer <= 0)
+        {
+            flamingClone.transform.position = transform.position + dir;
+            flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
+            flamingClone.SetActive(true);
+            bTimer = bCooldown;
+        }
     }
     #endregion
 }

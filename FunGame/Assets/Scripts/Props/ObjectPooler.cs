@@ -52,6 +52,7 @@ public class ObjectPooler : BlankMono
             #region Wiosna Props
             cloneList.Add(Instantiate(flamingClone, Vector3.zero, Quaternion.identity));
             cloneList[i].SetActive(false);
+            cloneList[i].name = "FlamingClone" + i;
             #endregion
         }
 
