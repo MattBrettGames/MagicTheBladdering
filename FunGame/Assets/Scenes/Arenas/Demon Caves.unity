@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
-  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 0.80844074, b: 0.8066038, a: 1}
+  m_AmbientEquatorColor: {r: 0.6226415, g: 0, b: 0, a: 1}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -319,6 +319,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27060145}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &83898020
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4052375144509025807, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_Name
+      value: Belts and Pelts Valderheim
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.286173
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -24.38932
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 21.232819
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542131343670543887, guid: bca2366dfb488a04e9ac94a955a12ffb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bca2366dfb488a04e9ac94a955a12ffb, type: 3}
 --- !u!1001 &126192484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,7 +633,7 @@ Transform:
   - {fileID: 2132235219}
   - {fileID: 1453974493}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &354138405
 PrefabInstance:
@@ -1585,7 +1654,7 @@ Transform:
   - {fileID: 27060146}
   - {fileID: 1589630004}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &995498696
 PrefabInstance:
@@ -2359,6 +2428,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5.6321
       objectReference: {fileID: 0}
+    - target: {fileID: 5697686786053697640, guid: fa3e8e20e67667f4eb14c539248820c4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07cf8bac6eace1448819e730e9162a4b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa3e8e20e67667f4eb14c539248820c4, type: 3}
 --- !u!1 &1453974491 stripped
