@@ -6,14 +6,13 @@ public class ObjectPooler : BlankMono
 {
     #region Songbird
     [Header("Songbird Inputs")]
-    public GameObject poisonSmokeModel;
+    public GameObject poisonSmoke;
     public GameObject cannister;
 
-    //    [HideInInspector] 
-    public List<GameObject> poisonSmoke = new List<GameObject>();
+    [HideInInspector] public List<GameObject> poisonSmokeList = new List<GameObject>();
     [HideInInspector] public List<GameObject> cannisters = new List<GameObject>();
 
-    public void ReturnToPoisonSmokePool(GameObject gameobject) { poisonSmoke.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
+    public void ReturnToPoisonSmokePool(GameObject gameobject) { poisonSmokeList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
 
     #endregion
 
@@ -40,8 +39,8 @@ public class ObjectPooler : BlankMono
         for (int i = 0; i < 5; i++)
         {
             #region Songbird Props
-            poisonSmoke.Add(Instantiate<GameObject>(poisonSmokeModel, transform.position, Quaternion.identity, transform));
-            poisonSmoke[i].SetActive(false);
+            poisonSmokeList.Add(Instantiate<GameObject>(poisonSmoke, transform.position, Quaternion.identity, transform));
+            poisonSmokeList[i].SetActive(false);
 
             cannisters.Add(Instantiate<GameObject>(cannister, transform.position, Quaternion.identity, transform));
             cannisters[i].SetActive(false);
@@ -67,6 +66,6 @@ public class ObjectPooler : BlankMono
 
     public GameObject ReturnSmokeCloud(int listIndex)
     {
-        return poisonSmoke[listIndex];
+        return poisonSmokeList[listIndex];
     }
 }
