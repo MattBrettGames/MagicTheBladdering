@@ -7,17 +7,24 @@ public class FlamingWiosna : MonoBehaviour
     private Transform target;
     private string thisID;
     [SerializeField] float speed;
+    [SerializeField] float lookSpeed;
     [SerializeField] int damage;
     [SerializeField] ParticleSystem particles;
     [SerializeField] float lifeSpan;
     float remainingTime;
+    GameObject looker;
 
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, target.transform.position, speed);
-        transform.LookAt(target);
+        looker.transform.LookAt(target);
+        looker.transform.position = transform.position;
+
+        transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed);
+
+        transform.position += transform.forward * speed;
+
         remainingTime -= Time.deltaTime;
-        if (remainingTime <= lifeSpan)
+        if (remainingTime <= 0)
         {
             gameObject.SetActive(false);
         }
@@ -43,5 +50,12 @@ public class FlamingWiosna : MonoBehaviour
         particles.Clear();
     }
 
-    public void SetInfo(Transform targetTemp, string id) { target = targetTemp; thisID = id; }
+    public void AwakenClone() { remainingTime = lifeSpan; }
+
+    public void SetInfo(Transform targetTemp, string id)
+    {
+        target = targetTemp;
+        thisID = id;
+        looker = new GameObject("FlamingCloneLooker");
+    }
 }

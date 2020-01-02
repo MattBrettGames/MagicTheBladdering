@@ -47,6 +47,7 @@ public class Wiosna : PlayerBase
     {
         objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         flamingClone = objectPooler.cloneList[playerID];
+        flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
     }
 
     public override void Update()
@@ -100,7 +101,7 @@ public class Wiosna : PlayerBase
         {
             print(flamingClone.name);
             flamingClone.transform.position = transform.position + dir;
-            flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
+            flamingClone.GetComponent<FlamingWiosna>().AwakenClone();
             flamingClone.SetActive(true);
             bTimer = bCooldown;
         }
