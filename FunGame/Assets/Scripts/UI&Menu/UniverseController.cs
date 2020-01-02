@@ -115,13 +115,6 @@ public class UniverseController : BlankMono
                 if (gams[i].name != winner) { gams[i].SetActive(false); }
             }
         }
-        else if (level == 3)
-        {
-            Text p1Text = GameObject.Find("ScoreInt1").GetComponent<Text>();
-            p1Text.text = finalScore[0].ToString();
-            Text p2Text = GameObject.Find("ScoreInt2").GetComponent<Text>();
-            p2Text.text = finalScore[1].ToString();
-        }
         else if (level >= firstArenaID)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);

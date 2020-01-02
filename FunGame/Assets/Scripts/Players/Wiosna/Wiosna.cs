@@ -56,12 +56,14 @@ public class Wiosna : PlayerBase
 
         bTimer -= Time.deltaTime;
         actTimer -= Time.deltaTime;
+        xTimer -= Time.deltaTime;
+        yTimer -= Time.deltaTime;
     }
 
     #region X Attacks
     public override void XAction()
     {
-        if (xTimer < 0)
+        if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0);
@@ -88,7 +90,12 @@ public class Wiosna : PlayerBase
     #region Y Attacks
     public override void YAction()
     {
-
+        if (yTimer <= 0)
+        {
+            print(gameObject.name + " has done the Y Attack");
+            anim.SetTrigger("YAttack");
+            yTimer = yCooldown;
+        }
     }
     #endregion
 
