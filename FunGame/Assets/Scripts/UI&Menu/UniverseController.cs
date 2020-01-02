@@ -108,12 +108,7 @@ public class UniverseController : BlankMono
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
 
-            GameObject[] gams = GameObject.FindGameObjectsWithTag("Boss");
-
-            for (int i = 0; i < gams.Length; i++)
-            {
-                if (gams[i].name != winner) { gams[i].SetActive(false); }
-            }
+            StartCoroutine(DelayedVictory());
         }
         else if (level >= firstArenaID)
         {
@@ -242,13 +237,12 @@ public class UniverseController : BlankMono
                 else
                 {
                     player = GameObject.FindGameObjectWithTag("Player2");
-
                 }
 
                 winner = player.name;
                 SceneManager.LoadScene("GameOver");
             }
-        }       
+        }
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
@@ -269,5 +263,18 @@ public class UniverseController : BlankMono
     }
 
     public void GetCam(DualObjectiveCamera newCam) { camCode = newCam; }
+
+
+    IEnumerator DelayedVictory()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject[] gams = GameObject.FindGameObjectsWithTag("Boss");
+        for (int i = 0; i < gams.Length; i++)
+        {
+            print(winner + "|" + gams[i].name);
+            if (gams[i].name == winner) { gams[i].SetActive(true); }
+        }
+    }
 
 }
