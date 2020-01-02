@@ -19,8 +19,6 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector4;
     public AnalyticsController analytics;
     public Player player;
-    public AreaGen generator;
-    public ScoreTracker tracker;
     DualObjectiveCamera camCode;
 
     [Header("Character Info")]
@@ -257,18 +255,7 @@ public class UniverseController : BlankMono
                 winner = player.name;
                 SceneManager.LoadScene("GameOver");
             }
-        }
-        else
-        {
-            playersAlive.Remove(player);
-            if (playersAlive.Count >= 0)
-            {
-                finalScore[0] = tracker.ReturnScores()[0];
-                finalScore[1] = tracker.ReturnScores()[1];
-
-                SceneManager.LoadScene("PvEGameOver");
-            }
-        }
+        }       
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
@@ -286,17 +273,6 @@ public class UniverseController : BlankMono
         selectedChars[1] = null;
         if (transform.childCount > 3) transform.GetChild(3).SetParent(Camera.main.transform);
         SceneManager.LoadScene("MainMenu");
-    }
-
-    public void BossDeath()
-    {
-        generator.rowsToSpawn += 1;
-        generator.columnsToSpawn += 1;
-        generator.DestroyZones();
-        generator.CreateZone(currentLevel);
-        tracker.EnemyDeath("both", 0);
-        playersAlive[0].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[0];
-        playersAlive[1].transform.position = allSpawnPositions[currentLevel - levelCount - 1].spawnPos[1];
     }
 
     public void GetCam(DualObjectiveCamera newCam) { camCode = newCam; }

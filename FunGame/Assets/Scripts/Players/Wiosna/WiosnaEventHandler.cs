@@ -6,20 +6,13 @@ public class WiosnaEventHandler : BlankMono
 {
 
     public Wiosna wiosna;
-    public Weapons beam;
-    public Weapons explosion;
     public Weapons melee;
 
     void Start()
     {
-        beam.gameObject.SetActive(false);
         melee.gameObject.SetActive(false);
-        explosion.gameObject.SetActive(false);
     }
 
-
-    public void ExplosionBeginAttack() { wiosna.BeginExplosion(); }
-    public void BeamBeginAttack() { wiosna.BeginBeam(); }
 
     public void BeginMelee() { melee.gameObject.SetActive(true); melee.StartAttack(); }
     public void EndMelee() { melee.EndAttack(); melee.gameObject.SetActive(false); }

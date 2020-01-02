@@ -42,28 +42,14 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (pvpTrue)
+
+        PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
+        if (player != null)
         {
-            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
-            if (player != null)
-            {
-                player.TakeDamage(damageFull);
-                player.Knockback(knockFull, knockDir);
-            }
+            player.TakeDamage(damageFull);
+            player.Knockback(knockFull, knockDir);
         }
-        else
-        {
-            if (other.transform.tag == "Enemy")
-            {
-                EnemyBase target = other.transform.GetComponent<EnemyBase>();
-                target.TakeDamage(damageFull, tag);
-            }
-            else if (other.transform.tag == "Objective")
-            {
-                ObjectiveController target = other.GetComponent<ObjectiveController>();
-                target.TakeDamage(damageFull);
-            }
-        }
+
     }
 
 

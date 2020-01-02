@@ -9,7 +9,7 @@ public class ObjectPooler : BlankMono
     public GameObject poisonSmokeModel;
     public GameObject cannister;
 
-//    [HideInInspector] 
+    //    [HideInInspector] 
     public List<GameObject> poisonSmoke = new List<GameObject>();
     [HideInInspector] public List<GameObject> cannisters = new List<GameObject>();
 
@@ -18,14 +18,6 @@ public class ObjectPooler : BlankMono
     #endregion
 
     #region Carman
-    [Header("Carman Inputs")]
-    public GameObject curseCircle;
-    public GameObject curseTrap;
-
-    [HideInInspector] public List<GameObject> curseCircleList = new List<GameObject>();
-    [HideInInspector] public List<GameObject> curseTrapList = new List<GameObject>();
-    public void ReturnToCurseCircleList(GameObject gameobject) { curseCircleList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
-    public void ReturnToCurseTrapList(GameObject gameobject) { curseTrapList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     #endregion
 
     #region Skjegg
@@ -36,11 +28,11 @@ public class ObjectPooler : BlankMono
     public void ReturnToGhostList(GameObject gameobject) { ghostList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     #endregion
 
-    #region enemies
-    [Header("Enemies")]
-    public GameObject warBanner;
-    [HideInInspector] public List<GameObject> warBanners = new List<GameObject>();
-    public void ReturnToWarBanner() { }
+    #region Wiosna
+    [Header("Wisona")]
+    public GameObject flamingClone;
+    [HideInInspector] public List<GameObject> cloneList = new List<GameObject>();
+
     #endregion
 
     private void Start()
@@ -56,13 +48,12 @@ public class ObjectPooler : BlankMono
             #endregion
 
             #region Carman Props
-            curseCircleList.Add(Instantiate<GameObject>(curseCircle, transform.position, Quaternion.identity));
-            curseCircleList[i].SetActive(false);
-
-            curseTrapList.Add(Instantiate<GameObject>(curseTrap, transform.position, Quaternion.identity));
-            curseTrapList[i].SetActive(false);
             #endregion
 
+            #region Wiosna Props
+            cloneList.Add(Instantiate(flamingClone, Vector3.zero, Quaternion.identity));
+            cloneList[i].SetActive(false);
+            #endregion
         }
 
         for (int i = 0; i < 15; i++)
@@ -70,9 +61,6 @@ public class ObjectPooler : BlankMono
             #region Skjegg & WarBanner Props
             ghostList.Add(Instantiate<GameObject>(ghost, transform.position, Quaternion.identity));
             ghostList[i].SetActive(false);
-
-            warBanners.Add(Instantiate<GameObject>(warBanner, transform.position, Quaternion.identity));
-            warBanners[i].SetActive(false);
             #endregion
         }
     }

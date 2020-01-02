@@ -23,10 +23,6 @@ public class KillHazard : BlankMono
                 code.Knockback(force, dir);
 
             }
-            else if (other.gameObject.GetComponent<EnemyBase>() != null)
-            {
-                other.gameObject.GetComponent<EnemyBase>().TakeDamage(damageToEnemy, "trap");
-            }
         }
     }
 
