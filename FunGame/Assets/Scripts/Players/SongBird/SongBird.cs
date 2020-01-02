@@ -47,7 +47,7 @@ public class SongBird : PlayerBase
     {
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
-        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmoke.Count - (playerID + 1));
+        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmokeList.Count - (playerID + 1));
         smokeCloudCannister.tag = tag;
 
         cannister = pooler.cannisters[playerID];
