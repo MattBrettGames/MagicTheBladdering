@@ -33,9 +33,8 @@ public class Valderheim : PlayerBase
     public ParticleSystem frenzyEffects;
 
     [Header("Passives")]
-    public int growingRageDiv;
+    [SerializeField] private float comboTimeDur;
     private bool comboTime;
-    private float comboTimeDur;
 
     public override void Start()
     {
@@ -157,7 +156,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
-            if (yTimer < 0)
+            if (yTimer <= 0)
             {
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun);
                 anim.SetTrigger("YAttack");
@@ -170,9 +169,9 @@ public class Valderheim : PlayerBase
 
     public override void BAction()
     {
-        OpenComboKick();
         if (!frenzy && state != State.stun)
         {
+            OpenComboKick();
             Invoke("StopFrenzy", frenzyDuration);
             anim.SetTrigger("BAttack");
             damageMult += frenzyBonus;
