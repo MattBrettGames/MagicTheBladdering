@@ -8,7 +8,7 @@ public class SmokeBase : BlankMono
     private float ticksTrue;
     private int forceTrue;
 
-    virtual public void Begin(int damage, float ticks, int force, GameObject targetLooker)
+    virtual public void Begin(int damage, float ticks, int force, GameObject targetLooker, float size)
     {
         damageTrue = damage;
         ticksTrue = ticks;
@@ -24,7 +24,9 @@ public class SmokeBase : BlankMono
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
-        if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= 1 * transform.localScale.y)
+            print(Vector3.Distance(target.gameObject.transform.position, transform.position) + "|"+ ticks);
+
+        if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
         {
             target.TakeDamage(damageTrue, true);
             target.Knockback(forceTrue, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
