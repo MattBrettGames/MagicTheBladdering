@@ -223,20 +223,24 @@ public class UniverseController : BlankMono
 
     [Serializable] public struct spawnPositions { public List<Vector3> spawnPos; }
 
-    public void PlayerDeath(GameObject player)
+    public void PlayerDeath(GameObject player, GameObject otherPlayer)
     {
 
         if (gameMode == "PvP")
         {
+
+            PlayerBase otherCode = otherPlayer.GetComponentInParent<PlayerBase>();
+            otherCode.enabled = false;
+
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
 
             camCode.Death(playerCode.playerID);
-            
+
             playerCode.numOfDeaths++;
 
             if (playerCode.numOfDeaths != numOfRespawns)
             {
-                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
+                StartCoroutine(StartSpawn(playerCode, playerCode.playerID, otherCode));
                 playerCode.enabled = true;
             }
             else
@@ -256,12 +260,13 @@ public class UniverseController : BlankMono
         }
     }
 
-    private IEnumerator StartSpawn(PlayerBase player, int playerInt)
+    private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)
     {
         yield return new WaitForSeconds(respawnTimer);
         player.enabled = true;
         camCode.RespawnedAPlayer();
         player.Respawn();
+        otherPlayer.enabled = true;
         player.gameObject.transform.position = new Vector3(15, 0, 0);
     }
     public void ReturnToMenu()
