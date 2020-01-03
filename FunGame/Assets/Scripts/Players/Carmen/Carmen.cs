@@ -35,14 +35,6 @@ public class Carmen : PlayerBase
         spinSphere.GetComponent<SphereCollider>().radius = spinRadius;
     }
 
-    public override void Update()
-    {
-        base.Update();
-        yTimer -= Time.deltaTime;
-        xTimer -= Time.deltaTime;
-        bTimer -= Time.deltaTime;
-    }
-
     IEnumerator GainBack()
     {
         yield return new WaitForEndOfFrame();
