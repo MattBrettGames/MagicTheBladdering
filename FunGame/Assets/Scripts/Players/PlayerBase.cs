@@ -109,7 +109,7 @@ public abstract class PlayerBase : BlankMono
 
         aimTarget.position = transform.position + dir * 5;
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+        //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
         switch (state)
         {
@@ -254,6 +254,7 @@ public abstract class PlayerBase : BlankMono
         anim.SetFloat("Movement", 0);
         GainIFrames();
         state = State.attack;
+        this.enabled = false;
     }
     public virtual void KnockbackContinual()
     {
