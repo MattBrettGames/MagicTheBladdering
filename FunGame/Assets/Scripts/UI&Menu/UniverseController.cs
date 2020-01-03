@@ -230,6 +230,8 @@ public class UniverseController : BlankMono
         {
 
             PlayerBase otherCode = otherPlayer.GetComponentInParent<PlayerBase>();
+            otherCode.dir = Vector3.zero;
+            otherCode.GetComponent<Rigidbody>().velocity = Vector3.zero;
             otherCode.enabled = false;
 
             PlayerBase playerCode = player.GetComponent<PlayerBase>();

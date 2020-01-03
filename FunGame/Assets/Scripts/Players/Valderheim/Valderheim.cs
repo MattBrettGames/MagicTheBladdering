@@ -29,6 +29,7 @@ public class Valderheim : PlayerBase
     [Header("Frenzy")]
     public int frenzyDuration;
     public int frenzyBonus;
+    public int frenzySpeedBuff;
     private bool frenzy;
     public ParticleSystem frenzyEffects;
 
@@ -171,6 +172,7 @@ public class Valderheim : PlayerBase
         {
             OpenComboKick();
             Invoke("StopFrenzy", frenzyDuration);
+            speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
@@ -182,6 +184,7 @@ public class Valderheim : PlayerBase
     {
         damageMult -= frenzyBonus;
         incomingMult -= frenzyBonus;
+        speed -= frenzySpeedBuff;
         frenzy = false;
         frenzyEffects.Clear();
         frenzyEffects.Stop();

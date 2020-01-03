@@ -17,7 +17,7 @@ public abstract class PlayerBase : BlankMono
     public float dodgeDur;
     private float baseSpeed;
     protected float moving;
-    protected Vector3 dir;
+    [HideInInspector] public Vector3 dir;
 
     [Header("Common Stats")]
     public int currentHealth;
@@ -187,7 +187,7 @@ public abstract class PlayerBase : BlankMono
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if(thisPlayer == "P2")
+            if (thisPlayer == "P2")
             {
                 TakeDamage(3000, true);
             }
@@ -257,9 +257,12 @@ public abstract class PlayerBase : BlankMono
     {
         anim.SetTrigger("Death");
         GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject, lookAtTarget.gameObject);
-        anim.SetFloat("Movement", 0);
         GainIFrames();
-        state = State.attack;
+
+        dir = Vector3.zero;
+        rb2d.velocity = Vector3.zero;
+        anim.SetFloat("Movement", 0);
+
         Time.timeScale = 1;
         this.enabled = false;
     }
