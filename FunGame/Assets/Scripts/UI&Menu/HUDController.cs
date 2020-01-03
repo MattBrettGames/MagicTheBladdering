@@ -53,7 +53,7 @@ public class HUDController : BlankMono
         bBannerRect.sizeDelta = new Vector2(100, (targetPlayer.bCooldown - targetPlayer.bTimer) * 5);
         xBannerRect.sizeDelta = new Vector2(100, (targetPlayer.xCooldown - targetPlayer.xTimer) * 5);
         yBannerRect.sizeDelta = new Vector2(100, (targetPlayer.yCooldown - targetPlayer.yTimer) * 5);
-
+               
         if (targetPlayer.currentHealth < 0) targetPlayer.currentHealth = 0;
     }
 }

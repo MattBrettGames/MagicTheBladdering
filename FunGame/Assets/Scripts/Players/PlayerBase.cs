@@ -99,15 +99,15 @@ public abstract class PlayerBase : BlankMono
         if (bTimer > 0) bTimer -= Time.deltaTime;
         if (xTimer > 0) xTimer -= Time.deltaTime;
         if (yTimer > 0) yTimer -= Time.deltaTime;
+        print(aTimer);
 
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
-        aTimer -= Time.deltaTime;
 
         if (poison > 0) { poison -= Time.deltaTime; }
 
         aimTarget.position = transform.position + dir * 5;
 
-        //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
         switch (state)
         {
