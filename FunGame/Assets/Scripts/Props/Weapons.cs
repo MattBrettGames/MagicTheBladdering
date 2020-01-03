@@ -42,14 +42,12 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-
         PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
         if (player != null)
         {
-            player.TakeDamage(damageFull);
+            player.TakeDamage(damageFull, true);
             player.Knockback(knockFull, knockDir);
         }
-
     }
 
 

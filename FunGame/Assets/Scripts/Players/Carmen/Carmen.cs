@@ -43,7 +43,7 @@ public class Carmen : PlayerBase
 
     public override void XAction()
     {
-        if (xTimer < 0)
+        if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
             spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
@@ -56,7 +56,7 @@ public class Carmen : PlayerBase
 
     public override void YAction()
     {
-        if (yTimer < 0)
+        if (yTimer <= 0)
         {
 
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
@@ -79,7 +79,7 @@ public class Carmen : PlayerBase
 
     public override void BAction()
     {
-        if (bTimer < 0)
+        if (bTimer <= 0)
         {
             anim.SetTrigger("BAttack");
             bTimer = bCooldown;

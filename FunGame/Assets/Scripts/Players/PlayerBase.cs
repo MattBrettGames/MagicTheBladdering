@@ -100,10 +100,6 @@ public abstract class PlayerBase : BlankMono
         if (xTimer > 0) xTimer -= Time.deltaTime;
         if (yTimer > 0) yTimer -= Time.deltaTime;
 
-        print(aTimer + "|" + bTimer + "|" + xTimer + "|" + yTimer);
-
-
-
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         aTimer -= Time.deltaTime;
 
@@ -204,7 +200,6 @@ public abstract class PlayerBase : BlankMono
             Invoke("EndDodge", dodgeDur);
         }
     }
-
     private void EndDodge()
     {
         state = State.normal;
@@ -217,7 +212,25 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); } }
+    public virtual void TakeDamage(int damageInc, bool fromAttack)
+    {
+        if (!counterFrames && !iFrames)
+        {
+            HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
+            anim.SetTrigger("Stagger");
+            if (fromAttack)
+            {
+                StartCoroutine(HitStun(0.033f));
+            }
+        }
+    }
+    IEnumerator HitStun(float time)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(time);
+        EndTimeScale();
+    }
+
     private void EndTimeScale() { Time.timeScale = 1; }
 
     public void BecomeStunned(float duration)
