@@ -29,7 +29,6 @@ public class HUDController : BlankMono
 
     public void SetStats(int imageInt, string charName)
     {
-        print(imageInt + " is the current player for " + gameObject.name);
 
         aBannerRect = aBanner.GetComponent<RectTransform>();
         bBannerRect = bBanner.GetComponent<RectTransform>();
@@ -50,11 +49,11 @@ public class HUDController : BlankMono
     {
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
 
-        aBannerRect.sizeDelta = new Vector2(100, (targetPlayer.aCooldown - targetPlayer.aTimer)*5);
-        bBannerRect.sizeDelta = new Vector2(100, (targetPlayer.bCooldown - targetPlayer.bTimer)*5);
-        xBannerRect.sizeDelta = new Vector2(100, (targetPlayer.xCooldown - targetPlayer.xTimer)*5);
-        yBannerRect.sizeDelta = new Vector2(100, (targetPlayer.yCooldown - targetPlayer.yTimer)*5);
+        aBannerRect.sizeDelta = new Vector2(100, (targetPlayer.aCooldown - targetPlayer.aTimer) * 5);
+        bBannerRect.sizeDelta = new Vector2(100, (targetPlayer.bCooldown - targetPlayer.bTimer) * 5);
+        xBannerRect.sizeDelta = new Vector2(100, (targetPlayer.xCooldown - targetPlayer.xTimer) * 5);
+        yBannerRect.sizeDelta = new Vector2(100, (targetPlayer.yCooldown - targetPlayer.yTimer) * 5);
 
-        Mathf.Clamp(targetPlayer.currentHealth, 0, 2000);
+        if (targetPlayer.currentHealth < 0) targetPlayer.currentHealth = 0;
     }
 }
