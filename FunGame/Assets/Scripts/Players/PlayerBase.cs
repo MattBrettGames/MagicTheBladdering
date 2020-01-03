@@ -95,15 +95,14 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Update()
     {
-        aTimer -= Time.deltaTime;
-        bTimer -= Time.deltaTime;
-        xTimer -= Time.deltaTime;
-        yTimer -= Time.deltaTime;
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
 
-        Mathf.Clamp(aTimer, 0, 100);
-        Mathf.Clamp(bTimer, 0, 100);
-        Mathf.Clamp(xTimer, 0, 100);
-        Mathf.Clamp(yTimer, 0, 100);
+        print(aTimer + "|" + bTimer + "|" + xTimer + "|" + yTimer);
+
+
 
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
         aTimer -= Time.deltaTime;

@@ -33,9 +33,8 @@ public class Valderheim : PlayerBase
     public ParticleSystem frenzyEffects;
 
     [Header("Passives")]
-    public int growingRageDiv;
+    [SerializeField] private float comboTimeDur;
     private bool comboTime;
-    private float comboTimeDur;
 
     public override void Start()
     {
@@ -45,15 +44,10 @@ public class Valderheim : PlayerBase
 
     public override void Update()
     {
-        aTimer -= Time.deltaTime;
-        bTimer -= Time.deltaTime;
-        xTimer -= Time.deltaTime;
-        yTimer -= Time.deltaTime;
-
-        Mathf.Clamp(aTimer, 0, 100);
-        Mathf.Clamp(bTimer, 0, 100);
-        Mathf.Clamp(xTimer, 0, 100);
-        Mathf.Clamp(yTimer, 0, 100);
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
 
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
 
@@ -162,7 +156,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
-            if (yTimer < 0)
+            if (yTimer <= 0)
             {
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun);
                 anim.SetTrigger("YAttack");
@@ -175,9 +169,9 @@ public class Valderheim : PlayerBase
 
     public override void BAction()
     {
-        OpenComboKick();
         if (!frenzy && state != State.stun)
         {
+            OpenComboKick();
             Invoke("StopFrenzy", frenzyDuration);
             anim.SetTrigger("BAttack");
             damageMult += frenzyBonus;

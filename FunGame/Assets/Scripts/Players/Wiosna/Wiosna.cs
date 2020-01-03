@@ -17,14 +17,6 @@ public class Wiosna : PlayerBase
     [Header("Vanishing Act")]
     [SerializeField] float vanishDistance;
 
-    [Header("Y Action")]
-    [SerializeField] float radiusOfStun;
-    [SerializeField] float stunDur;
-    [SerializeField] ParticleSystem stunParts;
-    [Space]
-    [SerializeField] float radiusOfPull;
-    [SerializeField] int pullImpact;
-    [Space]
 
     //[Header("BAttacks")]
     private GameObject flamingClone;
