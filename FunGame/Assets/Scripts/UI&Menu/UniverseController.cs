@@ -94,6 +94,7 @@ public class UniverseController : BlankMono
         if (level == 0)
         {
             lockedInPlayers = 0;
+            Time.timeScale = 1;
         }
         if (level == 2)
         {
@@ -105,10 +106,15 @@ public class UniverseController : BlankMono
         }
         else if (level == 3)
         {
+            Time.timeScale = 1;
+            print("Loaded the end screen");
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
+            print("1 Yup " + winner);
 
-            StartCoroutine(DelayedVictory());
+            GameObject gam = GameObject.Find(winner);
+            gam.transform.SetParent(Camera.main.transform);
+            GameObject.Find("CharacterStore").SetActive(false);
         }
         else if (level >= firstArenaID)
         {
@@ -269,7 +275,6 @@ public class UniverseController : BlankMono
 
     public void GetCam(DualObjectiveCamera newCam) { camCode = newCam; }
 
-
     IEnumerator DelayedVictory()
     {
         yield return new WaitForSeconds(0.1f);
@@ -277,9 +282,16 @@ public class UniverseController : BlankMono
         GameObject[] gams = GameObject.FindGameObjectsWithTag("Boss");
         for (int i = 0; i < gams.Length; i++)
         {
-            print(winner + "|" + gams[i].name);
+            print(winner + "|" + gams[i].name + "|" + gams[i].activeInHierarchy);
             if (gams[i].name == winner) { gams[i].SetActive(true); }
         }
     }
+
+    public void CameraRumbleCall()
+    {
+        camCode.CamShake(0.1f);
+    }
+
+
 
 }
