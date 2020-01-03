@@ -13,13 +13,9 @@ public class Wiosna : PlayerBase
     [Header("X Attack")]
     [SerializeField] int xDamage;
     [SerializeField] int xKnockback;
-    [SerializeField] float xCooldown = 0.8f;
-    float xTimer;
 
     [Header("Vanishing Act")]
     [SerializeField] float vanishDistance;
-    [SerializeField] float actCooldown = 1;
-    float actTimer;
 
     [Header("Y Action")]
     [SerializeField] float radiusOfStun;
@@ -29,12 +25,8 @@ public class Wiosna : PlayerBase
     [SerializeField] float radiusOfPull;
     [SerializeField] int pullImpact;
     [Space]
-    [SerializeField] float yCooldown = 1.1f;
-    float yTimer;
 
-    [Header("BAttacks")]
-    [SerializeField] float bCooldown = 14;
-    float bTimer;
+    //[Header("BAttacks")]
     private GameObject flamingClone;
 
     public override void SetInfo()
@@ -48,16 +40,6 @@ public class Wiosna : PlayerBase
         objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         flamingClone = objectPooler.cloneList[playerID];
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-
-        bTimer -= Time.deltaTime;
-        actTimer -= Time.deltaTime;
-        xTimer -= Time.deltaTime;
-        yTimer -= Time.deltaTime;
     }
 
     #region X Attacks
@@ -75,10 +57,10 @@ public class Wiosna : PlayerBase
     #region A Actions
     public override void AAction()
     {
-        if (actTimer <= 0)
+        if (aTimer <= 0)
         {
             anim.SetTrigger("AAction");
-            actTimer = actCooldown;
+            aTimer = aCooldown;
         }
     }
     public void DoTheTeleport()

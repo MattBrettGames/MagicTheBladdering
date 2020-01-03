@@ -24,8 +24,6 @@ public class SongBird : PlayerBase
     public int cannisterCloudSize;
     [Space]
     public int smokeKnockback;
-    [SerializeField] float bCooldown = 10;
-    float bTimer;
 
     private bool hasCannister;
 
@@ -35,13 +33,6 @@ public class SongBird : PlayerBase
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }
-
-    public override void Update()
-    {
-        base.Update();
-        bTimer -= Time.deltaTime;
-    }
-
 
     void GainSmokes()
     {
@@ -61,7 +52,14 @@ public class SongBird : PlayerBase
         weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0);
     }
 
-    public override void YAction() { anim.SetTrigger("YAction"); }
+    public override void YAction()
+    {
+        if (yTimer <= 0)
+        {
+            anim.SetTrigger("YAction");
+            yTimer = yCooldown;
+        }
+    }
 
     public override void BAction()
     {
@@ -86,7 +84,7 @@ public class SongBird : PlayerBase
 
     public override void AAction()
     {
-        if (dodgeTimer < 0)
+        if (aTimer < 0)
         {
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
@@ -102,13 +100,14 @@ public class SongBird : PlayerBase
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
             }
+
+            aTimer = aCooldown;
         }
     }
 
     public void EndDodge()
     {
         state = State.normal;
-        dodgeTimer = dodgeCooldown;
     }
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)

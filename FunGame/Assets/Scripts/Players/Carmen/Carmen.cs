@@ -12,22 +12,16 @@ public class Carmen : PlayerBase
     [Header("Dagger Stab")]
     public int stabDamage;
     public int stabKnockback;
-    [SerializeField] float yCooldown = 2;
-    float yTimer;
 
     [Header("Dash-Slash")]
     public int slashDamage;
     public int slashKnockback;
     public float slashTravelDuration;
-    [SerializeField] float xCooldown = 1;
     [SerializeField] Weapons spinSphere;
     [SerializeField] float spinRadius;
-    float xTimer;
 
     [Header("Dig")]
     public int digDistance;
-    [SerializeField] float bCooldown = 3;
-    float btimer;
 
     [Header("Backstab")]
     public int backstabAngle;
@@ -46,7 +40,7 @@ public class Carmen : PlayerBase
         base.Update();
         yTimer -= Time.deltaTime;
         xTimer -= Time.deltaTime;
-        btimer -= Time.deltaTime;
+        bTimer -= Time.deltaTime;
     }
 
     IEnumerator GainBack()
@@ -93,10 +87,10 @@ public class Carmen : PlayerBase
 
     public override void BAction()
     {
-        if (btimer < 0)
+        if (bTimer < 0)
         {
-            btimer = bCooldown;
             anim.SetTrigger("BAttack");
+            bTimer = bCooldown;
         }
     }
     public void DigTravel()
