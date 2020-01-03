@@ -277,7 +277,6 @@ MonoBehaviour:
   speed: 36
   dodgeSpeed: 25
   dodgeDur: 0.5
-  dodgeCooldown: 0.9
   currentHealth: 80
   healthMax: 0
   damageMult: 1
@@ -290,6 +289,14 @@ MonoBehaviour:
   state: 0
   aimTarget: {fileID: 5395824971405896753}
   visuals: {fileID: 6016919218180542987}
+  aCooldown: 1
+  bCooldown: 10
+  xCooldown: 0
+  yCooldown: 6
+  aTimer: 0
+  bTimer: 0
+  xTimer: 0
+  yTimer: 0
   weapon: {fileID: 5395824971114366995}
   baseXDamage: 10
   baseXKnockback: 2
@@ -299,7 +306,6 @@ MonoBehaviour:
   dodgeCloudSize: 10
   cannisterCloudSize: 10
   smokeKnockback: 1
-  bCooldown: 10
 --- !u!114 &5395824972024106338
 MonoBehaviour:
   m_ObjectHideFlags: 0

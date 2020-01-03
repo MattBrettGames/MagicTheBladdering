@@ -56,7 +56,6 @@ MonoBehaviour:
   speed: 35
   dodgeSpeed: 0
   dodgeDur: 0
-  dodgeCooldown: 0
   currentHealth: 100
   healthMax: 0
   damageMult: 1
@@ -69,21 +68,23 @@ MonoBehaviour:
   state: 0
   aimTarget: {fileID: 3870780719097180235}
   visuals: {fileID: 2274438900486359448}
+  aCooldown: 1
+  bCooldown: 11
+  xCooldown: 0.8
+  yCooldown: 1.1
+  aTimer: 0
+  bTimer: 0
+  xTimer: 0
+  yTimer: 0
   basicMelee: {fileID: 8986242647890308411}
-  explosionSphere: {fileID: 0}
-  finalBeam: {fileID: 0}
   xDamage: 10
   xKnockback: 5
-  xCooldown: 0.8
   vanishDistance: 25
-  actCooldown: 1
   radiusOfStun: 15
   stunDur: 2
   stunParts: {fileID: 6784689401510224267}
   radiusOfPull: 15
   pullImpact: 5
-  yCooldown: 1.1
-  bCooldown: 15
 --- !u!136 &695479573
 CapsuleCollider:
   m_ObjectHideFlags: 0

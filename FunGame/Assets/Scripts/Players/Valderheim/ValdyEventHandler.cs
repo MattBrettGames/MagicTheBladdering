@@ -11,7 +11,7 @@ public class ValdyEventHandler : BlankMono
     public void HammerBoxOff() { hammer.EndAttack(); }
 
     public void OpenKickCombo() { valdy.OpenComboKick(); }
-    public void CloseKickCombo() { valdy.CloseComboKick(); }
+    public void CloseKickCombo() { print("Godamnit, Brett"); }// aldy.CloseComboKick(); }
 
     public void GainHA() { valdy.GainHA(); }
     public void LoseHA() { valdy.LoseHA(); }
