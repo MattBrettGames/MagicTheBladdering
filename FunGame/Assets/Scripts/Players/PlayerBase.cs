@@ -15,8 +15,6 @@ public abstract class PlayerBase : BlankMono
     public float speed;
     public float dodgeSpeed;
     public float dodgeDur;
-    public float dodgeCooldown;
-    protected float dodgeTimer;
     private float baseSpeed;
     protected float moving;
     protected Vector3 dir;
@@ -65,11 +63,22 @@ public abstract class PlayerBase : BlankMono
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform walkDirection;
 
+    [Header("Cooldowns")]
+    public float aCooldown;
+    public float bCooldown;
+    public float xCooldown;
+    public float yCooldown;
+    [HideInInspector] public float aTimer;
+    [HideInInspector] public float bTimer;
+    [HideInInspector] public float xTimer;
+    [HideInInspector] public float yTimer;
+
+
     public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-        dodgeTimer = dodgeCooldown;
+        aTimer = aCooldown;
         baseSpeed = speed;
 
         healthMax = currentHealth;
@@ -86,8 +95,18 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Update()
     {
+        aTimer -= Time.deltaTime;
+        bTimer -= Time.deltaTime;
+        xTimer -= Time.deltaTime;
+        yTimer -= Time.deltaTime;
+
+        Mathf.Clamp(aTimer, 0, 100);
+        Mathf.Clamp(bTimer, 0, 100);
+        Mathf.Clamp(xTimer, 0, 100);
+        Mathf.Clamp(yTimer, 0, 100);
+
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
-        dodgeTimer -= Time.deltaTime;
+        aTimer -= Time.deltaTime;
 
         if (poison > 0) { poison -= Time.deltaTime; }
         if (curseTimer <= 0) { LoseCurse(); }
@@ -162,7 +181,7 @@ public abstract class PlayerBase : BlankMono
 
             case State.dodging:
 
-                if (dodgeTimer < 0)
+                if (aTimer < 0)
                 {
                     DodgeSliding(dir);
                 }
@@ -177,7 +196,7 @@ public abstract class PlayerBase : BlankMono
     #region Input Actions
     public virtual void AAction()
     {
-        if (dodgeTimer < 0 && dir != Vector3.zero)
+        if (aTimer < 0 && dir != Vector3.zero)
         {
             anim.SetTrigger("AAction");
 
@@ -190,7 +209,7 @@ public abstract class PlayerBase : BlankMono
     private void EndDodge()
     {
         state = State.normal;
-        dodgeTimer = dodgeCooldown;
+        aTimer = aCooldown;
     }
 
     public virtual void BAction() { }
@@ -271,12 +290,12 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec;  } }
+    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; } }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) {  transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
     #endregion
 
