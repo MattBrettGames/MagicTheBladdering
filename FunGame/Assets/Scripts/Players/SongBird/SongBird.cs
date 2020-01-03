@@ -17,7 +17,7 @@ public class SongBird : PlayerBase
 
     [Header("Vial Stats")]
     public int smokeburstDamage;
-    public int smokePoisonTicks;
+    [SerializeField] float smokePoisonTicks;
     [Space]
     public int thrownCloudSize;
     public int dodgeCloudSize;
@@ -77,7 +77,7 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback, lookAtTarget.gameObject);
             hasCannister = true;
         }
     }
@@ -122,7 +122,7 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback);
+        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback, lookAtTarget.gameObject);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {

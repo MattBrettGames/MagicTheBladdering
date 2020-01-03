@@ -5,53 +5,42 @@ public class SmokeBase : BlankMono
     private bool exploding;
     private PlayerBase target;
     private int damageTrue;
-    private int ticksTrue;
+    private float ticksTrue;
     private int forceTrue;
 
-    virtual public void Begin(int damage, int ticks, int force)
+    virtual public void Begin(int damage, float ticks, int force, GameObject targetLooker)
     {
         damageTrue = damage;
         ticksTrue = ticks;
         forceTrue = force;
         exploding = true;
         Invoke("EndForce", 0.2f);
+
+        target = targetLooker.GetComponentInParent<PlayerBase>();
+        InvokeRepeating("PoisonCheck", ticks, ticks);
+
+        target = targetLooker.GetComponentInParent<PlayerBase>();
+        print(targetLooker.gameObject.name);
+
+        GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
+
+        if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= 1 * transform.localScale.y)
+        {
+            target.TakeDamage(damageTrue, true);
+            target.Knockback(forceTrue, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
+        }
     }
 
     void EndForce() { exploding = false; }
 
-    void OnTriggerEnter(Collider other)
+    void PoisonCheck()
     {
-        target = other.gameObject.GetComponent<PlayerBase>();
-        if (target != null)
+        if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= 1 * transform.localScale.y)
         {
-            if (other.transform.tag != tag)
-            {
-                target.poison += ticksTrue;
-                if (exploding)
-                {
-                    target.TakeDamage(damageTrue, false);
-                    target.Knockback(forceTrue, new Vector3(other.transform.position.x - transform.position.x, 0, other.transform.position.z - transform.position.z));
-                }
-            }
-            else
-            {
-                target.damageMult += 1;                
-            }
+            print(target.gameObject.name + " is staying in smoke");
+
+            target.currentHealth -= 1;
+            target.ControllerRumble(0.1f, 0.1f);
         }
     }
-
-    void OnTriggerExit(Collider other)
-    {
-        target = other.GetComponent<PlayerBase>();
-
-        if (target != null)
-        {
-            if (other.tag == tag)
-            {
-                target.damageMult -= 1;                
-            }
-        }
-    }
-
-
 }
