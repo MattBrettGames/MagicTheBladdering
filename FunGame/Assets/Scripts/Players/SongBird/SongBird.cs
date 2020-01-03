@@ -49,7 +49,7 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0);
+        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this);
     }
 
     public override void YAction()

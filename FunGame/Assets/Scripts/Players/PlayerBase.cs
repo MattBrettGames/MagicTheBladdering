@@ -104,8 +104,6 @@ public abstract class PlayerBase : BlankMono
         aTimer -= Time.deltaTime;
 
         if (poison > 0) { poison -= Time.deltaTime; }
-        if (curseTimer <= 0) { LoseCurse(); }
-        else { curseTimer -= Time.deltaTime; }
 
         aimTarget.position = transform.position + dir * 5;
 
@@ -220,7 +218,7 @@ public abstract class PlayerBase : BlankMono
             anim.SetTrigger("Stagger");
             if (fromAttack)
             {
-                StartCoroutine(HitStun(0.033f));
+                StartCoroutine(HitStun(0.01f));
             }
         }
     }
@@ -274,9 +272,6 @@ public abstract class PlayerBase : BlankMono
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
 
-    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
-    public virtual void LoseCurse() { cursed = false; speed = baseSpeed; curseTimer = 0; }
-
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
 
@@ -307,6 +302,11 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
+
+    public void ControllerRumble(float intensity, float dur)
+    {
+        player.SetVibration(playerID - 1, intensity, dur);
+    }
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 

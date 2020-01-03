@@ -40,7 +40,7 @@ public class Wiosna : PlayerBase
         if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
-            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0);
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this);
             xTimer = xCooldown;
         }
     }

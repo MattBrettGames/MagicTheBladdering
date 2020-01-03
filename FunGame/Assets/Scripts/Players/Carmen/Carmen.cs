@@ -46,7 +46,7 @@ public class Carmen : PlayerBase
         if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
-            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
@@ -63,13 +63,13 @@ public class Carmen : PlayerBase
 
             if (lookDif <= backstabAngle)
             {
-                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0);
-                rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0);
+                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
+                rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
             }
             else
             {
-                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0);
-                rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0);
+                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
+                rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
             }
             anim.SetTrigger("YAttack");
 
