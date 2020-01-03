@@ -33,7 +33,7 @@ public class BioSelector : BlankMono
             onMovesets = !onMovesets;
         }
 
-        if ((player.GetAxis("VertMove") >= 0.4f && !inputCooldown) || (player2.GetAxis("VertMove") >= 0.4f && !inputCooldown))
+        if ((player.GetAxis("VertMove") <= -0.4f && !inputCooldown) || (player2.GetAxis("VertMove") <= -0.4f && !inputCooldown))
         {
             onMovesets = false;
             displays[currentDisplay].SetActive(false);
@@ -45,7 +45,7 @@ public class BioSelector : BlankMono
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);
         }
-        if ((player.GetAxis("VertMove") <= -0.4f && !inputCooldown)||(player2.GetAxis("VertMove") <= -0.4f && !inputCooldown))
+        if ((player.GetAxis("VertMove") >= 0.4f && !inputCooldown)||(player2.GetAxis("VertMove") >= 0.4f && !inputCooldown))
         {
             onMovesets = false;
             displays[currentDisplay].SetActive(false);
