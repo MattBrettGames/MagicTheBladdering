@@ -184,6 +184,15 @@ public abstract class PlayerBase : BlankMono
                 KnockbackContinual();
                 break;
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if(thisPlayer == "P2")
+            {
+                TakeDamage(3000, true);
+            }
+        }
+
     }
 
     #region Input Actions
@@ -216,6 +225,8 @@ public abstract class PlayerBase : BlankMono
         {
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             anim.SetTrigger("Stagger");
+            ControllerRumble(0.2f, 0.1f);
+            GameObject.Find("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
             if (fromAttack)
             {
                 StartCoroutine(HitStun(0.01f));
@@ -242,9 +253,6 @@ public abstract class PlayerBase : BlankMono
         state = State.normal;
     }
 
-    public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
-    public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
-
     public virtual void Death()
     {
         anim.SetTrigger("Death");
@@ -252,6 +260,7 @@ public abstract class PlayerBase : BlankMono
         anim.SetFloat("Movement", 0);
         GainIFrames();
         state = State.attack;
+        Time.timeScale = 1;
         this.enabled = false;
     }
     public virtual void KnockbackContinual()
@@ -298,25 +307,19 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; } }
+    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; ControllerRumble(0.1f, 0.05f); } }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
     public void ControllerRumble(float intensity, float dur)
     {
-        player.SetVibration(playerID - 1, intensity, dur);
+        player.SetVibration(1, intensity, dur);
+        player.SetVibration(0, intensity, dur);
     }
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
-    #endregion
-
-    #region Returns
-    public virtual int AccessUniqueFeature(int v)
-    {
-        return 0;
-    }
     #endregion
 
 }

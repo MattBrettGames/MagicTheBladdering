@@ -47,7 +47,7 @@ public class Weapons : BlankMono
         PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
         if (player != null)
         {
-            ownerTrue.ControllerRumble(damageFull * 0.01f, knockFull * 0.01f);
+            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
             player.TakeDamage(damageFull, true);
             player.Knockback(knockFull, knockDir);
         }

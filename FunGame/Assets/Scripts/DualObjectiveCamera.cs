@@ -11,6 +11,7 @@ public class DualObjectiveCamera : MonoBehaviour
     [SerializeField] float closeness;
     UniverseController universe;
     private bool bothPlayersAlive;
+    bool rumble;
 
     void Start()
     {
@@ -39,9 +40,26 @@ public class DualObjectiveCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (bothPlayersAlive) { transform.LookAt(centerPosition); }
+        if (bothPlayersAlive)
+        {
+            if (rumble)
+            {
+                centerPosition += new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            }
+            transform.LookAt(centerPosition);
+        }
+        else { transform.LookAt(Vector3.zero); }
     }
 
+    public void CamShake(float dur)
+    {
+        rumble = true;
+        Invoke("EndRumble", dur);
+    }
+    void EndRumble()
+    {
+        rumble = false;
+    }
 
 
 }
