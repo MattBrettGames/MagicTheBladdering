@@ -29,7 +29,7 @@ public class SmokeBase : BlankMono
                 target.poison += ticksTrue;
                 if (exploding)
                 {
-                    target.TakeDamage(damageTrue);
+                    target.TakeDamage(damageTrue, false);
                     target.Knockback(forceTrue, new Vector3(other.transform.position.x - transform.position.x, 0, other.transform.position.z - transform.position.z));
                 }
             }

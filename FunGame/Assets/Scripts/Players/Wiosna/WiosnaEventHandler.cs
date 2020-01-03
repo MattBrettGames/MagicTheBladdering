@@ -20,6 +20,7 @@ public class WiosnaEventHandler : BlankMono
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
 
+    public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur); }
     public void GainIFrmaes() { wiosna.GainIFrames(); }
     public void LoseIFrmaes() { wiosna.LoseIFrames(); }
 

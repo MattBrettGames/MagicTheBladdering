@@ -49,7 +49,7 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0);
+        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this);
     }
 
     public override void YAction()
@@ -65,7 +65,7 @@ public class SongBird : PlayerBase
     {
         if (hasCannister)
         {
-            if (bTimer < 0)
+            if (bTimer <= 0)
             {
                 cannister.transform.position = transform.position;
                 cannister.SetActive(true);
@@ -84,7 +84,7 @@ public class SongBird : PlayerBase
 
     public override void AAction()
     {
-        if (aTimer < 0)
+        if (aTimer <= 0)
         {
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;

@@ -252,6 +252,7 @@ public class UniverseController : BlankMono
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(respawnTimer);
+        player.enabled = true;
         camCode.RespawnedAPlayer();
         player.Respawn();
         player.gameObject.transform.position = new Vector3(15, 0, 0);

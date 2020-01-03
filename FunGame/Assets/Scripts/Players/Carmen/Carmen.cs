@@ -43,10 +43,10 @@ public class Carmen : PlayerBase
 
     public override void XAction()
     {
-        if (xTimer < 0)
+        if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
-            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
@@ -56,20 +56,20 @@ public class Carmen : PlayerBase
 
     public override void YAction()
     {
-        if (yTimer < 0)
+        if (yTimer <= 0)
         {
 
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
 
             if (lookDif <= backstabAngle)
             {
-                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0);
-                rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0);
+                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
+                rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
             }
             else
             {
-                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0);
-                rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0);
+                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
+                rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
             }
             anim.SetTrigger("YAttack");
 
@@ -79,7 +79,7 @@ public class Carmen : PlayerBase
 
     public override void BAction()
     {
-        if (bTimer < 0)
+        if (bTimer <= 0)
         {
             anim.SetTrigger("BAttack");
             bTimer = bCooldown;
