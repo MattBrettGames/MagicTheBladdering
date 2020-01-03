@@ -228,10 +228,10 @@ public class UniverseController : BlankMono
 
         if (gameMode == "PvP")
         {
-
             PlayerBase otherCode = otherPlayer.GetComponentInParent<PlayerBase>();
             otherCode.dir = Vector3.zero;
             otherCode.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            otherCode.GetComponent<Animator>().SetFloat("Movement", 0);
             otherCode.enabled = false;
 
             PlayerBase playerCode = player.GetComponent<PlayerBase>();

@@ -168,9 +168,8 @@ public class Valderheim : PlayerBase
 
     public override void BAction()
     {
-        if (!frenzy && state != State.stun)
+        if (!frenzy && state != State.stun && bTimer <= 0)
         {
-            OpenComboKick();
             Invoke("StopFrenzy", frenzyDuration);
             speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
@@ -178,12 +177,20 @@ public class Valderheim : PlayerBase
             incomingMult += frenzyBonus;
             frenzy = true;
             frenzyEffects.Play();
+            bTimer = bCooldown;
+
+            dodgeDur += 0.2f;
+            dodgeSpeed += 5;
         }
     }
     private void StopFrenzy()
     {
         damageMult -= frenzyBonus;
         incomingMult -= frenzyBonus;
+
+        dodgeDur -= 0.2f;
+        dodgeSpeed -= 5;
+
         speed -= frenzySpeedBuff;
         frenzy = false;
         frenzyEffects.Clear();
