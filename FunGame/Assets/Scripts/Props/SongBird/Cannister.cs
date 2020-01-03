@@ -14,7 +14,7 @@ public class Cannister : BlankMono
         smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
-        smoke1.Begin(damage, tick, knockback, target);
+        smoke1.Begin(damage, tick, knockback, target, size);
 
         for (int i = 0; i < size; i++)
         {

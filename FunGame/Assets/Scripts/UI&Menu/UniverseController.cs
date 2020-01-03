@@ -225,12 +225,13 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player)
     {
-        camCode.Death();
 
         if (gameMode == "PvP")
         {
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
 
+            camCode.Death(playerCode.playerID);
+            
             playerCode.numOfDeaths++;
 
             if (playerCode.numOfDeaths != numOfRespawns)
