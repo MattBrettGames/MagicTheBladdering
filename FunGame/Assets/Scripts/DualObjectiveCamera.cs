@@ -11,6 +11,8 @@ public class DualObjectiveCamera : MonoBehaviour
     [SerializeField] float closeness;
     UniverseController universe;
     private bool bothPlayersAlive;
+    bool rumble;
+    int deadPlayer = 2;
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class DualObjectiveCamera : MonoBehaviour
         bothPlayersAlive = true;
     }
 
-    public void Death() { bothPlayersAlive = false; }
+    public void Death(int charDeath) { bothPlayersAlive = false; deadPlayer = charDeath; }
     public void RespawnedAPlayer() { bothPlayersAlive = true; }
 
     void Update()
@@ -35,13 +37,51 @@ public class DualObjectiveCamera : MonoBehaviour
                 centerPosition.z
                 ) + offset;
         }
+        else
+        {
+            if (deadPlayer == 0)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(leftTarget.transform.position.x, leftTarget.transform.position.y + 5, leftTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(rightTarget.transform.position.x, rightTarget.transform.position.y + 5, rightTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
+            }
+        }
     }
 
     void LateUpdate()
     {
-        if (bothPlayersAlive) { transform.LookAt(centerPosition); }
+        if (bothPlayersAlive)
+        {
+            if (rumble)
+            {
+                centerPosition += new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            }
+            transform.LookAt(centerPosition);
+        }
+        else
+        {
+            if (deadPlayer == 0)
+            {
+                transform.LookAt(leftTarget);
+            }
+            else
+            {
+                transform.LookAt(rightTarget);
+            }
+        }
     }
 
+    public void CamShake(float dur)
+    {
+        rumble = true;
+        Invoke("EndRumble", dur);
+    }
+    void EndRumble()
+    {
+        rumble = false;
+    }
 
 
 }

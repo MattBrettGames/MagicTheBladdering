@@ -16,7 +16,7 @@ public class CarmenEventHandler : MonoBehaviour
     public void spinSphereOn() { spinSphere.StartAttack(); }
     public void spinSphereOff() { spinSphere.EndAttack(); }
     public void DigTravel() { carmen.DigTravel(); }
-
+    public void Vibration(float intensity, float dur) { carmen.ControllerRumble(intensity, dur); }
     public void GainIFrames() { carmen.GainIFrames(); }
     public void LoseIFrames() { carmen.LoseIFrames(); }
 

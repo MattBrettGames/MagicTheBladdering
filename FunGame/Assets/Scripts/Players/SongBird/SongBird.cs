@@ -17,15 +17,13 @@ public class SongBird : PlayerBase
 
     [Header("Vial Stats")]
     public int smokeburstDamage;
-    public int smokePoisonTicks;
+    [SerializeField] float smokePoisonTicks;
     [Space]
     public int thrownCloudSize;
     public int dodgeCloudSize;
     public int cannisterCloudSize;
     [Space]
     public int smokeKnockback;
-    [SerializeField] float bCooldown = 10;
-    float bTimer;
 
     private bool hasCannister;
 
@@ -35,13 +33,6 @@ public class SongBird : PlayerBase
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }
-
-    public override void Update()
-    {
-        base.Update();
-        bTimer -= Time.deltaTime;
-    }
-
 
     void GainSmokes()
     {
@@ -58,16 +49,23 @@ public class SongBird : PlayerBase
     public override void XAction()
     {
         anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0);
+        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this);
     }
 
-    public override void YAction() { anim.SetTrigger("YAction"); }
+    public override void YAction()
+    {
+        if (yTimer <= 0)
+        {
+            anim.SetTrigger("YAction");
+            yTimer = yCooldown;
+        }
+    }
 
     public override void BAction()
     {
         if (hasCannister)
         {
-            if (bTimer < 0)
+            if (bTimer <= 0)
             {
                 cannister.transform.position = transform.position;
                 cannister.SetActive(true);
@@ -79,14 +77,14 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback, lookAtTarget.gameObject);
             hasCannister = true;
         }
     }
 
     public override void AAction()
     {
-        if (dodgeTimer < 0)
+        if (aTimer <= 0)
         {
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
@@ -102,13 +100,14 @@ public class SongBird : PlayerBase
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
             }
+
+            aTimer = aCooldown;
         }
     }
 
     public void EndDodge()
     {
         state = State.normal;
-        dodgeTimer = dodgeCooldown;
     }
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
@@ -123,7 +122,7 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback);
+        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback, lookAtTarget.gameObject, thrownCloudSize);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {

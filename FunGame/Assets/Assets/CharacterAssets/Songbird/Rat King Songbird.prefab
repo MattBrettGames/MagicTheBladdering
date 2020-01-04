@@ -210,7 +210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6770962236240589834
 Transform:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   speed: 36
   dodgeSpeed: 25
   dodgeDur: 0.5
-  dodgeCooldown: 0.9
+  dir: {x: 0, y: 0, z: 0}
   currentHealth: 80
   healthMax: 0
   damageMult: 1
@@ -260,16 +260,23 @@ MonoBehaviour:
   state: 0
   aimTarget: {fileID: 847150793461591880}
   visuals: {fileID: 8107741570313646386}
+  aCooldown: 1
+  bCooldown: 10
+  xCooldown: 0.5
+  yCooldown: 6
+  aTimer: 0
+  bTimer: 0
+  xTimer: 0
+  yTimer: 0
   weapon: {fileID: 0}
   baseXDamage: 10
   baseXKnockback: 2
   smokeburstDamage: 10
-  smokePoisonTicks: 10
+  smokePoisonTicks: 0.2
   thrownCloudSize: 15
   dodgeCloudSize: 10
   cannisterCloudSize: 10
   smokeKnockback: 1
-  bCooldown: 10
 --- !u!114 &3886128637265820348
 MonoBehaviour:
   m_ObjectHideFlags: 0

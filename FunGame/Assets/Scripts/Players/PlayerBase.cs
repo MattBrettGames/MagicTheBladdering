@@ -15,11 +15,9 @@ public abstract class PlayerBase : BlankMono
     public float speed;
     public float dodgeSpeed;
     public float dodgeDur;
-    public float dodgeCooldown;
-    protected float dodgeTimer;
     private float baseSpeed;
     protected float moving;
-    protected Vector3 dir;
+    [HideInInspector] public Vector3 dir;
 
     [Header("Common Stats")]
     public int currentHealth;
@@ -65,11 +63,22 @@ public abstract class PlayerBase : BlankMono
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform walkDirection;
 
+    [Header("Cooldowns")]
+    public float aCooldown;
+    public float bCooldown;
+    public float xCooldown;
+    public float yCooldown;
+    [HideInInspector] public float aTimer;
+    [HideInInspector] public float bTimer;
+    [HideInInspector] public float xTimer;
+    [HideInInspector] public float yTimer;
+
+
     public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-        dodgeTimer = dodgeCooldown;
+        aTimer = aCooldown;
         baseSpeed = speed;
 
         healthMax = currentHealth;
@@ -86,12 +95,15 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Update()
     {
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
+        print(aTimer);
+
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
-        dodgeTimer -= Time.deltaTime;
 
         if (poison > 0) { poison -= Time.deltaTime; }
-        if (curseTimer <= 0) { LoseCurse(); }
-        else { curseTimer -= Time.deltaTime; }
 
         aimTarget.position = transform.position + dir * 5;
 
@@ -162,7 +174,7 @@ public abstract class PlayerBase : BlankMono
 
             case State.dodging:
 
-                if (dodgeTimer < 0)
+                if (aTimer < 0)
                 {
                     DodgeSliding(dir);
                 }
@@ -172,12 +184,21 @@ public abstract class PlayerBase : BlankMono
                 KnockbackContinual();
                 break;
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (thisPlayer == "P2")
+            {
+                TakeDamage(3000, true);
+            }
+        }
+
     }
 
     #region Input Actions
     public virtual void AAction()
     {
-        if (dodgeTimer < 0 && dir != Vector3.zero)
+        if (aTimer < 0 && dir != Vector3.zero)
         {
             anim.SetTrigger("AAction");
 
@@ -186,11 +207,10 @@ public abstract class PlayerBase : BlankMono
             Invoke("EndDodge", dodgeDur);
         }
     }
-
     private void EndDodge()
     {
         state = State.normal;
-        dodgeTimer = dodgeCooldown;
+        aTimer = aCooldown;
     }
 
     public virtual void BAction() { }
@@ -199,7 +219,27 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc) { if (!counterFrames && !iFrames) { HealthChange(Mathf.RoundToInt(-damageInc * incomingMult)); anim.SetTrigger("Stagger"); } }
+    public virtual void TakeDamage(int damageInc, bool fromAttack)
+    {
+        if (!counterFrames && !iFrames)
+        {
+            HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
+            anim.SetTrigger("Stagger");
+            ControllerRumble(0.2f, 0.1f);
+            GameObject.Find("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
+            if (fromAttack)
+            {
+                StartCoroutine(HitStun(0.01f));
+            }
+        }
+    }
+    IEnumerator HitStun(float time)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(time);
+        EndTimeScale();
+    }
+
     private void EndTimeScale() { Time.timeScale = 1; }
 
     public void BecomeStunned(float duration)
@@ -213,16 +253,18 @@ public abstract class PlayerBase : BlankMono
         state = State.normal;
     }
 
-    public virtual void KnockedDown(int duration) { Invoke("StandUp", duration); prone = true; anim.SetTrigger("Knockdown"); }
-    public virtual void StandUp() { anim.SetTrigger("StandUp"); prone = false; }
-
     public virtual void Death()
     {
         anim.SetTrigger("Death");
-        GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject);
-        anim.SetFloat("Movement", 0);
+        GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject, lookAtTarget.gameObject);
         GainIFrames();
-        state = State.attack;
+
+        dir = Vector3.zero;
+        rb2d.velocity = Vector3.zero;
+        anim.SetFloat("Movement", 0);
+
+        Time.timeScale = 1;
+        this.enabled = false;
     }
     public virtual void KnockbackContinual()
     {
@@ -241,9 +283,6 @@ public abstract class PlayerBase : BlankMono
 
     #region Utility Functions
     public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
-
-    public virtual void GainCurse(float duration) { cursed = true; speed /= 2; curseTimer += duration; }
-    public virtual void LoseCurse() { cursed = false; speed = baseSpeed; curseTimer = 0; }
 
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
@@ -271,20 +310,19 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec;  } }
+    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; ControllerRumble(0.1f, 0.05f); } }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
-    public virtual void DodgeSliding(Vector3 dir) {  transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
-
-    #endregion
-
-    #region Returns
-    public virtual int AccessUniqueFeature(int v)
+    public void ControllerRumble(float intensity, float dur)
     {
-        return 0;
+        player.SetVibration(1, intensity, dur);
+        player.SetVibration(0, intensity, dur);
     }
+
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
+
     #endregion
 
 }

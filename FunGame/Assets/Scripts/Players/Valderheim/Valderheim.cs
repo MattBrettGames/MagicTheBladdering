@@ -21,8 +21,6 @@ public class Valderheim : PlayerBase
     public int slamAttack;
     public int slamKnockback;
     [SerializeField] private float overheadStun;
-    [SerializeField] float yCooldown = 4;
-    float yTimer;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -31,11 +29,12 @@ public class Valderheim : PlayerBase
     [Header("Frenzy")]
     public int frenzyDuration;
     public int frenzyBonus;
+    public int frenzySpeedBuff;
     private bool frenzy;
     public ParticleSystem frenzyEffects;
 
     [Header("Passives")]
-    public int growingRageDiv;
+    [SerializeField] private float comboTimeDur;
     private bool comboTime;
 
     public override void Start()
@@ -46,12 +45,14 @@ public class Valderheim : PlayerBase
 
     public override void Update()
     {
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
+
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
-        dodgeTimer -= Time.deltaTime;
 
         if (poison > 0) { poison -= Time.deltaTime; }
-        if (curseTimer <= 0) { LoseCurse(); }
-        else { curseTimer -= Time.deltaTime; }
 
         aimTarget.position = transform.position + dir * 5;
 
@@ -59,7 +60,6 @@ public class Valderheim : PlayerBase
 
         if (player.GetButtonDown("BAttack")) { BAction(); }
 
-        yTimer -= Time.deltaTime;
 
         switch (state)
         {
@@ -118,7 +118,7 @@ public class Valderheim : PlayerBase
                 break;
 
             case State.dodging:
-                if (dodgeTimer < 0) DodgeSliding(dir);
+                if (aTimer < 0) DodgeSliding(dir);
                 break;
 
             case State.knockback:
@@ -131,54 +131,67 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0);
-            anim.SetTrigger("XAttack");
+            if (xTimer <= 0)
+            {
+                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
+                anim.SetTrigger("XAttack");
+                xTimer = xCooldown;
+            }
         }
         else
         {
-            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0);
+            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
             anim.SetTrigger("Spin");
         }
     }
 
     public override void YAction()
     {
-        if (yTimer < 0)
+        if (comboTime)
         {
-            if (comboTime)
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
+            anim.SetTrigger("ComboKick");
+            comboTime = false;
+        }
+        else
+        {
+            if (yTimer <= 0)
             {
-                hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0);
-                anim.SetTrigger("ComboKick");
-                comboTime = false;
-                yTimer = yCooldown;
-            }
-            else
-            {
-                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun);
+                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this);
                 anim.SetTrigger("YAttack");
+                yTimer = yCooldown;
             }
         }
     }
-    public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); }
-    public void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
+    public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); Invoke("CloseComboKick", comboTimeDur); }
+    private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
     public override void BAction()
     {
-        comboTime = false;
-        if (!frenzy && state != State.stun)
+        if (!frenzy && state != State.stun && bTimer <= 0)
         {
             Invoke("StopFrenzy", frenzyDuration);
+            speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
             frenzy = true;
             frenzyEffects.Play();
+            bTimer = bCooldown;
+
+            dodgeDur += 0.2f;
+            dodgeSpeed += 5;
         }
     }
     private void StopFrenzy()
     {
         damageMult -= frenzyBonus;
         incomingMult -= frenzyBonus;
+
+        dodgeDur -= 0.2f;
+        dodgeSpeed -= 5;
+
+        speed -= frenzySpeedBuff;
         frenzy = false;
         frenzyEffects.Clear();
         frenzyEffects.Stop();
