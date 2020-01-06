@@ -59,6 +59,7 @@ public class MenuSelector : MonoBehaviour
     void Duel() { universe.SelectedPlay(); }
     void Bios() { universe.SelectedBios(); }
     void BugFix() { universe.Restart(); }
+    void Options() { universe.SelectedOptions(); }
     void Adventure() { universe.SelectedAdventure(); }
     void EndCooldown() { inputOnCooldown = false; }
 }

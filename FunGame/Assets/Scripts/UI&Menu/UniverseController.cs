@@ -68,6 +68,11 @@ public class UniverseController : BlankMono
 
     private void Update()
     {
+        
+        if (SceneManager.GetActiveScene().name == "OptionsMenu")
+        {
+            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
+        }
         if (SceneManager.GetActiveScene().name == "Bios")
         {
             if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
@@ -94,14 +99,12 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelectorPVP"); numOfPlayers = 2; }
     public void SelectedBios() { SceneManager.LoadScene("Bios"); }
+    public void SelectedOptions() { SceneManager.LoadScene("OptionsMenu"); }
     public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; playersAlive.Add(GameObject.FindGameObjectWithTag("Player1")); playersAlive.Add(GameObject.FindGameObjectWithTag("Player2")); }
     public void Restart() { SceneManager.LoadScene("MainMenu"); }
 
     private void OnLevelWasLoaded(int level)
     {
-
-        Camera.main.gameObject.GetComponent<PostProcessingBehaviour>().enabled = isPostProcessing;
-
         currentLevel = level;
         if (level == 0)
         {
