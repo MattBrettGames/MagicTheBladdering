@@ -77,12 +77,11 @@ public class OptionMenuController : MonoBehaviour
 
     void Save()
     {
-        UniverseController uni = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
-        AudioManager aud = uni.gameObject.GetComponentInChildren<AudioManager>();
         masterVolume = sliders[0].value;
         musicVolume = sliders[1].value;
         sfxVolume = sliders[2].value;
 
+        aud.UpdateSettings();
 
         aud.masterVolume = masterVolume;
         aud.musicVolume = musicVolume;

@@ -10,13 +10,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
     SoundClip currentTrack = null;
 
-    public float masterVolume;
-    public float musicVolume;
-    public float sfxVolume;
+    public float masterVolume = 1;
+    public float musicVolume = 1;
+    public float sfxVolume = 1;
 
     public void Start()
     {
-               
+
         currentTrack = sounds[0];
         foreach (SoundClip s in sounds)
         {
@@ -28,12 +28,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void UpdateSettings() { Play(currentTrack.name); }
+
+
     public void Play(string clipToPlay)
     {
 
         print(" I'm now playing - " + clipToPlay);
 
-        if (currentTrack.isMusic)
+        if (currentTrack.isMusic && clipToPlay != currentTrack.name)
         {
             currentTrack.source.Stop();
         }

@@ -24,8 +24,6 @@ public class SmokeBase : BlankMono
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
-            print(Vector3.Distance(target.gameObject.transform.position, transform.position) + "|"+ ticks);
-
         if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
         {
             target.TakeDamage(damageTrue, true);

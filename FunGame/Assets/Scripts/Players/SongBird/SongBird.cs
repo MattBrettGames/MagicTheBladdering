@@ -98,7 +98,6 @@ public class SongBird : PlayerBase
     {
         if (aTimer <= 0)
         {
-
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
