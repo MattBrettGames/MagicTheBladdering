@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string clipToPlay)
     {
-        /*
+        
         print(" I'm now playing - " + clipToPlay);
 
         if (currentTrack.isMusic)
@@ -48,9 +48,10 @@ public class AudioManager : MonoBehaviour
         {
             s.source.volume = s.volume * mastervolume * sfxvolume;
         }
-
-        s.source.Play();
-        */
+        if(!s == null)
+        {
+            s.source.Play();
+        }        
     }
 }
 
