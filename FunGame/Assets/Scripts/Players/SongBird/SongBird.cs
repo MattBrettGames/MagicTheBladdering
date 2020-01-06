@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SongBird : PlayerBase
 {
+    [Header("Unique Sounds")]
+    [SerializeField] string bSoundBonus;
+
     [Header("More Components")]
     public CorvidDagger weapon;
     private ObjectPooler pooler;
@@ -15,20 +18,34 @@ public class SongBird : PlayerBase
     public int baseXDamage;
     public int baseXKnockback;
 
-    [Header("Vial Stats")]
-    public int smokeburstDamage;
-    [SerializeField] float smokePoisonTicks;
+    [Header("Cannister Cloud")]
+    [SerializeField] int cannisterCloudSize;
+    [SerializeField] int cannisterBurstDamage;
+    [SerializeField] float cannisterPoisonTicks;
+    [SerializeField] int cannisterSmokeKnockback;
+
+    [Header("Dodge Cloud")]
+    [SerializeField] int dodgeCloudSize;
+    [SerializeField] int dodgeBurstDamage;
+    [SerializeField] float dodgePoisonTicks;
+    [SerializeField] int dodgeSmokeKnockback;
+
+    [Header("Thrown Cloud")]
+    [SerializeField] int thrownCloudSize;
+    [SerializeField] int thrownBurstDamage;
+    [SerializeField] float thrownPoisonTicks;
+    [SerializeField] int thrownSmokeKnockback;
+
+    [Header("Death Cloud")]
+    [SerializeField] int deathCloudSize;
+    [SerializeField] int deathBurstDamage;
+    [SerializeField] float deathPoisonTicks;
+    [SerializeField] int deathSmokeKnockback;
+
     [Space]
-    public int thrownCloudSize;
-    public int dodgeCloudSize;
-    public int cannisterCloudSize;
-    [Space]
-    public int smokeKnockback;
 
     private bool hasCannister;
 
-    [Header("Unique Sounds")]
-    [SerializeField] string bSoundBonus;
 
 
     public override void SetInfo(UniverseController uni)
@@ -82,13 +99,13 @@ public class SongBird : PlayerBase
                 hasCannister = false;
                 anim.SetTrigger("BAction");
                 bTimer = bCooldown;
-            universe.PlaySound(bSound);
+                universe.PlaySound(bSound);
             }
         }
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback, lookAtTarget.gameObject);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterPoisonTicks, cannisterCloudSize, cannisterSmokeKnockback, lookAtTarget.gameObject);
             hasCannister = true;
             universe.PlaySound(bSoundBonus);
         }
@@ -102,6 +119,7 @@ public class SongBird : PlayerBase
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
             smokeCloud.SetActive(true);
+            smokeCloud.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgePoisonTicks, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize);
 
             anim.SetTrigger("AAction");
             state = State.dodging;
@@ -135,9 +153,23 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(smokeburstDamage, smokePoisonTicks, smokeKnockback, lookAtTarget.gameObject, thrownCloudSize);
+        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownPoisonTicks, thrownSmokeKnockback, lookAtTarget.gameObject, thrownCloudSize);
 
         for (int i = 0; i < thrownCloudSize; i++)
+        {
+            StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
+        }
+    }
+
+    public void DeathCloud()
+    {
+        smokeCloud.transform.position = transform.position;
+        smokeCloud.transform.localScale = Vector3.zero;
+        smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
+        smokeCloud.SetActive(true);
+        smokeCloud.GetComponent<SmokeBase>().Begin(deathBurstDamage, deathPoisonTicks, deathSmokeKnockback, lookAtTarget.gameObject, deathCloudSize);
+
+        for (int i = 0; i < deathCloudSize; i++)
         {
             StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
         }
