@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.loop = s.isLooping;
         }
     }
 
@@ -42,7 +43,7 @@ public class SoundClip
 {
     public string name;
     public bool isMusic;
-
+    public bool isLooping;
     public AudioClip clip;
 
     [HideInInspector] public AudioSource source;

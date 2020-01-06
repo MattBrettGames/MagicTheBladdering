@@ -77,6 +77,11 @@ MonoBehaviour:
   bTimer: 0
   xTimer: 0
   yTimer: 0
+  aSound: WiosA
+  bSound: WiosB
+  xSound: WiosX
+  ySound: WiosY
+  ouchSound: WiosOuch
   basicMelee: {fileID: 8986242647890308411}
   xDamage: 10
   xKnockback: 5
@@ -9989,34 +9994,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wiosna_JesterSkin
       objectReference: {fileID: 0}
-    - target: {fileID: 13700000, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
-    - target: {fileID: 13700002, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
-    - target: {fileID: 13700004, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
-    - target: {fileID: 13700006, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 12fc9104bd9de2e43855f93f848046ea, type: 2}
-    - target: {fileID: 13700008, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
-    - target: {fileID: 13700010, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 12fc9104bd9de2e43855f93f848046ea, type: 2}
-    - target: {fileID: 13700012, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 12fc9104bd9de2e43855f93f848046ea, type: 2}
     - target: {fileID: 400152, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10073,6 +10050,34 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
+    - target: {fileID: 13700002, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
+    - target: {fileID: 13700004, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
+    - target: {fileID: 13700006, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 12fc9104bd9de2e43855f93f848046ea, type: 2}
+    - target: {fileID: 13700008, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a8ed0482162df714bb4d9c907bae5a7b, type: 2}
+    - target: {fileID: 13700010, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 12fc9104bd9de2e43855f93f848046ea, type: 2}
+    - target: {fileID: 13700012, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 12fc9104bd9de2e43855f93f848046ea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef745fce5def1904ca8e9b4dbc3e5cb6, type: 3}
 --- !u!1 &2274438900486359448 stripped
