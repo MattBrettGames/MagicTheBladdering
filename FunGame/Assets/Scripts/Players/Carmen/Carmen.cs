@@ -62,7 +62,6 @@ public class Carmen : PlayerBase
     {
         if (yTimer <= 0)
         {
-
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
 
             if (lookDif <= backstabAngle)
