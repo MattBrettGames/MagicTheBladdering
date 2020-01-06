@@ -5,12 +5,10 @@ using System;
 public class AudioManager : MonoBehaviour
 {
 
-    [SerializeField] string menuTheme;
+    //[SerializeField] string menuTheme;
     [Space]
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
-
-
-
+        
     public void Start()
     {
         foreach (SoundClip s in sounds)
@@ -20,12 +18,11 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
         }
-
-        Play(menuTheme);
     }
 
     public void Play(string clipToPlay)
     {
+        print(" I'm now playing - " + clipToPlay);
         SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
         s.source.Play();
     }
