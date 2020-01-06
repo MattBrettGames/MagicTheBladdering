@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
         {
             s.source.volume = s.volume * mastervolume * sfxvolume;
         }
-        if(!s == null)
+        if(s != null)
         {
             s.source.Play();
         }        
