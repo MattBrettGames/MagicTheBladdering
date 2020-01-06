@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
@@ -43,6 +44,12 @@ public class UniverseController : BlankMono
     [Header("Determining Victory")]
     private string winner;
     private Text victoryText;
+
+    [Header("Settings")]
+
+    [HideInInspector] public bool isPostProcessing = true;
+
+
 
     void Start()
     {
@@ -92,6 +99,9 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
+
+        Camera.main.gameObject.GetComponent<PostProcessingBehaviour>().enabled = isPostProcessing;
+
         currentLevel = level;
         if (level == 0)
         {

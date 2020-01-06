@@ -42,7 +42,6 @@ public class Valderheim : PlayerBase
     {
         base.Start();
         hammer.gameObject.tag = tag;
-        print(hammer.gameObject.name);
     }
 
     public override void Update()
