@@ -74,6 +74,13 @@ public abstract class PlayerBase : BlankMono
     [HideInInspector] public float xTimer;
     [HideInInspector] public float yTimer;
 
+    [Header("Sound String")]
+    [SerializeField] protected string aSound;
+    [SerializeField] protected string bSound;
+    [SerializeField] protected string xSound;
+    [SerializeField] protected string ySound;
+    [SerializeField] protected string ouchSound;
+
 
     public virtual void Start()
     {
@@ -202,6 +209,8 @@ public abstract class PlayerBase : BlankMono
     {
         if (aTimer < 0 && dir != Vector3.zero)
         {
+            universe.PlaySound(aSound);
+
             anim.SetTrigger("AAction");
 
             state = State.dodging;
@@ -225,6 +234,7 @@ public abstract class PlayerBase : BlankMono
     {
         if (!counterFrames && !iFrames)
         {
+            universe.PlaySound(ouchSound);
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             anim.SetTrigger("Stagger");
             ControllerRumble(0.2f, 0.1f);

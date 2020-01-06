@@ -17,7 +17,6 @@ public class Wiosna : PlayerBase
     [Header("Vanishing Act")]
     [SerializeField] float vanishDistance;
 
-
     //[Header("BAttacks")]
     private GameObject flamingClone;
 
@@ -34,23 +33,23 @@ public class Wiosna : PlayerBase
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
     }
 
-    #region X Attacks
     public override void XAction()
     {
         if (xTimer <= 0)
         {
+            universe.PlaySound(xSound);
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this);
             xTimer = xCooldown;
         }
     }
-    #endregion
 
-    #region A Actions
+
     public override void AAction()
     {
         if (aTimer <= 0)
         {
+            universe.PlaySound(aSound);
             anim.SetTrigger("AAction");
             aTimer = aCooldown;
         }
@@ -59,27 +58,25 @@ public class Wiosna : PlayerBase
     {
         transform.position += dir * vanishDistance;
     }
-    #endregion
 
-    #region Y Attacks
+
     public override void YAction()
     {
         if (yTimer <= 0)
         {
-            print(gameObject.name + " has done the Y Attack");
+            universe.PlaySound(ySound);
             anim.SetTrigger("YAttack");
             yTimer = yCooldown;
         }
     }
-    #endregion
 
-    #region B Attacks
+
     public override void BAction()
     {
-        print(bTimer);
-
         if (bTimer <= 0)
         {
+            universe.PlaySound(bSound);
+
             print(flamingClone.name);
             flamingClone.transform.position = transform.position + dir;
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone();
@@ -87,5 +84,4 @@ public class Wiosna : PlayerBase
             bTimer = bCooldown;
         }
     }
-    #endregion
 }

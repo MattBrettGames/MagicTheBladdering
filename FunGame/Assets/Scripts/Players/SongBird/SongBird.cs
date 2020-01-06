@@ -27,6 +27,10 @@ public class SongBird : PlayerBase
 
     private bool hasCannister;
 
+    [Header("Unique Sounds")]
+    [SerializeField] string bSoundBonus;
+
+
     public override void SetInfo(UniverseController uni)
     {
         base.SetInfo(uni);
@@ -48,14 +52,20 @@ public class SongBird : PlayerBase
 
     public override void XAction()
     {
-        anim.SetTrigger("XAttack");
-        weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this);
+        if (xTimer <= 0)
+        {
+            universe.PlaySound(xSound);
+            anim.SetTrigger("XAttack");
+            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this);
+            xTimer = xCooldown;
+        }
     }
 
     public override void YAction()
     {
         if (yTimer <= 0)
         {
+            universe.PlaySound(ySound);
             anim.SetTrigger("YAction");
             yTimer = yCooldown;
         }
@@ -67,6 +77,7 @@ public class SongBird : PlayerBase
         {
             if (bTimer <= 0)
             {
+            universe.PlaySound(bSound);
                 cannister.transform.position = transform.position;
                 cannister.SetActive(true);
                 hasCannister = false;
@@ -76,6 +87,7 @@ public class SongBird : PlayerBase
         }
         else
         {
+            universe.PlaySound(bSoundBonus);
             smokeCloudCannister.transform.localScale = Vector3.one;
             cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, smokeburstDamage, smokePoisonTicks, cannisterCloudSize, smokeKnockback, lookAtTarget.gameObject);
             hasCannister = true;
@@ -86,6 +98,8 @@ public class SongBird : PlayerBase
     {
         if (aTimer <= 0)
         {
+            universe.PlaySound(aSound);
+
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);

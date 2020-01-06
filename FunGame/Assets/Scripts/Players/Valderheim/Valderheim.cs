@@ -37,6 +37,7 @@ public class Valderheim : PlayerBase
     [SerializeField] private float comboTimeDur;
     private bool comboTime;
 
+
     public override void Start()
     {
         base.Start();
@@ -134,6 +135,7 @@ public class Valderheim : PlayerBase
         {
             if (xTimer <= 0)
             {
+                universe.PlaySound(xSound);
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
@@ -141,6 +143,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
+            universe.PlaySound(xSound);
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
             anim.SetTrigger("Spin");
         }
@@ -150,6 +153,7 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
+            universe.PlaySound(ySound);
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
             anim.SetTrigger("ComboKick");
             comboTime = false;
@@ -158,6 +162,7 @@ public class Valderheim : PlayerBase
         {
             if (yTimer <= 0)
             {
+                universe.PlaySound(ySound);
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
@@ -171,6 +176,8 @@ public class Valderheim : PlayerBase
     {
         if (!frenzy && state != State.stun && bTimer <= 0)
         {
+            universe.PlaySound(bSound);
+
             Invoke("StopFrenzy", frenzyDuration);
             speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
@@ -182,6 +189,7 @@ public class Valderheim : PlayerBase
 
             dodgeDur += 0.2f;
             dodgeSpeed += 5;
+
         }
     }
     private void StopFrenzy()
