@@ -20,6 +20,7 @@ public class UniverseController : BlankMono
     public AnalyticsController analytics;
     public Player player;
     DualObjectiveCamera camCode;
+    AudioManager audio;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -47,6 +48,7 @@ public class UniverseController : BlankMono
     {
         player = ReInput.players.GetPlayer("System");
 
+        audio = GetComponentInChildren<AudioManager>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -143,7 +145,7 @@ public class UniverseController : BlankMono
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
-            playerCode.SetInfo();
+            playerCode.SetInfo(this);
 
             #endregion
 
@@ -167,7 +169,7 @@ public class UniverseController : BlankMono
             else if (p2.name.Contains("Camren")) { charInts[1] = 2; }
             else if (p2.name.Contains("Wiosna")) { charInts[1] = 3; }
             p2.transform.localScale = targetScale;
-            playerCode.SetInfo();
+            playerCode.SetInfo(this);
             #endregion
 
             for (int i = 0; i < 2; i++)
@@ -295,11 +297,8 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CameraRumbleCall()
-    {
-        camCode.CamShake(0.1f);
-    }
+    public void CameraRumbleCall() { camCode.CamShake(0.1f); }
 
-
+    public void PlaySound(string clip) { audio.Play(clip); }
 
 }
