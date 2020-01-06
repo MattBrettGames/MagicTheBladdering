@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
     SoundClip currentTrack = null;
 
+    public float mastervolume;
+    public float musicvolume;
+    public float sfxvolume;
+    
     public void Start()
     {
         currentTrack = sounds[0];
@@ -34,6 +38,16 @@ public class AudioManager : MonoBehaviour
 
         SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
         currentTrack = s;
+
+        if (currentTrack.isMusic)
+        {
+            s.source.volume = s.volume * mastervolume * musicvolume;
+        }
+        else
+        {
+            s.source.volume = s.volume * mastervolume * sfxvolume;
+        }
+
         s.source.Play();
     }
 }
