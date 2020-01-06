@@ -10,12 +10,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
     SoundClip currentTrack = null;
 
-    public float mastervolume;
-    public float musicvolume;
-    public float sfxvolume;
+    public float masterVolume;
+    public float musicVolume;
+    public float sfxVolume;
 
     public void Start()
     {
+               
         currentTrack = sounds[0];
         foreach (SoundClip s in sounds)
         {
@@ -42,11 +43,11 @@ public class AudioManager : MonoBehaviour
 
         if (currentTrack.isMusic)
         {
-            s.source.volume = s.volume * mastervolume * musicvolume;
+            s.source.volume = s.volume * masterVolume * musicVolume;
         }
         else
         {
-            s.source.volume = s.volume * mastervolume * sfxvolume;
+            s.source.volume = s.volume * masterVolume * sfxVolume;
         }
 
         if (s != null)
