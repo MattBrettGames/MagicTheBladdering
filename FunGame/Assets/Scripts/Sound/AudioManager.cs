@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     public float mastervolume;
     public float musicvolume;
     public float sfxvolume;
-    
+
     public void Start()
     {
         currentTrack = sounds[0];
@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string clipToPlay)
     {
-        
+
         print(" I'm now playing - " + clipToPlay);
 
         if (currentTrack.isMusic)
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
         }
 
         SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
-        currentTrack = s;
+        if (s != null) currentTrack = s;
 
         if (currentTrack.isMusic)
         {
@@ -49,10 +49,10 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume * mastervolume * sfxvolume;
         }
 
-        if(s != null)
+        if (s != null)
         {
             s.source.Play();
-        }        
+        }
     }
 }
 
