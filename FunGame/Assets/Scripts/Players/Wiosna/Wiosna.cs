@@ -58,8 +58,7 @@ public class Wiosna : PlayerBase
     {
         transform.position += dir * vanishDistance;
     }
-
-
+    
     public override void YAction()
     {
         if (yTimer <= 0)
@@ -69,8 +68,7 @@ public class Wiosna : PlayerBase
             universe.PlaySound(ySound);
         }
     }
-
-
+    
     public override void BAction()
     {
         if (bTimer <= 0)
