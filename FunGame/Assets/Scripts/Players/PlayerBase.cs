@@ -235,7 +235,6 @@ public abstract class PlayerBase : BlankMono
     {
         if (!counterFrames && !iFrames)
         {
-            universe.PlaySound(ouchSound);
             anim.SetTrigger("Stagger");
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
@@ -244,6 +243,7 @@ public abstract class PlayerBase : BlankMono
                 StartCoroutine(HitStun(0.01f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
+            universe.PlaySound(ouchSound);
         }
     }
     IEnumerator HitStun(float time)

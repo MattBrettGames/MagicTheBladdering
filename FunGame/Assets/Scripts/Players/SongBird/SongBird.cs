@@ -114,8 +114,8 @@ public class SongBird : PlayerBase
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
             }
 
-            universe.PlaySound(aSound);
             aTimer = aCooldown;
+            universe.PlaySound(aSound);
         }
     }
 
