@@ -20,12 +20,18 @@ public class OptionMenuController : MonoBehaviour
     [SerializeField] float sfxVolume;
 
     bool inputOnCooldown;
+    UniverseController uni;
+    AudioManager aud;
 
     void Start()
     {
-        sliders[0].value = masterVolume;
-        sliders[1].value = musicVolume;
-        sliders[2].value = sfxVolume;
+
+        uni = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
+        aud = uni.gameObject.GetComponentInChildren<AudioManager>();
+
+        sliders[0].value = aud.masterVolume;
+        sliders[1].value = aud.musicVolume;
+        sliders[2].value = aud.sfxVolume;
 
         for (int i = 0; i < sliders.Length; i++)
         {
@@ -57,7 +63,7 @@ public class OptionMenuController : MonoBehaviour
 
         if (currentDisplay == 0 || currentDisplay == 1 || currentDisplay == 2)
         {
-            sliders[currentDisplay].value += (player1.GetAxis("HoriMove")  + player2.GetAxis("HoriMove")) * Time.deltaTime;
+            sliders[currentDisplay].value += (player1.GetAxis("HoriMove") + player2.GetAxis("HoriMove")) * Time.deltaTime;
 
             if (sliders[currentDisplay].value < 0) sliders[currentDisplay].value = 0;
             if (sliders[currentDisplay].value > 1) sliders[currentDisplay].value = 1;
@@ -78,10 +84,10 @@ public class OptionMenuController : MonoBehaviour
         sfxVolume = sliders[2].value;
 
 
-        aud.mastervolume = masterVolume;
-        aud.musicvolume = musicVolume;
-        aud.sfxvolume = sfxVolume;
-        print("I've been saved - " + masterVolume + "|" + aud.mastervolume + "|" + musicVolume + "|" + aud.musicvolume + "|" + sfxVolume + "|" + aud.sfxvolume);
+        aud.masterVolume = masterVolume;
+        aud.musicVolume = musicVolume;
+        aud.sfxVolume = sfxVolume;
+        print("I've been saved - " + masterVolume + "|" + aud.masterVolume + "|" + musicVolume + "|" + aud.musicVolume + "|" + sfxVolume + "|" + aud.sfxVolume);
     }
 
     void EndCooldown() { inputOnCooldown = false; }
