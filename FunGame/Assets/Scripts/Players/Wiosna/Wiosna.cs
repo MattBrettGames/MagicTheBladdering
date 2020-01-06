@@ -37,10 +37,10 @@ public class Wiosna : PlayerBase
     {
         if (xTimer <= 0)
         {
-            universe.PlaySound(xSound);
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this);
             xTimer = xCooldown;
+            universe.PlaySound(xSound);
         }
     }
 
@@ -49,9 +49,9 @@ public class Wiosna : PlayerBase
     {
         if (aTimer <= 0)
         {
-            universe.PlaySound(aSound);
             anim.SetTrigger("AAction");
             aTimer = aCooldown;
+            universe.PlaySound(aSound);
         }
     }
     public void DoTheTeleport()
@@ -64,9 +64,9 @@ public class Wiosna : PlayerBase
     {
         if (yTimer <= 0)
         {
-            universe.PlaySound(ySound);
             anim.SetTrigger("YAttack");
             yTimer = yCooldown;
+            universe.PlaySound(ySound);
         }
     }
 
@@ -75,13 +75,14 @@ public class Wiosna : PlayerBase
     {
         if (bTimer <= 0)
         {
-            universe.PlaySound(bSound);
 
             print(flamingClone.name);
             flamingClone.transform.position = transform.position + dir;
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone();
             flamingClone.SetActive(true);
             bTimer = bCooldown;
+
+            universe.PlaySound(bSound);
         }
     }
 }

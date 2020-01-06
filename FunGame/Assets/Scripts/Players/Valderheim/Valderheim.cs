@@ -134,17 +134,17 @@ public class Valderheim : PlayerBase
         {
             if (xTimer <= 0)
             {
-                universe.PlaySound(xSound);
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
+                universe.PlaySound(xSound);
             }
         }
         else
         {
-            universe.PlaySound(xSound);
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
             anim.SetTrigger("Spin");
+            universe.PlaySound(xSound);
         }
     }
 
@@ -152,19 +152,19 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            universe.PlaySound(ySound);
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
             anim.SetTrigger("ComboKick");
             comboTime = false;
+            universe.PlaySound(ySound);
         }
         else
         {
             if (yTimer <= 0)
             {
-                universe.PlaySound(ySound);
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
+                universe.PlaySound(ySound);
             }
         }
     }
@@ -175,7 +175,6 @@ public class Valderheim : PlayerBase
     {
         if (!frenzy && state != State.stun && bTimer <= 0)
         {
-            universe.PlaySound(bSound);
 
             Invoke("StopFrenzy", frenzyDuration);
             speed += frenzySpeedBuff;
@@ -189,6 +188,7 @@ public class Valderheim : PlayerBase
             dodgeDur += 0.2f;
             dodgeSpeed += 5;
 
+            universe.PlaySound(bSound);
         }
     }
     private void StopFrenzy()

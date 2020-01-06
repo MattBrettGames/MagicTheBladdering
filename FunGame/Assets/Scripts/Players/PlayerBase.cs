@@ -209,13 +209,14 @@ public abstract class PlayerBase : BlankMono
     {
         if (aTimer < 0 && dir != Vector3.zero)
         {
-            universe.PlaySound(aSound);
 
             anim.SetTrigger("AAction");
 
             state = State.dodging;
 
             Invoke("EndDodge", dodgeDur);
+
+            universe.PlaySound(aSound);
         }
     }
     private void EndDodge()
@@ -235,7 +236,6 @@ public abstract class PlayerBase : BlankMono
         if (!counterFrames && !iFrames)
         {
             universe.PlaySound(ouchSound);
-            HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             anim.SetTrigger("Stagger");
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
@@ -243,6 +243,7 @@ public abstract class PlayerBase : BlankMono
             {
                 StartCoroutine(HitStun(0.01f));
             }
+            HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
         }
     }
     IEnumerator HitStun(float time)
@@ -267,7 +268,6 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Death()
     {
-        anim.SetTrigger("Death");
         universe.PlayerDeath(gameObject, lookAtTarget.gameObject);
         GainIFrames();
 
@@ -276,6 +276,7 @@ public abstract class PlayerBase : BlankMono
         anim.SetFloat("Movement", 0);
 
         Time.timeScale = 1;
+        anim.SetTrigger("Death");
         this.enabled = false;
     }
     public virtual void KnockbackContinual()

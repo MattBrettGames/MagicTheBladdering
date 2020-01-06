@@ -29,7 +29,7 @@ public class OptionMenuController : MonoBehaviour
 
         if (player1.GetAxis("VertMove") >= 0.4f || player2.GetAxis("VertMove") >= 0.4f)
         {
-
+            
 
 
 

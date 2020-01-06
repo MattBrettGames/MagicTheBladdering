@@ -48,13 +48,13 @@ public class Carmen : PlayerBase
     {
         if (xTimer <= 0)
         {
-            universe.PlaySound(xSound);
             anim.SetTrigger("XAttack");
             spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
             xTimer = xCooldown;
+            universe.PlaySound(xSound);
         }
     }
 
@@ -67,15 +67,15 @@ public class Carmen : PlayerBase
 
             if (lookDif <= backstabAngle)
             {
-                universe.PlaySound(ySoundBonus);
                 leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
                 rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
+                universe.PlaySound(ySoundBonus);
             }
             else
             {
-                universe.PlaySound(ySound);
                 leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
                 rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
+                universe.PlaySound(ySound);
             }
             anim.SetTrigger("YAttack");
 
@@ -87,9 +87,9 @@ public class Carmen : PlayerBase
     {
         if (bTimer <= 0)
         {
-            universe.PlaySound(bSound);
             anim.SetTrigger("BAttack");
             bTimer = bCooldown;
+            universe.PlaySound(bSound);
         }
     }
     public void DigTravel()
