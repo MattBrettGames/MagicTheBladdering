@@ -31,6 +31,7 @@ public class CharacterSelector : BlankMono
     [SerializeField] Vector3 camOffsetLocked;
     GameObject store;
     GameObject backStore;
+    [SerializeField] CharacterSelector otherChar;
 
     [Header("UI Elements")]
     public GameObject characterText;
@@ -170,15 +171,17 @@ public class CharacterSelector : BlankMono
 
     IEnumerator StartLoad()
     {
+        otherChar.characters[currentChar].skins[currentSkin].lockedChar = true;
+        otherChar.UpdateDisplay();
         yield return new WaitForSeconds(2);
         universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
     }
 
-
     private void Unlock()
     {
+        otherChar.characters[currentChar].skins[currentSkin].lockedChar = false;
+        otherChar.UpdateDisplay();
         store.transform.position = camOffsetBase;
-        //backStore.transform.position = camOffsetBase;
         cam.fieldOfView = camFOVBase;
     }
 
@@ -215,15 +218,9 @@ public class CharacterSelector : BlankMono
         displayChar.SetActive(true);
     }
 
-    public void SetUniverse(UniverseController universeTemp)
-    {
-        universe = universeTemp;
-    }
+    public void SetUniverse(UniverseController universeTemp) { universe = universeTemp; }
 
-    void EndCooldown()
-    {
-        inputCooldown = false;
-    }
+    void EndCooldown() { inputCooldown = false; }
 
     [Serializable]
     public struct ModelList
@@ -231,13 +228,13 @@ public class CharacterSelector : BlankMono
         public GameObject name;
         public List<SkinFo> skins;
     }
+}
 
-    [Serializable]
-    public struct SkinFo
-    {
-        public string name;
-        public GameObject Skin;
-        public bool lockedChar;
-    }
-
+[Serializable]
+public class SkinFo
+{
+    public CharacterSelector charSel;
+    public string name;
+    public GameObject Skin;
+    public bool lockedChar;
 }
