@@ -62,6 +62,7 @@ public abstract class PlayerBase : BlankMono
     protected Transform lookAtTarget;
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform walkDirection;
+    protected UniverseController universe;
 
     [Header("Cooldowns")]
     public float aCooldown;
@@ -87,8 +88,9 @@ public abstract class PlayerBase : BlankMono
         walkDirection = Instantiate<GameObject>(aimTarget.gameObject, Vector3.zero, Quaternion.identity, gameObject.transform).transform;
     }
 
-    public virtual void SetInfo()
+    public virtual void SetInfo(UniverseController uni)
     {
+        universe = uni;
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }
     }
@@ -226,7 +228,7 @@ public abstract class PlayerBase : BlankMono
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             anim.SetTrigger("Stagger");
             ControllerRumble(0.2f, 0.1f);
-            GameObject.Find("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
+            universe.CameraRumbleCall();
             if (fromAttack)
             {
                 StartCoroutine(HitStun(0.01f));
@@ -256,7 +258,7 @@ public abstract class PlayerBase : BlankMono
     public virtual void Death()
     {
         anim.SetTrigger("Death");
-        GameObject.Find("UniverseController").GetComponent<UniverseController>().PlayerDeath(gameObject, lookAtTarget.gameObject);
+        universe.PlayerDeath(gameObject, lookAtTarget.gameObject);
         GainIFrames();
 
         dir = Vector3.zero;

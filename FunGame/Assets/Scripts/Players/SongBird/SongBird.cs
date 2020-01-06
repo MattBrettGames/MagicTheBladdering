@@ -27,9 +27,9 @@ public class SongBird : PlayerBase
 
     private bool hasCannister;
 
-    public override void SetInfo()
+    public override void SetInfo(UniverseController uni)
     {
-        base.SetInfo();
+        base.SetInfo(uni);
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }

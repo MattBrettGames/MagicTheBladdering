@@ -21,9 +21,9 @@ public class Wiosna : PlayerBase
     //[Header("BAttacks")]
     private GameObject flamingClone;
 
-    public override void SetInfo()
+    public override void SetInfo(UniverseController uni)
     {
-        base.SetInfo();
+        base.SetInfo(uni);
         Invoke("GainClone", 0.1f);
     }
 

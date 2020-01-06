@@ -28,9 +28,9 @@ public class Carmen : PlayerBase
     public float backStabDamageMult;
     private GameObject enemyVisual;
 
-    public override void SetInfo()
+    public override void SetInfo(UniverseController uni)
     {
-        base.SetInfo();
+        base.SetInfo(uni);
         StartCoroutine(GainBack());
         spinSphere.GetComponent<SphereCollider>().radius = spinRadius;
     }
