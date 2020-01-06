@@ -32,7 +32,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3672090908981924634}
-  - {fileID: 3672090909303053044}
   - {fileID: 3672090909023925168}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -67,8 +66,8 @@ MonoBehaviour:
   prone: 0
   poison: 0
   state: 0
-  aimTarget: {fileID: 0}
-  visuals: {fileID: 0}
+  aimTarget: {fileID: 3672090908981924634}
+  visuals: {fileID: 3672090909023432592}
   aCooldown: 1.5
   bCooldown: 7
   xCooldown: 0.5
@@ -82,16 +81,26 @@ MonoBehaviour:
   xSound: SongX
   ySound: SongY
   ouchSound: SongOuch
+  bSoundBonus: SongYOuch
   weapon: {fileID: 3672090909329855606}
   baseXDamage: 10
   baseXKnockback: 2
-  smokeburstDamage: 14
-  smokePoisonTicks: 0.1
-  thrownCloudSize: 15
-  dodgeCloudSize: 10
   cannisterCloudSize: 10
-  smokeKnockback: 1
-  bSoundBonus: SongYOuch
+  cannisterBurstDamage: 15
+  cannisterPoisonTicks: 0.1
+  cannisterSmokeKnockback: 2
+  dodgeCloudSize: 7
+  dodgeBurstDamage: 15
+  dodgePoisonTicks: 0.1
+  dodgeSmokeKnockback: 2
+  thrownCloudSize: 15
+  thrownBurstDamage: 15
+  thrownPoisonTicks: 0.1
+  thrownSmokeKnockback: 2
+  deathCloudSize: 5
+  deathBurstDamage: 15
+  deathPoisonTicks: 0.1
+  deathSmokeKnockback: 2
 --- !u!114 &3672090907512359685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,36 +439,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!1 &3672090909303053045
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3672090909303053044}
-  m_Layer: 0
-  m_Name: RangeTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3672090909303053044
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3672090909303053045}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3672090907512359681}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3672090909329855609
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -527,7 +506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 73ee2e0e7effb564595cf59abd0b0155, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 73ee2e0e7effb564595cf59abd0b0155, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

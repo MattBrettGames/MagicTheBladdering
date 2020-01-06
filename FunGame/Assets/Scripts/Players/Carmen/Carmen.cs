@@ -63,6 +63,7 @@ public class Carmen : PlayerBase
         if (yTimer <= 0)
         {
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
+            anim.SetTrigger("YAttack");
 
             if (lookDif <= backstabAngle)
             {
@@ -76,7 +77,6 @@ public class Carmen : PlayerBase
                 rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
                 universe.PlaySound(ySound);
             }
-            anim.SetTrigger("YAttack");
 
             yTimer = yCooldown;
         }
