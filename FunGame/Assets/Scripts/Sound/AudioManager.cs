@@ -8,9 +8,11 @@ public class AudioManager : MonoBehaviour
     //[SerializeField] string menuTheme;
     [Space]
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
-        
+    SoundClip currentTrack = null;
+
     public void Start()
     {
+        currentTrack = sounds[0];
         foreach (SoundClip s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -23,7 +25,14 @@ public class AudioManager : MonoBehaviour
     public void Play(string clipToPlay)
     {
         print(" I'm now playing - " + clipToPlay);
+
+        if (currentTrack.isMusic)
+        {
+            currentTrack.source.Stop();
+        }
+
         SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
+        currentTrack = s;
         s.source.Play();
     }
 }
@@ -32,6 +41,7 @@ public class AudioManager : MonoBehaviour
 public class SoundClip
 {
     public string name;
+    public bool isMusic;
 
     public AudioClip clip;
 
