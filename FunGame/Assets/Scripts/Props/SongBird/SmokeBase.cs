@@ -20,7 +20,6 @@ public class SmokeBase : BlankMono
         InvokeRepeating("PoisonCheck", ticks, ticks);
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
-        print(targetLooker.gameObject.name);
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 

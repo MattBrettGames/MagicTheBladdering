@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cannister : BlankMono
 {
     private GameObject smokeTrue;
-        
+
     public void TriggerBurst(GameObject smoke, int damage, float tick, int size, int knockback, GameObject target)
     {
         smokeTrue = smoke;

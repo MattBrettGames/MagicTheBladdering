@@ -129,6 +129,7 @@ public class SongBird : PlayerBase
             for (int i = 0; i < dodgeCloudSize; i++)
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
+                print(i + " is the current cycle on dodge");
             }
 
             aTimer = aCooldown;
@@ -158,6 +159,7 @@ public class SongBird : PlayerBase
         for (int i = 0; i < thrownCloudSize; i++)
         {
             StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
+            print(i + " is the current cycle on throw");
         }
     }
 
@@ -171,7 +173,8 @@ public class SongBird : PlayerBase
 
         for (int i = 0; i < deathCloudSize; i++)
         {
-            StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
+            StartCoroutine(SmokeMove(smokeCloud, Vector3.zero, i * 0.01f));
+            print(i + " is the current cycle on death");
         }
     }
 
