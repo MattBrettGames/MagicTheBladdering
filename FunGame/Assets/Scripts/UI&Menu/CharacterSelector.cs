@@ -74,13 +74,13 @@ public class CharacterSelector : BlankMono
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(5, i)); }
                     currentChar++;
-                    UpdateDisplay();
+                    UpdateDisplay(0.2f);
                 }
                 else
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(5, i)); }
                     currentChar = 0;
-                    UpdateDisplay();
+                    UpdateDisplay(0.2f);
                 }
                 Invoke("EndCooldown", 0.3f);
                 currentSkin = 0;
@@ -93,14 +93,14 @@ public class CharacterSelector : BlankMono
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar--;
                     currentSkin = 0;
-                    UpdateDisplay();
+                    UpdateDisplay(0.2f);
                 }
                 else
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar = characters.Count - 1;
                     currentSkin = 0;
-                    UpdateDisplay();
+                    UpdateDisplay(0.2f);
                 }
                 Invoke("EndCooldown", 0.3f);
             }
@@ -195,7 +195,7 @@ public class CharacterSelector : BlankMono
 
     private IEnumerator SpinTrigger(float angle, float time)
     {
-        yield return new WaitForSecondsRealtime(time / 200);
+        yield return new WaitForSecondsRealtime(time * 0.005f);
         SpinJuice(angle);
     }
     private void SpinJuice(float angle)
@@ -203,8 +203,18 @@ public class CharacterSelector : BlankMono
         gameObject.transform.Rotate(new Vector3(0, angle, 0));
     }
 
+    public void UpdateDisplay(float time)
+    {
+        StartCoroutine(DelayedDisplay(time));
+    }
     public void UpdateDisplay()
     {
+        StartCoroutine(DelayedDisplay(0));
+    }
+
+    IEnumerator DelayedDisplay(float time)
+    {
+        yield return new WaitForSeconds(time);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
         characterText.SetActive(false);
         characterText = characters[currentChar].name;
@@ -224,7 +234,10 @@ public class CharacterSelector : BlankMono
         }
 
         displayChar.SetActive(true);
+
     }
+
+
 
     public void SetUniverse(UniverseController universeTemp) { universe = universeTemp; }
 
