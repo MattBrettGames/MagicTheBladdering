@@ -108,7 +108,6 @@ public abstract class PlayerBase : BlankMono
         if (bTimer > 0) bTimer -= Time.deltaTime;
         if (xTimer > 0) xTimer -= Time.deltaTime;
         if (yTimer > 0) yTimer -= Time.deltaTime;
-        print(aTimer);
 
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
 

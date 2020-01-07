@@ -34,8 +34,6 @@ public class AudioManager : MonoBehaviour
     public void Play(string clipToPlay)
     {
 
-        print(" I'm now playing - " + clipToPlay);
-
         if (currentTrack.isMusic && clipToPlay != currentTrack.name)
         {
             currentTrack.source.Stop();
