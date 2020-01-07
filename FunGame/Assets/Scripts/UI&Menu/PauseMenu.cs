@@ -114,7 +114,7 @@ public class PauseMenu : MonoBehaviour
     void Quit()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("MainMenu");
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
     }
 
 }
