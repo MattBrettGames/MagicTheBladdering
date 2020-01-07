@@ -8,12 +8,17 @@ public class Wiosna : PlayerBase
 
     [Header("More Components")]
     public Weapons basicMelee;
+    public Weapons explosion;
     private ObjectPooler objectPooler;
 
     [Header("X Attack")]
     [SerializeField] int xDamage;
     [SerializeField] int xKnockback;
 
+    [Header("Y Attack")]
+    [SerializeField] int yDamage;
+    [SerializeField] int yKnockback;
+       
     [Header("Vanishing Act")]
     [SerializeField] float vanishDistance;
 
@@ -85,6 +90,7 @@ public class Wiosna : PlayerBase
         if (yTimer <= 0)
         {
             anim.SetTrigger("YAttack");
+            explosion.GainInfo(yDamage, yKnockback, visuals.transform.forward, pvp, 0, this);
             yTimer = yCooldown;
             universe.PlaySound(ySound);
         }
