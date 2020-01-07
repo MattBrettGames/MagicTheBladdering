@@ -161,7 +161,7 @@ public class UniverseController : BlankMono
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
-            playerCode.SetInfo(this);
+            playerCode.SetInfo(this, 13);
 
             #endregion
 
@@ -182,10 +182,10 @@ public class UniverseController : BlankMono
             p2.transform.rotation = targetLook;
             if (p2.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p2.name.Contains("Songbird")) { charInts[1] = 1; }
-            else if (p2.name.Contains("Camren")) { charInts[1] = 2; }
+            else if (p2.name.Contains("Carmen")) { charInts[1] = 2; }
             else if (p2.name.Contains("Wiosna")) { charInts[1] = 3; }
             p2.transform.localScale = targetScale;
-            playerCode.SetInfo(this);
+            playerCode.SetInfo(this, 14);
             #endregion
 
             for (int i = 0; i < 2; i++)

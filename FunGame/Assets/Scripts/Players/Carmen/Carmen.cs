@@ -21,7 +21,8 @@ public class Carmen : PlayerBase
     [SerializeField] float spinRadius;
 
     [Header("Dig")]
-    public int digDistance;
+    public float digDur;
+    [SerializeField] float digSpeedBonus;
 
     [Header("Backstab")]
     public int backstabAngle;
@@ -31,9 +32,9 @@ public class Carmen : PlayerBase
     [Header("Bonus Sounds")]
     [SerializeField] string ySoundBonus;
 
-    public override void SetInfo(UniverseController uni)
+    public override void SetInfo(UniverseController uni, int layerNew)
     {
-        base.SetInfo(uni);
+        base.SetInfo(uni, layerNew);
         StartCoroutine(GainBack());
         spinSphere.GetComponent<SphereCollider>().radius = spinRadius;
     }
@@ -86,14 +87,36 @@ public class Carmen : PlayerBase
     {
         if (bTimer <= 0)
         {
-            anim.SetTrigger("BAttack");
+            int thisLayer;
+            if (playerID == 0)
+            {
+                thisLayer = 13;
+            }
+            else
+            {
+                thisLayer = 14;
+            }
+            Physics.IgnoreLayerCollision(thisLayer, 12, true);
+
+            dodgeSpeed += digSpeedBonus;
+
+            anim.SetTrigger("BAction");
+
+            state = State.dodging;
+
+            StartCoroutine(EndDig(thisLayer));
             bTimer = bCooldown;
+
             universe.PlaySound(bSound);
         }
     }
-    public void DigTravel()
+    IEnumerator EndDig(int layer)
     {
-        transform.position += dir * digDistance;
+        yield return new WaitForSeconds(dodgeDur);
+            dodgeSpeed -= digSpeedBonus;
+        base.EndDodge();
+        Physics.IgnoreLayerCollision(layer, 12, false);
     }
+
 
 }

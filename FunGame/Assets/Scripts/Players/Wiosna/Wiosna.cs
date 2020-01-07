@@ -20,9 +20,9 @@ public class Wiosna : PlayerBase
     //[Header("BAttacks")]
     private GameObject flamingClone;
 
-    public override void SetInfo(UniverseController uni)
+    public override void SetInfo(UniverseController uni, int layerNew)
     {
-        base.SetInfo(uni);
+        base.SetInfo(uni, layerNew);
         Invoke("GainClone", 0.1f);
     }
 
@@ -49,16 +49,34 @@ public class Wiosna : PlayerBase
     {
         if (aTimer <= 0)
         {
+            int thisLayer;
+            if (playerID == 0)
+            {
+                thisLayer = 13;
+            }
+            else
+            {
+                thisLayer = 14;
+            }
+            Physics.IgnoreLayerCollision(thisLayer, 12, true);
+
             anim.SetTrigger("AAction");
+
+            state = State.dodging;
+
+            StartCoroutine(EndDig(thisLayer));
             aTimer = aCooldown;
+
             universe.PlaySound(aSound);
         }
     }
-    public void DoTheTeleport()
+    IEnumerator EndDig(int layer)
     {
-        transform.position += dir * vanishDistance;
+        yield return new WaitForSeconds(dodgeDur);
+        base.EndDodge();
+        Physics.IgnoreLayerCollision(layer, 12, false);
     }
-    
+
     public override void YAction()
     {
         if (yTimer <= 0)
@@ -68,13 +86,11 @@ public class Wiosna : PlayerBase
             universe.PlaySound(ySound);
         }
     }
-    
+
     public override void BAction()
     {
         if (bTimer <= 0)
         {
-
-            print(flamingClone.name);
             flamingClone.transform.position = transform.position + dir;
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone();
             flamingClone.SetActive(true);
