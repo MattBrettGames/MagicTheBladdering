@@ -16,7 +16,6 @@ public class AudioManager : MonoBehaviour
 
     public void Start()
     {
-
         currentTrack = sounds[0];
         foreach (SoundClip s in sounds)
         {
@@ -33,13 +32,14 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string clipToPlay)
     {
+        SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
 
-        if (currentTrack.isMusic && clipToPlay != currentTrack.name)
+        if (s.isMusic && clipToPlay != currentTrack.name)
         {
             currentTrack.source.Stop();
         }
 
-        SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
+        //  SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
         if (s != null) currentTrack = s;
 
         if (currentTrack.isMusic)

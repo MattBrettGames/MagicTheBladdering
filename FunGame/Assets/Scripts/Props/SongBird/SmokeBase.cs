@@ -36,8 +36,6 @@ public class SmokeBase : BlankMono
     {
         if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= 1 * transform.localScale.y)
         {
-            print(target.gameObject.name + " is staying in smoke");
-
             target.currentHealth -= 1;
             target.ControllerRumble(0.1f, 0.1f);
         }
