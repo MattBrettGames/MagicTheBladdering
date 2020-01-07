@@ -95,11 +95,13 @@ public abstract class PlayerBase : BlankMono
         walkDirection = Instantiate<GameObject>(aimTarget.gameObject, Vector3.zero, Quaternion.identity, gameObject.transform).transform;
     }
 
-    public virtual void SetInfo(UniverseController uni)
+    public virtual void SetInfo(UniverseController uni, int layerNew)
     {
         universe = uni;
+        gameObject.layer = layerNew;
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }
+
     }
 
     public virtual void Update()
@@ -182,7 +184,7 @@ public abstract class PlayerBase : BlankMono
 
             case State.dodging:
 
-                if (aTimer < 0)
+                if (aTimer <= 0)
                 {
                     DodgeSliding(dir);
                 }
@@ -206,7 +208,7 @@ public abstract class PlayerBase : BlankMono
     #region Input Actions
     public virtual void AAction()
     {
-        if (aTimer < 0 && dir != Vector3.zero)
+        if (aTimer <= 0 && dir != Vector3.zero)
         {
 
             anim.SetTrigger("AAction");
@@ -218,7 +220,7 @@ public abstract class PlayerBase : BlankMono
             universe.PlaySound(aSound);
         }
     }
-    private void EndDodge()
+    public virtual void EndDodge()
     {
         state = State.normal;
         aTimer = aCooldown;

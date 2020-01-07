@@ -48,9 +48,9 @@ public class SongBird : PlayerBase
 
 
 
-    public override void SetInfo(UniverseController uni)
+    public override void SetInfo(UniverseController uni, int layerNew)
     {
-        base.SetInfo(uni);
+        base.SetInfo(uni, layerNew);
         pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }

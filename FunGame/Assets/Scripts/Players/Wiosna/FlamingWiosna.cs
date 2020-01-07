@@ -36,7 +36,6 @@ public class FlamingWiosna : MonoBehaviour
 
         if (player != null && player.thisPlayer != thisID)
         {
-            print(player.thisPlayer);
             player.TakeDamage(damage, true);
             particles.Play();
             Invoke("Disappear", 0.4f);
