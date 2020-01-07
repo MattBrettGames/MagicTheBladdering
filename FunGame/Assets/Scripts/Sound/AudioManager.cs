@@ -52,6 +52,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             s.source.volume = s.volume * masterVolume * sfxVolume;
+            s.source.pitch += UnityEngine.Random.Range(-1f, 1f);
         }
 
         if (s != null)
