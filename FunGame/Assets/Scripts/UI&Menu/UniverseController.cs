@@ -68,20 +68,20 @@ public class UniverseController : BlankMono
 
     private void Update()
     {
-        
+
         if (SceneManager.GetActiveScene().name == "OptionsMenu")
         {
-            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
+            if (Input.GetButtonDown("AllBButton")) { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu"); }
         }
         if (SceneManager.GetActiveScene().name == "Bios")
         {
-            if (Input.GetButtonDown("AllBButton")) { SceneManager.LoadScene("MainMenu"); }
+            if (Input.GetButtonDown("AllBButton")) { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu"); ; }
         }
         else if (SceneManager.GetActiveScene().name.Contains("GameOver"))
         {
             if (Input.GetButtonDown("AllBButton"))
             {
-                SceneManager.LoadScene("MainMenu");
+                GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
                 selectedChars[0] = null;
                 selectedChars[1] = null;
             }
@@ -97,15 +97,18 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void SelectedPlay() { SceneManager.LoadScene("2CharacterSelectorPVP"); numOfPlayers = 2; }
-    public void SelectedBios() { SceneManager.LoadScene("Bios"); }
-    public void SelectedOptions() { SceneManager.LoadScene("OptionsMenu"); }
-    public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; playersAlive.Add(GameObject.FindGameObjectWithTag("Player1")); playersAlive.Add(GameObject.FindGameObjectWithTag("Player2")); }
-    public void Restart() { SceneManager.LoadScene("MainMenu"); }
+    public void SelectedPlay() { numOfPlayers = 2; GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("2CharacterSelectorPVP"); }
+    public void SelectedBios() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("Bios"); }
+    public void SelectedOptions() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("OptionsMenu"); }
+    // public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; playersAlive.Add(GameObject.FindGameObjectWithTag("Player1")); playersAlive.Add(GameObject.FindGameObjectWithTag("Player2")); }
+    public void Restart() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu"); }
 
     private void OnLevelWasLoaded(int level)
     {
         currentLevel = level;
+
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
+
         if (level == 0)
         {
             lockedInPlayers = 0;
@@ -203,11 +206,17 @@ public class UniverseController : BlankMono
 
         if (lockedInPlayers == numOfPlayers)
         {
-            selectedChars[0].SetActive(false);
-            selectedChars[1].SetActive(false);
-            SceneManager.LoadScene("ArenaSelectorPvP");
+            GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("ArenaSelectorPVP");
+            Invoke("DisableChars", 0.5f);
         }
     }
+    void DisableChars()
+    {
+        selectedChars[0].SetActive(false);
+        selectedChars[1].SetActive(false);
+    }
+
+
 
     public void Unlock(int player)
     {
@@ -233,7 +242,7 @@ public class UniverseController : BlankMono
         analytics.skin1 = skins[0];
         analytics.skin2 = skins[1];
         analytics.CreateCSV();
-        SceneManager.LoadScene(arena);
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(arena);
     }
 
     [Serializable] public struct spawnPositions { public List<Vector3> spawnPos; }
@@ -272,7 +281,7 @@ public class UniverseController : BlankMono
                 }
 
                 winner = player.name;
-                SceneManager.LoadScene("GameOver");
+                GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("GameOver");
             }
         }
     }
@@ -293,7 +302,7 @@ public class UniverseController : BlankMono
         selectedChars[0] = null;
         selectedChars[1] = null;
         if (transform.childCount > 3) transform.GetChild(3).SetParent(Camera.main.transform);
-        SceneManager.LoadScene("MainMenu");
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
     }
 
     public void GetCam(DualObjectiveCamera newCam) { camCode = newCam; }
