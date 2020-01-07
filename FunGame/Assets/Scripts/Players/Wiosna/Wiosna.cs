@@ -71,8 +71,9 @@ public class Wiosna : PlayerBase
     }
     IEnumerator EndDig(int layer)
     {
+        print(aTimer);
         yield return new WaitForSeconds(dodgeDur);
-        //aTimer = aCooldown;
+        aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
     }

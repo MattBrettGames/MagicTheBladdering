@@ -293,7 +293,7 @@ public class UniverseController : BlankMono
         camCode.RespawnedAPlayer();
         player.Respawn();
         otherPlayer.enabled = true;
-        player.gameObject.transform.position = new Vector3(15, 0, 0);
+        player.gameObject.transform.position = new Vector3(15, 0.4f, 0);
     }
     public void ReturnToMenu()
     {
