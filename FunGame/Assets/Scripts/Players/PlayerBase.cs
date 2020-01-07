@@ -241,7 +241,7 @@ public abstract class PlayerBase : BlankMono
                 StartCoroutine(HitStun(0.01f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
-            if (currentHealth > 0) { anim.SetTrigger("Stagger"); }
+            if (currentHealth > 0 && !hyperArmour) { anim.SetTrigger("Stagger"); }
             universe.PlaySound(ouchSound);
         }
     }

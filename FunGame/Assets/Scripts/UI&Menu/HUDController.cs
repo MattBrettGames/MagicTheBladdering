@@ -11,14 +11,14 @@ public class HUDController : BlankMono
     public Text characterName;
 
     [Header("Cooldowns")]
-    public GameObject aBanner;
-    RectTransform aBannerRect;
-    public GameObject bBanner;
-    RectTransform bBannerRect;
-    public GameObject xBanner;
-    RectTransform xBannerRect;
-    public GameObject yBanner;
-    RectTransform yBannerRect;
+    public Image aBanner;
+    Text aBannerText;
+    public Image bBanner;
+    Text bBannerText;
+    public Image xBanner;
+    Text xBannerText;
+    public Image yBanner;
+    Text yBannerText;
 
     [Header("Misc Stuff")]
     public GameObject playerBase;
@@ -30,10 +30,10 @@ public class HUDController : BlankMono
     public void SetStats(int imageInt, string charName)
     {
 
-        aBannerRect = aBanner.GetComponent<RectTransform>();
-        bBannerRect = bBanner.GetComponent<RectTransform>();
-        xBannerRect = xBanner.GetComponent<RectTransform>();
-        yBannerRect = yBanner.GetComponent<RectTransform>();
+        aBannerText = aBanner.GetComponentInChildren<Text>();
+        bBannerText = bBanner.GetComponentInChildren<Text>();
+        xBannerText = xBanner.GetComponentInChildren<Text>();
+        yBannerText = yBanner.GetComponentInChildren<Text>();
 
         characterName.text = charName;
 
@@ -49,11 +49,50 @@ public class HUDController : BlankMono
     {
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
 
-        aBannerRect.sizeDelta = new Vector2(100, (targetPlayer.aCooldown - targetPlayer.aTimer) * 5);
-        bBannerRect.sizeDelta = new Vector2(100, (targetPlayer.bCooldown - targetPlayer.bTimer) * 5);
-        xBannerRect.sizeDelta = new Vector2(100, (targetPlayer.xCooldown - targetPlayer.xTimer) * 5);
-        yBannerRect.sizeDelta = new Vector2(100, (targetPlayer.yCooldown - targetPlayer.yTimer) * 5);
-               
+        if (targetPlayer.aTimer <= 0)
+        {
+            aBannerText.text = "";
+            aBanner.color = Color.white;
+        }
+        else
+        {
+            aBanner.color = Color.grey;
+            aBannerText.text = Mathf.RoundToInt(targetPlayer.aTimer) + "";
+        }
+
+        if (targetPlayer.bTimer <= 0)
+        {
+            bBannerText.text = "";
+            bBanner.color = Color.white;
+        }
+        else
+        {
+            bBanner.color = Color.grey;
+            bBannerText.text = Mathf.RoundToInt(targetPlayer.bTimer) + "";
+        }
+
+        if (targetPlayer.xTimer <= 0)
+        {
+            xBannerText.text = "";
+            xBanner.color = Color.white;
+        }
+        else
+        {
+            xBanner.color = Color.grey;
+            xBannerText.text = Mathf.RoundToInt(targetPlayer.xTimer) + "";
+        }
+
+        if (targetPlayer.yTimer <= 0)
+        {
+            yBannerText.text = "";
+            yBanner.color = Color.white;
+        }
+        else
+        {
+            yBanner.color = Color.grey;
+            yBannerText.text = Mathf.RoundToInt(targetPlayer.yTimer) + "";
+        }
+
         if (targetPlayer.currentHealth < 0) targetPlayer.currentHealth = 0;
     }
 }
