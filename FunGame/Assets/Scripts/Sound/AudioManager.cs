@@ -39,6 +39,9 @@ public class AudioManager : MonoBehaviour
             currentTrack.source.Stop();
         }
 
+
+        if (s.source.isPlaying) return;
+
         //  SoundClip s = Array.Find(sounds, sounds => sounds.name == clipToPlay);
         if (s != null) currentTrack = s;
 
