@@ -197,12 +197,18 @@ public class UniverseController : BlankMono
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
     {
+        StartCoroutine(DelayedCheckReady(arrayIndex, gobject, character, skin));
+    }
+    IEnumerator DelayedCheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
+    {
+        yield return new WaitForSecondsRealtime(1);
+
         selectedChars[arrayIndex] = gobject;
         characters[arrayIndex] = character.name;
         skins[arrayIndex] = skin;
 
         lockedInPlayers++;
-        gobject.transform.parent = gameObject.transform;
+        //gobject.transform.parent = gameObject.transform;
 
         if (lockedInPlayers == numOfPlayers)
         {
@@ -210,6 +216,7 @@ public class UniverseController : BlankMono
             Invoke("DisableChars", 0.5f);
         }
     }
+
     void DisableChars()
     {
         selectedChars[0].SetActive(false);
@@ -301,7 +308,7 @@ public class UniverseController : BlankMono
         charSelector2.locked = false;
         selectedChars[0] = null;
         selectedChars[1] = null;
-        if (transform.childCount > 3) transform.GetChild(3).SetParent(Camera.main.transform);
+        if (transform.childCount > 2) transform.GetChild(2).SetParent(Camera.main.transform);
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
     }
 

@@ -43,6 +43,9 @@ public class CharacterSelector : BlankMono
     public GameObject[] backImages = new GameObject[2];
     public GameObject displayImage;
 
+
+    Vector3 lockedForward;
+
     void Start()
     {
         store = transform.GetChild(0).gameObject;
@@ -108,11 +111,13 @@ public class CharacterSelector : BlankMono
                 if (currentSkin < characters[currentChar].skins.Count - 1)
                 {
                     currentSkin++;
+                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 else
                 {
                     currentSkin = 0;
+                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -150,8 +155,8 @@ public class CharacterSelector : BlankMono
             else
             {
                 locked = false;
-                universe.Unlock(thisPInt);
                 Unlock();
+                universe.Unlock(thisPInt);
             }
         }
     }
@@ -159,10 +164,9 @@ public class CharacterSelector : BlankMono
     private void LockInCharacter()
     {
         backStore.transform.position += camOffsetLocked;
-        //store.transform.position += camOffsetLocked;
         cam.fieldOfView = camFOVLocked;
-
-        displayChar.transform.rotation = new Quaternion(0, 0, 0, 0);
+        lockedForward = displayChar.transform.forward;
+        displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
 
         StartCoroutine(StartLoad());
 
@@ -173,7 +177,8 @@ public class CharacterSelector : BlankMono
     {
         otherChar.characters[currentChar].skins[currentSkin].lockedChar = true;
         otherChar.UpdateDisplay();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0);
+        displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseContoller").transform);
         universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
     }
 
@@ -181,13 +186,16 @@ public class CharacterSelector : BlankMono
     {
         otherChar.characters[currentChar].skins[currentSkin].lockedChar = false;
         otherChar.UpdateDisplay();
+        displayChar.transform.SetParent(GameObject.Find(thisPlayer + "GameObjectStore").transform);
+        displayChar.transform.forward = lockedForward;
         store.transform.position = camOffsetBase;
         cam.fieldOfView = camFOVBase;
+        locked = false;
     }
 
     private IEnumerator SpinTrigger(float angle, float time)
     {
-        yield return new WaitForSeconds(time / 200);
+        yield return new WaitForSecondsRealtime(time / 200);
         SpinJuice(angle);
     }
     private void SpinJuice(float angle)
