@@ -65,7 +65,6 @@ public class Wiosna : PlayerBase
             state = State.dodging;
 
             StartCoroutine(EndDig(thisLayer));
-            aTimer = aCooldown;
 
             universe.PlaySound(aSound);
         }
@@ -73,6 +72,7 @@ public class Wiosna : PlayerBase
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
+        //aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
     }

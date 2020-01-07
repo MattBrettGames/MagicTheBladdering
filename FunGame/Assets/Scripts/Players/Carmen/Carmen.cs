@@ -105,7 +105,6 @@ public class Carmen : PlayerBase
             state = State.dodging;
 
             StartCoroutine(EndDig(thisLayer));
-            bTimer = bCooldown;
 
             universe.PlaySound(bSound);
         }
