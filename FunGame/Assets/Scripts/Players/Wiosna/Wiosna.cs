@@ -59,20 +59,22 @@ public class Wiosna : PlayerBase
                 thisLayer = 14;
             }
             Physics.IgnoreLayerCollision(thisLayer, 12, true);
+            Outline outline = anim.gameObject.GetComponent<Outline>();
+            outline.OutlineColor = Color.grey;
 
             anim.SetTrigger("AAction");
 
             state = State.dodging;
 
-            StartCoroutine(EndDig(thisLayer));
+            StartCoroutine(EndDig(thisLayer, outline));
 
             universe.PlaySound(aSound);
         }
     }
-    IEnumerator EndDig(int layer)
+    IEnumerator EndDig(int layer, Outline outline)
     {
-        print(aTimer);
         yield return new WaitForSeconds(dodgeDur);
+        outline.OutlineColor = Color.black;
         aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
