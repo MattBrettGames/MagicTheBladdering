@@ -5,6 +5,8 @@ using UnityEngine;
 public class Carmen : PlayerBase
 {
 
+    [SerializeField] string ySoundBonus;
+
     [Header("Unique Components")]
     public Weapons leftDagger;
     public Weapons rightDagger;
@@ -28,9 +30,6 @@ public class Carmen : PlayerBase
     public int backstabAngle;
     public float backStabDamageMult;
     private GameObject enemyVisual;
-
-    [Header("Bonus Sounds")]
-    [SerializeField] string ySoundBonus;
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {

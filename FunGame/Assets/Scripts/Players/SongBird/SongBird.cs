@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SongBird : PlayerBase
 {
-    [Header("Unique Sounds")]
+    
     [SerializeField] string bSoundBonus;
 
     [Header("More Components")]

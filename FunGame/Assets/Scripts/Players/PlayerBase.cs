@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using System;
 
 public abstract class PlayerBase : BlankMono
 {
@@ -80,8 +81,7 @@ public abstract class PlayerBase : BlankMono
     [SerializeField] protected string xSound;
     [SerializeField] protected string ySound;
     [SerializeField] protected string ouchSound;
-
-
+    
     public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
@@ -218,13 +218,14 @@ public abstract class PlayerBase : BlankMono
             Invoke("EndDodge", dodgeDur);
 
             universe.PlaySound(aSound);
-        }
-    }
+        }        
+    }    
     public virtual void EndDodge()
     {
         state = State.normal;
         aTimer = aCooldown;
     }
+
 
     public virtual void BAction() { }
     public virtual void XAction() { }

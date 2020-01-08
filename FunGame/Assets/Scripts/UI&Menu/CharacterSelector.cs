@@ -166,7 +166,7 @@ public class CharacterSelector : BlankMono
         backStore.transform.position += camOffsetLocked;
         cam.fieldOfView = camFOVLocked;
         lockedForward = displayChar.transform.forward;
-        displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
+        displayChar.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt*2), 0);
 
         StartCoroutine(StartLoad());
 
@@ -178,7 +178,7 @@ public class CharacterSelector : BlankMono
         otherChar.characters[currentChar].skins[currentSkin].lockedChar = true;
         otherChar.UpdateDisplay();
         yield return new WaitForSeconds(0);
-        displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseContoller").transform);
+        displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseController").transform);
         universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
     }
 
