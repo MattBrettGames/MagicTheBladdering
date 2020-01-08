@@ -171,7 +171,7 @@ public class Valderheim : PlayerBase
 
     public override void BAction()
     {
-        if (!frenzy && state != State.stun && bTimer <= 0)
+        if (!frenzy && bTimer <= 0)
         {
 
             Invoke("StopFrenzy", frenzyDuration);
