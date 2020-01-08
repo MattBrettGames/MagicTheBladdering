@@ -85,7 +85,7 @@ public class ArenaSelector : BlankMono
                 displayOutlines[currentDisplay].enabled = false;
                 currentDisplay = displays.Count - 1;
                 displayOutlines[currentDisplay].enabled = true;
-                arenaName.text = displays[currentDisplay].name;
+                arenaName.text = displays[currentDisplay].name; 
             }
             inputCooldown = true;
             Invoke("EndCooldown", 0.3f);

@@ -44,8 +44,7 @@ public class Wiosna : PlayerBase
             universe.PlaySound(xSound);
         }
     }
-
-
+    
     public override void AAction()
     {
         if (aTimer <= 0)

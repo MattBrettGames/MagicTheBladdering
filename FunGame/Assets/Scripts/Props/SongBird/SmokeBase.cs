@@ -18,8 +18,6 @@ public class SmokeBase : BlankMono
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
 
-        //target = targetLooker.GetComponentInParent<PlayerBase>();
-
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
         if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
