@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SongBird : PlayerBase
 {
-    
+
     [SerializeField] string bSoundBonus;
 
     [Header("More Components")]
@@ -39,8 +39,8 @@ public class SongBird : PlayerBase
     [Header("Death Cloud")]
     [SerializeField] int deathCloudSize;
     [SerializeField] int deathBurstDamage;
-    [SerializeField] float deathCloudTime;
-    [SerializeField] int deathSmokeKnockback;
+    // [SerializeField] float deathCloudTime;
+    // [SerializeField] int deathSmokeKnockback;
 
     [Space]
 
@@ -105,7 +105,7 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, lookAtTarget.gameObject, cannisterPoisonTime );
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, lookAtTarget.gameObject, cannisterPoisonTime);
             hasCannister = true;
             universe.PlaySound(bSoundBonus);
         }
@@ -156,7 +156,7 @@ public class SongBird : PlayerBase
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
-            StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f));
+            StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f, false));
         }
     }
 
@@ -167,21 +167,29 @@ public class SongBird : PlayerBase
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
 
-        if(Vector3.Distance(gameObject.transform.position, lookAtTarget.position) <= deathCloudSize)
+        if (Vector3.Distance(gameObject.transform.position, lookAtTarget.position) <= deathCloudSize)
         {
             lookAtTarget.GetComponentInParent<PlayerBase>().TakeDamage(deathBurstDamage, true);
         }
 
         for (int i = 0; i < deathCloudSize; i++)
         {
-            StartCoroutine(SmokeMove(smokeCloud, Vector3.zero, i * 0.005f));
+            StartCoroutine(SmokeMove(smokeCloud, Vector3.zero, i * 0.005f, true));
         }
     }
 
-    private IEnumerator SmokeMove(GameObject smokeCloud, Vector3 dir, float time)
+    private IEnumerator SmokeMove(GameObject smokeCloud, Vector3 dir, float time, bool willShrink)
     {
         yield return new WaitForSeconds(time);
         smokeCloud.transform.position += dir * 2;
         smokeCloud.transform.localScale += Vector3.one;
+        if (willShrink) StartCoroutine(ShrinkCloud(smokeCloud));
     }
+
+    IEnumerator ShrinkCloud(GameObject smokeCloud)
+    {
+        yield return new WaitForSeconds(1);
+        smokeCloud.transform.localScale -= Vector3.one;
+    }
+
 }
