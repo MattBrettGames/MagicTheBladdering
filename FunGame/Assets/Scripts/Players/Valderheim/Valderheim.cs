@@ -7,7 +7,6 @@ public class Valderheim : PlayerBase
 {
     [Header("More Componenets")]
     public Weapons hammer;
-    public Outline outline;
 
     [Header("Wide Swing")]
     public int xAttack;
