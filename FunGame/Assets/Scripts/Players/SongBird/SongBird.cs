@@ -21,25 +21,25 @@ public class SongBird : PlayerBase
     [Header("Cannister Cloud")]
     [SerializeField] int cannisterCloudSize;
     [SerializeField] int cannisterBurstDamage;
-    [SerializeField] float cannisterPoisonTicks;
+    [SerializeField] float cannisterPoisonTime;
     [SerializeField] int cannisterSmokeKnockback;
 
     [Header("Dodge Cloud")]
     [SerializeField] int dodgeCloudSize;
     [SerializeField] int dodgeBurstDamage;
-    [SerializeField] float dodgePoisonTicks;
+    [SerializeField] float dodgePoisonTime;
     [SerializeField] int dodgeSmokeKnockback;
 
     [Header("Thrown Cloud")]
     [SerializeField] int thrownCloudSize;
     [SerializeField] int thrownBurstDamage;
-    [SerializeField] float thrownPoisonTicks;
+    [SerializeField] float thrownCloudTime;
     [SerializeField] int thrownSmokeKnockback;
 
     [Header("Death Cloud")]
     [SerializeField] int deathCloudSize;
     [SerializeField] int deathBurstDamage;
-    [SerializeField] float deathPoisonTicks;
+    [SerializeField] float deathCloudTime;
     [SerializeField] int deathSmokeKnockback;
 
     [Space]
@@ -105,7 +105,7 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterPoisonTicks, cannisterCloudSize, cannisterSmokeKnockback, lookAtTarget.gameObject);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, lookAtTarget.gameObject, cannisterPoisonTime );
             hasCannister = true;
             universe.PlaySound(bSoundBonus);
         }
@@ -119,7 +119,7 @@ public class SongBird : PlayerBase
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
             smokeCloud.SetActive(true);
-            smokeCloud.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgePoisonTicks, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize);
+            smokeCloud.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize, dodgePoisonTime);
 
             anim.SetTrigger("AAction");
             state = State.dodging;
@@ -135,7 +135,7 @@ public class SongBird : PlayerBase
             universe.PlaySound(aSound);
         }
     }
-    public void EndDodge()
+    public override void EndDodge()
     {
         state = State.normal;
     }
@@ -152,7 +152,7 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownPoisonTicks, thrownSmokeKnockback, lookAtTarget.gameObject, thrownCloudSize);
+        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, lookAtTarget.gameObject, thrownCloudSize, thrownCloudTime);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
@@ -166,11 +166,15 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(deathBurstDamage, deathPoisonTicks, deathSmokeKnockback, lookAtTarget.gameObject, deathCloudSize);
+
+        if(Vector3.Distance(gameObject.transform.position, lookAtTarget.position) <= deathCloudSize)
+        {
+            lookAtTarget.GetComponentInParent<PlayerBase>().TakeDamage(deathBurstDamage, true);
+        }
 
         for (int i = 0; i < deathCloudSize; i++)
         {
-            StartCoroutine(SmokeMove(smokeCloud, Vector3.zero, i * 0.01f));
+            StartCoroutine(SmokeMove(smokeCloud, Vector3.zero, i * 0.005f));
         }
     }
 

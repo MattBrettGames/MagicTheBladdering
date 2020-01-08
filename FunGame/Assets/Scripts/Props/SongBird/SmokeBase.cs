@@ -2,34 +2,28 @@
 
 public class SmokeBase : BlankMono
 {
-    private bool exploding;
-    private PlayerBase target;
-    private int damageTrue;
-    private float ticksTrue;
-    private int forceTrue;
 
-    virtual public void Begin(int damage, float ticks, int force, GameObject targetLooker, float size)
+    private PlayerBase target;
+
+
+    virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
     {
-        damageTrue = damage;
-        ticksTrue = ticks;
-        forceTrue = force;
-        exploding = true;
-        Invoke("EndForce", 0.2f);
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
-
-        //target = targetLooker.GetComponentInParent<PlayerBase>();
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
         if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
         {
-            target.TakeDamage(damageTrue, true);
-            target.Knockback(forceTrue, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
+            target.TakeDamage(damage, true);
+            target.Knockback(force, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
+        }
+
+        for (int i = 0; i < size; i++)
+        {
+            Invoke("Shrink", time + (i * 0.01f));
         }
     }
-
-    void EndForce() { exploding = false; }
 
     void OnTriggerStay(Collider other)
     {
@@ -46,4 +40,15 @@ public class SmokeBase : BlankMono
             target.poison = false;
         }
     }
+
+    void Shrink()
+    {
+        transform.localScale -= Vector3.one;
+        if (transform.localScale.y <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+
 }
