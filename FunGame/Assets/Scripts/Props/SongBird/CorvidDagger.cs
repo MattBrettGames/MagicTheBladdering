@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class CorvidDagger : Weapons
 {
-    public bool poisonActive;
+    [HideInInspector]public bool poisonActive;
 
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        other.GetComponent<PlayerBase>().poison *= 2;
     }
 }

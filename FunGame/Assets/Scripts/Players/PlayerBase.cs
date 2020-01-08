@@ -27,20 +27,16 @@ public abstract class PlayerBase : BlankMono
     public float incomingMult = 1;
 
     [Header("Status Effects")]
-    [SerializeField] private int poisonPerSec;
+    [SerializeField] private int poisonPerTick;
     [SerializeField] private float secsBetweenTicks;
-    [HideInInspector] public bool cursed;
-    protected float curseTimer;
-    [HideInInspector] public bool prone;
-    [HideInInspector] public float poison;
+    [HideInInspector] public bool poison;
     private bool hyperArmour;
     protected bool iFrames;
-    protected bool counterFrames;
+    protected bool trueIFrames;
     protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
-    [HideInInspector]
-    public State state;
+    [HideInInspector] public State state;
     [HideInInspector]
     public enum State
     {
@@ -81,7 +77,7 @@ public abstract class PlayerBase : BlankMono
     [SerializeField] protected string xSound;
     [SerializeField] protected string ySound;
     [SerializeField] protected string ouchSound;
-    
+
     public virtual void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
@@ -101,7 +97,7 @@ public abstract class PlayerBase : BlankMono
         gameObject.layer = layerNew;
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }
-
+        InvokeRepeating("PoisonTick", secsBetweenTicks, secsBetweenTicks);
     }
 
     public virtual void Update()
@@ -112,8 +108,6 @@ public abstract class PlayerBase : BlankMono
         if (yTimer > 0) yTimer -= Time.deltaTime;
 
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
-
-        if (poison > 0) { poison -= Time.deltaTime; }
 
         aimTarget.position = transform.position + dir * 5;
 
@@ -133,7 +127,7 @@ public abstract class PlayerBase : BlankMono
                 anim.SetBool("LockOn", false);
                 if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
 
-                if (!prone && !acting)
+                if (!acting)
                 {
                     //Rotating the Character Model
                     visuals.transform.LookAt(aimTarget);
@@ -161,7 +155,7 @@ public abstract class PlayerBase : BlankMono
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
-                if (!prone && !acting)
+                if (!acting)
                 {
                     rb2d.velocity = dir * speed;
 
@@ -218,8 +212,8 @@ public abstract class PlayerBase : BlankMono
             Invoke("EndDodge", dodgeDur);
 
             universe.PlaySound(aSound);
-        }        
-    }    
+        }
+    }
     public virtual void EndDodge()
     {
         state = State.normal;
@@ -235,7 +229,7 @@ public abstract class PlayerBase : BlankMono
     #region Common Events
     public virtual void TakeDamage(int damageInc, bool fromAttack)
     {
-        if (!counterFrames && !iFrames)
+        if (!iFrames)
         {
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
@@ -303,19 +297,18 @@ public abstract class PlayerBase : BlankMono
     public void LoseHA() { hyperArmour = false; }
 
     public void GainIFrames() { iFrames = true; }
+    public void GainTrueFrames() { iFrames = true; trueIFrames = true; }
+
     public void LoseIFrames() { iFrames = false; }
+    public void LoseTrueFrames() { iFrames = false; trueIFrames = false; }
 
     public virtual void Respawn()
     {
-
         currentHealth = healthMax;
-        cursed = false;
-        curseTimer = 0;
-        poison = 0;
-        prone = false;
+        poison = false;
         gameObject.SetActive(true);
-        GainIFrames();
-        Invoke("LoseIFrames", 3);
+        GainTrueFrames();
+        Invoke("LoseTrueFrames", 3);
         anim.SetTrigger("Respawn");
         damageMult = 1;
         incomingMult = 1;
@@ -325,7 +318,7 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison > 0) { currentHealth -= poisonPerSec; ControllerRumble(0.1f, 0.05f); } }
+    protected void PoisonTick() { if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }

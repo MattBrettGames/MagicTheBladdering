@@ -53,8 +53,6 @@ public class Valderheim : PlayerBase
 
         dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
 
-        if (poison > 0) { poison -= Time.deltaTime; }
-
         aimTarget.position = transform.position + dir * 5;
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
@@ -72,7 +70,7 @@ public class Valderheim : PlayerBase
                 anim.SetBool("LockOn", false);
                 if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
 
-                if (!prone && !acting)
+                if (!acting)
                 {
                     //Rotating the Character Model
                     visuals.transform.LookAt(aimTarget);
@@ -99,7 +97,7 @@ public class Valderheim : PlayerBase
                 anim.SetBool("LockOn", true);
                 if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
-                if (!prone && !acting)
+                if (!acting)
                 {
                     rb2d.velocity = dir * speed;
 
