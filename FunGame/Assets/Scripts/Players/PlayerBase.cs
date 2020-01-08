@@ -168,8 +168,8 @@ public abstract class PlayerBase : BlankMono
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
 
-                    anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
-                    anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir.normalized, visuals.transform.forward.normalized, Vector3.up) * 0.09f);
+                    anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir, visuals.transform.forward, Vector3.up) * 0.09f);
+                    anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir, visuals.transform.forward, Vector3.up) * 0.09f);
                 }
 
                 aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
