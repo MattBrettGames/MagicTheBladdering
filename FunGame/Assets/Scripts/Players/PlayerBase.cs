@@ -84,7 +84,6 @@ public abstract class PlayerBase : BlankMono
         outline = visuals.GetComponent<Outline>();
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-        aTimer = aCooldown;
         baseSpeed = speed;
 
         healthMax = currentHealth;

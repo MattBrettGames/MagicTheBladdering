@@ -115,29 +115,24 @@ public class SongBird : PlayerBase
     {
         if (aTimer <= 0)
         {
+            anim.SetTrigger("AAction");
+            state = State.dodging;
+
+            Invoke("EndDodge", dodgeDur);
+
             smokeCloud.transform.position = transform.position;
             smokeCloud.transform.localScale = Vector3.zero;
             smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
             smokeCloud.SetActive(true);
             smokeCloud.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize, dodgePoisonTime);
 
-            anim.SetTrigger("AAction");
-            state = State.dodging;
-
-            Invoke("EndDodge", dodgeDur);
-
             for (int i = 0; i < dodgeCloudSize; i++)
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
             }
 
-            aTimer = aCooldown;
             universe.PlaySound(aSound);
         }
-    }
-    public override void EndDodge()
-    {
-        state = State.normal;
     }
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
