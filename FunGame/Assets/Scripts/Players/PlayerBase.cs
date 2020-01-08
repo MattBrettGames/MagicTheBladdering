@@ -142,11 +142,6 @@ public abstract class PlayerBase : BlankMono
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
                     anim.SetFloat("Movement", Mathf.Abs((player.GetAxis("HoriMove") + player.GetAxis("VertMove")) * 0.5f));
-
-                    /*
-                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
-                    else { anim.SetFloat("Movement", 0); }
-                    */
                 }
                 else
                 {
