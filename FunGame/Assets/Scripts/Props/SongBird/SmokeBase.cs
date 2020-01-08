@@ -5,9 +5,9 @@ public class SmokeBase : BlankMono
 
     private PlayerBase target;
 
+
     virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
-    { 
-        Invoke("EndForce", 0.2f);
+    {
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
 
@@ -18,7 +18,11 @@ public class SmokeBase : BlankMono
             target.TakeDamage(damage, true);
             target.Knockback(force, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
         }
-        Invoke("Shrink", time);
+
+        for (int i = 0; i < size; i++)
+        {
+            Invoke("Shrink", time + (i * 0.01f));
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -39,13 +43,10 @@ public class SmokeBase : BlankMono
 
     void Shrink()
     {
-        for (int i = 0; i < transform.localScale.y; i++)
+        transform.localScale -= Vector3.one;
+        if (transform.localScale.y <= 0)
         {
-            transform.localScale -= Vector3.one;
-            if (transform.localScale.y <= 0)
-            {
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(false);
         }
     }
 
