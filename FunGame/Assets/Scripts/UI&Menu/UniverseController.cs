@@ -162,8 +162,7 @@ public class UniverseController : BlankMono
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
             playerCode.SetInfo(this, 13);
-
-            #endregion
+                        #endregion
 
             #region Player 2
             GameObject p2 = selectedChars[1];

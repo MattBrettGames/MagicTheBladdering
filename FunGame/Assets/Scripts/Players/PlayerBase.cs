@@ -52,6 +52,7 @@ public abstract class PlayerBase : BlankMono
     [Header("Components")]
     public Transform aimTarget;
     public GameObject visuals;
+    protected Outline outline;
     protected Animator anim;
     protected Rigidbody rb2d;
     protected PlayerController playerCont;
@@ -80,6 +81,7 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Start()
     {
+        outline = visuals.GetComponent<Outline>();
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
         aTimer = aCooldown;
@@ -297,10 +299,10 @@ public abstract class PlayerBase : BlankMono
     public void LoseHA() { hyperArmour = false; }
 
     public void GainIFrames() { iFrames = true; }
-    public void GainTrueFrames() { iFrames = true; trueIFrames = true; }
+    public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; } 
 
     public void LoseIFrames() { iFrames = false; }
-    public void LoseTrueFrames() { iFrames = false; trueIFrames = false; }
+    public void LoseTrueFrames() { iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; } 
 
     public virtual void Respawn()
     {

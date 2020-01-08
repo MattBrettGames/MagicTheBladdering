@@ -18,11 +18,7 @@ public class Wiosna : PlayerBase
     [Header("Y Attack")]
     [SerializeField] int yDamage;
     [SerializeField] int yKnockback;
-       
-    [Header("Vanishing Act")]
-    [SerializeField] float vanishDistance;
 
-    //[Header("BAttacks")]
     private GameObject flamingClone;
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -64,19 +60,18 @@ public class Wiosna : PlayerBase
                 thisLayer = 14;
             }
             Physics.IgnoreLayerCollision(thisLayer, 12, true);
-            Outline outline = anim.gameObject.GetComponent<Outline>();
             outline.OutlineColor = Color.grey;
 
             anim.SetTrigger("AAction");
 
             state = State.dodging;
 
-            StartCoroutine(EndDig(thisLayer, outline));
+            StartCoroutine(EndDig(thisLayer));
 
             universe.PlaySound(aSound);
         }
     }
-    IEnumerator EndDig(int layer, Outline outline)
+    IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
         outline.OutlineColor = Color.black;

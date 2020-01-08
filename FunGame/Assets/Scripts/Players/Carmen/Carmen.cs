@@ -96,7 +96,7 @@ public class Carmen : PlayerBase
                 thisLayer = 14;
             }
             Physics.IgnoreLayerCollision(thisLayer, 12, true);
-            Outline outline = anim.gameObject.GetComponent<Outline>();
+
             outline.OutlineColor = Color.grey;
 
             dodgeSpeed += digSpeedBonus;
@@ -105,12 +105,12 @@ public class Carmen : PlayerBase
 
             state = State.dodging;
 
-            StartCoroutine(EndDig(thisLayer, outline));
+            StartCoroutine(EndDig(thisLayer));
 
             universe.PlaySound(bSound);
         }
     }
-    IEnumerator EndDig(int layer, Outline outline)
+    IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
         outline.OutlineColor = Color.black;
