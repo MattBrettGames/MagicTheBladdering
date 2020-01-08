@@ -168,8 +168,8 @@ public abstract class PlayerBase : BlankMono
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
 
-                    anim.SetFloat("Movement_X", -Vector3.SignedAngle(dir, visuals.transform.forward, Vector3.up) * 0.09f);
-                    anim.SetFloat("Movement_ZY", -Vector3.SignedAngle(dir, visuals.transform.forward, Vector3.up) * 0.09f);
+                    anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                    anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
                 }
 
                 aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
