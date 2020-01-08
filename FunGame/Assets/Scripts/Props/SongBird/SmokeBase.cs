@@ -17,7 +17,6 @@ public class SmokeBase : BlankMono
         Invoke("EndForce", 0.2f);
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
-        InvokeRepeating("PoisonCheck", ticks, ticks);
 
         //target = targetLooker.GetComponentInParent<PlayerBase>();
 
@@ -32,7 +31,7 @@ public class SmokeBase : BlankMono
 
     void EndForce() { exploding = false; }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == target.tag)
         {

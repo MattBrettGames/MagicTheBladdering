@@ -29,7 +29,7 @@ public abstract class PlayerBase : BlankMono
     [Header("Status Effects")]
     [SerializeField] private int poisonPerTick;
     [SerializeField] private float secsBetweenTicks;
-    [HideInInspector] public bool poison;
+    [SerializeField] public bool poison;
     private bool hyperArmour;
     protected bool iFrames;
     protected bool trueIFrames;
