@@ -109,7 +109,7 @@ public abstract class PlayerBase : BlankMono
         if (xTimer > 0) xTimer -= Time.deltaTime;
         if (yTimer > 0) yTimer -= Time.deltaTime;
 
-        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove")).normalized;
+        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
 
         aimTarget.position = transform.position + dir * 5;
 
