@@ -631,10 +631,8 @@ MonoBehaviour:
   healthMax: 0
   damageMult: 1
   incomingMult: 1
-  poisonPerSec: 3
-  secsBetweenTicks: 1
-  cursed: 0
-  prone: 0
+  poisonPerTick: 1
+  secsBetweenTicks: 0.1
   poison: 0
   state: 0
   aimTarget: {fileID: 7239248628908076190}
@@ -652,6 +650,7 @@ MonoBehaviour:
   xSound: CarX
   ySound: CarY
   ouchSound: CarOuch
+  ySoundBonus: CarYBonus
   leftDagger: {fileID: 1542757276}
   rightDagger: {fileID: 1420230113}
   stabDamage: 25
@@ -661,10 +660,10 @@ MonoBehaviour:
   slashTravelDuration: 0.5
   spinSphere: {fileID: 2747210304084681415}
   spinRadius: 8
-  digDistance: 20
+  digDur: 0
+  digSpeedBonus: 0
   backstabAngle: 45
   backStabDamageMult: 1.7
-  ySoundBonus: CarYBonus
 --- !u!136 &7239248629072716890
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -986,6 +985,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carmen_WH
       objectReference: {fileID: 0}
+    - target: {fileID: 13700018, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7518dcf41d3402643bcb24dbfd865884, type: 2}
+    - target: {fileID: 13700008, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7518dcf41d3402643bcb24dbfd865884, type: 2}
+    - target: {fileID: 13700006, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7518dcf41d3402643bcb24dbfd865884, type: 2}
     - target: {fileID: 400000, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1054,14 +1065,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1d8751dee6bcea542897df90692614a8, type: 2}
-    - target: {fileID: 13700006, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7518dcf41d3402643bcb24dbfd865884, type: 2}
-    - target: {fileID: 13700008, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7518dcf41d3402643bcb24dbfd865884, type: 2}
     - target: {fileID: 13700010, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1078,10 +1081,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1d8751dee6bcea542897df90692614a8, type: 2}
-    - target: {fileID: 13700018, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7518dcf41d3402643bcb24dbfd865884, type: 2}
     - target: {fileID: 13700020, guid: 44b385cd51ef9c640b8e1a22c55126f4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

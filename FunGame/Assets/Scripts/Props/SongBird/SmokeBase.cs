@@ -17,9 +17,8 @@ public class SmokeBase : BlankMono
         Invoke("EndForce", 0.2f);
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
-        InvokeRepeating("PoisonCheck", ticks, ticks);
 
-        target = targetLooker.GetComponentInParent<PlayerBase>();
+        //target = targetLooker.GetComponentInParent<PlayerBase>();
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
@@ -32,12 +31,19 @@ public class SmokeBase : BlankMono
 
     void EndForce() { exploding = false; }
 
-    void PoisonCheck()
+    void OnTriggerStay(Collider other)
     {
-        if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= 1 * transform.localScale.y)
+        if (other.tag == target.tag)
         {
-            target.currentHealth -= 1;
-            target.ControllerRumble(0.1f, 0.1f);
+            target.poison = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == target.tag)
+        {
+            target.poison = false;
         }
     }
 }

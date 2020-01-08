@@ -8,10 +8,7 @@ public class DemonEaters : Weapons
 
     public override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
-        if (demonSlayer) { other.GetComponent<PlayerBase>().cursed = false; }
-
+        base.OnTriggerEnter(other);        
     }
 
 }
