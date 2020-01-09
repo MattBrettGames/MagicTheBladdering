@@ -634,6 +634,109 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1001 &70241308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 772704727}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_Name
+      value: Gilded Gladiator Carmen
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+--- !u!4 &70241309 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 70241308}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &70241310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 70241308}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &70241311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70241310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &139054558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1000,6 +1103,7 @@ Transform:
   m_Children:
   - {fileID: 1018358011}
   - {fileID: 1574939113}
+  - {fileID: 1868000231}
   m_Father: {fileID: 1491853139}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6014,6 +6118,7 @@ Transform:
   m_Children:
   - {fileID: 499221431}
   - {fileID: 59906021272193645}
+  - {fileID: 70241309}
   m_Father: {fileID: 1199422747}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17465,6 +17570,10 @@ MonoBehaviour:
       name: Wild Hunter
       Skin: {fileID: 59906021272193644}
       lockedChar: 0
+    - charSel: {fileID: 0}
+      name: Gilded Gladiator
+      Skin: {fileID: 70241310}
+      lockedChar: 0
   - name: {fileID: 2059311646}
     skins:
     - charSel: {fileID: 0}
@@ -21918,6 +22027,109 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855516197}
   m_CullTransparentMesh: 0
+--- !u!1001 &1868000230
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 171149945}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_Name
+      value: Gilded Gladiator Carmen
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.050000023
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.04999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.050000023
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab, type: 3}
+--- !u!4 &1868000231 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 61d7a4bdae6c881409ecaa937cbf99ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1868000230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1868000232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 61d7a4bdae6c881409ecaa937cbf99ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1868000230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1868000233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868000232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1906756346 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2188090938317167738, guid: ac9af5001bb06914da58530370199fc8,
@@ -23731,6 +23943,10 @@ MonoBehaviour:
     - charSel: {fileID: 0}
       name: Wild Hunter
       Skin: {fileID: 1574939121}
+      lockedChar: 0
+    - charSel: {fileID: 0}
+      name: Gilded Gladiator
+      Skin: {fileID: 1868000232}
       lockedChar: 0
   - name: {fileID: 1061873015}
     skins:
