@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &570348886467674892
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570348887071278304}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: ef8565e4aa7da9d40ab4e7f6bb19e2a6, type: 3}
+  m_Controller: {fileID: 9100000, guid: 1ddeeeec7be00d242ab103cf3eef04df, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &570348887071376341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33,25 +52,6 @@ MonoBehaviour:
   wiosna: {fileID: 4682567264278004736}
   melee: {fileID: 3148250441988357681}
   explosion: {fileID: 6805180686517566178}
---- !u!95 &570348886467674892
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 570348887071278304}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ef8565e4aa7da9d40ab4e7f6bb19e2a6, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1ddeeeec7be00d242ab103cf3eef04df, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2172320753659303885
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +392,7 @@ MonoBehaviour:
   aimTarget: {fileID: 7111922156013806401}
   visuals: {fileID: 570348887071278304}
   aCooldown: 3
-  bCooldown: 15
+  bCooldown: 8
   xCooldown: 0.8
   yCooldown: 4
   aTimer: 0
