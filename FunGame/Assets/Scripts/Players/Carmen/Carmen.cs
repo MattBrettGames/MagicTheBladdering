@@ -22,14 +22,15 @@ public class Carmen : PlayerBase
     [SerializeField] Weapons spinSphere;
     [SerializeField] float spinRadius;
 
-    [Header("Dig")]
-    public float digDur;
-    [SerializeField] float digSpeedBonus;
+    [Header("Grapple")]
+    [SerializeField] float grapplingSpeed;
+    GrapplingTrap grapplingTrap;
 
     [Header("Backstab")]
     public int backstabAngle;
     public float backStabDamageMult;
     private GameObject enemyVisual;
+    private Vector3 grappleDir;
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
@@ -41,8 +42,125 @@ public class Carmen : PlayerBase
     IEnumerator GainBack()
     {
         yield return new WaitForEndOfFrame();
+        ObjectPooler pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
+        grapplingTrap = pooler.grapplerList[playerID].GetComponent<GrapplingTrap>();
+
         enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
     }
+
+
+    public override void Update()
+    {
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
+
+        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+
+        aimTarget.position = transform.position + dir * 5;
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
+        switch (state)
+        {
+            case State.stun:
+                anim.SetBool("Stunned", true);
+                break;
+
+            case State.attack:
+                break;
+
+            case State.normal:
+
+                anim.SetBool("LockOn", false);
+                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+
+                if (!acting)
+                {
+                    //Rotating the Character Model
+                    visuals.transform.LookAt(aimTarget);
+                    rb2d.velocity = dir * speed;
+
+                    //Standard Inputs
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    anim.SetFloat("Movement", Mathf.Abs((player.GetAxis("HoriMove") + player.GetAxis("VertMove")) * 0.5f));
+                }
+                else
+                {
+                    dir = Vector3.zero;
+                }
+                break;
+
+            case State.lockedOn:
+
+                walkDirection.position = dir + transform.position;
+
+                anim.SetBool("LockOn", true);
+                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
+
+                if (!acting)
+                {
+                    rb2d.velocity = dir * speed;
+
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
+
+                    anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                    anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
+                }
+
+                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+
+                break;
+
+            case State.dodging:
+
+                if (aTimer < 0)
+                {
+                    DodgeSliding(dir);
+                }
+                break;
+
+            case State.knockback:
+                KnockbackContinual();
+                break;
+
+            case State.unique:
+                visuals.transform.LookAt(grappleDir);
+                DodgeSliding(visuals.transform.forward * grapplingSpeed);
+                anim.SetBool("Grappling", true);
+                if (Vector3.Distance(transform.position, grappleDir) <= 1)
+                {
+                    anim.SetBool("Grappling", false);
+                    grapplingTrap.End();
+                    state = State.normal;
+                }
+                break;
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (thisPlayer == "P2")
+            {
+                TakeDamage(3000, true);
+            }
+
+
+        }
+    }
+
 
     public override void XAction()
     {
@@ -65,6 +183,8 @@ public class Carmen : PlayerBase
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
             anim.SetTrigger("YAttack");
 
+            yTimer = yCooldown;
+
             if (lookDif <= backstabAngle)
             {
                 leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
@@ -77,8 +197,6 @@ public class Carmen : PlayerBase
                 // rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
                 universe.PlaySound(ySound);
             }
-
-            yTimer = yCooldown;
         }
     }
 
@@ -86,43 +204,23 @@ public class Carmen : PlayerBase
     {
         if (bTimer <= 0)
         {
-            int thisLayer;
-            int otherLayer;
-            if (playerID == 0)
-            {
-                thisLayer = 13;
-                otherLayer = 14;
-                Physics.IgnoreLayerCollision(thisLayer, 12, true);
-                Physics.IgnoreLayerCollision(thisLayer, otherLayer, true);
-            }
-            else
-            {
-                thisLayer = 14;
-                otherLayer = 13;
-                Physics.IgnoreLayerCollision(thisLayer, 12, true);
-                Physics.IgnoreLayerCollision(thisLayer, otherLayer, true);
-            }
+            grapplingTrap.gameObject.transform.position = transform.position + new Vector3(0, 5, 0);
+            grapplingTrap.transform.eulerAngles = transform.forward;
 
-            outline.OutlineColor = Color.grey;
+            grapplingTrap.gameObject.SetActive(true);
 
-            dodgeSpeed += digSpeedBonus;
+            grapplingTrap.OnThrow(visuals.transform.forward, this, playerID + 13);
 
-            anim.SetTrigger("BAttack");
-
-            state = State.dodging;
-
-            StartCoroutine(EndDig(thisLayer, otherLayer));
-
+            bTimer = bCooldown;
             universe.PlaySound(bSound);
         }
     }
-    IEnumerator EndDig(int layer, int otherLayer)
+
+    public void GetLocation(Vector3 dirTemp)
     {
-        yield return new WaitForSeconds(dodgeDur);
-        outline.OutlineColor = Color.black;
-        dodgeSpeed -= digSpeedBonus;
-        base.EndDodge();
-        Physics.IgnoreLayerCollision(layer, 12, false);
-        Physics.IgnoreLayerCollision(layer, otherLayer, false);
+        grappleDir = dirTemp - new Vector3(0, 5, 0);
+        state = State.unique;
     }
+
+
 }
