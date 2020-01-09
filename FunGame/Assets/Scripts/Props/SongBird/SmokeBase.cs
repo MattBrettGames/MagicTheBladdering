@@ -18,6 +18,7 @@ public class SmokeBase : BlankMono
             target.TakeDamage(damage, true);
             target.Knockback(force, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
         }
+        CancelInvoke();
 
         for (int i = 0; i < size; i++)
         {
