@@ -74,7 +74,7 @@ public class Carmen : PlayerBase
             else
             {
                 leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
-               // rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
+                // rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
                 universe.PlaySound(ySound);
             }
 
@@ -87,37 +87,42 @@ public class Carmen : PlayerBase
         if (bTimer <= 0)
         {
             int thisLayer;
+            int otherLayer;
             if (playerID == 0)
             {
                 thisLayer = 13;
+                otherLayer = 14;
+                Physics.IgnoreLayerCollision(thisLayer, 12, true);
+                Physics.IgnoreLayerCollision(thisLayer, otherLayer, true);
             }
             else
             {
                 thisLayer = 14;
+                otherLayer = 13;
+                Physics.IgnoreLayerCollision(thisLayer, 12, true);
+                Physics.IgnoreLayerCollision(thisLayer, otherLayer, true);
             }
-            Physics.IgnoreLayerCollision(thisLayer, 12, true);
 
             outline.OutlineColor = Color.grey;
 
             dodgeSpeed += digSpeedBonus;
 
-            anim.SetTrigger("BAction");
+            anim.SetTrigger("BAttack");
 
             state = State.dodging;
 
-            StartCoroutine(EndDig(thisLayer));
+            StartCoroutine(EndDig(thisLayer, otherLayer));
 
             universe.PlaySound(bSound);
         }
     }
-    IEnumerator EndDig(int layer)
+    IEnumerator EndDig(int layer, int otherLayer)
     {
         yield return new WaitForSeconds(dodgeDur);
         outline.OutlineColor = Color.black;
         dodgeSpeed -= digSpeedBonus;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
+        Physics.IgnoreLayerCollision(layer, otherLayer, false);
     }
-
-
 }

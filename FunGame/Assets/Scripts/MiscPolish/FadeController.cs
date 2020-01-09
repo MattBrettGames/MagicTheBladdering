@@ -9,11 +9,12 @@ public class FadeController : MonoBehaviour
 
     Image cover;
 
-    public void Awake() 
+    public void Start()
     {
+        cover = GetComponentInChildren<Image>();
+        print("I've just started " + cover.name);
         FadeFromBlack();
         cover.color = Color.black;
-
     }
 
     public void FadeToBlack(string levelToLoad)
@@ -33,11 +34,10 @@ public class FadeController : MonoBehaviour
         cover.canvasRenderer.SetAlpha(0);
         cover.CrossFadeAlpha(1f, 0.5f, true);
     }
-         
+
 
     public void FadeFromBlack()
     {
-        cover = GetComponentInChildren<Image>();
         cover.canvasRenderer.SetAlpha(1);
         cover.CrossFadeAlpha(0f, 0.5f, true);
     }

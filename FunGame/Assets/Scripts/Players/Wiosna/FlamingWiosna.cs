@@ -13,6 +13,8 @@ public class FlamingWiosna : MonoBehaviour
     [SerializeField] float lifeSpan;
     float remainingTime;
     GameObject looker;
+    [SerializeField] int maxHealh;
+    int currentHealth;
 
     void Update()
     {
@@ -38,7 +40,16 @@ public class FlamingWiosna : MonoBehaviour
         {
             player.TakeDamage(damage, true);
             particles.Play();
-            Invoke("Disappear", 0.4f);
+            Invoke("Disappear", 0);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if(currentHealth <= 0)
+        {
+            Disappear();
         }
     }
 
@@ -46,7 +57,7 @@ public class FlamingWiosna : MonoBehaviour
     {
         gameObject.SetActive(false);
         particles.Stop();
-        particles.Clear();
+        //particles.Clear();
     }
 
     public void AwakenClone() { remainingTime = lifeSpan; }
@@ -56,5 +67,7 @@ public class FlamingWiosna : MonoBehaviour
         target = targetTemp;
         thisID = id;
         looker = new GameObject("FlamingCloneLooker");
+
+        currentHealth = maxHealh;
     }
 }

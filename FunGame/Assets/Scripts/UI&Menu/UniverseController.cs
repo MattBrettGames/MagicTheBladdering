@@ -105,6 +105,14 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
+
+        StartCoroutine(NewLevelLoad(level));
+    }
+    IEnumerator NewLevelLoad(int level)
+    {
+        yield return new WaitForEndOfFrame();
+
+
         currentLevel = level;
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
@@ -162,7 +170,7 @@ public class UniverseController : BlankMono
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
             playerCode.SetInfo(this, 13);
-                        #endregion
+            #endregion
 
             #region Player 2
             GameObject p2 = selectedChars[1];

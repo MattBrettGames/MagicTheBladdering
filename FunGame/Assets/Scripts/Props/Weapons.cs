@@ -51,6 +51,11 @@ public class Weapons : BlankMono
             player.TakeDamage(damageFull, true);
             player.Knockback(knockFull, knockDir);
         }
+        if(player == null)
+        {
+            FlamingWiosna clone = other.gameObject.GetComponent<FlamingWiosna>();
+            clone.TakeDamage(damageFull);
+        }
     }
 
 
