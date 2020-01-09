@@ -222,5 +222,11 @@ public class Carmen : PlayerBase
         state = State.unique;
     }
 
+    public override void StopKnockback()
+    {
+        base.StopKnockback();
+        anim.SetBool("Grappling", false);
+    }
+
 
 }
