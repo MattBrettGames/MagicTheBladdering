@@ -17,6 +17,9 @@ public class ObjectPooler : BlankMono
     #endregion
 
     #region Carman
+    [Header("Carmen")]
+    public GameObject grappler;
+    [HideInInspector] public List<GameObject> grapplerList = new List<GameObject>();
     #endregion
 
     #region Skjegg
@@ -47,6 +50,9 @@ public class ObjectPooler : BlankMono
             #endregion
 
             #region Carman Props
+            grapplerList.Add(Instantiate<GameObject>(grappler, transform.position, Quaternion.identity, transform));
+            grapplerList[i].SetActive(false);
+
             #endregion
 
             #region Wiosna Props
