@@ -320,7 +320,7 @@ public abstract class PlayerBase : BlankMono
     }
     protected void PoisonTick() { if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } }
 
-    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
+    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }// state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
     public void ControllerRumble(float intensity, float dur)
