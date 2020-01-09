@@ -193,7 +193,7 @@ public abstract class PlayerBase : BlankMono
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, true);
+                TakeDamage(3000, true, false);
             }
         }
 
@@ -227,7 +227,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc, bool fromAttack)
+    public virtual void TakeDamage(int damageInc, bool fromAttack, bool stopAttack)
     {
         if (!iFrames)
         {
@@ -238,7 +238,7 @@ public abstract class PlayerBase : BlankMono
                 StartCoroutine(HitStun(0.01f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
-            if (currentHealth > 0 && !hyperArmour) { anim.SetTrigger("Stagger"); }
+            if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             universe.PlaySound(ouchSound);
         }
     }
@@ -320,7 +320,7 @@ public abstract class PlayerBase : BlankMono
     }
     protected void PoisonTick() { if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } }
 
-    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
+    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; }// state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
 
     public void ControllerRumble(float intensity, float dur)

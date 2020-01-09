@@ -140,10 +140,12 @@ public class Carmen : PlayerBase
                 visuals.transform.LookAt(grappleDir);
                 DodgeSliding(visuals.transform.forward * grapplingSpeed);
                 anim.SetBool("Grappling", true);
-                if (Vector3.Distance(transform.position, grappleDir) <= 1)
+                CancelInvoke();
+                if (Vector3.Distance(transform.position, grappleDir) <= 2)
                 {
                     anim.SetBool("Grappling", false);
                     grapplingTrap.End();
+                    EndActing();
                     state = State.normal;
                 }
                 break;
@@ -154,10 +156,8 @@ public class Carmen : PlayerBase
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, true);
+                TakeDamage(3000, true, false);
             }
-
-
         }
     }
 
@@ -167,7 +167,7 @@ public class Carmen : PlayerBase
         if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
-            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
@@ -220,6 +220,7 @@ public class Carmen : PlayerBase
     {
         grappleDir = dirTemp - new Vector3(0, 5, 0);
         state = State.unique;
+        BeginActing();
     }
 
     public override void StopKnockback()

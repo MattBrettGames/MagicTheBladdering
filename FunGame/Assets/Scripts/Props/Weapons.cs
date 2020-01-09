@@ -12,6 +12,18 @@ public class Weapons : BlankMono
     private bool pvpTrue;
     private float stunDurTrue;
     PlayerBase ownerTrue;
+    bool stopAttackTrue;
+
+    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner, bool stopAttack)
+    {
+        damageFull = damage;
+        knockFull = knockback;
+        knockDir = forward;
+        pvpTrue = pvp;
+        stunDurTrue = stunDur;
+        ownerTrue = owner;
+        stopAttackTrue = stopAttack;
+    }
 
     public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner)
     {
@@ -21,7 +33,9 @@ public class Weapons : BlankMono
         pvpTrue = pvp;
         stunDurTrue = stunDur;
         ownerTrue = owner;
+        stopAttackTrue = true;
     }
+
     private void Start()
     {
         hitBox = gameObject.GetComponent<Collider>();
@@ -48,7 +62,7 @@ public class Weapons : BlankMono
         if (player != null)
         {
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
-            player.TakeDamage(damageFull, true);
+            player.TakeDamage(damageFull, true, stopAttackTrue);
             player.Knockback(knockFull, knockDir);
         }
         if(player == null)

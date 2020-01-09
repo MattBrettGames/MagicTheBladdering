@@ -15,7 +15,7 @@ public class SmokeBase : BlankMono
 
         if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
         {
-            target.TakeDamage(damage, true);
+            target.TakeDamage(damage, true, false);
             target.Knockback(force, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
         }
         CancelInvoke();
