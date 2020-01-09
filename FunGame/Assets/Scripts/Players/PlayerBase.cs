@@ -178,7 +178,7 @@ public abstract class PlayerBase : BlankMono
 
             case State.dodging:
 
-                if (aTimer < 0)
+                if (aTimer <= 0)
                 {
                     DodgeSliding(dir);
                 }
