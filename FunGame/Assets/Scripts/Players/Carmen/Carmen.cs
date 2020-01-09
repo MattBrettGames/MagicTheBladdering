@@ -156,7 +156,7 @@ public class Carmen : PlayerBase
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, true);
+                TakeDamage(3000, true, false);
             }
         }
     }
@@ -167,7 +167,7 @@ public class Carmen : PlayerBase
         if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
-            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
