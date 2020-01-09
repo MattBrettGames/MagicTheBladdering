@@ -46,7 +46,7 @@ public class PauseMenu : MonoBehaviour
             visuals.SetActive(true);
             playerCode1.BeginActing();
             playerCode2.BeginActing();
-            Time.timeScale = Mathf.Epsilon;
+            Time.timeScale = 0;
         }
 
         if (visuals.activeSelf)

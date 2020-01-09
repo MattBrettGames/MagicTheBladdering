@@ -39,7 +39,7 @@ public class ObjectPooler : BlankMono
 
     private void Start()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 12; i++)
         {
             #region Songbird Props
             poisonSmokeList.Add(Instantiate<GameObject>(poisonSmoke, transform.position, Quaternion.identity, transform));
@@ -73,6 +73,9 @@ public class ObjectPooler : BlankMono
 
     public GameObject ReturnSmokeCloud(int listIndex)
     {
-        return poisonSmokeList[listIndex];
+        GameObject poisonSmoke = poisonSmokeList[listIndex];
+        poisonSmokeList.RemoveAt(listIndex);
+        return poisonSmoke;
+
     }
 }
