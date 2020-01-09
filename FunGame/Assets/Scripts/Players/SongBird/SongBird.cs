@@ -58,18 +58,12 @@ public class SongBird : PlayerBase
 
     void GainSmokes()
     {
-
-        print(playerID);
-        print(playerID * 2 + 1);
-        print(playerID + 2 + 2);
-
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
         smokeCloudCannister = pooler.ReturnSmokeCloud(playerID * 2 + 1);//pooler.poisonSmokeList.Count - (playerID + 1));
         smokeCloudCannister.tag = tag;
         smokeCloudDodge = pooler.ReturnSmokeCloud(playerID + 2 + 2);
         smokeCloudDodge.tag = tag;
-
 
         cannister = pooler.cannisters[playerID];
         cannister.tag = tag;
@@ -160,7 +154,7 @@ public class SongBird : PlayerBase
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
-            StartCoroutine(SmokeMove(smokeCloud, dir, i * 0.01f, false));
+            StartCoroutine(SmokeMove(smokeCloud, visuals.transform.forward, i * 0.01f, false));
         }
     }
 
