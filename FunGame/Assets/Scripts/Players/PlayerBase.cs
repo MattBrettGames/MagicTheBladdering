@@ -287,7 +287,7 @@ public abstract class PlayerBase : BlankMono
         state = State.knockback;
         Invoke("StopKnockback", power * 0.01f);
     }
-    public void StopKnockback() { knockbackForce = Vector3.zero; state = State.normal; }
+    public virtual void StopKnockback() { knockbackForce = Vector3.zero; state = State.normal; }
     #endregion
 
     #region Utility Functions

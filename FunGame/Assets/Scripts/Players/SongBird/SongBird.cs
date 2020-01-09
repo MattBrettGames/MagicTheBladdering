@@ -12,6 +12,7 @@ public class SongBird : PlayerBase
     private ObjectPooler pooler;
     private GameObject smokeCloud;
     private GameObject smokeCloudCannister;
+    private GameObject smokeCloudDodge;
     private GameObject cannister;
 
     [Header("Dagger Swipe")]
@@ -57,10 +58,18 @@ public class SongBird : PlayerBase
 
     void GainSmokes()
     {
+
+        print(playerID);
+        print(playerID * 2 + 1);
+        print(playerID + 2 + 2);
+
         smokeCloud = pooler.ReturnSmokeCloud(playerID);
         smokeCloud.tag = tag;
-        smokeCloudCannister = pooler.ReturnSmokeCloud(pooler.poisonSmokeList.Count - (playerID + 1));
+        smokeCloudCannister = pooler.ReturnSmokeCloud(playerID * 2 + 1);//pooler.poisonSmokeList.Count - (playerID + 1));
         smokeCloudCannister.tag = tag;
+        smokeCloudDodge = pooler.ReturnSmokeCloud(playerID + 2 + 2);
+        smokeCloudDodge.tag = tag;
+
 
         cannister = pooler.cannisters[playerID];
         cannister.tag = tag;
@@ -120,15 +129,15 @@ public class SongBird : PlayerBase
 
             Invoke("EndDodge", dodgeDur);
 
-            smokeCloud.transform.position = transform.position;
-            smokeCloud.transform.localScale = Vector3.zero;
-            smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
-            smokeCloud.SetActive(true);
-            smokeCloud.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize, dodgePoisonTime);
+            smokeCloudDodge.transform.position = transform.position;
+            smokeCloudDodge.transform.localScale = Vector3.zero;
+            smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
+            smokeCloudDodge.SetActive(true);
+            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize, dodgePoisonTime);
 
             for (int i = 0; i < dodgeCloudSize; i++)
             {
-                StartCoroutine(smokeGrowth(i * 0.01f, smokeCloud));
+                StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDodge));
             }
 
             universe.PlaySound(aSound);
@@ -187,4 +196,4 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale -= Vector3.one;
     }
 
-}
+};
