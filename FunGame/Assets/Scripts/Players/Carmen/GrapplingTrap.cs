@@ -21,6 +21,7 @@ public class GrapplingTrap : MonoBehaviour
         Physics.IgnoreLayerCollision(layer, layer);
         transform.forward = dir;
         curDistance = 0;
+        gameObject.transform.SetParent(null);
 
     }
 
@@ -41,6 +42,7 @@ public class GrapplingTrap : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        gameObject.transform.SetParent(other.transform);
         travelling = false;
         carTrue.GetLocation(gameObject.transform.position);
         rb2d.velocity = Vector3.zero;
