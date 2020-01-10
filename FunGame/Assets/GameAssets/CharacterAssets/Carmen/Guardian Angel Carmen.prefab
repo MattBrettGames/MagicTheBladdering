@@ -355,7 +355,7 @@ MonoBehaviour:
   pvp: 1
   speed: 40
   dodgeSpeed: 60
-  dodgeDur: 0.43
+  dodgeDur: 0.4
   dir: {x: 0, y: 0, z: 0}
   currentHealth: 100
   healthMax: 0
@@ -367,7 +367,7 @@ MonoBehaviour:
   state: 0
   aimTarget: {fileID: 59906020347858681}
   visuals: {fileID: 59906019536891435}
-  aCooldown: 1.69
+  aCooldown: 0.1
   bCooldown: 3
   xCooldown: 1
   yCooldown: 5
@@ -984,6 +984,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59906021055628848}
     m_Modifications:
+    - target: {fileID: 100008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_Name
+      value: Carmen_Skelemesh_noWP
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1039,34 +1043,6 @@ PrefabInstance:
     - target: {fileID: 400008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 27.032381
-      objectReference: {fileID: 0}
-    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 6.1471763
-      objectReference: {fileID: 0}
-    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 7.0993857
-      objectReference: {fileID: 0}
-    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -25.051674
-      objectReference: {fileID: 0}
-    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -178.00554
-      objectReference: {fileID: 0}
-    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -59.26886
-      objectReference: {fileID: 0}
-    - target: {fileID: 100008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_Name
-      value: Carmen_Skelemesh_noWP
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_Controller
@@ -1383,6 +1359,30 @@ PrefabInstance:
     - target: {fileID: 400098, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -43.18553
+      objectReference: {fileID: 0}
+    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 27.032381
+      objectReference: {fileID: 0}
+    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 6.1471763
+      objectReference: {fileID: 0}
+    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 7.0993857
+      objectReference: {fileID: 0}
+    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -25.051674
+      objectReference: {fileID: 0}
+    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -178.00554
+      objectReference: {fileID: 0}
+    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -59.26886
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b02c824101176c847bc31d7c49c0672d, type: 3}

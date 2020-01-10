@@ -5121,8 +5121,8 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 30
-  dodgeSpeed: 50
-  dodgeDur: 0.2
+  dodgeSpeed: 10
+  dodgeDur: 0.4
   dir: {x: 0, y: 0, z: 0}
   currentHealth: 160
   healthMax: 140
@@ -5134,7 +5134,7 @@ MonoBehaviour:
   state: 0
   aimTarget: {fileID: 4487641701897503642}
   visuals: {fileID: 2481741387571461302}
-  aCooldown: 1
+  aCooldown: 0.6
   bCooldown: 12
   xCooldown: 0.4
   yCooldown: 4
@@ -5148,6 +5148,7 @@ MonoBehaviour:
   ySound: ValdY
   ouchSound: ValdOuch
   hammer: {fileID: 3888434811973879354}
+  outline: {fileID: 2481741387571493841}
   xAttack: 10
   xKnockback: 2
   spinDamage: 20
@@ -5351,18 +5352,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -21.08392
-      objectReference: {fileID: 0}
-    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -48.973793
-      objectReference: {fileID: 0}
-    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 43.43192
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.0000010976722
@@ -5422,6 +5411,18 @@ PrefabInstance:
     - target: {fileID: 400008, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -62.726334
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -21.08392
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -48.973793
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 43.43192
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
