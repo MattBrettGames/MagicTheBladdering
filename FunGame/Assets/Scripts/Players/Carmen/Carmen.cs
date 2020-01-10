@@ -117,9 +117,9 @@ public class Carmen : PlayerBase
                     anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
+                }
                     aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
                     visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
-                }
 
 
                 break;
@@ -140,11 +140,12 @@ public class Carmen : PlayerBase
                 visuals.transform.LookAt(grappleDir);
                 DodgeSliding(visuals.transform.forward * grapplingSpeed);
                 anim.SetBool("Grappling", true);
+                print("I'm grappling");
                 CancelInvoke();
                 if (Vector3.Distance(transform.position, grappleDir) <= 2)
                 {
-                    anim.SetBool("Grappling", false);
                     grapplingTrap.End();
+                    anim.SetBool("Grappling", false);
                     EndActing();
                     state = State.normal;
                 }
@@ -217,8 +218,8 @@ public class Carmen : PlayerBase
     public void GetLocation(Vector3 dirTemp)
     {
         grappleDir = dirTemp - new Vector3(0, 5, 0);
-        state = State.unique;
         BeginActing();
+        state = State.unique;
     }
 
     public override void StopKnockback()

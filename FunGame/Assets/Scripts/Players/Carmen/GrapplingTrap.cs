@@ -43,17 +43,16 @@ public class GrapplingTrap : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        print("I've collided");
         if (other.gameObject.tag != "Hazard")
         {
+            print("Collided with something");
             gameObject.transform.SetParent(other.transform);
             travelling = false;
             carTrue.GetLocation(gameObject.transform.position);
             rb2d.velocity = Vector3.zero;
-        }
-        else
-        {
-            End();
-        }
+            print("Finished Collided with something + " + carTrue.gameObject.name);
+        }        
     }
 
     public void End()
