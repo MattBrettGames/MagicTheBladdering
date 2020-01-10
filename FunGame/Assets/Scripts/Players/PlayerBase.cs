@@ -85,6 +85,7 @@ public abstract class PlayerBase : BlankMono
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
         baseSpeed = speed;
+        bTimer = bCooldown;
 
         healthMax = currentHealth;
         InvokeRepeating("PoisonTick", 0, secsBetweenTicks);
@@ -273,6 +274,9 @@ public abstract class PlayerBase : BlankMono
 
         Time.timeScale = 1;
         anim.SetTrigger("Death");
+
+        GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
+
         this.enabled = false;
     }
     public virtual void KnockbackContinual()
