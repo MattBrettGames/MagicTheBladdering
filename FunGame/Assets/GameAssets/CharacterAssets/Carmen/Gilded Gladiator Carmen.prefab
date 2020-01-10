@@ -305,6 +305,22 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &9184104974700990327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304488729965445030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2409e56bdd11a864c84798f37c70f669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carmen: {fileID: 5006592551857591636}
+  leftDagger: {fileID: 3370517344193086882}
+  rightDagger: {fileID: 4687993868678380091}
+  spinSphere: {fileID: 516799142119920584}
 --- !u!1 &3203895092179688902
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,8 +511,8 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 40
-  dodgeSpeed: 25
-  dodgeDur: 0.6
+  dodgeSpeed: 60
+  dodgeDur: 0.4
   dir: {x: 0, y: 0, z: 0}
   currentHealth: 100
   healthMax: 0
@@ -523,7 +539,6 @@ MonoBehaviour:
   ouchSound: CarOuch
   ySoundBonus: CarYBonus
   leftDagger: {fileID: 3370517344193086882}
-  rightDagger: {fileID: 4687993868678380091}
   stabDamage: 25
   stabKnockback: 1
   slashDamage: 10
@@ -1074,6 +1089,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7ad27276d1f2c05488b221f0fc775153, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb34ce39ce2daf54d8a238fd7306b309, type: 3}
+--- !u!4 &2304488729965535846 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400226, guid: eb34ce39ce2daf54d8a238fd7306b309,
+    type: 3}
+  m_PrefabInstance: {fileID: 2304488729965410564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2304488729965535844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400224, guid: eb34ce39ce2daf54d8a238fd7306b309,
@@ -1089,12 +1110,6 @@ Transform:
 --- !u!1 &2304488729965445030 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: eb34ce39ce2daf54d8a238fd7306b309,
-    type: 3}
-  m_PrefabInstance: {fileID: 2304488729965410564}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2304488729965535846 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400226, guid: eb34ce39ce2daf54d8a238fd7306b309,
     type: 3}
   m_PrefabInstance: {fileID: 2304488729965410564}
   m_PrefabAsset: {fileID: 0}

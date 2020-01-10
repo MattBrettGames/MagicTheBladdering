@@ -187,12 +187,12 @@ public class Carmen : PlayerBase
 
             if (lookDif <= backstabAngle)
             {
-                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
+                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true);
                 universe.PlaySound(ySoundBonus);
             }
             else
             {
-                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
+                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true);
                 universe.PlaySound(ySound);
             }
         }

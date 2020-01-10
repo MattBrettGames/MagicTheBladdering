@@ -25,17 +25,6 @@ public class Weapons : BlankMono
         stopAttackTrue = stopAttack;
     }
 
-    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner)
-    {
-        damageFull = damage;
-        knockFull = knockback;
-        knockDir = forward;
-        pvpTrue = pvp;
-        stunDurTrue = stunDur;
-        ownerTrue = owner;
-        stopAttackTrue = true;
-    }
-
     private void Start()
     {
         hitBox = gameObject.GetComponent<Collider>();

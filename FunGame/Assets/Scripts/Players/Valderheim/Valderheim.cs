@@ -131,7 +131,7 @@ public class Valderheim : PlayerBase
         {
             if (xTimer <= 0)
             {
-                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
+                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
                 universe.PlaySound(xSound);
@@ -139,7 +139,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
-            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
+            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("Spin");
             universe.PlaySound(xSound);
         }
@@ -149,7 +149,7 @@ public class Valderheim : PlayerBase
     {
         if (comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this);
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("ComboKick");
             comboTime = false;
             universe.PlaySound(ySound);
@@ -158,7 +158,7 @@ public class Valderheim : PlayerBase
         {
             if (yTimer <= 0)
             {
-                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this);
+                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
                 universe.PlaySound(ySound);

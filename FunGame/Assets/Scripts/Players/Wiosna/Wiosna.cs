@@ -39,7 +39,7 @@ public class Wiosna : PlayerBase
         if (xTimer <= 0)
         {
             anim.SetTrigger("XAttack");
-            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this);
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
             universe.PlaySound(xSound);
         }
@@ -84,7 +84,7 @@ public class Wiosna : PlayerBase
         if (yTimer <= 0)
         {
             anim.SetTrigger("YAttack");
-            explosion.GainInfo(yDamage, yKnockback, visuals.transform.forward, pvp, 0, this);
+            explosion.GainInfo(yDamage, yKnockback, visuals.transform.forward, pvp, 0, this, true);
             yTimer = yCooldown;
             universe.PlaySound(ySound);
         }
