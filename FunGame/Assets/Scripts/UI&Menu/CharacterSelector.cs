@@ -138,7 +138,7 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
+            if (player.GetButtonDown("AAction"))// || Input.GetKeyDown(KeyCode.H))
             {
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {

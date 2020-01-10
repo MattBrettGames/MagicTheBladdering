@@ -42,10 +42,13 @@ public class GrapplingTrap : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        gameObject.transform.SetParent(other.transform);
-        travelling = false;
-        carTrue.GetLocation(gameObject.transform.position);
-        rb2d.velocity = Vector3.zero;
+        if (other.gameObject.tag != "Hazard")
+        {
+            gameObject.transform.SetParent(other.transform);
+            travelling = false;
+            carTrue.GetLocation(gameObject.transform.position);
+            rb2d.velocity = Vector3.zero;
+        }
     }
 
     public void End()

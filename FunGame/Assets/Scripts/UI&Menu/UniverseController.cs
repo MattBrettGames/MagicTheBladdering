@@ -112,7 +112,6 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForEndOfFrame();
 
-
         currentLevel = level;
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
@@ -197,7 +196,9 @@ public class UniverseController : BlankMono
 
             for (int i = 0; i < 2; i++)
             {
-                GameObject.Find("P" + (i + 1) + "HUDController").GetComponents<HUDController>()[i].SetStats(charInts[i], selectedChars[i].name);
+                print(i + 1);
+                GameObject.Find("P" + (i + 1) + "HUDController").GetComponent<HUDController>().SetStats(charInts[i], selectedChars[i].name);
+                print(i);
             }
         }
     }
