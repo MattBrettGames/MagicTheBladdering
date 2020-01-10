@@ -116,7 +116,7 @@ public class SongBird : PlayerBase
 
     public override void AAction()
     {
-        if (aTimer <= 0)
+        if (aTimer <= 0 && dir != Vector3.zero)
         {
             anim.SetTrigger("AAction");
             state = State.dodging;
