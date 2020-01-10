@@ -15,6 +15,7 @@ public class GrapplingTrap : MonoBehaviour
     public void OnThrow(Vector3 dirNew, Carmen car, int layer)
     {
         travelling = true;
+        rb2d.angularVelocity = Vector3.zero;
         dir = dirNew;
         carTrue = car;
         gameObject.layer = layer;
@@ -49,12 +50,17 @@ public class GrapplingTrap : MonoBehaviour
             carTrue.GetLocation(gameObject.transform.position);
             rb2d.velocity = Vector3.zero;
         }
+        else
+        {
+            End();
+        }
     }
 
     public void End()
     {
         gameObject.SetActive(false);
         transform.position = new Vector3(0, -100, 0);
+        rb2d.angularVelocity = Vector3.zero;
     }
 
 }
