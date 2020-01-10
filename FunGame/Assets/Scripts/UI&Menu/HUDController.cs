@@ -25,6 +25,7 @@ public class HUDController : BlankMono
     public string thisPlayerInt;
     public GameObject[] images = new GameObject[4];
     public GameObject image;
+    [SerializeField] GameObject[] skulls = new GameObject[3];
     private PlayerBase targetPlayer;
 
     public void SetStats(int imageInt, string charName)
@@ -40,11 +41,21 @@ public class HUDController : BlankMono
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
-
-
+        
         image.SetActive(false);
         image = images[imageInt];
         image.SetActive(true);
+
+        for (int i = 0; i < skulls.Length; i++)
+        {
+            skulls[i].SetActive(false);
+        }
+
+    }
+
+    public void PlayerDeath()
+    {
+        skulls[targetPlayer.numOfDeaths].SetActive(true);
     }
 
     public void Update()

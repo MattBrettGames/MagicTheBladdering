@@ -274,6 +274,9 @@ public abstract class PlayerBase : BlankMono
 
         Time.timeScale = 1;
         anim.SetTrigger("Death");
+
+        GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
+
         this.enabled = false;
     }
     public virtual void KnockbackContinual()
