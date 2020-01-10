@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SmokeBase : BlankMono
+public class SmokeBase : MonoBehaviour
 {
     private PlayerBase target;
     
