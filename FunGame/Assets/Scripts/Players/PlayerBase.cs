@@ -265,17 +265,17 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void Death()
     {
-        universe.PlayerDeath(gameObject, lookAtTarget.gameObject);
         GainIFrames();
 
         dir = Vector3.zero;
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
 
+        GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
+        universe.PlayerDeath(gameObject, lookAtTarget.gameObject);
         Time.timeScale = 1;
         anim.SetTrigger("Death");
 
-        GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
 
         this.enabled = false;
     }
