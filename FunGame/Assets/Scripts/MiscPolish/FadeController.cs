@@ -12,7 +12,6 @@ public class FadeController : MonoBehaviour
     public void Start()
     {
         cover = GetComponentInChildren<Image>();
-        print("I've just started " + cover.name);
         FadeFromBlack();
         cover.color = Color.black;
     }

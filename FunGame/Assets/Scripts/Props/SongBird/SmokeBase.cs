@@ -22,7 +22,7 @@ public class SmokeBase : MonoBehaviour
             Invoke("Shrink", time + (i * 0.01f));
         }
     }
-
+    
     void OnTriggerStay(Collider other)
     {
         if (other.tag == target.tag)

@@ -27,26 +27,38 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(TrueStart());
         visuals.SetActive(false);
+    }
+
+    IEnumerator TrueStart()
+    {
+        yield return new WaitForEndOfFrame();
         players = ReInput.players.GetPlayer(0);
         player2 = ReInput.players.GetPlayer(1);
 
-        playerCode1 = GameObject.Find("Player1Base").GetComponentInParent<PlayerBase>();
-        playerCode2 = GameObject.Find("Player2Base").GetComponentInParent<PlayerBase>();
+        GameObject everything = GameObject.Find("EverythingYouNeed");
+
+        playerCode1 = everything.GetComponentsInChildren<PlayerBase>()[0];
+        playerCode2 = everything.GetComponentsInChildren<PlayerBase>()[1];
+
+        print(playerCode1.name + "|" + playerCode2.name);
 
         for (int i = 0; i < options.Length; i++) { texts.Add(options[i].GetComponent<Text>()); }
         options[currentDisplay].transform.localScale += sizeChange;
         texts[currentDisplay].color = activeColour;
     }
 
+
     void Update()
     {
         if (players.GetButtonDown("Pause") | player2.GetButtonDown("Pause"))
         {
             visuals.SetActive(true);
+            Time.timeScale = 0;
             playerCode1.BeginActing();
             playerCode2.BeginActing();
-            Time.timeScale = 0;
+            print("Time scale is " + Time.timeScale);
         }
 
         if (visuals.activeSelf)

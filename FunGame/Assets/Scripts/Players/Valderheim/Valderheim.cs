@@ -58,7 +58,6 @@ public class Valderheim : PlayerBase
 
         if (player.GetButtonDown("BAttack")) { BAction(); }
 
-
         switch (state)
         {
             case State.attack:
@@ -109,10 +108,11 @@ public class Valderheim : PlayerBase
 
                     anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
+
+                    aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
                 }
 
-                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
-                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
                 break;
 
             case State.dodging:
