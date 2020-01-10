@@ -229,5 +229,11 @@ public class Carmen : PlayerBase
         anim.SetBool("Grappling", false);
     }
 
+    public override void Respawn()
+    {
+        base.Respawn();
+        anim.SetBool("Grappling", false);
+    }
+
 
 }

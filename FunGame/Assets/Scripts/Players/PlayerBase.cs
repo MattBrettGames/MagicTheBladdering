@@ -314,7 +314,7 @@ public abstract class PlayerBase : BlankMono
         incomingMult = 1;
 
         EndActing();
-        anim.SetFloat("Movement", 0);
+        anim.SetFloat("Movement", 0);        
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
