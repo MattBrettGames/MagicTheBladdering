@@ -2,13 +2,10 @@
 
 public class SmokeBase : BlankMono
 {
-
     private PlayerBase target;
-
-
+    
     virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
     {
-
         target = targetLooker.GetComponentInParent<PlayerBase>();
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
@@ -50,6 +47,4 @@ public class SmokeBase : BlankMono
             gameObject.SetActive(false);
         }
     }
-
-
 }
