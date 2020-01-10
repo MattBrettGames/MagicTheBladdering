@@ -9,7 +9,6 @@ public class Carmen : PlayerBase
 
     [Header("Unique Components")]
     public Weapons leftDagger;
-    public Weapons rightDagger;
 
     [Header("Dagger Stab")]
     public int stabDamage;
@@ -189,13 +188,11 @@ public class Carmen : PlayerBase
             if (lookDif <= backstabAngle)
             {
                 leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
-                //rightDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this);
                 universe.PlaySound(ySoundBonus);
             }
             else
             {
                 leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
-                // rightDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this);
                 universe.PlaySound(ySound);
             }
         }
