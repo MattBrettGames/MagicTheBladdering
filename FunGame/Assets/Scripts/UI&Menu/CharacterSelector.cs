@@ -128,11 +128,13 @@ public class CharacterSelector : BlankMono
                 if (currentSkin != 0)
                 {
                     currentSkin--;
+                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 else
                 {
                     currentSkin = characters[currentChar].skins.Count - 1;
+                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -186,9 +188,9 @@ public class CharacterSelector : BlankMono
     {
         otherChar.characters[currentChar].skins[currentSkin].lockedChar = false;
         otherChar.UpdateDisplay();
-        displayChar.transform.SetParent(GameObject.Find(thisPlayer + "GameObjectStore").transform);
-        displayChar.transform.forward = lockedForward;
-        store.transform.position = camOffsetBase;
+        displayChar.transform.SetParent(store.transform);
+        store.transform.forward = lockedForward;
+        displayChar.transform.position = camOffsetBase;
         cam.fieldOfView = camFOVBase;
         locked = false;
     }
