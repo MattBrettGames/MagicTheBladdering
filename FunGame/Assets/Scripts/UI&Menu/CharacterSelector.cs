@@ -111,13 +111,13 @@ public class CharacterSelector : BlankMono
                 if (currentSkin < characters[currentChar].skins.Count - 1)
                 {
                     currentSkin++;
-                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
+                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 else
                 {
                     currentSkin = 0;
-                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
+                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -128,13 +128,13 @@ public class CharacterSelector : BlankMono
                 if (currentSkin != 0)
                 {
                     currentSkin--;
-                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
+                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 else
                 {
                     currentSkin = characters[currentChar].skins.Count - 1;
-                    displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
+                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 Invoke("EndCooldown", 0.3f);
