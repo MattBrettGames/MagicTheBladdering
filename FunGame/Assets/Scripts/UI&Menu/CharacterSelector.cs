@@ -15,6 +15,8 @@ public class CharacterSelector : BlankMono
     private Player player;
     int currentChar;
     int currentSkin;
+    
+    [SerializeField] float fovLerpSpeed;
 
     private bool inputCooldown;
 
@@ -161,14 +163,19 @@ public class CharacterSelector : BlankMono
                 universe.Unlock(thisPInt);
             }
         }
+        
+        if(locked)
+        {
+           Mathf.Lerp(cam.fieldOfView, camFOVLocked, fovLerpSpeed);
+        }
     }
 
     private void LockInCharacter()
     {
         backStore.transform.position += camOffsetLocked;
-        cam.fieldOfView = camFOVLocked;
+        
         lockedForward = displayChar.transform.forward;
-        displayChar.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt*2), 0);
+        store.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt*2), 0);
 
         StartCoroutine(StartLoad());
 
