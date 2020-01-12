@@ -220,14 +220,14 @@ public class UniverseController : BlankMono
         if (lockedInPlayers == numOfPlayers)
         {
             GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("ArenaSelectorPVP");
+            charSelector1.enabled = false;
+            charSelector2.enabled = false;
             Invoke("DisableChars", 0.5f);
         }
     }
 
     void DisableChars()
     {
-        charSelector1.enabled = false;
-        charSelector2.enabled = false;
         selectedChars[0].SetActive(false);
         selectedChars[1].SetActive(false);
     }
