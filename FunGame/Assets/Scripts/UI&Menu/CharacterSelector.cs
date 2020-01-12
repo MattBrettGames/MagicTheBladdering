@@ -162,19 +162,13 @@ public class CharacterSelector : BlankMono
                 Unlock();
                 universe.Unlock(thisPInt);
             }
-        }
-        
-        if(locked)
-        {
-        print("I'm locked");
-           Mathf.Lerp(cam.fieldOfView, camFOVLocked, fovLerpSpeed * Time.deltaTime);
-        }
+        }              
     }
 
     private void LockInCharacter()
     {
         backStore.transform.position += camOffsetLocked;
-        
+        cam.fieldOfView = camFOVLocked;
         lockedForward = displayChar.transform.forward;
         store.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt*2), 0);
 
