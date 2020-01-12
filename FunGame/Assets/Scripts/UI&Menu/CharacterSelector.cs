@@ -166,7 +166,8 @@ public class CharacterSelector : BlankMono
         
         if(locked)
         {
-           Mathf.Lerp(cam.fieldOfView, camFOVLocked, fovLerpSpeed);
+        print("I'm locked");
+           Mathf.Lerp(cam.fieldOfView, camFOVLocked, fovLerpSpeed * Time.deltaTime);
         }
     }
 
