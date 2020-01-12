@@ -226,6 +226,8 @@ public class UniverseController : BlankMono
 
     void DisableChars()
     {
+        charSelector1.enabled = false;
+        charSelector2.enabled = false;
         selectedChars[0].SetActive(false);
         selectedChars[1].SetActive(false);
     }
