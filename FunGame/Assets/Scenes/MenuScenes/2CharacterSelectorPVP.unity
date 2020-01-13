@@ -1030,7 +1030,7 @@ PrefabInstance:
         type: 3}
       propertyPath: weapon
       value: 
-      objectReference: {fileID: 3672090908052612082}
+      objectReference: {fileID: 178850819}
     - target: {fileID: 205717147657783760, guid: c28653dd4adc8bb48b696b8450d9916c,
         type: 3}
       propertyPath: playerID
@@ -1131,6 +1131,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 178850815}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &178850819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 495545894, guid: c28653dd4adc8bb48b696b8450d9916c,
+    type: 3}
+  m_PrefabInstance: {fileID: 178850815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce40f2c857997864a93498bbe390a64c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &183398863
 GameObject:
   m_ObjectHideFlags: 0
@@ -17529,6 +17541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: P1
   thisPInt: 0
+  fovLerpSpeed: 0
   characters:
   - name: {fileID: 1958984048}
     skins:
@@ -23805,6 +23818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: P2
   thisPInt: 1
+  fovLerpSpeed: 0
   characters:
   - name: {fileID: 1593902223}
     skins:
