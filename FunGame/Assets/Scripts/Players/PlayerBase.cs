@@ -331,13 +331,14 @@ public abstract class PlayerBase : BlankMono
 
     public void ControllerRumble(float intensity, float dur)
     {
+        print(thisPlayer + " is rumbling");
         player.SetVibration(1, intensity, dur);
         player.SetVibration(0, intensity, dur);
     }
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
-    public virtual void LeaveCrack(Vector3 pos) { CameraShake(); ControllerRumble(3, 0.3f); }
+    public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f); CameraShake(); }
 
     public virtual void CameraShake() { universe.CameraRumbleCall(); }
     #endregion
