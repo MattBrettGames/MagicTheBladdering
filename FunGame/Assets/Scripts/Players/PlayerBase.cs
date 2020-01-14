@@ -239,7 +239,7 @@ public abstract class PlayerBase : BlankMono
             universe.CameraRumbleCall();
             if (fromAttack)
             {
-                StartCoroutine(HitStun(0.01f));
+                StartCoroutine(HitStun(0.05f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
@@ -248,7 +248,7 @@ public abstract class PlayerBase : BlankMono
     }
     IEnumerator HitStun(float time)
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0.5f;
         yield return new WaitForSecondsRealtime(time);
         EndTimeScale();
     }
