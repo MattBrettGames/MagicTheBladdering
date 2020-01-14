@@ -36,6 +36,7 @@ public class PillarDamage : ThingThatCanDie
     void EngageDestruction()
     {
         column.SetActive(false);
+        GetComponent<Collider>().enabled = false;
 
         for (int i = 0; i < rb2ds.Length; i++)
         {
