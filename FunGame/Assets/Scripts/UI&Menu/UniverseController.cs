@@ -196,7 +196,6 @@ public class UniverseController : BlankMono
 
             for (int i = 0; i < 2; i++)
             {
-                print(i + 1);
                 GameObject.Find("P" + (i + 1) + "HUDController").GetComponent<HUDController>().SetStats(charInts[i], selectedChars[i].name);
             }
         }

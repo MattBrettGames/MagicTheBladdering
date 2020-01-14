@@ -42,8 +42,6 @@ public class PauseMenu : MonoBehaviour
         playerCode1 = everything.GetComponentsInChildren<PlayerBase>()[0];
         playerCode2 = everything.GetComponentsInChildren<PlayerBase>()[1];
 
-        print(playerCode1.name + "|" + playerCode2.name);
-
         for (int i = 0; i < options.Length; i++) { texts.Add(options[i].GetComponent<Text>()); }
         options[currentDisplay].transform.localScale += sizeChange;
         texts[currentDisplay].color = activeColour;
