@@ -167,7 +167,7 @@ public class SongBird : PlayerBase
 
         if (Vector3.Distance(gameObject.transform.position, lookAtTarget.position) <= deathCloudSize)
         {
-            lookAtTarget.GetComponentInParent<PlayerBase>().TakeDamage(deathBurstDamage, true, false);
+            lookAtTarget.GetComponentInParent<PlayerBase>().TakeDamage(deathBurstDamage, Vector3.zero, true, false);
         }
 
         for (int i = 0; i < deathCloudSize; i++)

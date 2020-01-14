@@ -4,7 +4,7 @@ using UnityEngine;
 using Rewired;
 using System;
 
-public abstract class PlayerBase : BlankMono
+public abstract class PlayerBase : ThingThatCanDie
 {
     [Header("GameMode Stuff")]
     public string thisPlayer;
@@ -21,8 +21,6 @@ public abstract class PlayerBase : BlankMono
     [HideInInspector] public Vector3 dir;
 
     [Header("Common Stats")]
-    public int currentHealth;
-    [HideInInspector] public int healthMax;
     public float damageMult = 1;
     public float incomingMult = 1;
 
@@ -197,7 +195,7 @@ public abstract class PlayerBase : BlankMono
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, true, false);
+                TakeDamage(3000, Vector3.zero, true, false);
             }
         }
 
@@ -231,7 +229,7 @@ public abstract class PlayerBase : BlankMono
     #endregion
 
     #region Common Events
-    public virtual void TakeDamage(int damageInc, bool fromAttack, bool stopAttack)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, bool fromAttack, bool stopAttack)
     {
         if (!iFrames)
         {
@@ -287,7 +285,7 @@ public abstract class PlayerBase : BlankMono
         transform.position += knockbackForce * knockBackPower * Time.deltaTime;
         visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
     }
-    public virtual void Knockback(int power, Vector3 direction)
+    public override void Knockback(int power, Vector3 direction)
     {
         knockbackForce = direction;
         knockBackPower = power * 10;

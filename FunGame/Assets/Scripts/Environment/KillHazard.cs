@@ -19,7 +19,7 @@ public class KillHazard : BlankMono
             {
                 PlayerBase code = other.gameObject.GetComponent<PlayerBase>();
                 code.currentHealth -= damageToPlayer;
-                code.TakeDamage(1, false, false);
+                code.TakeDamage(1, Vector3.zero, false, false);
                 code.Knockback(force, dir);
 
             }

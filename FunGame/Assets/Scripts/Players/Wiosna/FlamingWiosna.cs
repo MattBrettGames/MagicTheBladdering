@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlamingWiosna : MonoBehaviour
+public class FlamingWiosna : ThingThatCanDie
 {
     private Transform target;
     private string thisID;
@@ -13,8 +13,6 @@ public class FlamingWiosna : MonoBehaviour
     [SerializeField] float lifeSpan;
     float remainingTime;
     GameObject looker;
-    [SerializeField] int maxHealh;
-    int currentHealth;
 
     void Update()
     {
@@ -38,16 +36,16 @@ public class FlamingWiosna : MonoBehaviour
 
         if (player != null && player.thisPlayer != thisID)
         {
-            player.TakeDamage(damage, true, true);
+            player.TakeDamage(damage, Vector3.zero, true, true);
             Invoke("Disappear", 0);
             particles.Play();
         }
     }
 
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Vector3 dirTemp, bool fromAttack, bool stopAttack)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Disappear();
         }
@@ -68,6 +66,6 @@ public class FlamingWiosna : MonoBehaviour
         thisID = id;
         looker = new GameObject("FlamingCloneLooker");
 
-        currentHealth = maxHealh;
+        currentHealth = healthMax;
     }
 }

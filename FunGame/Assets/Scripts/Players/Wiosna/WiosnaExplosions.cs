@@ -8,7 +8,7 @@ public class WiosnaExplosions : MonoBehaviour
     PlayerBase ownerTrue;
     int damageFull;
     int knockFull;
-    Vector3 dirTrue;
+    Vector3 knockDir;
     float spaceTrue;
     ParticleSystem parts;
 
@@ -24,7 +24,7 @@ public class WiosnaExplosions : MonoBehaviour
         ownerTrue = owner;
         damageFull = damage;
         knockFull = knockback;
-        dirTrue = dir;
+        knockDir = dir;
         spaceTrue = spacing;
 
         parts.Clear();
@@ -52,7 +52,7 @@ public class WiosnaExplosions : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, dirTrue, spaceTrue, time, remaining, uni, ySound);
+        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound);
     }
 
     IEnumerator Fade(float time)
@@ -67,17 +67,23 @@ public class WiosnaExplosions : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
-        if (player != null && player.tag != tag)
+        ThingThatCanDie player = other.gameObject.GetComponent<PlayerBase>();
+        if (player != null)
         {
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
-            player.TakeDamage(damageFull, true, true);
-            player.Knockback(knockFull, transform.position - player.transform.position);
+            player.TakeDamage(damageFull, Vector3.zero, true, true);
+            player.Knockback(knockFull, knockDir);
         }
+
         if (player == null)
         {
-            FlamingWiosna clone = other.gameObject.GetComponent<FlamingWiosna>();
-            clone.TakeDamage(damageFull);
+            player = other.gameObject.GetComponent<FlamingWiosna>();
+            player.TakeDamage(damageFull, knockDir, false, false);
+        }
+
+        if (player == null)
+        {
+            other.GetComponentInParent<PillarDamage>().TakeDamage(damageFull, knockDir, false, false);
         }
     }
 }
