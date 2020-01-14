@@ -8,7 +8,6 @@ public class Wiosna : PlayerBase
 
     [Header("More Components")]
     public Weapons basicMelee;
-    public Weapons explosion;
     private ObjectPooler objectPooler;
 
     [Header("X Attack")]
@@ -18,7 +17,12 @@ public class Wiosna : PlayerBase
     [Header("Y Attack")]
     [SerializeField] int yDamage;
     [SerializeField] int yKnockback;
+    [SerializeField] float ySpacing;
+    [SerializeField] float yTimeBetweenBlasts;
+    [SerializeField] int numberOfBlasts;
 
+    WiosnaExplosions blast1;
+    WiosnaExplosions blast2;    
     private GameObject flamingClone;
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -32,6 +36,10 @@ public class Wiosna : PlayerBase
         objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         flamingClone = objectPooler.cloneList[playerID];
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
+
+        blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
+        blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
+
     }
 
     public override void XAction()
@@ -44,7 +52,7 @@ public class Wiosna : PlayerBase
             universe.PlaySound(xSound);
         }
     }
-    
+
     public override void AAction()
     {
         if (aTimer <= 0)
@@ -83,10 +91,15 @@ public class Wiosna : PlayerBase
     {
         if (yTimer <= 0)
         {
+            print("I've done a Y");
             anim.SetTrigger("YAttack");
-            explosion.GainInfo(yDamage, yKnockback, visuals.transform.forward, pvp, 0, this, true);
+
+            blast1.transform.position = gameObject.transform.position;
+            blast2.transform.position = gameObject.transform.position;
+
+            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
+            
             yTimer = yCooldown;
-            universe.PlaySound(ySound);
         }
     }
 

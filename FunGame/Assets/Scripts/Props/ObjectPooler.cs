@@ -35,6 +35,16 @@ public class ObjectPooler : BlankMono
     public GameObject flamingClone;
     [HideInInspector] public List<GameObject> cloneList = new List<GameObject>();
 
+    public GameObject explosion;
+    [HideInInspector] public List<GameObject> blastList = new List<GameObject>();
+
+    #endregion
+
+    #region Valderheim
+    [Header("Valderheim")]
+    [SerializeField] GameObject cracks;
+    [HideInInspector] public List<GameObject> crackList = new List<GameObject>();
+
     #endregion
 
     private void Start()
@@ -59,7 +69,17 @@ public class ObjectPooler : BlankMono
             cloneList.Add(Instantiate(flamingClone, Vector3.zero, Quaternion.identity));
             cloneList[i].SetActive(false);
             cloneList[i].name = "FlamingClone" + i;
+
+            blastList.Add(Instantiate(explosion, Vector3.zero, Quaternion.identity));
+            blastList[i].SetActive(false);
+            blastList[i].GetComponent<WiosnaExplosions>().Setup();
             #endregion
+
+            #region Valderheim Props
+            crackList.Add(Instantiate(cracks, Vector3.zero, Quaternion.identity));
+            blastList[i].SetActive(false);
+            #endregion
+
         }
 
         for (int i = 0; i < 15; i++)

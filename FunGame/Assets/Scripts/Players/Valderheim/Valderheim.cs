@@ -36,12 +36,23 @@ public class Valderheim : PlayerBase
     [SerializeField] private float comboTimeDur;
     private bool comboTime;
 
+    GameObject crack;
+
 
     public override void Start()
     {
         base.Start();
         hammer.gameObject.tag = tag;
     }
+
+    public override void SetInfo(UniverseController uni, int layerNew)
+    {
+        base.SetInfo(uni, layerNew);
+
+        ObjectPooler  objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
+        crack = objectPooler.crackList[playerID];
+    }
+
 
     public override void Update()
     {
@@ -167,6 +178,19 @@ public class Valderheim : PlayerBase
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); Invoke("CloseComboKick", comboTimeDur); }
     private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
+
+    public void LeaveCrack(Vector3 pos)
+    {
+        crack.transform.position = pos;
+        crack.transform.eulerAngles = new Vector3(0, Random.Range(0f,359f), 0);
+        crack.SetActive(true);
+        StartCoroutine(EndCrack());
+    }
+    IEnumerator EndCrack()
+    {
+        yield return new WaitForSeconds(7);
+        crack.SetActive(false);
+    }
 
     public override void BAction()
     {
