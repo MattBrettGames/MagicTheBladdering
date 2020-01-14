@@ -36,8 +36,9 @@ public class Valderheim : PlayerBase
     [SerializeField] private float comboTimeDur;
     private bool comboTime;
 
+    [Header("Polish")]
+    [SerializeField] Color skinColour;
     GameObject crack;
-
 
     public override void Start()
     {
@@ -51,6 +52,8 @@ public class Valderheim : PlayerBase
 
         ObjectPooler  objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         crack = objectPooler.crackList[playerID];
+        crack.GetComponent<Material>().SetColor("_EmissionColor", skinColour);
+
     }
 
 
