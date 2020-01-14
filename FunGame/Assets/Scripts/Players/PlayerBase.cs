@@ -331,7 +331,6 @@ public abstract class PlayerBase : BlankMono
 
     public void ControllerRumble(float intensity, float dur)
     {
-        print(thisPlayer + " is rumbling");
         player.SetVibration(1, intensity, dur);
         player.SetVibration(0, intensity, dur);
     }

@@ -23,8 +23,6 @@ public class WiosnaExplosions : MonoBehaviour
 
     public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, string ySound)
     {
-        print("Chain Started + " + (dir * spacing));
-
         tag = owner.tag;
 
         ownerTrue = owner;
@@ -36,7 +34,8 @@ public class WiosnaExplosions : MonoBehaviour
         parts.Clear();
         gameObject.SetActive(true);
 
-        gameObject.transform.position += dir * spacing;
+        gameObject.transform.position += (dir * spacing);
+        nextBlast.transform.position += (dir * spacing);
         remaining--;
         damageFull--;
 

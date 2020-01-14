@@ -91,7 +91,6 @@ public class Wiosna : PlayerBase
     {
         if (yTimer <= 0)
         {
-            print("I've done a Y");
             anim.SetTrigger("YAttack");
 
             blast1.transform.position = gameObject.transform.position;
