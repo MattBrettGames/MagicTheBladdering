@@ -337,6 +337,8 @@ public abstract class PlayerBase : BlankMono
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
+    public virtual void LeaveCrack(Vector3 pos) { }
+
     #endregion
 
 }
