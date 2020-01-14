@@ -71,19 +71,18 @@ public class WiosnaExplosions : MonoBehaviour
         if (player != null)
         {
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
-            player.TakeDamage(damageFull, Vector3.zero, true, true);
-            player.Knockback(knockFull, knockDir);
+            player.TakeDamage(damageFull, knockDir, knockFull, true, true);
         }
 
         if (player == null)
         {
             player = other.gameObject.GetComponent<FlamingWiosna>();
-            player.TakeDamage(damageFull, knockDir, false, false);
+            player.TakeDamage(damageFull, knockDir, knockFull, false, false);
         }
 
         if (player == null)
         {
-            other.GetComponentInParent<PillarDamage>().TakeDamage(damageFull, knockDir, false, false);
+            other.GetComponentInParent<PillarDamage>().TakeDamage(damageFull, knockDir, knockFull, false, false);
         }
     }
 }

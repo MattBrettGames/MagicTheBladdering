@@ -50,7 +50,7 @@ public class Weapons : BlankMono
     public virtual void OnTriggerEnter(Collider other)
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-        player.TakeDamage(damageFull, knockDir, true, stopAttackTrue);
+        player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue);
     }
 
 

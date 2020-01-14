@@ -9,7 +9,7 @@ public class ThingThatCanDie : MonoBehaviour
     [HideInInspector] public int healthMax;
 
 
-    public virtual void TakeDamage(int damage, Vector3 dirTemp, bool fromAttack, bool stopAttack) { }
+    public virtual void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack) { }
     public virtual void Knockback(int power, Vector3 direction) { }
 
 }

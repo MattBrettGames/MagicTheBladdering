@@ -195,7 +195,7 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, Vector3.zero, true, false);
+                TakeDamage(3000, Vector3.zero, 0, true, false);
             }
         }
 
@@ -229,7 +229,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #endregion
 
     #region Common Events
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, bool fromAttack, bool stopAttack)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack)
     {
         if (!iFrames)
         {
@@ -241,6 +241,7 @@ public abstract class PlayerBase : ThingThatCanDie
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
+            Knockback(knockback, dirTemp);
             universe.PlaySound(ouchSound);
         }
     }

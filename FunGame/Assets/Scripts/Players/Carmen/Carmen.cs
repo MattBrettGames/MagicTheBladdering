@@ -160,7 +160,7 @@ public class Carmen : PlayerBase
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, Vector3.zero, true, false);
+                TakeDamage(3000, Vector3.zero, 0, true, false);
             }
         }
 

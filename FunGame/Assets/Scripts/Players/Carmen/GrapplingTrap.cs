@@ -49,7 +49,7 @@ public class GrapplingTrap : MonoBehaviour
             carTrue.GetLocation(gameObject.transform.position);
             rb2d.velocity = Vector3.zero;
 
-            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, true, true);
+            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true);
         }
     }
 

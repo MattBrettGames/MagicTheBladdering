@@ -36,13 +36,13 @@ public class FlamingWiosna : ThingThatCanDie
 
         if (player != null && player.thisPlayer != thisID)
         {
-            player.TakeDamage(damage, Vector3.zero, true, true);
+            player.TakeDamage(damage, Vector3.zero, 0, true, true);
             Invoke("Disappear", 0);
             particles.Play();
         }
     }
 
-    public override void TakeDamage(int damage, Vector3 dirTemp, bool fromAttack, bool stopAttack)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)

@@ -16,10 +16,10 @@ public class PillarDamage : ThingThatCanDie
         rb2ds = destructable.GetComponentsInChildren<Rigidbody>();
     }
 
-    public override void TakeDamage(int damage, Vector3 dirTemp, bool fromAttack, bool stopAttack)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack)
     {
         dir = dirTemp;
-        if (damage >= 15)
+        if (damageInc >= 15)
         {
             EngageDestruction();
             Time.timeScale = 0.2f;

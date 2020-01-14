@@ -15,8 +15,7 @@ public class SmokeBase : MonoBehaviour
 
         if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
         {
-            target.TakeDamage(damage, Vector3.zero, true, false);
-            target.Knockback(force, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
+            target.TakeDamage(damage, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z), force, true, false);
         }
 
         Collider[] obj = Physics.OverlapSphere(transform.position, size);
@@ -24,7 +23,7 @@ public class SmokeBase : MonoBehaviour
         {
             if (obj[i].name.Contains("FlamingClone"))
             {
-                obj[i].GetComponent<FlamingWiosna>().TakeDamage(damage, Vector3.zero, false, false);
+                obj[i].GetComponent<FlamingWiosna>().TakeDamage(damage, Vector3.zero, 0, false, false);
             }
         }
 
