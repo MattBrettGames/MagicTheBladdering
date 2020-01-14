@@ -4977,6 +4977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!65 &39753348010496603
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5116,6 +5117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f832a189cdc4c3b4aaf6359d860657f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 160
+  healthMax: 140
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
@@ -5124,13 +5127,12 @@ MonoBehaviour:
   dodgeSpeed: 10
   dodgeDur: 0.4
   dir: {x: 0, y: 0, z: 0}
-  currentHealth: 160
-  healthMax: 140
   damageMult: 1
   incomingMult: 1.2
   poisonPerTick: 1
   secsBetweenTicks: 0.1
   poison: 0
+  hazardFrames: 0
   state: 0
   aimTarget: {fileID: 4487641701897503642}
   visuals: {fileID: 2481741387571461302}
@@ -5148,8 +5150,7 @@ MonoBehaviour:
   ySound: ValdY
   ouchSound: ValdOuch
   hammer: {fileID: 3888434811973879354}
-  outline: {fileID: 2481741387571493841}
-  xAttack: 10
+  xAttack: 15
   xKnockback: 2
   spinDamage: 20
   spinKnockback: 0
