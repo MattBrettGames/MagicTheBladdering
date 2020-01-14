@@ -77,7 +77,7 @@ public class ObjectPooler : BlankMono
 
             #region Valderheim Props
             crackList.Add(Instantiate(cracks, Vector3.zero, Quaternion.identity));
-            blastList[i].SetActive(false);
+            crackList[i].SetActive(false);
             #endregion
 
         }

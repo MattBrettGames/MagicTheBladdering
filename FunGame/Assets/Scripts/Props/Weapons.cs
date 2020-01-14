@@ -13,6 +13,7 @@ public class Weapons : BlankMono
     private float stunDurTrue;
     PlayerBase ownerTrue;
     bool stopAttackTrue;
+    Transform head;
 
     public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner, bool stopAttack)
     {
@@ -23,6 +24,7 @@ public class Weapons : BlankMono
         stunDurTrue = stunDur;
         ownerTrue = owner;
         stopAttackTrue = stopAttack;
+        head = trails.transform;
     }
 
     private void Start()
@@ -59,6 +61,9 @@ public class Weapons : BlankMono
             FlamingWiosna clone = other.gameObject.GetComponent<FlamingWiosna>();
             clone.TakeDamage(damageFull);
         }
+
+        ownerTrue.LeaveCrack(head.position);
+
     }
 
 

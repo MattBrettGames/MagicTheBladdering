@@ -182,7 +182,7 @@ public class Valderheim : PlayerBase
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); Invoke("CloseComboKick", comboTimeDur); }
     private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
-    public void LeaveCrack(Vector3 pos)
+    public override void LeaveCrack(Vector3 pos)
     {
         crack.transform.position = pos;
         crack.transform.eulerAngles = new Vector3(0, Random.Range(0f,359f), 0);
