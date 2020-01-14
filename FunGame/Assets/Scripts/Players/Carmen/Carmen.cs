@@ -23,6 +23,7 @@ public class Carmen : PlayerBase
 
     [Header("Grapple")]
     [SerializeField] float grapplingSpeed;
+    [SerializeField] int bDamage;
     GrapplingTrap grapplingTrap;
 
     [Header("Backstab")]
@@ -209,7 +210,7 @@ public class Carmen : PlayerBase
 
             grapplingTrap.gameObject.SetActive(true);
 
-            grapplingTrap.OnThrow(visuals.transform.forward, this, playerID + 13);
+            grapplingTrap.OnThrow(visuals.transform.forward, this, playerID + 13, bDamage);
 
             bTimer = bCooldown;
             universe.PlaySound(bSound);

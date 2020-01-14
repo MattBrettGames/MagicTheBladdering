@@ -11,9 +11,11 @@ public class GrapplingTrap : MonoBehaviour
     [SerializeField] float maxDistance;
     float curDistance;
     Carmen carTrue;
+    int damageTrue;
 
-    public void OnThrow(Vector3 dirNew, Carmen car, int layer)
+    public void OnThrow(Vector3 dirNew, Carmen car, int layer, int damage)
     {
+        damageTrue = damage;
         travelling = true;
         rb2d.angularVelocity = Vector3.zero;
         dir = dirNew;
@@ -41,15 +43,14 @@ public class GrapplingTrap : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        print("I've collided");
         if (other.gameObject.tag != "Hazard")
         {
-            print("Collided with something");
             travelling = false;
             carTrue.GetLocation(gameObject.transform.position);
             rb2d.velocity = Vector3.zero;
-            print("Finished Collided with something + " + carTrue.gameObject.name);
-        }        
+
+            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, true, true);
+        }
     }
 
     public void End()

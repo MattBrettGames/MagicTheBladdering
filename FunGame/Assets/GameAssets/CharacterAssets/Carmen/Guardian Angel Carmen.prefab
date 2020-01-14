@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!1 &59906019898410692
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!1 &59906020347858682
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +366,7 @@ MonoBehaviour:
   poisonPerTick: 1
   secsBetweenTicks: 0.1
   poison: 0
+  hazardFrames: 0
   state: 0
   aimTarget: {fileID: 59906020347858681}
   visuals: {fileID: 59906019536891435}
@@ -382,7 +385,7 @@ MonoBehaviour:
   ouchSound: CarOuch
   ySoundBonus: CarYBonus
   leftDagger: {fileID: 59906019783268921}
-  stabDamage: 25
+  stabDamage: 35
   stabKnockback: 1
   slashDamage: 10
   slashKnockback: 5
@@ -390,6 +393,7 @@ MonoBehaviour:
   spinSphere: {fileID: 7608921217202626050}
   spinRadius: 8
   grapplingSpeed: 5
+  bDamage: 20
   backstabAngle: 45
   backStabDamageMult: 1.7
 --- !u!136 &59906021055628861
@@ -842,6 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!1 &9151247299182260380
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,10 +989,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59906021055628848}
     m_Modifications:
-    - target: {fileID: 100008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_Name
-      value: Carmen_Skelemesh_noWP
-      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1043,6 +1044,34 @@ PrefabInstance:
     - target: {fileID: 400008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 27.032381
+      objectReference: {fileID: 0}
+    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 6.1471763
+      objectReference: {fileID: 0}
+    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 7.0993857
+      objectReference: {fileID: 0}
+    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -25.051674
+      objectReference: {fileID: 0}
+    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -178.00554
+      objectReference: {fileID: 0}
+    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -59.26886
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
+      propertyPath: m_Name
+      value: Carmen_Skelemesh_noWP
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1327,30 +1356,6 @@ PrefabInstance:
     - target: {fileID: 400224, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 102.24899
-      objectReference: {fileID: 0}
-    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 27.032381
-      objectReference: {fileID: 0}
-    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 6.1471763
-      objectReference: {fileID: 0}
-    - target: {fileID: 400230, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 7.0993857
-      objectReference: {fileID: 0}
-    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -25.051674
-      objectReference: {fileID: 0}
-    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -178.00554
-      objectReference: {fileID: 0}
-    - target: {fileID: 400232, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -59.26886
       objectReference: {fileID: 0}
     - target: {fileID: 400234, guid: b02c824101176c847bc31d7c49c0672d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

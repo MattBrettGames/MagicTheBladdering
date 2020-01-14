@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!1 &1542757274
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!1 &3558770403954040504
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c04fbb76e9f97048a2f5ae62149bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 0}
 --- !u!1 &5261069875868410496
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,6 +637,7 @@ MonoBehaviour:
   poisonPerTick: 1
   secsBetweenTicks: 0.1
   poison: 0
+  hazardFrames: 0
   state: 0
   aimTarget: {fileID: 7239248628908076190}
   visuals: {fileID: 7251409410767254107}
@@ -652,7 +656,7 @@ MonoBehaviour:
   ouchSound: CarOuch
   ySoundBonus: CarYBonus
   leftDagger: {fileID: 1542757276}
-  stabDamage: 25
+  stabDamage: 35
   stabKnockback: 1
   slashDamage: 10
   slashKnockback: 5
@@ -660,6 +664,7 @@ MonoBehaviour:
   spinSphere: {fileID: 2747210304084681415}
   spinRadius: 8
   grapplingSpeed: 5
+  bDamage: 20
   backstabAngle: 45
   backStabDamageMult: 1.7
 --- !u!136 &7239248629072716890
