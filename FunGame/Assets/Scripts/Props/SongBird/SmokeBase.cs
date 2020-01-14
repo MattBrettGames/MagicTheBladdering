@@ -3,7 +3,7 @@
 public class SmokeBase : MonoBehaviour
 {
     private PlayerBase target;
-    
+
     virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
     {
         target = targetLooker.GetComponentInParent<PlayerBase>();
@@ -15,6 +15,17 @@ public class SmokeBase : MonoBehaviour
             target.TakeDamage(damage, true, false);
             target.Knockback(force, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z));
         }
+
+        Collider[] obj = Physics.OverlapSphere(transform.position, size);
+        for (int i = 0; i < obj.Length; i++)
+        {
+            if (obj[i].name.Contains("Clone"))
+            {
+                obj[i].GetComponent<FlamingWiosna>().TakeDamage(damage);
+            }
+        }
+
+
         CancelInvoke();
 
         for (int i = 0; i < size; i++)
@@ -22,7 +33,7 @@ public class SmokeBase : MonoBehaviour
             Invoke("Shrink", time + (i * 0.01f));
         }
     }
-    
+
     void OnTriggerStay(Collider other)
     {
         if (other.tag == target.tag)
