@@ -33,7 +33,9 @@ public class WiosnaExplosions : MonoBehaviour
         dirTrue = dir;
         spaceTrue = spacing;
 
+        parts.Clear();
         gameObject.SetActive(true);
+
         gameObject.transform.position += dir * spacing;
         remaining--;
         damageFull--;
@@ -44,7 +46,6 @@ public class WiosnaExplosions : MonoBehaviour
             uni.PlaySound(ySound);
         }
 
-        parts.Clear();
         parts.Play();
 
         StartCoroutine(Fade(timeBetweenBlasts * 2f));
