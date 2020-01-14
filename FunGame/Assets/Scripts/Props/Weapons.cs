@@ -49,21 +49,22 @@ public class Weapons : BlankMono
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        ThingThatCanDie player = other.gameObject.GetComponent<PlayerBase>();
-        if (player != null)
+        ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
+
+        if (player.GetType().Name == "PlayerBase")
         {
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
             player.TakeDamage(damageFull, knockDir, true, stopAttackTrue);
             player.Knockback(knockFull, knockDir);
         }
 
-        if (player == null)
+        if (player.GetType().Name == "FlamingWiosna")
         {
             player = other.gameObject.GetComponent<FlamingWiosna>();
             player.TakeDamage(damageFull, knockDir, false, false);
         }
 
-        if (player == null)
+        if (player.GetType().Name == "PillarDamage")
         {
             other.GetComponentInParent<PillarDamage>().TakeDamage(damageFull, knockDir, false, false);
         }
