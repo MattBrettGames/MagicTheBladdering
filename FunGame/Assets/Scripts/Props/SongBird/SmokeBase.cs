@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class SmokeBase : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class SmokeBase : MonoBehaviour
 
     virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
     {
+        //CancelInvoke();
+
         target = targetLooker.GetComponentInParent<PlayerBase>();
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
@@ -19,18 +22,16 @@ public class SmokeBase : MonoBehaviour
         Collider[] obj = Physics.OverlapSphere(transform.position, size);
         for (int i = 0; i < obj.Length; i++)
         {
-            if (obj[i].name.Contains("Clone"))
+            if (obj[i].name.Contains("FlamingClone"))
             {
                 obj[i].GetComponent<FlamingWiosna>().TakeDamage(damage);
             }
         }
 
 
-        CancelInvoke();
-
         for (int i = 0; i < size; i++)
         {
-            Invoke("Shrink", time + (i * 0.01f));
+            StartCoroutine(Shrink(time + (i * 0.01f)));
         }
     }
 
@@ -50,8 +51,9 @@ public class SmokeBase : MonoBehaviour
         }
     }
 
-    void Shrink()
+    IEnumerator Shrink(float time)
     {
+        yield return new WaitForSecondsRealtime(time);
         transform.localScale -= Vector3.one;
         if (transform.localScale.y <= 0)
         {
