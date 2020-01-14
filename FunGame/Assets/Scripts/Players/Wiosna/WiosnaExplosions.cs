@@ -8,16 +8,12 @@ public class WiosnaExplosions : MonoBehaviour
     PlayerBase ownerTrue;
     int damageFull;
     int knockFull;
-
     Vector3 dirTrue;
     float spaceTrue;
-
-    //Collider hitBox;
     ParticleSystem parts;
 
     public void Setup()
     {
-        //hitBox = GetComponent<Collider>();
         parts = GetComponentInChildren<ParticleSystem>();
     }
 
@@ -37,7 +33,7 @@ public class WiosnaExplosions : MonoBehaviour
         gameObject.transform.position += (dir * spacing);
         nextBlast.transform.position += (dir * spacing);
         remaining--;
-        damageFull--;
+        damageFull -= 2;
 
         if (remaining > 0)
         {

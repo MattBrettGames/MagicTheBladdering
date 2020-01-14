@@ -33,6 +33,7 @@ public abstract class PlayerBase : BlankMono
     private bool hyperArmour;
     protected bool iFrames;
     protected bool trueIFrames;
+    [HideInInspector] public bool hazardFrames;
     protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
@@ -88,7 +89,7 @@ public abstract class PlayerBase : BlankMono
         bTimer = bCooldown;
 
         healthMax = currentHealth;
-        InvokeRepeating("PoisonTick", 0, secsBetweenTicks);
+        //StartCoroutine(PoisonTick());
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = Instantiate<GameObject>(aimTarget.gameObject, Vector3.zero, Quaternion.identity, gameObject.transform).transform;
     }
@@ -99,7 +100,7 @@ public abstract class PlayerBase : BlankMono
         gameObject.layer = layerNew;
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }
-        InvokeRepeating("PoisonTick", secsBetweenTicks, secsBetweenTicks);
+        StartCoroutine(PoisonTick());
     }
 
     public virtual void Update()
@@ -306,7 +307,7 @@ public abstract class PlayerBase : BlankMono
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
 
     public void LoseIFrames() { iFrames = false; }
-    public void LoseTrueFrames() { iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; }
+    public IEnumerator LoseTrueFrames(float time) { yield return new WaitForSeconds(time); iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; }
 
     public virtual void Respawn()
     {
@@ -314,7 +315,7 @@ public abstract class PlayerBase : BlankMono
         poison = false;
         gameObject.SetActive(true);
         GainTrueFrames();
-        Invoke("LoseTrueFrames", 3);
+        StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");
         damageMult = 1;
         incomingMult = 1;
@@ -324,7 +325,7 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected void PoisonTick() { if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } }
+    protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }

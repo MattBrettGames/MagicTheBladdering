@@ -142,6 +142,7 @@ public class Carmen : PlayerBase
                 anim.SetBool("Grappling", true);
                 print("I'm grappling");
                 CancelInvoke();
+                hazardFrames = true;
                 if (Vector3.Distance(transform.position, grappleDir) <= 2)
                 {
                     grapplingTrap.End();
@@ -226,6 +227,7 @@ public class Carmen : PlayerBase
     {
         base.StopKnockback();
         anim.SetBool("Grappling", false);
+        hazardFrames = false;
     }
 
     public override void Respawn()
