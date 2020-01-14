@@ -5,7 +5,6 @@ using UnityEngine;
 public class KillHazard : BlankMono
 {
     [Header("Damage")]
-    public int damageToEnemy;
     public int damageToPlayer;
 
     [Header("Knockback")]
