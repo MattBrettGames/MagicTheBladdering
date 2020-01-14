@@ -7,11 +7,10 @@ public class CarmenEventHandler : MonoBehaviour
 
     public Carmen carmen;
     public Weapons leftDagger;
-    public Weapons rightDagger;
     public Weapons spinSphere;
 
-    public void BothBeginAttack() { leftDagger.StartAttack(); rightDagger.StartAttack(); }
-    public void BothEndAttack() { leftDagger.EndAttack(); rightDagger.EndAttack(); }
+    public void BothBeginAttack() { leftDagger.StartAttack(); }
+    public void BothEndAttack() { leftDagger.EndAttack(); }
 
     public void spinSphereOn() { spinSphere.StartAttack(); }
     public void spinSphereOff() { spinSphere.EndAttack(); }

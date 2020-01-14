@@ -325,7 +325,8 @@ public abstract class PlayerBase : BlankMono
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); }
+    protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); ExtraUpdate(); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); }
+    public virtual void ExtraUpdate() { }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
     public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }

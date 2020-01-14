@@ -8,7 +8,8 @@ public class Carmen : PlayerBase
     [SerializeField] string ySoundBonus;
 
     [Header("Unique Components")]
-    public Weapons leftDagger;
+    public Weapons backStabBox;
+    [SerializeField] GameObject stabSymbol;
 
     [Header("Dagger Stab")]
     public int stabDamage;
@@ -119,8 +120,8 @@ public class Carmen : PlayerBase
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
                 }
-                    aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
 
 
                 break;
@@ -162,7 +163,27 @@ public class Carmen : PlayerBase
                 TakeDamage(3000, true, false);
             }
         }
+
+
+
+
     }
+
+    public override void ExtraUpdate()
+    {
+        float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
+
+        if (Vector3.Distance(transform.position, lookAtTarget.position) <= 11 && lookDif <= backstabAngle && yTimer <= 0)
+        {
+            stabSymbol.SetActive(true);
+        }
+        else
+        {
+            stabSymbol.SetActive(false);
+        }
+
+    }
+
 
 
     public override void XAction()
@@ -190,15 +211,28 @@ public class Carmen : PlayerBase
 
             if (lookDif <= backstabAngle)
             {
-                leftDagger.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true);
+                backStabBox.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true);
+
+                if (Vector3.Distance(transform.position, lookAtTarget.position) <= 11)
+                {
+                    Time.timeScale = 0.2f;
+                    StartCoroutine(HideSymbol(0.5f));
+                }
+
                 universe.PlaySound(ySoundBonus);
             }
             else
             {
-                leftDagger.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true);
+                backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true);
                 universe.PlaySound(ySound);
             }
         }
+    }
+
+    IEnumerator HideSymbol(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1;
     }
 
     public override void BAction()
