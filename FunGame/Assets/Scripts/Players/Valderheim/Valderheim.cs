@@ -123,14 +123,14 @@ public class Valderheim : PlayerBase
                     anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
-                    aimTarget.LookAt(lookAtTarget.parent.position + lookAtVariant);
+                    aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
                     visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
                 }
 
                 break;
 
             case State.dodging:
-                if (aTimer < 0) DodgeSliding(dir);
+                if (aTimer <= 0) DodgeSliding(dir);
                 break;
 
             case State.knockback:
@@ -186,12 +186,12 @@ public class Valderheim : PlayerBase
 
     public override void LeaveCrack(Vector3 pos)
     {
-        crack.transform.position = new Vector3(pos.x, 0.4f, pos.y);
+        crack.transform.position = new Vector3(pos.x, 0.4f, pos.z);
         crack.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
         if (frenzy)
         {
-            crack.transform.localScale = new Vector3(2, 2, 2);
+            crack.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
         else
         {

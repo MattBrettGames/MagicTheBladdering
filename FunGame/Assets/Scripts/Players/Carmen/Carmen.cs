@@ -120,9 +120,8 @@ public class Carmen : PlayerBase
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
                 }
-                aimTarget.LookAt(lookAtTarget.parent.position + lookAtVariant);
+                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
                 visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
-
 
                 break;
 
