@@ -199,8 +199,7 @@ public class Valderheim : PlayerBase
     {
         if (!frenzy && bTimer <= 0)
         {
-
-            Invoke("StopFrenzy", frenzyDuration);
+            StartCoroutine(StopFrenzy());
             speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
             damageMult += frenzyBonus;
@@ -215,8 +214,10 @@ public class Valderheim : PlayerBase
             universe.PlaySound(bSound);
         }
     }
-    private void StopFrenzy()
+    private IEnumerator StopFrenzy()
     {
+        yield return new WaitForSeconds(frenzyDuration);
+
         damageMult -= frenzyBonus;
         incomingMult -= frenzyBonus;
 
