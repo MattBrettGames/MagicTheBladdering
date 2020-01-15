@@ -186,7 +186,7 @@ public class Valderheim : PlayerBase
 
     public override void LeaveCrack(Vector3 pos)
     {
-        crack.transform.position = new Vector3(pos.x, 0.1f, pos.y);
+        crack.transform.position = new Vector3(pos.x, 0.4f, pos.y);
         crack.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
         if (frenzy)

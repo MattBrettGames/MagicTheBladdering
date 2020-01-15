@@ -144,7 +144,7 @@ public class UniverseController : BlankMono
         else if (level >= firstArenaID)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
-            Quaternion targetLook = new Quaternion(0, 0, 0, 0);
+            Vector3 targetLook = new Vector3(0, 90, 0);
             Vector3 targetPos = new Vector3(0, 5, 0);
             int[] charInts = new int[4];
 
@@ -163,13 +163,15 @@ public class UniverseController : BlankMono
             parent1.transform.localPosition = targetPos;
             p1.transform.position = new Vector3(-15, 0.4f, 0);
             p1.transform.localScale = Vector3.one;
-            p1.transform.rotation = targetLook;
+            p1.transform.eulerAngles = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
             playerCode.SetInfo(this, 13);
             #endregion
+
+            targetLook = new Vector3(0, -90, 0);
 
             #region Player 2
             GameObject p2 = selectedChars[1];
@@ -185,7 +187,7 @@ public class UniverseController : BlankMono
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
             p2.transform.position = new Vector3(15, 0.4f, 0);
-            p2.transform.rotation = targetLook;
+            p2.transform.eulerAngles = targetLook;
             if (p2.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p2.name.Contains("Songbird")) { charInts[1] = 1; }
             else if (p2.name.Contains("Carmen")) { charInts[1] = 2; }
@@ -241,7 +243,7 @@ public class UniverseController : BlankMono
             selectedChars[0].transform.SetParent(Camera.main.transform);
             selectedChars[0] = null;
             selectedChars[1].transform.SetParent(Camera.main.transform);
-            selectedChars[1] = null;
+            selectedChars[1] = null;            
         }
         else
         {
@@ -308,7 +310,7 @@ public class UniverseController : BlankMono
         camCode.RespawnedAPlayer();
         player.Respawn();
         otherPlayer.enabled = true;
-        player.gameObject.transform.position = new Vector3(15, 0.4f, 0);
+        player.gameObject.transform.position = new Vector3(0, 0.4f, 0);
     }
     public void ReturnToMenu()
     {
