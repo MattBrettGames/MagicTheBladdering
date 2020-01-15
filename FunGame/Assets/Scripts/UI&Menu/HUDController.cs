@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class HUDController : BlankMono
 {
@@ -28,6 +29,10 @@ public class HUDController : BlankMono
     [SerializeField] GameObject[] skulls = new GameObject[3];
     private PlayerBase targetPlayer;
 
+    [Header("Ability Symbols")]
+    [SerializeField] SkillImages[] abilitySymbols = new SkillImages[4];
+
+
     public void SetStats(int imageInt, string charName)
     {
 
@@ -41,10 +46,15 @@ public class HUDController : BlankMono
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
-        
+
         image.SetActive(false);
         image = images[imageInt];
         image.SetActive(true);
+
+        aBanner.sprite = abilitySymbols[imageInt].aSymbol;
+        bBanner.sprite = abilitySymbols[imageInt].bSymbol;
+        xBanner.sprite = abilitySymbols[imageInt].xSymbol;
+        yBanner.sprite = abilitySymbols[imageInt].ySymbol;
 
         for (int i = 0; i < skulls.Length; i++)
         {
@@ -108,4 +118,14 @@ public class HUDController : BlankMono
 
         if (targetPlayer.currentHealth < 0) targetPlayer.currentHealth = 0;
     }
+
+    [Serializable]
+    public struct SkillImages
+    {
+        public Sprite aSymbol;
+        public Sprite bSymbol;
+        public Sprite xSymbol;
+        public Sprite ySymbol;
+    }
+
 }
