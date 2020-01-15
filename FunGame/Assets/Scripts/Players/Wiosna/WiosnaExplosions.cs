@@ -67,22 +67,11 @@ public class WiosnaExplosions : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        ThingThatCanDie player = other.gameObject.GetComponent<PlayerBase>();
-        if (player != null)
+        if (other.tag != tag)
         {
-            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+            ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
             player.TakeDamage(damageFull, knockDir, knockFull, true, true);
-        }
-
-        if (player == null)
-        {
-            player = other.gameObject.GetComponent<FlamingWiosna>();
-            player.TakeDamage(damageFull, knockDir, knockFull, false, false);
-        }
-
-        if (player == null)
-        {
-            other.GetComponentInParent<PillarDamage>().TakeDamage(damageFull, knockDir, knockFull, false, false);
+            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
         }
     }
 }
