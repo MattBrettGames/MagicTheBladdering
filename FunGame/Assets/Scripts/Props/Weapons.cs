@@ -51,7 +51,6 @@ public class Weapons : BlankMono
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
         player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue);
+        ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
     }
-
-
 }
