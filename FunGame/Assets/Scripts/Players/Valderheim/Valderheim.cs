@@ -188,6 +188,16 @@ public class Valderheim : PlayerBase
     {
         crack.transform.position = new Vector3(pos.x, 0.1f, pos.y);
         crack.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
+
+        if (frenzy)
+        {
+            crack.transform.localScale = new Vector3(2, 2, 2);
+        }
+        else
+        {
+            crack.transform.localScale = Vector3.one;
+        }
+
         crack.SetActive(true);
         StartCoroutine(EndCrack());
     }
