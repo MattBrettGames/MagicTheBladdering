@@ -206,7 +206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6396482908631600458
 Transform:
   m_ObjectHideFlags: 0
@@ -235,6 +235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14602cf32cc6eca47ba4f97a33316d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 100
+  healthMax: 0
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
@@ -243,8 +245,6 @@ MonoBehaviour:
   dodgeSpeed: 300
   dodgeDur: 0.05
   dir: {x: 0, y: 0, z: 0}
-  currentHealth: 100
-  healthMax: 0
   damageMult: 1
   incomingMult: 1
   poisonPerTick: 1
