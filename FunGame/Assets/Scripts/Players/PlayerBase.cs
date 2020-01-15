@@ -51,6 +51,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [Header("Components")]
     public GameObject visuals;
     [SerializeField] GameObject respawnEffects;
+    [SerializeField] GameObject hitEffects;
     [HideInInspector] public Transform aimTarget;
     protected Outline outline;
     protected Animator anim;
@@ -240,6 +241,7 @@ public abstract class PlayerBase : ThingThatCanDie
             {
                 StartCoroutine(HitStun(0.1f));
             }
+            hitEffects.SetActive(true);
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             Knockback(knockback, dirTemp);
@@ -250,6 +252,7 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         Time.timeScale = 0.2f;
         yield return new WaitForSecondsRealtime(time);
+        hitEffects.SetActive(false);
         EndTimeScale();
     }
 
