@@ -191,11 +191,11 @@ public class Valderheim : PlayerBase
 
         if (frenzy)
         {
-            crack.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            crack.transform.localScale = new Vector3(1f, 1f, 1f);
         }
         else
         {
-            crack.transform.localScale = Vector3.one;
+            crack.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
         crack.SetActive(true);
@@ -203,7 +203,7 @@ public class Valderheim : PlayerBase
     }
     IEnumerator EndCrack()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         crack.SetActive(false);
     }
 
