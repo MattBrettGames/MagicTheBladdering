@@ -222,7 +222,6 @@ public abstract class PlayerBase : ThingThatCanDie
         aTimer = aCooldown;
     }
 
-
     public virtual void BAction() { }
     public virtual void XAction() { }
     public virtual void YAction() { }
@@ -237,7 +236,7 @@ public abstract class PlayerBase : ThingThatCanDie
             universe.CameraRumbleCall();
             if (fromAttack)
             {
-                StartCoroutine(HitStun(0.2f));
+                StartCoroutine(HitStun(0.1f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
@@ -265,6 +264,8 @@ public abstract class PlayerBase : ThingThatCanDie
         state = State.normal;
     }
 
+    public virtual void OnKill() { }
+
     public virtual void Death()
     {
         GainIFrames();
@@ -276,6 +277,7 @@ public abstract class PlayerBase : ThingThatCanDie
         GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
         universe.PlayerDeath(gameObject, lookAtTarget.gameObject);
         Time.timeScale = 1;
+        lookAtTarget.GetComponentInParent<PlayerBase>().OnKill();
         anim.SetTrigger("Death");
 
 
