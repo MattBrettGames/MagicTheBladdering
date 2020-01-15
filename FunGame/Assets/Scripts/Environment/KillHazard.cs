@@ -11,6 +11,11 @@ public class KillHazard : BlankMono
     public Vector3 dir;
     public int force;
 
+    [Header("Animation?")]
+    [SerializeField] bool hasAnimation;
+    [SerializeField] Animator anims;
+    [SerializeField] string animName;
+       
     void OnCollisionEnter(Collision other)
     {
         if (other.transform.tag != "Zone")
@@ -21,6 +26,10 @@ public class KillHazard : BlankMono
                 code.currentHealth -= damageToPlayer;
                 code.TakeDamage(1, dir, force, false, false);
 
+                if (hasAnimation)
+                {
+                    anims.SetTrigger(animName);
+                }
             }
         }
     }
