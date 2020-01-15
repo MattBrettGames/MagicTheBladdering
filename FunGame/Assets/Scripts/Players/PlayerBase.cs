@@ -237,11 +237,11 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
+            hitEffects.SetActive(true);
             if (fromAttack)
             {
                 StartCoroutine(HitStun(0.1f));
             }
-            hitEffects.SetActive(true);
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             Knockback(knockback, dirTemp);
@@ -252,8 +252,14 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         Time.timeScale = 0.2f;
         yield return new WaitForSecondsRealtime(time);
-        hitEffects.SetActive(false);
+        StartCoroutine(EndParticles());
         EndTimeScale();
+    }
+
+    IEnumerator EndParticles()
+    {
+        yield return new WaitForSeconds(0.5f);
+        hitEffects.SetActive(false);
     }
 
     private void EndTimeScale() { Time.timeScale = 1; }
