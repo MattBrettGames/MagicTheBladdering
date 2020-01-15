@@ -49,8 +49,9 @@ public abstract class PlayerBase : ThingThatCanDie
     }
 
     [Header("Components")]
-    public Transform aimTarget;
     public GameObject visuals;
+    [SerializeField] GameObject respawnEffects;
+    [HideInInspector] public Transform aimTarget;
     protected Outline outline;
     protected Animator anim;
     protected Rigidbody rb2d;
@@ -98,6 +99,7 @@ public abstract class PlayerBase : ThingThatCanDie
         gameObject.layer = layerNew;
         if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
         else { lookAtTarget = GameObject.Find("Player1Base").transform; }
+        aimTarget = new GameObject("Aimer").transform;
         StartCoroutine(PoisonTick());
     }
 
@@ -269,6 +271,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public virtual void Death()
     {
         GainIFrames();
+        respawnEffects.SetActive(false);
 
         dir = Vector3.zero;
         rb2d.velocity = Vector3.zero;
@@ -320,6 +323,8 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.SetTrigger("Respawn");
         damageMult = 1;
         incomingMult = 1;
+
+        respawnEffects.SetActive(true);
 
         EndActing();
         anim.SetFloat("Movement", 0);
