@@ -61,6 +61,7 @@ public class MenuSelector : MonoBehaviour
         if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
         {
             Invoke(options[currentSel].name, 0);
+            cursorTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
     }
 
