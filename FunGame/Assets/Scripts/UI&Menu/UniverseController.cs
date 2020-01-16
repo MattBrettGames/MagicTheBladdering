@@ -132,11 +132,8 @@ public class UniverseController : BlankMono
         else if (level == 3)
         {
             Time.timeScale = 1;
-            print("Loaded the end screen");
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = winner + " Won!";
-            print("1 Yup " + winner);
-
             GameObject gam = GameObject.Find(winner);
             gam.transform.SetParent(Camera.main.transform);
             GameObject.Find("CharacterStore").SetActive(false);
@@ -243,7 +240,7 @@ public class UniverseController : BlankMono
             selectedChars[0].transform.SetParent(Camera.main.transform);
             selectedChars[0] = null;
             selectedChars[1].transform.SetParent(Camera.main.transform);
-            selectedChars[1] = null;            
+            selectedChars[1] = null;
         }
         else
         {
@@ -298,10 +295,11 @@ public class UniverseController : BlankMono
                 }
 
                 winner = player.name;
-                GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("GameOver");
+                Invoke("EndGame", 4);
             }
         }
     }
+    void EndGame() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("GameOver"); }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)
     {
