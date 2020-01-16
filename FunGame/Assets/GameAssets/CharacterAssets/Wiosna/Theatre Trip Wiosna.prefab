@@ -118,7 +118,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8200f848da3c5d7409aa60db6a188cf4, type: 2}
+  - {fileID: 2100000, guid: b584ca207a70d8c41a28f30c37017f98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -202,6 +202,7 @@ MonoBehaviour:
   poisonPerTick: 1
   secsBetweenTicks: 0.1
   poison: 0
+  trueIFrames: 0
   hazardFrames: 0
   state: 0
   visuals: {fileID: 2188090938172416066}
@@ -229,6 +230,8 @@ MonoBehaviour:
   ySpacing: 7
   yTimeBetweenBlasts: 0.1
   numberOfBlasts: 6
+  cloneDamage: 25
+  cloneColour: {r: 0.9245283, g: 0.10124442, b: 0, a: 1}
 --- !u!136 &2188090938317167741
 CapsuleCollider:
   m_ObjectHideFlags: 0

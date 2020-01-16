@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThingThatCanDie : MonoBehaviour
 {
-    [Header("Sutff to do with Dying")]
+    [Header("Stuff to do with Dying")]
     public int currentHealth;
     [HideInInspector] public int healthMax;
 

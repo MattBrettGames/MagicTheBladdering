@@ -63,11 +63,11 @@ public class WiosnaExplosions : MonoBehaviour
         parts.Clear();
         gameObject.SetActive(false);
     }
-
-
+    
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.tag != tag)
+        print(tag + "|" + other.tag);
+        if (other.tag != tag || other.tag == "Untagged")
         {
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
             player.TakeDamage(damageFull, knockDir, knockFull, true, true);
