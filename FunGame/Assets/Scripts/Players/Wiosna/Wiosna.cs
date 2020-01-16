@@ -22,7 +22,11 @@ public class Wiosna : PlayerBase
     [SerializeField] int numberOfBlasts;
 
     WiosnaExplosions blast1;
-    WiosnaExplosions blast2;    
+    WiosnaExplosions blast2;
+
+    [Header("Flaming Clone")]
+    [SerializeField] int cloneDamage;
+    [SerializeField] Color cloneColour;
     private GameObject flamingClone;
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -35,7 +39,7 @@ public class Wiosna : PlayerBase
     {
         objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         flamingClone = objectPooler.cloneList[playerID];
-        flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer);
+        flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer, cloneDamage, cloneColour);
 
         blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
         blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
@@ -106,7 +110,7 @@ public class Wiosna : PlayerBase
     {
         if (bTimer <= 0)
         {
-            flamingClone.transform.position = transform.position + dir;
+            flamingClone.transform.position = transform.position;// + dir;
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone();
             flamingClone.SetActive(true);
             bTimer = bCooldown;

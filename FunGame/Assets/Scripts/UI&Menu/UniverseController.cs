@@ -42,6 +42,7 @@ public class UniverseController : BlankMono
     private string[] skins = new string[2] { "", "" };
 
     [Header("Determining Victory")]
+    [SerializeField] string gameOverText;
     private string winner;
     private Text victoryText;
 
@@ -133,7 +134,7 @@ public class UniverseController : BlankMono
         {
             Time.timeScale = 1;
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
-            victoryText.text = winner + " Won!";
+            victoryText.text = gameOverText.Replace("<winner>", winner);
             GameObject gam = GameObject.Find(winner);
             gam.transform.SetParent(Camera.main.transform);
             GameObject.Find("CharacterStore").SetActive(false);
@@ -158,7 +159,7 @@ public class UniverseController : BlankMono
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
-            p1.transform.position = new Vector3(-15, 0.4f, 0);
+            p1.transform.position = GameObject.Find("Player1Spawn").transform.position;
             p1.transform.localScale = Vector3.one;
             p1.transform.eulerAngles = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
@@ -183,7 +184,7 @@ public class UniverseController : BlankMono
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
-            p2.transform.position = new Vector3(15, 0.4f, 0);
+            p2.transform.position = GameObject.Find("Player2Spawn").transform.position;
             p2.transform.eulerAngles = targetLook;
             if (p2.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p2.name.Contains("Songbird")) { charInts[1] = 1; }
