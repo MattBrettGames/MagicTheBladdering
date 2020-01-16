@@ -6,9 +6,11 @@ using Rewired;
 public class MenuSelector : MonoBehaviour
 {
     [Header("Options")]
-    public GameObject[] options = new GameObject[2];
+    public GameObject[] options = new GameObject[4];
     public GameObject[] cursors = new GameObject[0];
-   [HideInInspector] public GameObject cursor;
+    [HideInInspector] public GameObject cursor;
+    RectTransform cursorTransform;
+    RectTransform[] optionTransforms = new RectTransform[4];
 
     [Header("Components")]
     public UniverseController universe;
@@ -20,15 +22,22 @@ public class MenuSelector : MonoBehaviour
 
     void Start()
     {
-        cursor.transform.position = options[currentSel].transform.position;
         player1 = ReInput.players.GetPlayer(0);
-        player2 = ReInput.players.GetPlayer(1);      
-        
+        player2 = ReInput.players.GetPlayer(1);
+
         for (int i = 0; i < cursors.Length; i++)
         {
             cursors[i].SetActive(false);
         }
         cursor.SetActive(true);
+        cursorTransform = cursor.GetComponent<RectTransform>();
+
+        for (int i = 0; i < options.Length; i++)
+        {
+            optionTransforms[i] = options[i].GetComponent<RectTransform>();
+        }
+
+        cursorTransform.anchoredPosition = optionTransforms[currentSel].anchoredPosition;
     }
 
     void Update()
@@ -39,7 +48,7 @@ public class MenuSelector : MonoBehaviour
             Invoke("EndCooldown", 0.2f);
             if (currentSel >= options.Length - 1) { currentSel = 0; }
             else { currentSel++; }
-            cursor.transform.position = options[currentSel].transform.position;
+            cursorTransform.anchoredPosition = optionTransforms[currentSel].anchoredPosition;
         }
         if (player1.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player2.GetAxis("VertMove") >= 0.4 && !inputOnCooldown)
         {
@@ -47,7 +56,7 @@ public class MenuSelector : MonoBehaviour
             Invoke("EndCooldown", 0.2f);
             if (currentSel <= 0) { currentSel = options.Length - 1; }
             else { currentSel--; }
-            cursor.transform.position = options[currentSel].transform.position;
+            cursorTransform.anchoredPosition = optionTransforms[currentSel].anchoredPosition;
         }
         if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
         {

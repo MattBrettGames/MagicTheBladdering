@@ -12,6 +12,7 @@ public class GrapplingTrap : MonoBehaviour
     float curDistance;
     Carmen carTrue;
     int damageTrue;
+    int ignoredLayer;
 
     public void OnThrow(Vector3 dirNew, Carmen car, int layer, int damage)
     {
@@ -51,6 +52,11 @@ public class GrapplingTrap : MonoBehaviour
 
             other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true);
         }
+        else
+        {
+            ignoredLayer = other.gameObject.layer;
+            Physics.IgnoreLayerCollision(gameObject.layer, ignoredLayer, true);
+        }
     }
 
     public void End()
@@ -58,6 +64,7 @@ public class GrapplingTrap : MonoBehaviour
         gameObject.SetActive(false);
         transform.position = new Vector3(0, -100, 0);
         rb2d.angularVelocity = Vector3.zero;
+        Physics.IgnoreLayerCollision(gameObject.layer, ignoredLayer, false);
     }
 
 }
