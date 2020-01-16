@@ -30,7 +30,7 @@ public class Valderheim : PlayerBase
     public int frenzyBonus;
     public int frenzySpeedBuff;
     private bool frenzy;
-    public ParticleSystem frenzyEffects;
+    public GameObject frenzyEffects;
 
     [Header("Passives")]
     [SerializeField] private float comboTimeDur;
@@ -217,7 +217,7 @@ public class Valderheim : PlayerBase
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
             frenzy = true;
-            frenzyEffects.Play();
+            frenzyEffects.SetActive(true);
             bTimer = bCooldown;
 
             dodgeDur += 0.2f;
@@ -238,7 +238,6 @@ public class Valderheim : PlayerBase
 
         speed -= frenzySpeedBuff;
         frenzy = false;
-        frenzyEffects.Clear();
-        frenzyEffects.Stop();
+        frenzyEffects.SetActive(false);
     }
 }
