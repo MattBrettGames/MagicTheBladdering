@@ -15,7 +15,7 @@ public class KillHazard : BlankMono
     [SerializeField] bool hasAnimation;
     [SerializeField] Animator anims;
     [SerializeField] string animName;
-       
+
     void OnCollisionEnter(Collision other)
     {
         if (other.transform.tag != "Zone")
@@ -23,14 +23,26 @@ public class KillHazard : BlankMono
             if (other.gameObject.GetComponent<PlayerBase>() != null)
             {
                 PlayerBase code = other.gameObject.GetComponent<PlayerBase>();
-                code.currentHealth -= damageToPlayer;
-                code.TakeDamage(1, dir, force, false, false);
+                code.TakeDamage(damageToPlayer, dir, force, false, false);
 
                 if (hasAnimation)
                 {
                     anims.SetTrigger(animName);
                 }
+                if (code.trueIFrames)
+                {
+                    int otherLayer = other.gameObject.layer;
+                    Physics.IgnoreLayerCollision(otherLayer, gameObject.layer, true);
+                    StartCoroutine(EndPass(otherLayer));
+                }
             }
         }
     }
+
+    IEnumerator EndPass(int otherLayer)
+    {
+        yield return new WaitForSecondsRealtime(2);
+        Physics.IgnoreLayerCollision(otherLayer, gameObject.layer, false); ;
+    }
+
 }

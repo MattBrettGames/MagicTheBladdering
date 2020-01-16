@@ -30,7 +30,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] public bool poison;
     private bool hyperArmour;
     protected bool iFrames;
-    protected bool trueIFrames;
+    [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
     protected bool acting;
     protected Vector3 knockbackForce;
@@ -233,7 +233,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #region Common Events
     public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack)
     {
-        if (!iFrames)
+        if (!iFrames && !trueIFrames)
         {
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
