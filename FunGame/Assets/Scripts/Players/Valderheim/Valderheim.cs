@@ -93,8 +93,7 @@ public class Valderheim : PlayerBase
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                    anim.SetFloat("Movement", Mathf.Abs(dir.x) + Mathf.Abs(dir.z) * 0.5f);
-
+                    anim.SetFloat("Movement", (Mathf.Abs(dir.normalized.x * 2) + Mathf.Abs(dir.normalized.z)) * 0.5f);
                 }
                 else
                 {
