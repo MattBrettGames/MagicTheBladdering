@@ -36,9 +36,9 @@ public class FlamingWiosna : ThingThatCanDie
 
     void OnColliderEnter(Collision other)
     {
-        PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
+        ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
 
-        if (player != null && player.thisPlayer != thisID)
+        if (player != null && player.tag != tag)
         {
             player.TakeDamage(damage, Vector3.zero, 0, true, true);
             Disappear();
@@ -67,12 +67,13 @@ public class FlamingWiosna : ThingThatCanDie
         remainingTime = lifeSpan;
     }
 
-    public void SetInfo(Transform targetTemp, string id, int damageTemp, Color cloneColour)
+    public void SetInfo(Transform targetTemp, string id, int damageTemp, Color cloneColour, string newTag)
     {
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         target = targetTemp;
         thisID = id;
         damage = damageTemp;
+        tag = newTag;
 
         if (id == "P1") { activeMaterial = mat0; }
         else { activeMaterial = mat1; }
