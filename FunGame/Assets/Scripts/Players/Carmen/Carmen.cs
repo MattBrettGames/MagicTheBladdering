@@ -26,12 +26,12 @@ public class Carmen : PlayerBase
     [SerializeField] float grapplingSpeed;
     [SerializeField] int bDamage;
     GrapplingTrap grapplingTrap;
+    private Vector3 grappleDir;
 
     [Header("Backstab")]
     public int backstabAngle;
     public float backStabDamageMult;
     private GameObject enemyVisual;
-    private Vector3 grappleDir;
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
