@@ -571,7 +571,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   - m_ConditionMode: 2
     m_ConditionEvent: LockOn
     m_EventTreshold: 0
@@ -674,7 +674,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   - m_ConditionMode: 2
     m_ConditionEvent: LockOn
     m_EventTreshold: 0
@@ -752,7 +752,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   - m_ConditionMode: 2
     m_ConditionEvent: LockOn
     m_EventTreshold: 0
@@ -780,7 +780,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   - m_ConditionMode: 2
     m_ConditionEvent: LockOn
     m_EventTreshold: 0
@@ -808,7 +808,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   - m_ConditionMode: 2
     m_ConditionEvent: LockOn
     m_EventTreshold: 0
@@ -1048,7 +1048,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   - m_ConditionMode: 2
     m_ConditionEvent: Grappling
     m_EventTreshold: 0
@@ -1107,7 +1107,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Movement
-    m_EventTreshold: 0.2
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102895246279624696}
   m_Solo: 0
@@ -1377,13 +1377,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: a36ee3f3eab9b8148999b3417039989d, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Movement
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

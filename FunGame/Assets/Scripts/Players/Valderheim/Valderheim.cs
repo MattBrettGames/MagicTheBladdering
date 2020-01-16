@@ -38,7 +38,8 @@ public class Valderheim : PlayerBase
 
     //[Header("Polish")]
     //[SerializeField] Color skinColour;
-    GameObject crack;
+    GameObject crack1;
+    GameObject crack2;
 
     public override void Start()
     {
@@ -51,9 +52,8 @@ public class Valderheim : PlayerBase
         base.SetInfo(uni, layerNew);
 
         ObjectPooler objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
-        crack = objectPooler.crackList[playerID];
-        //crack.GetComponent<Material>().SetColor("_EmissionColor", skinColour);
-
+        crack1 = objectPooler.crackList[playerID * 2];
+        crack2 = objectPooler.crackList[(playerID * 2) + 1];
     }
 
 
@@ -186,31 +186,53 @@ public class Valderheim : PlayerBase
 
     public override void LeaveCrack(Vector3 pos)
     {
-        crack.transform.position = new Vector3(pos.x, 0.4f, pos.z);
-        crack.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
+        crack1.transform.position = new Vector3(pos.x, 0.4f, pos.z);
+        crack2.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
         if (frenzy)
         {
-            crack.transform.localScale = new Vector3(1f, 1f, 1f);
+            crack1.transform.localScale = new Vector3(1f, 1f, 1f);
         }
         else
         {
-            crack.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            crack1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
-        crack.SetActive(true);
-        StartCoroutine(EndCrack());
+        crack1.SetActive(true);
+        StartCoroutine(EndCrack(crack1));
     }
-    IEnumerator EndCrack()
+    IEnumerator EndCrack(GameObject crack)
     {
         yield return new WaitForSeconds(2);
         crack.SetActive(false);
     }
+    public void LeaveCrack(Vector3 pos, bool isCrack)
+    {
+        crack2.transform.position = new Vector3(pos.x, 0.4f, pos.z);
+        crack2.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
+
+        if (frenzy)
+        {
+            crack2.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else
+        {
+            crack2.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+
+        crack2.SetActive(true);
+        StartCoroutine(EndCrack(crack2));
+    }
+
 
     public override void BAction()
     {
         if (!frenzy && bTimer <= 0)
         {
+
+            StopCoroutine(EndCrack(crack2));
+            LeaveCrack(transform.position, true);
+
             StartCoroutine(StopFrenzy());
             speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
