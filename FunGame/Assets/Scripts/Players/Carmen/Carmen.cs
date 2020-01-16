@@ -141,7 +141,6 @@ public class Carmen : PlayerBase
                 visuals.transform.LookAt(grappleDir);
                 DodgeSliding(visuals.transform.forward * grapplingSpeed);
                 anim.SetBool("Grappling", true);
-                print("I'm grappling");
                 CancelInvoke();
                 trueIFrames = true;
                 if (Vector3.Distance(transform.position, grappleDir) <= 2)

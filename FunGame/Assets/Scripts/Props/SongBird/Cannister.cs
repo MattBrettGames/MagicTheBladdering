@@ -25,7 +25,7 @@ public class Cannister : BlankMono
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         smokecloud.transform.localScale += Vector3.one;
     }
 }

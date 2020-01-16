@@ -7,7 +7,8 @@ public class SmokeBase : MonoBehaviour
 
     virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
     {
-        //CancelInvoke();
+        CancelInvoke();
+        gameObject.transform.localScale = Vector3.zero;
 
         target = targetLooker.GetComponentInParent<PlayerBase>();
 
@@ -30,7 +31,7 @@ public class SmokeBase : MonoBehaviour
 
         for (int i = 0; i < size; i++)
         {
-            StartCoroutine(Shrink(time + (i * 0.01f)));
+            StartCoroutine(Shrink(time + (i * 0.05f)));
         }
     }
 

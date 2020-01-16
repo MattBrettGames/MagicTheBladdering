@@ -9,6 +9,7 @@ public class GrapplingTrap : MonoBehaviour
     [SerializeField] Rigidbody rb2d;
     [SerializeField] float speed;
     [SerializeField] float maxDistance;
+    [SerializeField] GameObject dustCloud;
     float curDistance;
     Carmen carTrue;
     int damageTrue;
@@ -25,6 +26,7 @@ public class GrapplingTrap : MonoBehaviour
         Physics.IgnoreLayerCollision(layer, layer);
         transform.forward = dir;
         curDistance = 0;
+        dustCloud.SetActive(false);
     }
 
     void Update()
@@ -50,6 +52,7 @@ public class GrapplingTrap : MonoBehaviour
             carTrue.GetLocation(gameObject.transform.position);
             rb2d.velocity = Vector3.zero;
 
+            Invoke("EndParts", 1);
             other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true);
         }
         else
@@ -67,4 +70,8 @@ public class GrapplingTrap : MonoBehaviour
         Physics.IgnoreLayerCollision(gameObject.layer, ignoredLayer, false);
     }
 
+    void EndParts()
+    {
+            dustCloud.SetActive(true);
+    }
 }
