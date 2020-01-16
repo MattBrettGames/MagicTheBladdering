@@ -320,7 +320,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
 
     public void LoseIFrames() { iFrames = false; }
-    public IEnumerator LoseTrueFrames(float time) { yield return new WaitForSeconds(time); iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; }
+    public IEnumerator LoseTrueFrames(float time) { yield return new WaitForSeconds(time); iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; poison = false; }
 
     public virtual void Respawn()
     {
