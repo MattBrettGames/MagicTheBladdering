@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class FlamingWiosna : ThingThatCanDie
 {
-    private Transform target;
-    [SerializeField] private string thisID;
     [SerializeField] float speed;
     [SerializeField] float lookSpeed;
-    int damage;
-    [SerializeField] ParticleSystem particles;
     [SerializeField] float lifeSpan;
-    Material activeMaterial;
     [SerializeField] Material mat0;
     [SerializeField] Material mat1;
+    private Transform target;
+    private string thisID;
+    int damage;
+    Material activeMaterial;
     float remainingTime;
     GameObject looker;
     SkinnedMeshRenderer[] meshRenderers = new SkinnedMeshRenderer[7];
@@ -21,7 +20,7 @@ public class FlamingWiosna : ThingThatCanDie
 
     void Update()
     {
-        looker.transform.LookAt(target.position - new Vector3(0,5,0));
+        looker.transform.LookAt(target.position - new Vector3(0, 5, 0));
         looker.transform.position = transform.position;
 
         transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed);
@@ -42,6 +41,7 @@ public class FlamingWiosna : ThingThatCanDie
         if (player != null && player.tag != tag)
         {
             player.TakeDamage(damage, Vector3.zero, 0, true, true);
+            cloneBurst.transform.position = transform.position;
             cloneBurst.SetActive(true);
             Disappear();
         }
@@ -74,6 +74,7 @@ public class FlamingWiosna : ThingThatCanDie
         thisID = id;
         damage = damageTemp;
         tag = newTag;
+        cloneBurst = cloneExplosion;
 
         if (id == "P1") { activeMaterial = mat0; }
         else { activeMaterial = mat1; }
@@ -88,12 +89,12 @@ public class FlamingWiosna : ThingThatCanDie
 
         ParticleSystem[] parts = cloneExplosion.GetComponentsInChildren<ParticleSystem>();
 
-        for(int i =0; i< parts.Length; i++)
+        for (int i = 0; i < parts.Length; i++)
         {
             parts[i].startColor = cloneColour;
         }
 
-        activeMaterial.SetColor("_EmissionColor", cloneColour *3);
+        activeMaterial.SetColor("_EmissionColor", cloneColour * 3);
         activeMaterial.SetColor("_Color", cloneColour * 3);
 
         currentHealth = healthMax;

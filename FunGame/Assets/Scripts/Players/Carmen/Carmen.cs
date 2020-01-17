@@ -152,7 +152,6 @@ public class Carmen : PlayerBase
                     state = State.normal;
                 }
                 break;
-
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -162,10 +161,6 @@ public class Carmen : PlayerBase
                 TakeDamage(3000, Vector3.zero, 0, true, false);
             }
         }
-
-
-
-
     }
 
     public override void ExtraUpdate()
@@ -182,8 +177,6 @@ public class Carmen : PlayerBase
         }
 
     }
-
-
 
     public override void XAction()
     {
@@ -269,6 +262,4 @@ public class Carmen : PlayerBase
         base.Respawn();
         anim.SetBool("Grappling", false);
     }
-
-
 }

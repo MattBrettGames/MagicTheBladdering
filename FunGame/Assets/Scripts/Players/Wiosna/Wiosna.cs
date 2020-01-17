@@ -41,6 +41,7 @@ public class Wiosna : PlayerBase
         objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         flamingClone = objectPooler.cloneList[playerID];
         cloneExplosion = objectPooler.cloneExplosionList[playerID];
+        print(cloneExplosion.name);
 
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(lookAtTarget, thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion);
 
