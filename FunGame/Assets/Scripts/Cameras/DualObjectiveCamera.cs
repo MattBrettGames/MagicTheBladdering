@@ -55,7 +55,7 @@ public class DualObjectiveCamera : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    public virtual void LateUpdate()
     {
         if (bothPlayersAlive)
         {

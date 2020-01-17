@@ -37,13 +37,9 @@ public class HUDController : BlankMono
 
     public void SetStats(int imageInt, string charName, bool shouldBeActive)
     {
-
-        if (!shouldBeActive)
-        {
-            myHud.SetActive(false);
-            gameObject.SetActive(false);
-            return;
-        } 
+        myHud.SetActive(shouldBeActive);
+        Debug.LogError(myHud.activeInHierarchy + " is myHud's active, it should be " + shouldBeActive);
+        gameObject.SetActive(shouldBeActive);
 
         aBannerText = aBanner.GetComponentInChildren<Text>();
         bBannerText = bBanner.GetComponentInChildren<Text>();
@@ -53,6 +49,7 @@ public class HUDController : BlankMono
         characterName.text = charName;
 
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
+        print(targetPlayer.name + " is the target of " + gameObject.name);
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
 

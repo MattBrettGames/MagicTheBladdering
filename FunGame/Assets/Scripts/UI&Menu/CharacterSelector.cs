@@ -15,7 +15,7 @@ public class CharacterSelector : BlankMono
     private Player player;
     int currentChar;
     int currentSkin;
-    
+
     [SerializeField] float fovLerpSpeed;
 
     private bool inputCooldown;
@@ -46,11 +46,12 @@ public class CharacterSelector : BlankMono
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
     public GameObject displayImage;
-    
+
     Vector3 lockedForward;
 
     void Start()
     {
+
         store = transform.GetChild(0).gameObject;
         backStore = transform.parent.GetChild(1).gameObject;
         camOffsetBase = store.transform.position;
@@ -62,7 +63,10 @@ public class CharacterSelector : BlankMono
         displayImage.SetActive(true);
         skinText.text = characters[currentChar].skins[currentSkin].name.ToString();
         characterText = characters[currentChar].name;
+
         player = ReInput.players.GetPlayer(thisPInt);
+
+        universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
     }
 
     void Update()
@@ -159,7 +163,7 @@ public class CharacterSelector : BlankMono
                 Unlock();
                 universe.Unlock(thisPInt);
             }
-        }              
+        }
     }
 
     private void LockInCharacter()
@@ -167,7 +171,7 @@ public class CharacterSelector : BlankMono
         backStore.transform.position += camOffsetLocked;
         cam.fieldOfView = camFOVLocked;
         lockedForward = displayChar.transform.forward;
-        store.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt*2), 0);
+        store.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt * 2), 0);
 
         StartCoroutine(StartLoad());
 
@@ -179,11 +183,16 @@ public class CharacterSelector : BlankMono
         otherChar1.characters[currentChar].skins[currentSkin].lockedChar = true;
         otherChar1.UpdateDisplay();
 
-        otherChar2.characters[currentChar].skins[currentSkin].lockedChar = true;
-        otherChar2.UpdateDisplay();
-
-        otherChar3.characters[currentChar].skins[currentSkin].lockedChar = true;
-        otherChar3.UpdateDisplay();
+        if (otherChar2 != null)
+        {
+            otherChar2.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar2.UpdateDisplay();
+        }
+        if (otherChar3 != null)
+        {
+            otherChar3.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar3.UpdateDisplay();
+        }
 
         yield return new WaitForSeconds(0);
         displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseController").transform);
@@ -195,11 +204,16 @@ public class CharacterSelector : BlankMono
         otherChar1.characters[currentChar].skins[currentSkin].lockedChar = false;
         otherChar1.UpdateDisplay();
 
-        otherChar2.characters[currentChar].skins[currentSkin].lockedChar = false;
-        otherChar2.UpdateDisplay();
-
-        otherChar3.characters[currentChar].skins[currentSkin].lockedChar = false;
-        otherChar3.UpdateDisplay();
+        if (otherChar2 != null)
+        {
+            otherChar2.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar2.UpdateDisplay();
+        }
+        if (otherChar3 != null)
+        {
+            otherChar3.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar3.UpdateDisplay();
+        }
 
         displayChar.transform.SetParent(store.transform);
         store.transform.forward = lockedForward;

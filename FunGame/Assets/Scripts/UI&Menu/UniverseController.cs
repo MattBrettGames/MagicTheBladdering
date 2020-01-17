@@ -98,7 +98,8 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-        numOfPlayers = ReInput.controllers.controllerCount;
+        print(ReInput.controllers.controllerCount + " is the number of active controllers");
+        numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP");
@@ -116,11 +117,11 @@ public class UniverseController : BlankMono
     }
     IEnumerator NewLevelLoad(int level)
     {
-        GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
 
-        livingPlayers = numOfPlayers;
         yield return new WaitForEndOfFrame();
 
+        livingPlayers = numOfPlayers;
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
         currentLevel = level;
 
         if (level == 0)
@@ -130,13 +131,38 @@ public class UniverseController : BlankMono
         }
         if (level == 2)
         {
-            gameMode = "PvP";
+            print("Loaded 2CharacterSelector");
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
             charSelector2.SetUniverse(this);
         }
         else if (level == 3)
+        {
+
+            print("Loaded 3CharacterSelector");
+            charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
+            charSelector1.SetUniverse(this);
+            charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
+            charSelector2.SetUniverse(this);
+
+            charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
+            charSelector3.SetUniverse(this);
+        }
+        else if (level == 4)
+        {
+            print("Loaded 4CharacterSelector");
+            charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
+            charSelector1.SetUniverse(this);
+            charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
+            charSelector2.SetUniverse(this);
+
+            charSelector3 = GameObject.FindGameObjectWithTag("P3Selector").GetComponent<CharacterSelector>();
+            charSelector3.SetUniverse(this);
+            charSelector4 = GameObject.FindGameObjectWithTag("P4Selector").GetComponent<CharacterSelector>();
+            charSelector4.SetUniverse(this);
+        }
+        else if (level == 5)
         {
             Time.timeScale = 1;
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
@@ -145,6 +171,7 @@ public class UniverseController : BlankMono
             gam.transform.SetParent(Camera.main.transform);
             GameObject.Find("CharacterStore").SetActive(false);
         }
+        //Game-Level Setup
         else if (level >= firstArenaID)
         {
             Vector3 targetScale = new Vector3(1, 1, 1);
@@ -222,7 +249,7 @@ public class UniverseController : BlankMono
             #region Player 3
             if (selectedChars[2] != null)
             {
-                GameObject p3 = selectedChars[1];
+                GameObject p3 = selectedChars[2];
                 p3.SetActive(true);
                 playerCode = p3.GetComponent<PlayerBase>();
                 playerCode.enabled = true;
@@ -243,12 +270,13 @@ public class UniverseController : BlankMono
                 p3.transform.localScale = targetScale;
                 playerCode.SetInfo(this, 15);
             }
+            else { selectedChars[2] = new GameObject("NullObjectExceptionPlayer3"); }
             #endregion
 
             #region Player 4
             if (selectedChars[3] != null)
             {
-                GameObject p4 = selectedChars[1];
+                GameObject p4 = selectedChars[3];
                 p4.SetActive(true);
                 playerCode = p4.GetComponent<PlayerBase>();
                 playerCode.enabled = true;
@@ -257,7 +285,7 @@ public class UniverseController : BlankMono
                 p4.transform.parent = GameObject.Find("CentreBase").transform;
                 p4.GetComponent<CapsuleCollider>().isTrigger = false;
 
-                GameObject parent4 = GameObject.Find("Player2Base");
+                GameObject parent4 = GameObject.Find("Player4Base");
                 parent4.transform.SetParent(p4.transform);
                 parent4.transform.localPosition = targetPos;
                 p4.transform.position = GameObject.Find("Player4Spawn").transform.position;
@@ -269,11 +297,23 @@ public class UniverseController : BlankMono
                 p4.transform.localScale = targetScale;
                 playerCode.SetInfo(this, 16);
             }
+            else { selectedChars[3] = new GameObject("NullObjectExceptionPlayer4"); }
             #endregion
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
-                GameObject.Find("P" + (i + 1) + "HUDController").GetComponent<HUDController>().SetStats(charInts[i], selectedChars[i].name, !selectedChars[i].Equals(null));
+                bool temp;
+                if(selectedChars[i] != null)
+                {
+                    temp = true;
+                }
+                else
+                {
+                    temp = false;
+                }
+                print(temp);
+                GameObject.Find("P" + (i + 1) + "HUDController").GetComponent<HUDController>().SetStats(charInts[i], selectedChars[i].name, temp);
+
             }
         }
     }
@@ -287,8 +327,6 @@ public class UniverseController : BlankMono
         yield return new WaitForSecondsRealtime(1);
 
         selectedChars[arrayIndex] = gobject;
-        characters[arrayIndex] = character.name;
-        skins[arrayIndex] = skin;
 
         lockedInPlayers++;
         //gobject.transform.parent = gameObject.transform;
