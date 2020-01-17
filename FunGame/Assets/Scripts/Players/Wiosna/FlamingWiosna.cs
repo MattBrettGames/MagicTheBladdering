@@ -34,7 +34,7 @@ public class FlamingWiosna : ThingThatCanDie
         }
     }
 
-    void OnColliderEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
 
