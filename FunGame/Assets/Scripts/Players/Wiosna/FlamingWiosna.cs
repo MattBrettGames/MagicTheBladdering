@@ -17,6 +17,7 @@ public class FlamingWiosna : ThingThatCanDie
     float remainingTime;
     GameObject looker;
     SkinnedMeshRenderer[] meshRenderers = new SkinnedMeshRenderer[7];
+    GameObject cloneBurst;
 
     void Update()
     {
@@ -41,8 +42,8 @@ public class FlamingWiosna : ThingThatCanDie
         if (player != null && player.tag != tag)
         {
             player.TakeDamage(damage, Vector3.zero, 0, true, true);
+            cloneBurst.SetActive(true);
             Disappear();
-            particles.Play();
         }
     }
 
@@ -57,17 +58,16 @@ public class FlamingWiosna : ThingThatCanDie
 
     void Disappear()
     {
-        particles.Stop();
-        particles.Clear();
         gameObject.SetActive(false);
     }
 
     public void AwakenClone()
     {
         remainingTime = lifeSpan;
+        cloneBurst.SetActive(false);
     }
 
-    public void SetInfo(Transform targetTemp, string id, int damageTemp, Color cloneColour, string newTag)
+    public void SetInfo(Transform targetTemp, string id, int damageTemp, Color cloneColour, string newTag, GameObject cloneExplosion)
     {
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         target = targetTemp;
@@ -86,8 +86,15 @@ public class FlamingWiosna : ThingThatCanDie
             meshRenderers[i].material = activeMaterial;
         }
 
-        activeMaterial.SetColor("_EmissionColor", cloneColour * 4);
-        activeMaterial.SetColor("_Color", cloneColour * 4);
+        ParticleSystem[] parts = cloneExplosion.GetComponentsInChildren<ParticleSystem>();
+
+        for(int i =0; i< parts.Length; i++)
+        {
+            parts[i].startColor = cloneColour;
+        }
+
+        activeMaterial.SetColor("_EmissionColor", cloneColour *3);
+        activeMaterial.SetColor("_Color", cloneColour * 3);
 
         currentHealth = healthMax;
     }

@@ -38,6 +38,9 @@ public class ObjectPooler : BlankMono
     public GameObject explosion;
     [HideInInspector] public List<GameObject> blastList = new List<GameObject>();
 
+    public GameObject cloneExplosion;
+    [HideInInspector] public List<GameObject> cloneExplosionList = new List<GameObject>();
+
     #endregion
 
     #region Valderheim
@@ -73,6 +76,10 @@ public class ObjectPooler : BlankMono
             blastList.Add(Instantiate(explosion, Vector3.zero, Quaternion.identity));
             blastList[i].SetActive(false);
             blastList[i].GetComponent<WiosnaExplosions>().Setup();
+
+            cloneExplosionList.Add(Instantiate(cloneExplosion, Vector3.zero, Quaternion.identity));
+            cloneExplosionList[i].SetActive(false);
+
             #endregion
 
             #region Valderheim Props
