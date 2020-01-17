@@ -70,7 +70,7 @@ public class WiosnaExplosions : MonoBehaviour
         if (other.tag != tag || other.tag == "Untagged")
         {
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-            player.TakeDamage(damageFull, knockDir, knockFull, true, true);
+            player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue);
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
         }
     }

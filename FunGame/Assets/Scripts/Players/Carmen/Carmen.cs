@@ -46,7 +46,6 @@ public class Carmen : PlayerBase
         ObjectPooler pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         grapplingTrap = pooler.grapplerList[playerID].GetComponent<GrapplingTrap>();
 
-        enemyVisual = lookAtTarget.parent.GetComponentInChildren<Animator>().gameObject;
     }
 
 
@@ -89,7 +88,7 @@ public class Carmen : PlayerBase
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                    anim.SetFloat("Movement",(Mathf.Abs(dir.normalized.x) + Mathf.Abs(dir.normalized.z)) * 0.5f);
+                    anim.SetFloat("Movement", (Mathf.Abs(dir.normalized.x) + Mathf.Abs(dir.normalized.z)) * 0.5f);
                 }
                 else
                 {
@@ -120,8 +119,9 @@ public class Carmen : PlayerBase
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
                 }
-                aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
                 visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                LockOnScroll();
 
                 break;
 
@@ -158,7 +158,7 @@ public class Carmen : PlayerBase
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, Vector3.zero, 0, true, false);
+                TakeDamage(3000, Vector3.zero, 0, true, false, this);
             }
         }
     }
@@ -167,7 +167,7 @@ public class Carmen : PlayerBase
     {
         float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
 
-        if (Vector3.Distance(transform.position, lookAtTarget.position) <= 11 && lookDif <= backstabAngle && yTimer <= 0)
+        if (Vector3.Distance(transform.position, lockTargetList[currentLock].position) <= 11 && lookDif <= backstabAngle && yTimer <= 0)
         {
             stabSymbol.SetActive(true);
         }
@@ -196,6 +196,7 @@ public class Carmen : PlayerBase
     {
         if (yTimer <= 0)
         {
+            enemyVisual = lockTargetList[currentLock].parent.GetComponentInChildren<Animator>().gameObject;
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
             anim.SetTrigger("YAttack");
 
@@ -205,7 +206,7 @@ public class Carmen : PlayerBase
             {
                 backStabBox.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true);
 
-                if (Vector3.Distance(transform.position, lookAtTarget.position) <= 11)
+                if (Vector3.Distance(transform.position, lockTargetList[currentLock].position) <= 11)
                 {
                     Time.timeScale = 0.2f;
                     StartCoroutine(HideSymbol(0.5f));
@@ -255,6 +256,13 @@ public class Carmen : PlayerBase
         base.StopKnockback();
         anim.SetBool("Grappling", false);
         hazardFrames = false;
+    }
+
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    {
+        anim.SetBool("Grappling", false);
+        base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker);
+
     }
 
     public override void Respawn()

@@ -3,32 +3,22 @@ using System.Collections;
 
 public class SmokeBase : MonoBehaviour
 {
-    private PlayerBase target;
+    private PlayerBase owner;
+    bool isBurst;
+    int damageTrue;
+    int forceTrue;
 
-    virtual public void Begin(int damage, int force, GameObject targetLooker, float size, float time)
+
+    virtual public void Begin(int damage, int force, float size, float time, PlayerBase ownerTemp, string tagtemp)
     {
         CancelInvoke();
+        tag = tagtemp;
+        isBurst = true;
         gameObject.transform.localScale = Vector3.zero;
-
-        target = targetLooker.GetComponentInParent<PlayerBase>();
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
-        if (Vector3.Distance(target.gameObject.transform.position, transform.position) <= size)
-        {
-            target.TakeDamage(damage, new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z), force, true, false);
-        }
-
-        Collider[] obj = Physics.OverlapSphere(transform.position, size);
-        for (int i = 0; i < obj.Length; i++)
-        {
-            if (obj[i].name.Contains("FlamingClone"))
-            {
-                obj[i].GetComponent<FlamingWiosna>().TakeDamage(damage, Vector3.zero, 0, false, false);
-            }
-        }
-
-
+        StartCoroutine(StopBurst());
         for (int i = 0; i < size; i++)
         {
             StartCoroutine(Shrink(time + (i * 0.05f)));
@@ -37,17 +27,24 @@ public class SmokeBase : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == target.tag)
+        if (other.tag != tag)
         {
-            target.poison = true;
+            PlayerBase otherCode = other.GetComponent<PlayerBase>();
+            otherCode.poison = true;
+            
+            if (isBurst)
+            {
+                otherCode.TakeDamage(damageTrue, transform.position - other.transform.position, forceTrue, true, true, owner);
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == target.tag)
+        if (other.tag != tag)
         {
-            target.poison = false;
+            PlayerBase otherCode = other.GetComponent<PlayerBase>();
+            otherCode.poison = true;
         }
     }
 
@@ -60,4 +57,10 @@ public class SmokeBase : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    IEnumerator StopBurst()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isBurst = false;
+    }
+
 }

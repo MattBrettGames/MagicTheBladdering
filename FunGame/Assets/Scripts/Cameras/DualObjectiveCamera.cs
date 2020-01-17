@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class DualObjectiveCamera : MonoBehaviour
 {
-    public Transform leftTarget;
-    public Transform rightTarget;
+
+
     public Vector3 offset;
-    Vector3 centerPosition;
-    [SerializeField] float closeness;
-    UniverseController universe;
-    private bool bothPlayersAlive;
-    bool rumble;
+    protected Vector3 centerPosition;
+    [SerializeField] protected float closeness;
+    protected UniverseController universe;
+    protected bool bothPlayersAlive;
+    protected bool rumble;
+    [HideInInspector] public float distanceBetweenTargets; 
     int deadPlayer = 2;
 
-    void Start()
+    [Header("Targets")]
+    public Transform firstTarget;
+    public Transform secondTarget;
+
+    public virtual void Start()
     {
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
-        universe.GetCam(this);
+        universe.GetCam(this, GetComponent<TriObjectiveCamera>(), GetComponent<QuadObjectiveCamera>());
         bothPlayersAlive = true;
     }
 
     public void Death(int charDeath) { bothPlayersAlive = false; deadPlayer = charDeath; }
     public void RespawnedAPlayer() { bothPlayersAlive = true; }
 
-    void Update()
+    public virtual void Update()
     {
-        float distanceBetweenTargets = Vector3.Distance(leftTarget.position, rightTarget.position) - closeness;
-        centerPosition = (leftTarget.position + rightTarget.position) / 2;
+        float distanceBetweenTargets = Vector3.Distance(firstTarget.position, secondTarget.position) - closeness;
+        centerPosition = (firstTarget.position + secondTarget.position) / 2;
 
         if (bothPlayersAlive)
         {
@@ -41,11 +46,11 @@ public class DualObjectiveCamera : MonoBehaviour
         {
             if (deadPlayer == 0)
             {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(leftTarget.transform.position.x, leftTarget.transform.position.y + 5, leftTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(firstTarget.transform.position.x, firstTarget.transform.position.y + 5, firstTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
             }
             else
             {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(rightTarget.transform.position.x, rightTarget.transform.position.y + 5, rightTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(secondTarget.transform.position.x, secondTarget.transform.position.y + 5, secondTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
             }
         }
     }
@@ -64,11 +69,11 @@ public class DualObjectiveCamera : MonoBehaviour
         {
             if (deadPlayer == 0)
             {
-                transform.LookAt(leftTarget);
+                transform.LookAt(firstTarget);
             }
             else
             {
-                transform.LookAt(rightTarget);
+                transform.LookAt(secondTarget);
             }
         }
     }

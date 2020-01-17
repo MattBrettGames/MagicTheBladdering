@@ -58,10 +58,15 @@ public abstract class PlayerBase : ThingThatCanDie
     protected Rigidbody rb2d;
     protected PlayerController playerCont;
     protected Player player;
-    protected Transform lookAtTarget;
-    protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform walkDirection;
     protected UniverseController universe;
+
+
+    //{Header("Lockon Mechanics")]
+    protected int currentLock;
+    protected List<Transform> lockTargetList = new List<Transform>();
+    protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
+    protected Transform currentLockTran;
 
     [Header("Cooldowns")]
     public float aCooldown;
@@ -98,8 +103,33 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         universe = uni;
         gameObject.layer = layerNew;
-        if (playerID == 0) { lookAtTarget = GameObject.Find("Player2Base").transform; }
-        else { lookAtTarget = GameObject.Find("Player1Base").transform; }
+        if (playerID == 0) 
+        {
+            lockTargetList.Add(GameObject.Find("Player2Base").transform);
+            lockTargetList.Add(GameObject.Find("Player3Base").transform);
+            lockTargetList.Add(GameObject.Find("Player4Base").transform);
+
+        }
+        else if (playerID == 1)
+        {
+            lockTargetList.Add(GameObject.Find("Player1Base").transform);
+            lockTargetList.Add(GameObject.Find("Player3Base").transform);
+            lockTargetList.Add(GameObject.Find("Player4Base").transform);
+        }
+        else if (playerID == 2)
+        {
+            lockTargetList.Add(GameObject.Find("Player2Base").transform);
+            lockTargetList.Add(GameObject.Find("Player1Base").transform);
+            lockTargetList.Add(GameObject.Find("Player4Base").transform);
+        }
+        else
+        {
+            lockTargetList.Add(GameObject.Find("Player2Base").transform);
+            lockTargetList.Add(GameObject.Find("Player3Base").transform);
+            lockTargetList.Add(GameObject.Find("Player1Base").transform);
+        }
+
+
         aimTarget = new GameObject("Aimer").transform;
         StartCoroutine(PoisonTick());
     }
@@ -173,9 +203,12 @@ public abstract class PlayerBase : ThingThatCanDie
                     anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
-                    aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
 
                     visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+
+                    LockOnScroll();
+
                 }
 
 
@@ -198,10 +231,36 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             if (thisPlayer == "P2")
             {
-                TakeDamage(3000, Vector3.zero, 0, true, false);
+                TakeDamage(3000, Vector3.zero, 0, true, false, this);
             }
         }
 
+    }
+
+    protected virtual void LockOnScroll()
+    {
+        if (player.GetAxis("CharRotate") >= 0.2f)
+        {
+            if (currentLock < lockTargetList.Count - 1)
+            {
+                currentLock++;
+            }
+            else
+            {
+                currentLock = 0;
+            }
+        }
+        if (player.GetAxis("CharRotate") <= -0.2)
+        {
+            if (currentLock != 0)
+            {
+                currentLock--;
+            }
+            else
+            {
+                currentLock = lockTargetList.Count - 1;
+            }
+        }
     }
 
     #region Input Actions
@@ -231,7 +290,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #endregion
 
     #region Common Events
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
     {
         if (!iFrames && !trueIFrames)
         {
@@ -242,7 +301,7 @@ public abstract class PlayerBase : ThingThatCanDie
             {
                 StartCoroutine(HitStun(0.1f));
             }
-            HealthChange(Mathf.RoundToInt(-damageInc * incomingMult));
+            HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             Knockback(knockback, dirTemp);
             universe.PlaySound(ouchSound);
@@ -277,7 +336,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void OnKill() { }
 
-    public virtual void Death()
+    public virtual void Death(PlayerBase killer)
     {
         GainIFrames();
         respawnEffects.SetActive(false);
@@ -287,9 +346,9 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.SetFloat("Movement", 0);
 
         GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
-        universe.PlayerDeath(gameObject, lookAtTarget.gameObject);
+        universe.PlayerDeath(gameObject, killer.gameObject);
         Time.timeScale = 1;
-        lookAtTarget.GetComponentInParent<PlayerBase>().OnKill();
+        killer.OnKill();
         anim.SetTrigger("Death");
 
 
@@ -298,7 +357,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public virtual void KnockbackContinual()
     {
         transform.position += knockbackForce * knockBackPower * Time.deltaTime;
-        visuals.transform.LookAt(lookAtTarget.position + lookAtVariant);
+        //visuals.transform.LookAt(lockTargetList.position + lookAtVariant);
     }
     public override void Knockback(int power, Vector3 direction)
     {
@@ -311,7 +370,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #endregion
 
     #region Utility Functions
-    public virtual void HealthChange(int healthChange) { currentHealth += healthChange; if (currentHealth <= 0) { Death(); } }
+    public virtual void HealthChange(int healthChange, PlayerBase attacker) { currentHealth += healthChange; if (currentHealth <= 0) { Death(attacker); } }
 
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }

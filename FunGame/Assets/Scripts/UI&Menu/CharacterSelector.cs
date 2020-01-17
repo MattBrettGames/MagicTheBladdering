@@ -33,7 +33,9 @@ public class CharacterSelector : BlankMono
     [SerializeField] Vector3 camOffsetLocked;
     GameObject store;
     GameObject backStore;
-    [SerializeField] CharacterSelector otherChar;
+    [SerializeField] CharacterSelector otherChar1;
+    [SerializeField] CharacterSelector otherChar2;
+    [SerializeField] CharacterSelector otherChar3;
 
     [Header("UI Elements")]
     public GameObject characterText;
@@ -44,8 +46,7 @@ public class CharacterSelector : BlankMono
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
     public GameObject displayImage;
-
-
+    
     Vector3 lockedForward;
 
     void Start()
@@ -113,13 +114,11 @@ public class CharacterSelector : BlankMono
                 if (currentSkin < characters[currentChar].skins.Count - 1)
                 {
                     currentSkin++;
-                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 else
                 {
                     currentSkin = 0;
-                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -130,13 +129,11 @@ public class CharacterSelector : BlankMono
                 if (currentSkin != 0)
                 {
                     currentSkin--;
-                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 else
                 {
                     currentSkin = characters[currentChar].skins.Count - 1;
-                    //displayChar.transform.eulerAngles = new Vector3(0, 90, 0);
                     UpdateDisplay();
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -179,8 +176,15 @@ public class CharacterSelector : BlankMono
 
     IEnumerator StartLoad()
     {
-        otherChar.characters[currentChar].skins[currentSkin].lockedChar = true;
-        otherChar.UpdateDisplay();
+        otherChar1.characters[currentChar].skins[currentSkin].lockedChar = true;
+        otherChar1.UpdateDisplay();
+
+        otherChar2.characters[currentChar].skins[currentSkin].lockedChar = true;
+        otherChar2.UpdateDisplay();
+
+        otherChar3.characters[currentChar].skins[currentSkin].lockedChar = true;
+        otherChar3.UpdateDisplay();
+
         yield return new WaitForSeconds(0);
         displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseController").transform);
         universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
@@ -188,8 +192,15 @@ public class CharacterSelector : BlankMono
 
     private void Unlock()
     {
-        otherChar.characters[currentChar].skins[currentSkin].lockedChar = false;
-        otherChar.UpdateDisplay();
+        otherChar1.characters[currentChar].skins[currentSkin].lockedChar = false;
+        otherChar1.UpdateDisplay();
+
+        otherChar2.characters[currentChar].skins[currentSkin].lockedChar = false;
+        otherChar2.UpdateDisplay();
+
+        otherChar3.characters[currentChar].skins[currentSkin].lockedChar = false;
+        otherChar3.UpdateDisplay();
+
         displayChar.transform.SetParent(store.transform);
         store.transform.forward = lockedForward;
         displayChar.transform.position = camOffsetBase;

@@ -26,15 +26,24 @@ public class HUDController : BlankMono
     public string thisPlayerInt;
     public GameObject[] images = new GameObject[4];
     public GameObject image;
+    [SerializeField] GameObject myHud;
     [SerializeField] GameObject[] skulls = new GameObject[3];
     private PlayerBase targetPlayer;
+    [HideInInspector] bool isUsed;
 
     [Header("Ability Symbols")]
     [SerializeField] SkillImages[] abilitySymbols = new SkillImages[4];
 
 
-    public void SetStats(int imageInt, string charName)
+    public void SetStats(int imageInt, string charName, bool shouldBeActive)
     {
+
+        if (!shouldBeActive)
+        {
+            myHud.SetActive(false);
+            gameObject.SetActive(false);
+            return;
+        } 
 
         aBannerText = aBanner.GetComponentInChildren<Text>();
         bBannerText = bBanner.GetComponentInChildren<Text>();

@@ -108,7 +108,7 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, lookAtTarget.gameObject, cannisterPoisonTime);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this);
             hasCannister = true;
             universe.PlaySound(bSoundBonus);
         }
@@ -127,7 +127,7 @@ public class SongBird : PlayerBase
             smokeCloudDodge.transform.localScale = Vector3.zero;
             smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
             smokeCloudDodge.SetActive(true);
-            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, lookAtTarget.gameObject, dodgeCloudSize, dodgePoisonTime);
+            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag);
 
             for (int i = 0; i < dodgeCloudSize; i++)
             {
@@ -150,29 +150,11 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, lookAtTarget.gameObject, thrownCloudSize, thrownCloudTime);
+        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime,this,tag);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
             StartCoroutine(SmokeMove(smokeCloud, visuals.transform.forward, i * 0.01f, false));
-        }
-    }
-
-    public void DeathCloud()
-    {
-        smokeCloud.transform.position = transform.position;
-        smokeCloud.transform.localScale = Vector3.zero;
-        smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
-        smokeCloud.SetActive(true);
-
-        if (Vector3.Distance(gameObject.transform.position, lookAtTarget.position) <= deathCloudSize)
-        {
-            lookAtTarget.GetComponentInParent<PlayerBase>().TakeDamage(deathBurstDamage, Vector3.zero, 0, true, false);
-        }
-
-        for (int i = 0; i < deathCloudSize; i++)
-        {
-            StartCoroutine(SmokeMove(smokeCloud, Vector3.zero, i * 0.005f, true));
         }
     }
 
