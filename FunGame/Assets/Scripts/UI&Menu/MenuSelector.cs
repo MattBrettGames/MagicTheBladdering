@@ -16,6 +16,8 @@ public class MenuSelector : MonoBehaviour
     public UniverseController universe;
     private Player player1;
     private Player player2;
+    private Player player3;
+    private Player player4;
 
     private bool inputOnCooldown;
     private int currentSel;
@@ -24,6 +26,8 @@ public class MenuSelector : MonoBehaviour
     {
         player1 = ReInput.players.GetPlayer(0);
         player2 = ReInput.players.GetPlayer(1);
+        player3 = ReInput.players.GetPlayer(2);
+        player4 = ReInput.players.GetPlayer(3);
 
         for (int i = 0; i < cursors.Length; i++)
         {
@@ -42,7 +46,7 @@ public class MenuSelector : MonoBehaviour
 
     void Update()
     {
-        if (player1.GetAxis("VertMove") <= -0.4 && !inputOnCooldown || player2.GetAxis("VertMove") <= -0.4 && !inputOnCooldown)
+        if (player1.GetAxis("VertMove") <= -0.4 && !inputOnCooldown || player2.GetAxis("VertMove") <= -0.4 && !inputOnCooldown || player3.GetAxis("VertMove") <= -0.4 && !inputOnCooldown || player4.GetAxis("VertMove") <= -0.4 && !inputOnCooldown)
         {
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
@@ -50,7 +54,7 @@ public class MenuSelector : MonoBehaviour
             else { currentSel++; }
             cursorTransform.anchoredPosition = optionTransforms[currentSel].anchoredPosition;
         }
-        if (player1.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player2.GetAxis("VertMove") >= 0.4 && !inputOnCooldown)
+        if (player1.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player2.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player3.GetAxis("VertMove") >= 0.4 && !inputOnCooldown || player4.GetAxis("VertMove") >= 0.4 && !inputOnCooldown)
         {
             inputOnCooldown = true;
             Invoke("EndCooldown", 0.2f);
@@ -58,7 +62,7 @@ public class MenuSelector : MonoBehaviour
             else { currentSel--; }
             cursorTransform.anchoredPosition = optionTransforms[currentSel].anchoredPosition;
         }
-        if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
+        if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction") || player3.GetButtonDown("AAction") || player4.GetButtonDown("AAction"))
         {
             Invoke(options[currentSel].name, 0);
             cursorTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);

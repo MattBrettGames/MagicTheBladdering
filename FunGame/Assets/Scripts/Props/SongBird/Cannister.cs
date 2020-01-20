@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cannister : BlankMono
 {
-    public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, GameObject target, float time)
+    public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner)
     {
         smoke.SetActive(true);
         smoke.transform.position = transform.position;
@@ -12,7 +12,7 @@ public class Cannister : BlankMono
         smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
-        smoke1.Begin(damage, knockback, target, size, time);
+        smoke1.Begin(damage, knockback, size, time, owner, tag);
 
         for (int i = 0; i < size; i++)
         {
