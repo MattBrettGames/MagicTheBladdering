@@ -393,14 +393,8 @@ public class UniverseController : BlankMono
         {
             print("Someone died whilst there were two players");
 
-            PlayerBase otherCode = otherPlayer.GetComponentInParent<PlayerBase>();
-
-            otherCode.dir = Vector3.zero;
-            otherCode.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            otherCode.GetComponentInChildren<Animator>().SetFloat("Movement", 0);
-            otherCode.enabled = false;
-
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
+            player.GetComponent<Rigidbody>().isKinematic = true;
 
             // dualCamCode.Death(playerCode.playerID);
 
@@ -409,7 +403,7 @@ public class UniverseController : BlankMono
 
             if (playerCode.numOfDeaths != numOfRespawns)
             {
-                StartCoroutine(StartSpawn(playerCode, playerCode.playerID, otherCode));
+                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
             }
             else
             {
@@ -438,7 +432,6 @@ public class UniverseController : BlankMono
                 }
 
                 triCamCode.enabled = true;
-                print("Player" + (playerCode.playerID + 1) + "Base");
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID+1) + "Base").transform);
                 
                 RemovePlayerFromTargets(playerCode.playerID - 1);

@@ -382,6 +382,7 @@ public abstract class PlayerBase : ThingThatCanDie
             print("killer is null");
             universe.PlayerDeath(gameObject, null);
         }
+        print(gameObject.name + " has just successfully died");
 
         this.enabled = false;
     }
@@ -423,6 +424,7 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.SetTrigger("Respawn");
         damageMult = 1;
         incomingMult = 1;
+        rb2d.isKinematic = false;
 
         respawnEffects.SetActive(true);
 
