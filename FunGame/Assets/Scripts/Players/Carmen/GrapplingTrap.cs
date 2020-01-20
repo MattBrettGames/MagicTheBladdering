@@ -68,6 +68,7 @@ public class GrapplingTrap : MonoBehaviour
         transform.position = new Vector3(0, -100, 0);
         rb2d.angularVelocity = Vector3.zero;
         Physics.IgnoreLayerCollision(gameObject.layer, ignoredLayer, false);
+        carTrue.LoseTrueFrames(0);
     }
 
     void EndParts()

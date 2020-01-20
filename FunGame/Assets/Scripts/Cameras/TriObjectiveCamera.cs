@@ -14,14 +14,23 @@ public class TriObjectiveCamera : MonoBehaviour
     [Header("Offsets")]
     [SerializeField] Vector3 offset;
     [SerializeField] Vector3 lookatOffset;
+    float camShake;
+    UniverseController universe;
 
-    public void Start() { RetryTargets(); blank = new GameObject("BlankCameraTarget"); }
+    public void Start()
+    {
+        RetryTargets();
+        blank = new GameObject("BlankCameraTarget");
+
+        universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
+        universe.GetCam(null, this);
+    }
 
     public void LateUpdate()
     {
         transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z);
 
-        blank.transform.LookAt(boundBox.center + lookatOffset);
+        blank.transform.LookAt(boundBox.center + lookatOffset + (Vector3.one * camShake));
         blank.transform.position = transform.position;
 
         transform.forward = Vector3.Lerp(transform.forward, blank.transform.forward, Time.deltaTime);
@@ -35,10 +44,22 @@ public class TriObjectiveCamera : MonoBehaviour
         RetryTargets();
     }
 
-    public void RemoveTarget(int targetNum)
+    public void RemoveTarget(Transform target)
     {
-        targets.RemoveAt(targetNum);
+        targets.Remove(target);
         RetryTargets();
+    }
+
+    public void CamShake(float degree)
+    {
+        camShake = degree;
+        StartCoroutine(StopShake());
+    }
+
+    IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.2f);
+        camShake = 0;
     }
 
     void RetryTargets()

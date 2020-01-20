@@ -140,13 +140,12 @@ public abstract class PlayerBase : ThingThatCanDie
             lockTargetList.Add(GameObject.Find("Player3Base").transform);
             lockTargetList.Add(GameObject.Find("Player1Base").transform);
         }
-
-
     }
 
     public void RemoveTarget(Transform targetTemp)
     {
         lockTargetList.Remove(targetTemp);
+        currentLock = 0;
     }
 
     public virtual void Update()
@@ -319,8 +318,6 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
-            print(name + " was attacked by " + attacker.gameObject.name);
-
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
             hitEffects.SetActive(true);
@@ -382,6 +379,7 @@ public abstract class PlayerBase : ThingThatCanDie
         }
         else
         {
+            print("killer is null");
             universe.PlayerDeath(gameObject, null);
         }
 
@@ -419,6 +417,7 @@ public abstract class PlayerBase : ThingThatCanDie
         currentHealth = healthMax;
         poison = false;
         gameObject.SetActive(true);
+        LoseIFrames();
         GainTrueFrames();
         StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");
