@@ -97,7 +97,6 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-        print(ReInput.controllers.controllerCount + " is the number of active controllers");
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
 
@@ -130,7 +129,6 @@ public class UniverseController : BlankMono
         }
         if (level == 2)
         {
-            print("Loaded 2CharacterSelector");
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -138,8 +136,6 @@ public class UniverseController : BlankMono
         }
         else if (level == 3)
         {
-
-            print("Loaded 3CharacterSelector");
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -150,7 +146,6 @@ public class UniverseController : BlankMono
         }
         else if (level == 4)
         {
-            print("Loaded 4CharacterSelector");
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -303,7 +298,6 @@ public class UniverseController : BlankMono
                 {
                     temp = false;
                 }
-                print(temp);
                 GameObject.Find("P" + (i + 1) + "HUDController").GetComponent<HUDController>().SetStats(charInts[i], selectedChars[i].name, temp);
 
             }
@@ -463,7 +457,6 @@ public class UniverseController : BlankMono
         GameObject[] gams = GameObject.FindGameObjectsWithTag("Boss");
         for (int i = 0; i < gams.Length; i++)
         {
-            print(winner + "|" + gams[i].name + "|" + gams[i].activeInHierarchy);
             if (gams[i].name == winner) { gams[i].SetActive(true); }
         }
     }

@@ -66,7 +66,6 @@ public class WiosnaExplosions : MonoBehaviour
     
     public virtual void OnTriggerEnter(Collider other)
     {
-        print(tag + "|" + other.tag);
         if (other.tag != tag || other.tag == "Untagged")
         {
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();

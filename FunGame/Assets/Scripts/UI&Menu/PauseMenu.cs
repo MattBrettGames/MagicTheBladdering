@@ -56,7 +56,6 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0;
             playerCode1.BeginActing();
             playerCode2.BeginActing();
-            print("Time scale is " + Time.timeScale);
         }
 
         if (visuals.activeSelf)

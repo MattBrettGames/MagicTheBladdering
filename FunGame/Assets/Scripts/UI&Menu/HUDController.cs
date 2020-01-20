@@ -49,7 +49,6 @@ public class HUDController : BlankMono
         characterName.text = charName;
 
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
-        print(targetPlayer.name + " is the target of " + gameObject.name);
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
 
