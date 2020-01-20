@@ -5,27 +5,50 @@ using UnityEngine;
 public class TriObjectiveCamera : DualObjectiveCamera
 {
 
-    [SerializeField] public Transform thirdTarget;
-    protected Vector3 firstPos;
-    protected float secondDistance;
+    [SerializeField]
+    public List<Transform> targets
+    {
+        get { return targets; }
+        set
+        {
+            targets = value;
+            RetryTargets();
+        }
+    }
+    private Bounds boundBox;
 
-    public override void Start() { }
+    public override void Start() { RetryTargets(); }
 
-    public override void Update()
+    public override void LateUpdate()
     {
 
-        distanceBetweenTargets = (firstTarget.position.x + secondTarget.position.x + thirdTarget.position.x) - (firstTarget.position.y + secondTarget.position.y + thirdTarget.position.y);
+        transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z), offset.z);
 
-        centerPosition = (firstTarget.position + secondTarget.position + thirdTarget.position) / 3;
-
-        transform.position = new Vector3(
-            centerPosition.x,
-            distanceBetweenTargets + 5,
-            centerPosition.z
-            ) + offset;
+        transform.LookAt(boundBox.center);
 
     }
 
-    public override void LateUpdate() { }
+    public void RemoveTarget(int targetNum)
+    {
+        targets.RemoveAt(targetNum);
+        RetryTargets();
+    }
+
+    void RetryTargets()
+    {
+        boundBox = new Bounds(targets[0].position, Vector3.zero);
+
+        for (int i = 0; i < targets.Count; i++)
+        {
+            boundBox.Encapsulate(targets[i].position);
+        }
+
+        if (targets.Count <= 2)
+        {
+            GetComponent<DualObjectiveCamera>().enabled = true;
+            this.enabled = false;
+        }
+
+    }
 
 }

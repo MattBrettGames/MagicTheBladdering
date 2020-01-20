@@ -67,6 +67,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected List<Transform> lockTargetList = new List<Transform>();
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform currentLockTran;
+    protected bool onCooldown;
 
     [Header("Cooldowns")]
     public float aCooldown;
@@ -210,8 +211,7 @@ public abstract class PlayerBase : ThingThatCanDie
                     LockOnScroll();
 
                 }
-
-
+                
                 break;
 
             case State.dodging:
@@ -239,28 +239,39 @@ public abstract class PlayerBase : ThingThatCanDie
 
     protected virtual void LockOnScroll()
     {
-        if (player.GetAxis("CharRotate") >= 0.2f)
+        if (player.GetAxis("CharRotate") >= 0.2f && !onCooldown)
         {
             if (currentLock < lockTargetList.Count - 1)
             {
                 currentLock++;
+                StartCoroutine(OffCooldown());
             }
             else
             {
                 currentLock = 0;
+                StartCoroutine(OffCooldown());
             }
         }
-        if (player.GetAxis("CharRotate") <= -0.2)
+        if (player.GetAxis("CharRotate") <= -0.2 && !onCooldown)
         {
             if (currentLock != 0)
             {
                 currentLock--;
+                StartCoroutine(OffCooldown());
             }
             else
             {
                 currentLock = lockTargetList.Count - 1;
+                StartCoroutine(OffCooldown());
             }
         }
+    }
+
+    IEnumerator OffCooldown()
+    {
+        onCooldown = true;
+        yield return new WaitForSecondsRealtime(0.1f);
+        onCooldown = false;
     }
 
     #region Input Actions

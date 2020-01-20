@@ -22,7 +22,6 @@ public class UniverseController : BlankMono
     public Player player;
     DualObjectiveCamera dualCamCode;
     TriObjectiveCamera triCamCode;
-    QuadObjectiveCamera quadCamCode;
     AudioManager audioManager;
 
     [Header("Character Info")]
@@ -183,20 +182,13 @@ public class UniverseController : BlankMono
             {
                 dualCamCode.enabled = true;
                 triCamCode.enabled = false;
-                quadCamCode.enabled = false;
-            }
-            else if (numOfPlayers == 3)
-            {
-                dualCamCode.enabled = false;
-                triCamCode.enabled = true;
-                quadCamCode.enabled = false;
             }
             else
             {
                 dualCamCode.enabled = false;
-                triCamCode.enabled = false;
-                quadCamCode.enabled = true;
+                triCamCode.enabled = true;
             }
+
 
             #region Player 1
             GameObject p1 = selectedChars[0];
@@ -270,7 +262,7 @@ public class UniverseController : BlankMono
                 p3.transform.localScale = targetScale;
                 playerCode.SetInfo(this, 15);
             }
-            else { selectedChars[2] = new GameObject("NullObjectExceptionPlayer3"); }
+            else { selectedChars[2] = new GameObject("NullObjectException"); }
             #endregion
 
             #region Player 4
@@ -297,7 +289,7 @@ public class UniverseController : BlankMono
                 p4.transform.localScale = targetScale;
                 playerCode.SetInfo(this, 16);
             }
-            else { selectedChars[3] = new GameObject("NullObjectExceptionPlayer4"); }
+            else { selectedChars[3] = new GameObject("NullObjectException"); }
             #endregion
 
             for (int i = 0; i < 4; i++)
@@ -401,7 +393,7 @@ public class UniverseController : BlankMono
             else
             {
                 livingPlayers--;
-                if (livingPlayers <= 0)
+                if (livingPlayers <= 1)
                 {
                     if (playerCode.playerID == 1)
                     {
@@ -427,13 +419,12 @@ public class UniverseController : BlankMono
                 {
                     dualCamCode.enabled = true;
                     triCamCode.enabled = false;
-                    quadCamCode.enabled = false;
                 }
-                else if (livingPlayers == 3)
+                else if (livingPlayers >= 3)
                 {
                     dualCamCode.enabled = false;
                     triCamCode.enabled = true;
-                    quadCamCode.enabled = false;
+                    triCamCode.RemoveTarget(playerCode.playerID - 1);
                 }
             }
         }
@@ -459,11 +450,10 @@ public class UniverseController : BlankMono
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
     }
 
-    public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam, QuadObjectiveCamera quadCam)
+    public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
         dualCamCode = duoCam;
         triCamCode = triCam;
-        quadCamCode = quadCam;
     }
 
     IEnumerator DelayedVictory()

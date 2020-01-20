@@ -5,7 +5,6 @@ using UnityEngine;
 public class DualObjectiveCamera : MonoBehaviour
 {
 
-
     public Vector3 offset;
     protected Vector3 centerPosition;
     [SerializeField] protected float closeness;
@@ -22,7 +21,7 @@ public class DualObjectiveCamera : MonoBehaviour
     public virtual void Start()
     {
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
-        universe.GetCam(this, GetComponent<TriObjectiveCamera>(), GetComponent<QuadObjectiveCamera>());
+        universe.GetCam(this, GetComponent<TriObjectiveCamera>());
         bothPlayersAlive = true;
     }
 

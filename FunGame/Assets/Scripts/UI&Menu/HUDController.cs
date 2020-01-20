@@ -74,7 +74,7 @@ public class HUDController : BlankMono
         skulls[targetPlayer.numOfDeaths].SetActive(true);
     }
 
-    public void Update()
+    public void LateUpdate()
     {
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
 
