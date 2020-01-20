@@ -230,7 +230,7 @@ public class Valderheim : PlayerBase
         {
 
             StopCoroutine(EndCrack(crack2));
-            LeaveCrack(transform.position, true);
+            //LeaveCrack(transform.position, true);
             StartCoroutine(StopFrenzy());
             anim.SetTrigger("BAttack");
             
