@@ -5163,7 +5163,6 @@ GameObject:
   - component: {fileID: 5571274981792768078}
   - component: {fileID: 5571274981792768079}
   - component: {fileID: 4878596828877883517}
-  - component: {fileID: 5197298662877144092}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -5277,31 +5276,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14dcb0f6c71ff3449b22280ffbc828c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 5571274981279769974}
+  - {fileID: 5571274980161021821}
+  - {fileID: 775211429452480894}
+  - {fileID: 4404327420255023255}
+  dampTime: 1
   offset: {x: 0, y: 35, z: -20}
-  closeness: 20
-  distanceBetweenTargets: 0
-  firstTarget: {fileID: 5571274981279769974}
-  secondTarget: {fileID: 5571274980161021821}
-  thirdTarget: {fileID: 775211429452480894}
---- !u!114 &5197298662877144092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5571274981792768082}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a69ae995c1da42148bbd1a565ecc6773, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 35, z: -20}
-  closeness: 20
-  distanceBetweenTargets: 0
-  firstTarget: {fileID: 5571274981279769974}
-  secondTarget: {fileID: 5571274980161021821}
-  thirdTarget: {fileID: 775211429452480894}
-  fourthTarget: {fileID: 4404327420255023255}
 --- !u!1 &5578984627877061339
 GameObject:
   m_ObjectHideFlags: 0

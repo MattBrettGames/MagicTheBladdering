@@ -62,16 +62,16 @@ public class FlamingWiosna : ThingThatCanDie
         gameObject.SetActive(false);
     }
 
-    public void AwakenClone()
+    public void AwakenClone(Transform targetTemp)
     {
         remainingTime = lifeSpan;
         cloneBurst.SetActive(false);
+        target = targetTemp;
     }
 
-    public void SetInfo(Transform targetTemp, string id, int damageTemp, Color cloneColour, string newTag, GameObject cloneExplosion, PlayerBase ownerTemp)
+    public void SetInfo(string id, int damageTemp, Color cloneColour, string newTag, GameObject cloneExplosion, PlayerBase ownerTemp)
     {
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-        target = targetTemp;
         thisID = id;
         damage = damageTemp;
         tag = newTag;

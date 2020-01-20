@@ -42,7 +42,7 @@ public class Wiosna : PlayerBase
         flamingClone = objectPooler.cloneList[playerID];
         cloneExplosion = objectPooler.cloneExplosionList[playerID];
 
-        flamingClone.GetComponent<FlamingWiosna>().SetInfo(lockTargetList[currentLock].transform, thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
+        flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);        
 
         blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
         blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
@@ -113,12 +113,11 @@ public class Wiosna : PlayerBase
     {
         if (bTimer <= 0)
         {
-            flamingClone.transform.position = transform.position;// + dir;
-            flamingClone.GetComponent<FlamingWiosna>().AwakenClone();
+            flamingClone.transform.position = transform.position;
+            flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
             flamingClone.SetActive(true);
             bTimer = bCooldown;
-            flamingClone.GetComponent<FlamingWiosna>().SetInfo(lockTargetList[currentLock].transform, thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
-
+            
             universe.PlaySound(bSound);
         }
     }

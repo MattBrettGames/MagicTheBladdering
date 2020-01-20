@@ -97,8 +97,9 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-        numOfPlayers = ReInput.controllers.controllerCount - 2;
+        numOfPlayers = ReInput.controllers.controllerCount - 1; // - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
+        if (numOfPlayers > 4) { numOfPlayers = 4; }
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP");
     }
@@ -184,6 +185,10 @@ public class UniverseController : BlankMono
                 triCamCode.enabled = true;
             }
 
+            if (numOfPlayers == 3)
+            {
+                triCamCode.RemoveTarget(3);
+            }
 
             #region Player 1
             GameObject p1 = selectedChars[0];
@@ -242,8 +247,8 @@ public class UniverseController : BlankMono
                 playerCode.enabled = true;
                 playerCode.thisPlayer = "P3";
                 p3.tag = "Player3";
-                p2.transform.parent = GameObject.Find("CentreBase").transform;
-                p2.GetComponent<CapsuleCollider>().isTrigger = false;
+                p3.transform.parent = GameObject.Find("CentreBase").transform;
+                p3.GetComponent<CapsuleCollider>().isTrigger = false;
 
                 GameObject parent3 = GameObject.Find("Player3Base");
                 parent3.transform.SetParent(p3.transform);
@@ -290,7 +295,7 @@ public class UniverseController : BlankMono
             for (int i = 0; i < 4; i++)
             {
                 bool temp;
-                if(selectedChars[i] != null)
+                if (!selectedChars[i].name.Contains("Null"))
                 {
                     temp = true;
                 }
@@ -320,9 +325,11 @@ public class UniverseController : BlankMono
         if (lockedInPlayers == numOfPlayers)
         {
             GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("ArenaSelectorPVP");
+            Invoke("DisableChars", 0.5f);
             charSelector1.enabled = false;
             charSelector2.enabled = false;
-            Invoke("DisableChars", 0.5f);
+            charSelector3.enabled = false;
+            charSelector4.enabled = false;
         }
     }
 
@@ -333,8 +340,6 @@ public class UniverseController : BlankMono
         selectedChars[2].SetActive(false);
         selectedChars[3].SetActive(false);
     }
-
-
 
     public void Unlock(int player)
     {
@@ -359,15 +364,27 @@ public class UniverseController : BlankMono
         analytics.character2 = characters[1];
         analytics.skin1 = skins[0];
         analytics.skin2 = skins[1];
-        analytics.CreateCSV();
+        //analytics.CreateCSV();
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(arena);
+    }
+
+    void RemovePlayerFromTargets(int deadPlayer)
+    {
+        for (int i = 0; i < numOfPlayers; i++)
+        {
+            PlayerBase playerI = GameObject.Find("Player" + i + "Base").GetComponentInParent<PlayerBase>();
+            playerI.RemoveTarget(GameObject.Find("Player" + deadPlayer + "Base").transform);
+        }
     }
 
     public void PlayerDeath(GameObject player, GameObject otherPlayer)
     {
-        if (gameMode == "PvP")
+        if (numOfPlayers == 2)
         {
+            print("Someone died whlist there were two players");
+
             PlayerBase otherCode = otherPlayer.GetComponentInParent<PlayerBase>();
+
             otherCode.dir = Vector3.zero;
             otherCode.GetComponent<Rigidbody>().velocity = Vector3.zero;
             otherCode.GetComponentInChildren<Animator>().SetFloat("Movement", 0);
@@ -378,11 +395,11 @@ public class UniverseController : BlankMono
             dualCamCode.Death(playerCode.playerID);
 
             playerCode.numOfDeaths++;
+            print(player.name + " has died " + playerCode.numOfDeaths + " times");
 
             if (playerCode.numOfDeaths != numOfRespawns)
             {
                 StartCoroutine(StartSpawn(playerCode, playerCode.playerID, otherCode));
-                playerCode.enabled = true;
             }
             else
             {
@@ -411,28 +428,109 @@ public class UniverseController : BlankMono
                 }
                 else if (livingPlayers == 2)
                 {
+                    playerCode.gameObject.SetActive(false);
                     dualCamCode.enabled = true;
                     triCamCode.enabled = false;
                 }
                 else if (livingPlayers >= 3)
                 {
+                    playerCode.gameObject.SetActive(false);
+                    dualCamCode.enabled = false;
+                    triCamCode.enabled = true;
+                    triCamCode.RemoveTarget(playerCode.playerID - 1);
+                }
+                RemovePlayerFromTargets(playerCode.playerID);
+
+            }
+        }
+        else if (otherPlayer == null)
+        {
+            print("Someone died whlist there were three/four players");
+
+            PlayerBase playerCode = player.GetComponent<PlayerBase>();
+            triCamCode.RemoveTarget(playerCode.playerID - 1);
+
+            playerCode.numOfDeaths++;
+
+            if (playerCode.numOfDeaths != numOfRespawns)
+            {
+                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
+            }
+            else
+            {
+                livingPlayers--;
+                if (livingPlayers <= 1)
+                {
+                    if (playerCode.playerID == 1)
+                    {
+                        player = GameObject.FindGameObjectWithTag("Player1");
+                    }
+                    else if (playerCode.playerID == 2)
+                    {
+                        player = GameObject.FindGameObjectWithTag("Player2");
+                    }
+                    else if (playerCode.playerID == 3)
+                    {
+                        player = GameObject.FindGameObjectWithTag("Player3");
+                    }
+                    else
+                    {
+                        player = GameObject.FindGameObjectWithTag("Player4");
+                    }
+
+                    winner = player.name;
+                    Invoke("EndGame", 4);
+                }
+                else if (livingPlayers == 2)
+                {
+                    playerCode.gameObject.SetActive(false);
+                    dualCamCode.enabled = true;
+
+                    if (selectedChars[0].activeInHierarchy == true && dualCamCode.firstTarget == null)
+                    {
+                        dualCamCode.firstTarget = selectedChars[0].transform.GetChild(1);
+                    }
+
+
+
+                    triCamCode.enabled = false;
+                }
+                else if (livingPlayers >= 3)
+                {
+                    playerCode.gameObject.SetActive(false);
                     dualCamCode.enabled = false;
                     triCamCode.enabled = true;
                     triCamCode.RemoveTarget(playerCode.playerID - 1);
                 }
             }
+
         }
     }
     void EndGame() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("GameOver"); }
 
+    private IEnumerator StartSpawn(PlayerBase player, int playerInt)
+    {
+        yield return new WaitForSeconds(respawnTimer);
+
+        print("I've been told to spawn " + player.gameObject.name);
+        player.enabled = true;
+        triCamCode.AddTarget(playerInt);
+        player.Respawn();
+        player.gameObject.transform.position = new Vector3(0, 0.4f, 0);
+
+    }
+
     private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)
     {
         yield return new WaitForSeconds(respawnTimer);
-        player.enabled = true;
-        dualCamCode.RespawnedAPlayer();
-        player.Respawn();
-        otherPlayer.enabled = true;
-        player.gameObject.transform.position = new Vector3(0, 0.4f, 0);
+        if (numOfPlayers == 2)
+        {
+            player.enabled = true;
+            dualCamCode.RespawnedAPlayer();
+            player.Respawn();
+            otherPlayer.enabled = true;
+            player.gameObject.transform.position = new Vector3(0, 0.4f, 0);
+        }
     }
     public void ReturnToMenu()
     {

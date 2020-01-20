@@ -15,6 +15,7 @@ public class SmokeBase : MonoBehaviour
         tag = tagtemp;
         isBurst = true;
         gameObject.transform.localScale = Vector3.zero;
+        owner = ownerTemp;
 
         GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
 
@@ -44,7 +45,7 @@ public class SmokeBase : MonoBehaviour
         if (other.tag != tag)
         {
             PlayerBase otherCode = other.GetComponent<PlayerBase>();
-            otherCode.poison = true;
+            otherCode.poison = false;
         }
     }
 

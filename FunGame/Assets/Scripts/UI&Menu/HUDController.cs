@@ -34,11 +34,9 @@ public class HUDController : BlankMono
     [Header("Ability Symbols")]
     [SerializeField] SkillImages[] abilitySymbols = new SkillImages[4];
 
-
     public void SetStats(int imageInt, string charName, bool shouldBeActive)
     {
         myHud.SetActive(shouldBeActive);
-        Debug.LogError(myHud.activeInHierarchy + " is myHud's active, it should be " + shouldBeActive);
         gameObject.SetActive(shouldBeActive);
 
         aBannerText = aBanner.GetComponentInChildren<Text>();
@@ -49,6 +47,12 @@ public class HUDController : BlankMono
         characterName.text = charName;
 
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
+        if (targetPlayer == null)
+        {
+            myHud.SetActive(false);
+            return;
+        }
+
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
 

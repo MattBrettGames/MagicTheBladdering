@@ -2,35 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriObjectiveCamera : DualObjectiveCamera
+public class TriObjectiveCamera : MonoBehaviour
 {
-
     [SerializeField]
-    public List<Transform> targets
-    {
-        get { return targets; }
-        set
-        {
-            targets = value;
-            RetryTargets();
-        }
-    }
+    public List<Transform> targets;
     private Bounds boundBox;
     public float dampTime;
     GameObject blank;
     Vector3 velocity;
 
-    public override void Start() { RetryTargets(); blank = new GameObject("BlankCameraTarget"); }
+    [Header("Offsets")]
+    [SerializeField] Vector3 offset;
+    [SerializeField] Vector3 lookatOffset;
 
-    public override void LateUpdate()
+    public void Start() { RetryTargets(); blank = new GameObject("BlankCameraTarget"); }
+
+    public void LateUpdate()
     {
+        transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z);
 
-        transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z), offset.z);
+        blank.transform.LookAt(boundBox.center + lookatOffset);
+        blank.transform.position = transform.position;
 
-        Vector3.SmoothDamp(transform.forward, blank.transform.forward, ref velocity, dampTime);
+        transform.forward = Vector3.Lerp(transform.forward, blank.transform.forward, Time.deltaTime);
 
-        blank.transform.LookAt(boundBox.center);
+        RetryTargets();
+    }
 
+    public void AddTarget(int targetNum)
+    {
+        targets.Add(GameObject.Find("Player" + targetNum + "Base").transform);
+        RetryTargets();
     }
 
     public void RemoveTarget(int targetNum)
@@ -47,13 +49,6 @@ public class TriObjectiveCamera : DualObjectiveCamera
         {
             boundBox.Encapsulate(targets[i].position);
         }
-
-        if (targets.Count <= 2)
-        {
-            GetComponent<DualObjectiveCamera>().enabled = true;
-            this.enabled = false;
-        }
-
     }
 
 }

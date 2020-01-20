@@ -97,14 +97,25 @@ public abstract class PlayerBase : ThingThatCanDie
         healthMax = currentHealth;
         //StartCoroutine(PoisonTick());
         player = ReInput.players.GetPlayer(playerID);
-        walkDirection = Instantiate<GameObject>(aimTarget.gameObject, Vector3.zero, Quaternion.identity, gameObject.transform).transform;
+        walkDirection = new GameObject("WalkDirection").transform;
     }
 
     public virtual void SetInfo(UniverseController uni, int layerNew)
     {
         universe = uni;
         gameObject.layer = layerNew;
-        if (playerID == 0) 
+
+        RegainTargets();
+
+        aimTarget = new GameObject("Aimer").transform;
+        StartCoroutine(PoisonTick());
+    }
+
+    public void RegainTargets()
+    {
+        lockTargetList.Clear();
+
+        if (playerID == 0)
         {
             lockTargetList.Add(GameObject.Find("Player2Base").transform);
             lockTargetList.Add(GameObject.Find("Player3Base").transform);
@@ -131,8 +142,11 @@ public abstract class PlayerBase : ThingThatCanDie
         }
 
 
-        aimTarget = new GameObject("Aimer").transform;
-        StartCoroutine(PoisonTick());
+    }
+
+    public void RemoveTarget(Transform targetTemp)
+    {
+        lockTargetList.Remove(targetTemp);
     }
 
     public virtual void Update()
@@ -211,7 +225,7 @@ public abstract class PlayerBase : ThingThatCanDie
                     LockOnScroll();
 
                 }
-                
+
                 break;
 
             case State.dodging:
@@ -305,6 +319,8 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
+            print(name + " was attacked by " + attacker.gameObject.name);
+
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall();
             hitEffects.SetActive(true);
@@ -357,11 +373,17 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.SetFloat("Movement", 0);
 
         GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
-        universe.PlayerDeath(gameObject, killer.gameObject);
         Time.timeScale = 1;
-        killer.OnKill();
         anim.SetTrigger("Death");
-
+        if (killer != null)
+        {
+            universe.PlayerDeath(gameObject, killer.gameObject);
+            killer.OnKill();
+        }
+        else
+        {
+            universe.PlayerDeath(gameObject, null);
+        }
 
         this.enabled = false;
     }
