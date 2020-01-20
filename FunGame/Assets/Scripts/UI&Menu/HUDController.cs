@@ -26,15 +26,18 @@ public class HUDController : BlankMono
     public string thisPlayerInt;
     public GameObject[] images = new GameObject[4];
     public GameObject image;
+    [SerializeField] GameObject myHud;
     [SerializeField] GameObject[] skulls = new GameObject[3];
     private PlayerBase targetPlayer;
+    [HideInInspector] bool isUsed;
 
     [Header("Ability Symbols")]
     [SerializeField] SkillImages[] abilitySymbols = new SkillImages[4];
 
-
-    public void SetStats(int imageInt, string charName)
+    public void SetStats(int imageInt, string charName, bool shouldBeActive)
     {
+        myHud.SetActive(shouldBeActive);
+        gameObject.SetActive(shouldBeActive);
 
         aBannerText = aBanner.GetComponentInChildren<Text>();
         bBannerText = bBanner.GetComponentInChildren<Text>();
@@ -44,6 +47,12 @@ public class HUDController : BlankMono
         characterName.text = charName;
 
         targetPlayer = playerBase.GetComponentInParent<PlayerBase>();
+        if (targetPlayer == null)
+        {
+            myHud.SetActive(false);
+            return;
+        }
+
         healthBar.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
         barBorder.transform.localScale = new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1);
 
@@ -68,7 +77,7 @@ public class HUDController : BlankMono
         skulls[targetPlayer.numOfDeaths].SetActive(true);
     }
 
-    public void Update()
+    public void LateUpdate()
     {
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
 

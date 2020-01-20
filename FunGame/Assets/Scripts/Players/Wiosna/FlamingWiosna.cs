@@ -17,6 +17,7 @@ public class FlamingWiosna : ThingThatCanDie
     GameObject looker;
     SkinnedMeshRenderer[] meshRenderers = new SkinnedMeshRenderer[7];
     GameObject cloneBurst;
+    PlayerBase owner;
 
     void Update()
     {
@@ -40,14 +41,14 @@ public class FlamingWiosna : ThingThatCanDie
 
         if (player != null && player.tag != tag)
         {
-            player.TakeDamage(damage, Vector3.zero, 0, true, true);
+            player.TakeDamage(damage, Vector3.zero, 0, true, true, owner);
             cloneBurst.transform.position = transform.position;
             cloneBurst.SetActive(true);
             Disappear();
         }
     }
 
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -61,20 +62,21 @@ public class FlamingWiosna : ThingThatCanDie
         gameObject.SetActive(false);
     }
 
-    public void AwakenClone()
+    public void AwakenClone(Transform targetTemp)
     {
         remainingTime = lifeSpan;
         cloneBurst.SetActive(false);
+        target = targetTemp;
     }
 
-    public void SetInfo(Transform targetTemp, string id, int damageTemp, Color cloneColour, string newTag, GameObject cloneExplosion)
+    public void SetInfo(string id, int damageTemp, Color cloneColour, string newTag, GameObject cloneExplosion, PlayerBase ownerTemp)
     {
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-        target = targetTemp;
         thisID = id;
         damage = damageTemp;
         tag = newTag;
         cloneBurst = cloneExplosion;
+        owner = ownerTemp;
 
         if (id == "P1") { activeMaterial = mat0; }
         else { activeMaterial = mat1; }

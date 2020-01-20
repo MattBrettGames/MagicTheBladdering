@@ -50,18 +50,17 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (players.GetButtonDown("Pause") | player2.GetButtonDown("Pause"))
+        if (players.GetButtonDown("Pause") || player2.GetButtonDown("Pause"))
         {
             visuals.SetActive(true);
             Time.timeScale = 0;
             playerCode1.BeginActing();
             playerCode2.BeginActing();
-            print("Time scale is " + Time.timeScale);
         }
 
         if (visuals.activeSelf)
         {
-            if ((players.GetAxis("VertMove") <= -0.4f | player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
+            if ((players.GetAxis("VertMove") <= -0.4f || player2.GetAxis("VertMove") <= -0.4f) && !inputOnCooldown)
             {
                 texts[currentDisplay].color = Color.white;
                 options[currentDisplay].transform.localScale = Vector3.one - sizeChange;
@@ -75,7 +74,7 @@ public class PauseMenu : MonoBehaviour
                 StartCoroutine(EndCooldown());
                 inputOnCooldown = true;
             }
-            if ((players.GetAxis("VertMove") >= 0.4f | player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
+            if ((players.GetAxis("VertMove") >= 0.4f || player2.GetAxis("VertMove") >= 0.4f) && !inputOnCooldown)
             {
                 texts[currentDisplay].color = Color.white;
                 options[currentDisplay].transform.localScale = Vector3.one - sizeChange;

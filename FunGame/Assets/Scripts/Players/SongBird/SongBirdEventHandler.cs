@@ -9,7 +9,6 @@ public class SongBirdEventHandler : BlankMono
     public CorvidDagger weapon;
 
     public void ThrowVial() { songBird.ThrowVial(); }
-    public void DeathVial() { songBird.DeathCloud(); }
 
     public void BeginAttack() { weapon.StartAttack(); }
     public void EndAttack() { weapon.EndAttack(); }

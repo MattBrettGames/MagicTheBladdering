@@ -122,8 +122,9 @@ public class Valderheim : PlayerBase
                     anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
                     anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
-                    aimTarget.LookAt(lookAtTarget.position + lookAtVariant);
+                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
                     visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                    LockOnScroll();
                 }
 
                 break;
@@ -186,7 +187,7 @@ public class Valderheim : PlayerBase
     public override void LeaveCrack(Vector3 pos)
     {
         crack1.transform.position = new Vector3(pos.x, 0.4f, pos.z);
-        crack2.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
+        crack1.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
         if (frenzy)
         {
@@ -222,8 +223,7 @@ public class Valderheim : PlayerBase
         crack2.SetActive(true);
         StartCoroutine(EndCrack(crack2));
     }
-
-
+    
     public override void BAction()
     {
         if (!frenzy && bTimer <= 0)
@@ -231,18 +231,18 @@ public class Valderheim : PlayerBase
 
             StopCoroutine(EndCrack(crack2));
             LeaveCrack(transform.position, true);
-
             StartCoroutine(StopFrenzy());
-            speed += frenzySpeedBuff;
             anim.SetTrigger("BAttack");
+            
+            speed += frenzySpeedBuff;
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
             frenzy = true;
-            frenzyEffects.SetActive(true);
-            bTimer = bCooldown;
-
             dodgeDur += 0.2f;
             dodgeSpeed += 5;
+
+            frenzyEffects.SetActive(true);
+            bTimer = bCooldown;
 
             universe.PlaySound(bSound);
         }

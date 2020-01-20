@@ -53,7 +53,7 @@ public class GrapplingTrap : MonoBehaviour
             rb2d.velocity = Vector3.zero;
 
             Invoke("EndParts", 1);
-            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true);
+            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true, carTrue);
         }
         else
         {
@@ -68,10 +68,11 @@ public class GrapplingTrap : MonoBehaviour
         transform.position = new Vector3(0, -100, 0);
         rb2d.angularVelocity = Vector3.zero;
         Physics.IgnoreLayerCollision(gameObject.layer, ignoredLayer, false);
+        carTrue.LoseTrueFrames(0);
     }
 
     void EndParts()
     {
-            dustCloud.SetActive(true);
+        dustCloud.SetActive(true);
     }
 }

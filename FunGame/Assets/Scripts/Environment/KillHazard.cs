@@ -23,7 +23,7 @@ public class KillHazard : BlankMono
             if (other.gameObject.GetComponent<PlayerBase>() != null)
             {
                 PlayerBase code = other.gameObject.GetComponent<PlayerBase>();
-                code.TakeDamage(damageToPlayer, dir, force, false, false);
+                code.TakeDamage(damageToPlayer, dir, force, false, false, null);
 
                 if (hasAnimation)
                 {
