@@ -16,15 +16,20 @@ public class TriObjectiveCamera : DualObjectiveCamera
         }
     }
     private Bounds boundBox;
+    public float dampTime;
+    GameObject blank;
+    Vector3 velocity;
 
-    public override void Start() { RetryTargets(); }
+    public override void Start() { RetryTargets(); blank = new GameObject("BlankCameraTarget"); }
 
     public override void LateUpdate()
     {
 
         transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z), offset.z);
 
-        transform.LookAt(boundBox.center);
+        Vector3.SmoothDamp(transform.forward, blank.transform.forward, ref velocity, dampTime);
+
+        blank.transform.LookAt(boundBox.center);
 
     }
 
