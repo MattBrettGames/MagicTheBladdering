@@ -45,10 +45,7 @@ public class UniverseController : BlankMono
     private Text victoryText;
 
     [Header("Settings")]
-
     [HideInInspector] public bool isPostProcessing = true;
-
-
 
     void Start()
     {
