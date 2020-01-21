@@ -24,6 +24,10 @@ public class Wiosna : PlayerBase
     WiosnaExplosions blast1;
     WiosnaExplosions blast2;
 
+    [Header("Teleport")]
+    [SerializeField] GameObject vanishEffect;
+    [SerializeField] GameObject appearEffect;
+
     [Header("Flaming Clone")]
     [SerializeField] int cloneDamage;
     [SerializeField] Color cloneColour;
@@ -81,6 +85,8 @@ public class Wiosna : PlayerBase
             state = State.dodging;
 
             StartCoroutine(EndDig(thisLayer));
+            appearEffect.SetActive(false); ;
+            vanishEffect.SetActive(true);
 
             universe.PlaySound(aSound);
         }
@@ -92,6 +98,8 @@ public class Wiosna : PlayerBase
         aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
+        vanishEffect.SetActive(false);
+        appearEffect.SetActive(true);
     }
 
     public override void YAction()
