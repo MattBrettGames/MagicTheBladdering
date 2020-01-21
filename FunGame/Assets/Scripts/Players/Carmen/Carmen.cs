@@ -175,7 +175,6 @@ public class Carmen : PlayerBase
         {
             stabSymbol.SetActive(false);
         }
-
     }
 
     public override void XAction()
