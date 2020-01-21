@@ -439,6 +439,7 @@ public class UniverseController : BlankMono
 
                     Invoke("EndGame", 4);
                     winner = player.name;
+                    print(winner + " is the winner");
                 }
 
                 triCamCode.enabled = true;

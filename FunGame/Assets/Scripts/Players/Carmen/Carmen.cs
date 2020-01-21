@@ -129,7 +129,7 @@ public class Carmen : PlayerBase
 
                 if (aTimer < 0)
                 {
-                    DodgeSliding(dir);
+                    DodgeSliding(visuals.transform.forward);
                 }
                 break;
 
