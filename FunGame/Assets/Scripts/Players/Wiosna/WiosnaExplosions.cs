@@ -68,6 +68,7 @@ public class WiosnaExplosions : MonoBehaviour
     {
         if (other.tag != tag || other.tag == "Untagged")
         {
+            print(other.name + " is the thing I hit");
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
             player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue);
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
