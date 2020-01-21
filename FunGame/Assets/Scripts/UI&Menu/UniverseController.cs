@@ -535,7 +535,7 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CameraRumbleCall() { triCamCode.CamShake(0.1f); }
+    public void CameraRumbleCall(float degree) { triCamCode.CamShake(degree); }
 
     public void PlaySound(string clip) { audioManager.Play(clip); }
 

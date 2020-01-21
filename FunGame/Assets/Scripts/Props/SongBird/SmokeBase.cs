@@ -17,7 +17,7 @@ public class SmokeBase : MonoBehaviour
         gameObject.transform.localScale = Vector3.zero;
         owner = ownerTemp;
 
-        GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall();
+        GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>().CameraRumbleCall(0.1f);
 
         StartCoroutine(StopBurst());
         for (int i = 0; i < size; i++)
