@@ -82,6 +82,8 @@ public class UniverseController : BlankMono
                 GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
                 selectedChars[0] = null;
                 selectedChars[1] = null;
+                selectedChars[2] = null;
+                selectedChars[3] = null;
             }
         }
         else if (SceneManager.GetActiveScene().name.Contains("ArenaSel"))
@@ -90,6 +92,8 @@ public class UniverseController : BlankMono
             {
                 Unlock(0);
                 Unlock(1);
+                Unlock(2);
+                Unlock(3);
                 ReturnToMenu();
             }
         }
@@ -183,7 +187,7 @@ public class UniverseController : BlankMono
             else
             {*/
             // dualCamCode.enabled = false;
-           // }
+            // }
 
             triCamCode.enabled = true;
 
@@ -359,6 +363,11 @@ public class UniverseController : BlankMono
             selectedChars[0] = null;
             selectedChars[1].transform.SetParent(Camera.main.transform);
             selectedChars[1] = null;
+
+            selectedChars[2].transform.SetParent(Camera.main.transform);
+            selectedChars[2] = null;
+            selectedChars[3].transform.SetParent(Camera.main.transform);
+            selectedChars[3] = null;
         }
         else
         {
@@ -381,7 +390,7 @@ public class UniverseController : BlankMono
     {
         for (int i = 0; i < livingPlayers; i++)
         {
-            print("Removing " + "Player" + deadPlayer + "Base" + " from " + "Player" + (i + 1) + "Base");
+            //        print("Removing " + "Player" + deadPlayer + "Base" + " from " + "Player" + (i + 1) + "Base");
             PlayerBase playerI = GameObject.Find("Player" + (i + 1) + "Base").GetComponentInParent<PlayerBase>();
             playerI.RemoveTarget(GameObject.Find("Player" + deadPlayer + "Base").transform);
         }
@@ -391,7 +400,6 @@ public class UniverseController : BlankMono
     {
         if (numOfPlayers == 2)
         {
-            print("Someone died whilst there were two players");
 
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
             player.GetComponent<Rigidbody>().isKinematic = true;
@@ -399,7 +407,7 @@ public class UniverseController : BlankMono
             // dualCamCode.Death(playerCode.playerID);
 
             playerCode.numOfDeaths++;
-            print(player.name + " has died " + playerCode.numOfDeaths + " times");
+            //   print(player.name + " has died " + playerCode.numOfDeaths + " times");
 
             if (playerCode.numOfDeaths != numOfRespawns)
             {
@@ -432,8 +440,8 @@ public class UniverseController : BlankMono
                 }
 
                 triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID+1) + "Base").transform);
-                
+                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
+
                 RemovePlayerFromTargets(playerCode.playerID - 1);
 
             }
@@ -474,12 +482,12 @@ public class UniverseController : BlankMono
                     winner = player.name;
                     Invoke("EndGame", 4);
                 }
-               
+
                 triCamCode.enabled = true;
                 print("Player" + (playerCode.playerID + 1) + "Base");
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
 
-                RemovePlayerFromTargets(playerCode.playerID +1);
+                RemovePlayerFromTargets(playerCode.playerID + 1);
             }
 
         }
@@ -512,15 +520,19 @@ public class UniverseController : BlankMono
     {
         charSelector1.locked = false;
         charSelector2.locked = false;
+        charSelector3.locked = false;
+        charSelector4.locked = false;
         selectedChars[0] = null;
         selectedChars[1] = null;
+        selectedChars[2] = null;
+        selectedChars[3] = null;
         if (transform.childCount > 2) transform.GetChild(2).SetParent(Camera.main.transform);
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
     }
 
     public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
-       // dualCamCode = duoCam;
+        // dualCamCode = duoCam;
         triCamCode = triCam;
     }
 
