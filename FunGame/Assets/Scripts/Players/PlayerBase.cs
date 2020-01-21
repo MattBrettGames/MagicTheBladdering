@@ -120,7 +120,6 @@ public abstract class PlayerBase : ThingThatCanDie
             lockTargetList.Add(GameObject.Find("Player2Base").transform);
             lockTargetList.Add(GameObject.Find("Player3Base").transform);
             lockTargetList.Add(GameObject.Find("Player4Base").transform);
-
         }
         else if (playerID == 1)
         {
