@@ -250,6 +250,8 @@ public class UniverseController : BlankMono
             playerCode.SetInfo(this, 14);
             #endregion
 
+            targetLook = new Vector3(0, 0, 0);
+
             #region Player 3
             if (selectedChars[2] != null)
             {
@@ -276,6 +278,8 @@ public class UniverseController : BlankMono
             }
             else { selectedChars[2] = new GameObject("NullObjectException"); }
             #endregion
+
+            targetLook = new Vector3(0, 180, 0);
 
             #region Player 4
             if (selectedChars[3] != null)
