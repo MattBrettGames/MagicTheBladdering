@@ -76,6 +76,7 @@ public class UniverseController : BlankMono
         {
             if (Input.GetButtonDown("AllBButton"))
             {
+                print("Have gotten back Button");
                 GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
                 selectedChars[0] = null;
                 selectedChars[1] = null;
@@ -436,8 +437,8 @@ public class UniverseController : BlankMono
                         player = GameObject.FindGameObjectWithTag("Player4");
                     }
 
-                    winner = player.name;
                     Invoke("EndGame", 4);
+                    winner = player.name;
                 }
 
                 triCamCode.enabled = true;
@@ -497,7 +498,7 @@ public class UniverseController : BlankMono
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
         yield return new WaitForSeconds(respawnTimer);
-        player.enabled = true;        
+        player.enabled = true;
         triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
         player.gameObject.transform.position = new Vector3(0, 0.4f, 0);
@@ -519,8 +520,15 @@ public class UniverseController : BlankMono
     {
         charSelector1.locked = false;
         charSelector2.locked = false;
-        charSelector3.locked = false;
-        charSelector4.locked = false;
+        if (SceneManager.GetActiveScene().name.Contains("3Character"))
+        {
+            charSelector3.locked = false;
+        }
+        if (SceneManager.GetActiveScene().name.Contains("4Character"))
+        {
+            charSelector3.locked = false;
+            charSelector4.locked = false;
+        }
         selectedChars[0] = null;
         selectedChars[1] = null;
         selectedChars[2] = null;
