@@ -360,6 +360,8 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void Death(PlayerBase killer)
     {
+        enabled = false;
+
         GainIFrames();
         respawnEffects.SetActive(false);
 
@@ -380,8 +382,6 @@ public abstract class PlayerBase : ThingThatCanDie
             print("killer is null");
             universe.PlayerDeath(gameObject, null);
         }
-
-        this.enabled = false;
     }
     public virtual void KnockbackContinual()
     {
