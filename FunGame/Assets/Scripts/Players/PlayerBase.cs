@@ -120,7 +120,6 @@ public abstract class PlayerBase : ThingThatCanDie
             lockTargetList.Add(GameObject.Find("Player2Base").transform);
             lockTargetList.Add(GameObject.Find("Player3Base").transform);
             lockTargetList.Add(GameObject.Find("Player4Base").transform);
-
         }
         else if (playerID == 1)
         {
@@ -432,7 +431,7 @@ public abstract class PlayerBase : ThingThatCanDie
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
-    protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); ExtraUpdate(); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); }
+    protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); ExtraUpdate(); }
     public virtual void ExtraUpdate() { }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }

@@ -27,7 +27,6 @@ public class ArenaSelector : BlankMono
 
     void Start()
     {
-        loadingScreen.SetActive(false);
         cam = Camera.main.gameObject;
         for (int i = 0; i < displays.Count; i++)
         {
@@ -93,7 +92,7 @@ public class ArenaSelector : BlankMono
 
         if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
         {
-            loadingScreen.SetActive(true);
+            //loadingScreen.SetActive(true);
             universe.ChooseArena(displays[currentDisplay].name);
         }
     }
