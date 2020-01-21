@@ -46,10 +46,13 @@ public class Wiosna : PlayerBase
         flamingClone = objectPooler.cloneList[playerID];
         cloneExplosion = objectPooler.cloneExplosionList[playerID];
 
-        flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);        
+        flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
 
         blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
         blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
+
+        vanishEffect.transform.SetParent(gameObject.transform.parent);
+        appearEffect.transform.SetParent(gameObject.transform.parent);
 
     }
 
@@ -85,7 +88,9 @@ public class Wiosna : PlayerBase
             state = State.dodging;
 
             StartCoroutine(EndDig(thisLayer));
-            appearEffect.SetActive(false); ;
+            vanishEffect.SetActive(false);
+            appearEffect.SetActive(false);
+            vanishEffect.transform.localPosition = transform.localPosition;
             vanishEffect.SetActive(true);
 
             universe.PlaySound(aSound);
@@ -98,7 +103,7 @@ public class Wiosna : PlayerBase
         aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
-        vanishEffect.SetActive(false);
+        appearEffect.transform.localPosition = transform.localPosition;
         appearEffect.SetActive(true);
     }
 
@@ -125,7 +130,7 @@ public class Wiosna : PlayerBase
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
             flamingClone.SetActive(true);
             bTimer = bCooldown;
-            
+
             universe.PlaySound(bSound);
         }
     }
