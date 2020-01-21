@@ -230,7 +230,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                 if (aTimer <= 0)
                 {
-                    DodgeSliding(dir);
+                    DodgeSliding(visuals.transform.forward);
                 }
                 break;
 
@@ -291,7 +291,6 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (aTimer <= 0 && dir != Vector3.zero)
         {
-
             anim.SetTrigger("AAction");
 
             state = State.dodging;
