@@ -68,7 +68,7 @@ public class UniverseController : BlankMono
         {
             if (Input.GetButtonDown("AllBButton")) { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu"); }
         }
-        if (SceneManager.GetActiveScene().name == "Bios")
+        if (SceneManager.GetActiveScene().name.Contains("Bios"))
         {
             if (Input.GetButtonDown("AllBButton")) { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu"); ; }
         }
