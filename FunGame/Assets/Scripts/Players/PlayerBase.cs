@@ -382,7 +382,6 @@ public abstract class PlayerBase : ThingThatCanDie
             print("killer is null");
             universe.PlayerDeath(gameObject, null);
         }
-        print(gameObject.name + " has just successfully died");
 
         this.enabled = false;
     }
