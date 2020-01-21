@@ -26,6 +26,7 @@ public class CharacterSelector : BlankMono
     [Header("Readying Up")]
     public bool locked;
     [HideInInspector] public UniverseController universe;
+    [SerializeField] Vector3 targetLookatForChar;
     public Camera cam;
     public float camFOVLocked;
     private float camFOVBase;
@@ -171,7 +172,7 @@ public class CharacterSelector : BlankMono
         backStore.transform.position += camOffsetLocked;
         cam.fieldOfView = camFOVLocked;
         lockedForward = displayChar.transform.forward;
-        store.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt * 2), 0);
+        store.transform.eulerAngles = targetLookatForChar;
 
         StartCoroutine(StartLoad());
 

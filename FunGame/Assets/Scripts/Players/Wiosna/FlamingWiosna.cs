@@ -9,6 +9,8 @@ public class FlamingWiosna : ThingThatCanDie
     [SerializeField] float lifeSpan;
     [SerializeField] Material mat0;
     [SerializeField] Material mat1;
+    [SerializeField] Material mat2;
+    [SerializeField] Material mat3;
     private Transform target;
     private string thisID;
     int damage;
@@ -79,7 +81,9 @@ public class FlamingWiosna : ThingThatCanDie
         owner = ownerTemp;
 
         if (id == "P1") { activeMaterial = mat0; }
-        else { activeMaterial = mat1; }
+        else if(id == "P2"){ activeMaterial = mat1; }
+        else if (id == "P3") { activeMaterial = mat2; }
+        else { activeMaterial = mat3; }
 
         looker = new GameObject("FlamingCloneLooker");
 

@@ -319,7 +319,7 @@ public abstract class PlayerBase : ThingThatCanDie
         if (!iFrames && !trueIFrames)
         {
             ControllerRumble(0.2f, 0.1f);
-            universe.CameraRumbleCall();
+            universe.CameraRumbleCall(damageInc * 0.01f);
             hitEffects.SetActive(true);
             if (fromAttack)
             {
@@ -423,6 +423,7 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.SetTrigger("Respawn");
         damageMult = 1;
         incomingMult = 1;
+        rb2d.isKinematic = false;
 
         respawnEffects.SetActive(true);
 
@@ -447,7 +448,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f); CameraShake(); }
 
-    public virtual void CameraShake() { universe.CameraRumbleCall(); }
+    public virtual void CameraShake() { universe.CameraRumbleCall(0.1f); }
     #endregion
 
 }

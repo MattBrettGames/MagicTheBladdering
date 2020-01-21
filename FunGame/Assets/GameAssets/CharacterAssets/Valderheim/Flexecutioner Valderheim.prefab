@@ -405,7 +405,7 @@ Transform:
   m_GameObject: {fileID: 8884567124808399784}
   m_LocalRotation: {x: -0.000000029802319, y: -0.000000059604638, z: -0.000000029802319,
     w: 1}
-  m_LocalPosition: {x: -0.08788935, y: 0.14381109, z: -0.0008322685}
+  m_LocalPosition: {x: -0.0886, y: 0.1277, z: 0.0288}
   m_LocalScale: {x: 0.012057116, y: 0.012057122, z: 0.012057116}
   m_Children: []
   m_Father: {fileID: 306440633624023432}
@@ -452,36 +452,36 @@ TrailRenderer:
   m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2
+    widthMultiplier: 4
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: -2.0877194
+        outSlope: -2.0877194
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.11176471
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -3.3488371
-        outSlope: -3.3488371
+        inSlope: -0.9000001
+        outSlope: -0.9000001
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.0625
+        inWeight: 0.19999999
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.6886792, g: 0.48984712, b: 0.08770915, a: 0.93333334}
+      key0: {r: 0.8196079, g: 0.76470596, b: 0, a: 1}
       key1: {r: 0.47058824, g: 0.54522175, b: 0.6117647, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0.43529412}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -495,9 +495,9 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 18504
-      atime1: 33924
-      atime2: 55512
+      atime0: 0
+      atime1: 65535
+      atime2: 33346
       atime3: 0
       atime4: 0
       atime5: 0
@@ -505,10 +505,10 @@ TrailRenderer:
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
@@ -617,6 +617,36 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 98e9a631c5582cf489bc2074013e0d4d, type: 2}
+    - target: {fileID: 50114387620839390, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8b6fda6620317ed45899ab8556f5a766, type: 2}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.163522
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: -6
+      objectReference: {fileID: 0}
     - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
