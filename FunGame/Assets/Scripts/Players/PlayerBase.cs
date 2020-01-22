@@ -182,9 +182,9 @@ public abstract class PlayerBase : ThingThatCanDie
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack")) { YAction(); }
+                    if (player.GetButtonDown("YAttack") || Input.GetKeyDown(KeyCode.Y)) { YAction(); }
 
                     anim.SetFloat("Movement", (Mathf.Abs(dir.normalized.x) + Mathf.Abs(dir.normalized.z)) * 0.5f);
                 }

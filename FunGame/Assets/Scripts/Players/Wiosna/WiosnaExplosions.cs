@@ -11,21 +11,27 @@ public class WiosnaExplosions : MonoBehaviour
     Vector3 knockDir;
     float spaceTrue;
     ParticleSystem parts;
+    float scaleChange; // = new Vector3(0.1f, 0.1f, 0.1f);
 
     public void Setup()
     {
         parts = GetComponentInChildren<ParticleSystem>();
+        transform.localScale += transform.localScale * scaleChange;
     }
 
-    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, string ySound)
+    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, string ySound)//, Vector3 newScale)
     {
         gameObject.tag = owner.tag;
+
+       // scaleChange = (damage + remaining) * 0.1f;
+        print(scaleChange);
 
         ownerTrue = owner;
         damageFull = damage;
         knockFull = knockback;
         knockDir = dir;
         spaceTrue = spacing;
+        //transform.localScale -= new Vector3(0.1f,0.1f,0.1f);
 
         parts.Clear();
         gameObject.SetActive(true);
@@ -52,7 +58,7 @@ public class WiosnaExplosions : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound);
+        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound);//, transform.localScale - (transform.localScale / scaleChange));
     }
 
     IEnumerator Fade(float time)
@@ -66,9 +72,9 @@ public class WiosnaExplosions : MonoBehaviour
     
     public virtual void OnTriggerEnter(Collider other)
     {
+            print(other.name + " is the thing I hit");
         if (other.tag != tag || other.tag == "Untagged")
         {
-            print(other.name + " is the thing I hit");
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
             player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue);
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);

@@ -116,7 +116,7 @@ public class Wiosna : PlayerBase
             blast1.transform.position = gameObject.transform.position;
             blast2.transform.position = gameObject.transform.position;
 
-            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
+            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);//, Vector3.one);
 
             yTimer = yCooldown;
         }
