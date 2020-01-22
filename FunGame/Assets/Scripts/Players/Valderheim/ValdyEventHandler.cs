@@ -13,6 +13,9 @@ public class ValdyEventHandler : BlankMono
     public void OpenKickCombo() { valdy.OpenComboKick(); }
     public void Vibration(float intensity, float dur) { valdy.ControllerRumble(intensity, dur); }
 
+    public void BeginSlow() { valdy.BeginSlow(); }
+    public void EndSlow() { valdy.EndSlow(); }
+
     public void CreateCrack() { valdy.LeaveCrack(hammer.head.position); }
 
     public void GainHA() { valdy.GainHA(); }

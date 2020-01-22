@@ -19,7 +19,8 @@ public class Valderheim : PlayerBase
     [Header("Ground Slam")]
     public int slamAttack;
     public int slamKnockback;
-    [SerializeField] private float overheadStun;
+    private float overheadStun;
+    [SerializeField] int ySpeedDebuff = 10;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -181,6 +182,9 @@ public class Valderheim : PlayerBase
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
+
+    public void BeginSlow() { speed -= ySpeedDebuff; }
+    public void EndSlow() { speed += ySpeedDebuff; }
 
     private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
