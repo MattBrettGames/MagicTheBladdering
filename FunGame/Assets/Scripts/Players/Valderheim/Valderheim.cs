@@ -60,6 +60,10 @@ public class Valderheim : PlayerBase
 
     public override void Update()
     {
+        if (player.GetButtonDown("BAttack")) { BAction(); }
+        base.Update();
+
+        /*
         if (aTimer > 0) aTimer -= Time.deltaTime;
         if (bTimer > 0) bTimer -= Time.deltaTime;
         if (xTimer > 0) xTimer -= Time.deltaTime;
@@ -71,7 +75,6 @@ public class Valderheim : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-        if (player.GetButtonDown("BAttack")) { BAction(); }
 
         switch (state)
         {
@@ -138,6 +141,7 @@ public class Valderheim : PlayerBase
                 KnockbackContinual();
                 break;
         }
+        */
     }
 
     public override void XAction()
