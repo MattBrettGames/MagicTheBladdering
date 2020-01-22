@@ -68,6 +68,16 @@ public class CharacterSelector : BlankMono
         player = ReInput.players.GetPlayer(thisPInt);
 
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
+
+        currentChar = UnityEngine.Random.Range(0, characters.Count);
+        while (currentChar == otherChar1.currentChar && thisPInt != 0)
+        {
+            currentChar = UnityEngine.Random.Range(0, characters.Count);
+            print(currentChar + " is the currentChar");
+        }
+
+        UpdateDisplay();
+
     }
 
     void Update()

@@ -41,13 +41,11 @@ public class FadeController : MonoBehaviour
     {
         cover.canvasRenderer.SetAlpha(1);
         StartCoroutine(TrueFade());
-        print("Ended 1");
     }
 
     IEnumerator TrueFade()
     {
         yield return new WaitForSecondsRealtime(0.2f);
         cover.CrossFadeAlpha(0f, 0.5f, true);
-        print("Ended 2 " + SceneManager.GetActiveScene().name);
     }
 }
