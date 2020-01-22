@@ -90,7 +90,7 @@ public class ArenaSelector : BlankMono
             Invoke("EndCooldown", 0.3f);
         }
 
-        if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
+        if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
         {
             //loadingScreen.SetActive(true);
             universe.ChooseArena(displays[currentDisplay].name);

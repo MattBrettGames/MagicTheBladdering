@@ -239,14 +239,13 @@ public abstract class PlayerBase : ThingThatCanDie
                 break;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            if (thisPlayer == "P2")
+            if (thisPlayer != "P1")
             {
                 TakeDamage(3000, Vector3.zero, 0, true, false, this);
             }
         }
-
     }
 
     protected virtual void LockOnScroll()
@@ -443,7 +442,7 @@ public abstract class PlayerBase : ThingThatCanDie
         player.SetVibration(0, intensity, dur);
     }
 
-    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals. transform.LookAt(aimTarget); }
+    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
     public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f); CameraShake(); }
 

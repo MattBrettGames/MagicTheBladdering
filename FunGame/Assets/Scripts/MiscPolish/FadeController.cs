@@ -47,5 +47,6 @@ public class FadeController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.2f);
         cover.CrossFadeAlpha(0f, 0.5f, true);
+        print("Ended 2");
     }
 }
