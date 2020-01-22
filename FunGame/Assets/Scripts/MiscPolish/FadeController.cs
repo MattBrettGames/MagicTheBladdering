@@ -21,13 +21,12 @@ public class FadeController : MonoBehaviour
 
     public void FadeToBlack(string levelToLoad)
     {
-        cover.canvasRenderer.SetAlpha(0);
-        cover.CrossFadeAlpha(1f, 0.5f, true);
+        FadeToBlack();
         StartCoroutine(LoadLevel(levelToLoad));
     }
     IEnumerator LoadLevel(string level)
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.6f);
         SceneManager.LoadScene(level);
     }
 
