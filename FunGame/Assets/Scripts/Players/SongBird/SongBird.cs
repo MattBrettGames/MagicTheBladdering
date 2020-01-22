@@ -43,13 +43,6 @@ public class SongBird : PlayerBase
     [SerializeField] float thrownImpactDur;
     [SerializeField] bool thrownInterrupt;
 
-    [Header("Death Cloud")]
-    [SerializeField] int deathCloudSize;
-    [SerializeField] int deathBurstDamage;
-    // [SerializeField] float deathCloudTime;
-    // [SerializeField] int deathSmokeKnockback;
-
-    [Space]
 
     private bool hasCannister;
 
