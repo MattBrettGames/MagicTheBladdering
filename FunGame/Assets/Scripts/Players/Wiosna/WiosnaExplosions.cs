@@ -19,7 +19,7 @@ public class WiosnaExplosions : MonoBehaviour
 
     public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, string ySound)
     {
-        tag = owner.tag;
+        gameObject.tag = owner.tag;
 
         ownerTrue = owner;
         damageFull = damage;

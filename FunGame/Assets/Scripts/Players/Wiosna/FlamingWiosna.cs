@@ -76,7 +76,7 @@ public class FlamingWiosna : ThingThatCanDie
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         thisID = id;
         damage = damageTemp;
-        tag = newTag;
+        gameObject.tag = newTag;
         cloneBurst = cloneExplosion;
         owner = ownerTemp;
 
