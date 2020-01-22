@@ -371,6 +371,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
         GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
         Time.timeScale = 1;
+        anim.SetBool("LockOn", false);
         anim.SetTrigger("Death");
         if (killer != null)
         {
