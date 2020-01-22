@@ -70,5 +70,4 @@ public class SmokeBase : MonoBehaviour
         yield return new WaitForSeconds(impactDur);
         isBurst = false;
     }
-
 }

@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Cannister : BlankMono
 {
+    [SerializeField] GameObject parts;
+
     public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner, float impactDur, bool interrupt)
     {
         smoke.SetActive(true);
+        parts.SetActive(false);
+        parts.SetActive(true);
+
         smoke.transform.position = transform.position;
         smoke.transform.localScale = Vector3.zero;
         smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
