@@ -458,7 +458,8 @@ public class UniverseController : BlankMono
                         player = GameObject.FindGameObjectWithTag("Player4");
                     }
 
-                    Invoke("EndGame", 4);
+                    Invoke("EndGame", 2);
+                    Time.timeScale = 0.5f;
                     winner = player.name;
                     print(winner + " is the winner");
                 }
