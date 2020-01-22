@@ -57,8 +57,9 @@ public class SmokeBase : MonoBehaviour
 
     IEnumerator Shrink(float time)
     {
-        yield return new WaitForSecondsRealtime(time);
+        yield return new WaitForSeconds(time);
         transform.localScale -= Vector3.one;
+        transform.position -= new Vector3(0, 0.1f, 0);
         if (transform.localScale.y <= 0)
         {
             gameObject.SetActive(false);
