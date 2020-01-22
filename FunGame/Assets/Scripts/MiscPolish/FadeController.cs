@@ -26,14 +26,14 @@ public class FadeController : MonoBehaviour
     }
     IEnumerator LoadLevel(string level)
     {
-        yield return new WaitForSecondsRealtime(0.6f);
+        yield return new WaitForSecondsRealtime(0.3f);
         SceneManager.LoadScene(level);
     }
 
     public void FadeToBlack()
     {
         cover.canvasRenderer.SetAlpha(0);
-        cover.CrossFadeAlpha(1f, 0.5f, true);
+        cover.CrossFadeAlpha(1f, 0.3f, true);
     }
 
 
@@ -45,8 +45,8 @@ public class FadeController : MonoBehaviour
 
     IEnumerator TrueFade()
     {
-        yield return new WaitForSecondsRealtime(0.2f);
-        cover.CrossFadeAlpha(0f, 0.5f, true);
+        yield return new WaitForSecondsRealtime(0.1f);
+        cover.CrossFadeAlpha(0f, 0.3f, true);
         print("Ended 2");
     }
 }

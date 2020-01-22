@@ -74,7 +74,7 @@ public class UniverseController : BlankMono
         }
         else if (SceneManager.GetActiveScene().name.Contains("GameOver"))
         {
-            if (Input.GetButtonDown("AllBButton"))
+            if (Input.GetButtonDown("AllBButton") || Input.GetKeyDown(KeyCode.H))
             {
                 print("Have gotten back Button");
                 GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
@@ -200,6 +200,8 @@ public class UniverseController : BlankMono
                 triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
             }
 
+            PlayerBase[] playerBases = new PlayerBase[4];
+
             #region Player 1
             GameObject p1 = selectedChars[0];
             p1.SetActive(true);
@@ -221,6 +223,7 @@ public class UniverseController : BlankMono
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
             playerCode.SetInfo(this, 13);
+            playerBases[0] = playerCode;
             #endregion
 
             targetLook = new Vector3(0, -90, 0);
@@ -228,9 +231,9 @@ public class UniverseController : BlankMono
             #region Player 2
             GameObject p2 = selectedChars[1];
             p2.SetActive(true);
-            playerCode = p2.GetComponent<PlayerBase>();
-            playerCode.enabled = true;
-            playerCode.thisPlayer = "P2";
+            PlayerBase playerCode2 = p2.GetComponent<PlayerBase>();
+            playerCode2.enabled = true;
+            playerCode2.thisPlayer = "P2";
             p2.tag = "Player2";
             p2.transform.parent = GameObject.Find("CentreBase").transform;
             p2.GetComponent<CapsuleCollider>().isTrigger = false;
@@ -245,19 +248,21 @@ public class UniverseController : BlankMono
             else if (p2.name.Contains("Carmen")) { charInts[1] = 2; }
             else if (p2.name.Contains("Wiosna")) { charInts[1] = 3; }
             p2.transform.localScale = targetScale;
-            playerCode.SetInfo(this, 14);
+            playerCode2.SetInfo(this, 14);
+            playerBases[1] = playerCode2;
             #endregion
 
             targetLook = new Vector3(0, 0, 0);
 
             #region Player 3
+            PlayerBase playerCode3;
             if (selectedChars[2] != null)
             {
                 GameObject p3 = selectedChars[2];
                 p3.SetActive(true);
-                playerCode = p3.GetComponent<PlayerBase>();
-                playerCode.enabled = true;
-                playerCode.thisPlayer = "P3";
+                playerCode3 = p3.GetComponent<PlayerBase>();
+                playerCode3.enabled = true;
+                playerCode3.thisPlayer = "P3";
                 p3.tag = "Player3";
                 p3.transform.parent = GameObject.Find("CentreBase").transform;
                 p3.GetComponent<CapsuleCollider>().isTrigger = false;
@@ -272,7 +277,8 @@ public class UniverseController : BlankMono
                 else if (p3.name.Contains("Carmen")) { charInts[2] = 2; }
                 else if (p3.name.Contains("Wiosna")) { charInts[2] = 3; }
                 p3.transform.localScale = targetScale;
-                playerCode.SetInfo(this, 15);
+                playerCode3.SetInfo(this, 15);
+                playerBases[2] = playerCode3;
             }
             else { selectedChars[2] = new GameObject("NullObjectException"); }
             #endregion
@@ -280,13 +286,14 @@ public class UniverseController : BlankMono
             targetLook = new Vector3(0, 180, 0);
 
             #region Player 4
+            PlayerBase playerCode4;
             if (selectedChars[3] != null)
             {
                 GameObject p4 = selectedChars[3];
                 p4.SetActive(true);
-                playerCode = p4.GetComponent<PlayerBase>();
-                playerCode.enabled = true;
-                playerCode.thisPlayer = "P4";
+                playerCode4 = p4.GetComponent<PlayerBase>();
+                playerCode4.enabled = true;
+                playerCode4.thisPlayer = "P4";
                 p4.tag = "Player4";
                 p4.transform.parent = GameObject.Find("CentreBase").transform;
                 p4.GetComponent<CapsuleCollider>().isTrigger = false;
@@ -301,7 +308,8 @@ public class UniverseController : BlankMono
                 else if (p4.name.Contains("Carmen")) { charInts[3] = 2; }
                 else if (p4.name.Contains("Wiosna")) { charInts[3] = 3; }
                 p4.transform.localScale = targetScale;
-                playerCode.SetInfo(this, 16);
+                playerCode4.SetInfo(this, 16);
+                playerBases[3] = playerCode4;
             }
             else { selectedChars[3] = new GameObject("NullObjectException"); }
             #endregion
@@ -321,8 +329,21 @@ public class UniverseController : BlankMono
                 GameObject.Find("P" + (i + 1) + "HUDController").GetComponent<HUDController>().SetStats(charInts[i], selectedChars[i].name, temp);
 
             }
+
+            StartCoroutine(DelayedStart(playerBases[0], playerBases[1], playerBases[2], playerBases[3]));
         }
     }
+
+    IEnumerator DelayedStart(PlayerBase p1, PlayerBase p2, PlayerBase p3, PlayerBase p4)
+    {
+
+        yield return new WaitForSecondsRealtime(4.3f);
+        p1.enabled = true;
+        p2.enabled = true;
+        p3.enabled = true;
+        p4.enabled = true;
+    }
+
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
     {
@@ -403,7 +424,7 @@ public class UniverseController : BlankMono
         if (numOfPlayers == 2)
         {
 
-            PlayerBase playerCode = player.GetComponent<PlayerBase>();
+            PlayerBase playerCode = player.GetComponent<PlayerBase>();            
             player.GetComponent<Rigidbody>().isKinematic = true;
 
             // dualCamCode.Death(playerCode.playerID);
