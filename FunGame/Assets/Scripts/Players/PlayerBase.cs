@@ -16,8 +16,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public float speed;
     public float dodgeSpeed;
     public float dodgeDur;
-    protected float baseSpeed;
-    protected float bonusSpeed;
+    [SerializeField] protected float bonusSpeed;
     protected float moving;
     [HideInInspector] public Vector3 dir;
 
@@ -93,7 +92,6 @@ public abstract class PlayerBase : ThingThatCanDie
         outline = visuals.GetComponent<Outline>();
         anim = gameObject.GetComponentInChildren<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody>();
-        baseSpeed = speed;
         bTimer = bCooldown;
 
         healthMax = currentHealth;
@@ -162,7 +160,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-        transform.position = new Vector3(transform.position.x, 0.4f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
         switch (state)
         {

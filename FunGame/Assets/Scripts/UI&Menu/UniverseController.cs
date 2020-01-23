@@ -216,7 +216,7 @@ public class UniverseController : BlankMono
             parent1.transform.localPosition = targetPos;
             p1.transform.position = GameObject.Find("Player1Spawn").transform.position;
             p1.transform.localScale = Vector3.one;
-            p1.transform.eulerAngles = targetLook;
+            playerCode.visuals.transform.eulerAngles = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
             else if (p1.name.Contains("Songbird")) { charInts[0] = 1; }
             else if (p1.name.Contains("Carmen")) { charInts[0] = 2; }
@@ -240,7 +240,7 @@ public class UniverseController : BlankMono
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
             p2.transform.position = GameObject.Find("Player2Spawn").transform.position;
-            p2.transform.eulerAngles = targetLook;
+            playerCode2.visuals.transform.eulerAngles = targetLook;
             if (p2.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p2.name.Contains("Songbird")) { charInts[1] = 1; }
             else if (p2.name.Contains("Carmen")) { charInts[1] = 2; }
@@ -268,7 +268,7 @@ public class UniverseController : BlankMono
                 parent3.transform.SetParent(p3.transform);
                 parent3.transform.localPosition = targetPos;
                 p3.transform.position = GameObject.Find("Player3Spawn").transform.position;
-                p3.transform.eulerAngles = targetLook;
+                playerCode3.visuals.transform.eulerAngles = targetLook;
                 if (p3.name.Contains("Valderheim")) { charInts[2] = 0; }
                 else if (p3.name.Contains("Songbird")) { charInts[2] = 1; }
                 else if (p3.name.Contains("Carmen")) { charInts[2] = 2; }
@@ -298,7 +298,7 @@ public class UniverseController : BlankMono
                 parent4.transform.SetParent(p4.transform);
                 parent4.transform.localPosition = targetPos;
                 p4.transform.position = GameObject.Find("Player4Spawn").transform.position;
-                p4.transform.eulerAngles = targetLook;
+                playerCode4.visuals.transform.eulerAngles = targetLook;
                 if (p4.name.Contains("Valderheim")) { charInts[3] = 0; }
                 else if (p4.name.Contains("Songbird")) { charInts[3] = 1; }
                 else if (p4.name.Contains("Carmen")) { charInts[3] = 2; }
