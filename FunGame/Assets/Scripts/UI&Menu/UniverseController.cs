@@ -441,10 +441,11 @@ public class UniverseController : BlankMono
                     {
                         player = GameObject.FindGameObjectWithTag("Player1");
                     }
-                    else if (playerCode.playerID == 2)
+                    else if (playerCode.playerID == 0)
                     {
                         player = GameObject.FindGameObjectWithTag("Player2");
                     }
+                    /*
                     else if (playerCode.playerID == 3)
                     {
                         player = GameObject.FindGameObjectWithTag("Player3");
@@ -453,7 +454,7 @@ public class UniverseController : BlankMono
                     {
                         player = GameObject.FindGameObjectWithTag("Player4");
                     }
-
+                    */
                     Invoke("EndGame", 2);
                     Time.timeScale = 0.5f;
                     winner = player.name;

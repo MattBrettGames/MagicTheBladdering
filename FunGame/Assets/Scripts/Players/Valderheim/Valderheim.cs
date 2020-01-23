@@ -192,8 +192,8 @@ public class Valderheim : PlayerBase
 
     public override void Death(PlayerBase killer)
     {
-        base.Death(killer);
         bonusSpeed = 0;
+        base.Death(killer);
     }
 
     public override void LeaveCrack(Vector3 pos)
