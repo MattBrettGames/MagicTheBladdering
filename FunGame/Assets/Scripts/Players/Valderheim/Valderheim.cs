@@ -61,9 +61,7 @@ public class Valderheim : PlayerBase
     public override void Update()
     {
         if (player.GetButtonDown("BAttack")) { BAction(); }
-        base.Update();
 
-        /*
         if (aTimer > 0) aTimer -= Time.deltaTime;
         if (bTimer > 0) bTimer -= Time.deltaTime;
         if (xTimer > 0) xTimer -= Time.deltaTime;
@@ -90,7 +88,7 @@ public class Valderheim : PlayerBase
                 {
                     //Rotating the Character Model
                     visuals.transform.LookAt(aimTarget);
-                    rb2d.velocity = dir * speed;
+                    rb2d.velocity = dir * (speed + bonusSpeed);
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
@@ -114,7 +112,7 @@ public class Valderheim : PlayerBase
 
                 if (!acting)
                 {
-                    rb2d.velocity = dir * speed;
+                    rb2d.velocity = dir * (speed + bonusSpeed);
 
                     if (player.GetButtonDown("AAction")) { AAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
@@ -140,8 +138,7 @@ public class Valderheim : PlayerBase
             case State.knockback:
                 KnockbackContinual();
                 break;
-        }
-        */
+        }        
     }
 
     public override void XAction()
@@ -187,8 +184,8 @@ public class Valderheim : PlayerBase
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
-    public void BeginSlow() { speed -= ySpeedDebuff; }
-    public void EndSlow() { speed += ySpeedDebuff; }
+    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
+    public void EndSlow() { bonusSpeed += ySpeedDebuff; }
 
     private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
@@ -242,7 +239,7 @@ public class Valderheim : PlayerBase
             StartCoroutine(StopFrenzy());
             anim.SetTrigger("BAttack");
             
-            speed += frenzySpeedBuff;
+            bonusSpeed += frenzySpeedBuff;
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
             frenzy = true;
@@ -265,7 +262,7 @@ public class Valderheim : PlayerBase
         dodgeDur -= 0.2f;
         dodgeSpeed -= 5;
 
-        speed -= frenzySpeedBuff;
+        bonusSpeed -= frenzySpeedBuff;
         frenzy = false;
         frenzyEffects.SetActive(false);
     }

@@ -16,7 +16,8 @@ public abstract class PlayerBase : ThingThatCanDie
     public float speed;
     public float dodgeSpeed;
     public float dodgeDur;
-    private float baseSpeed;
+    protected float baseSpeed;
+    protected float bonusSpeed;
     protected float moving;
     [HideInInspector] public Vector3 dir;
 
@@ -178,7 +179,7 @@ public abstract class PlayerBase : ThingThatCanDie
                 {
                     //Rotating the Character Model
                     visuals.transform.LookAt(aimTarget);
-                    rb2d.velocity = dir * speed;
+                    rb2d.velocity = dir * (speed + bonusSpeed);
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
@@ -203,7 +204,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                 if (!acting)
                 {
-                    rb2d.velocity = dir * speed;
+                    rb2d.velocity = dir * (speed + bonusSpeed);
 
                     if (player.GetButtonDown("AAction")) { AAction(); }
                     if (player.GetButtonDown("BAttack")) { BAction(); }
@@ -434,7 +435,19 @@ public abstract class PlayerBase : ThingThatCanDie
     public virtual void ExtraUpdate() { }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
-    public void EndActing() { acting = false; rb2d.velocity = Vector3.zero; state = State.normal; }
+    public void EndActing()
+    {
+        acting = false;
+        rb2d.velocity = Vector3.zero;
+        if (!anim.GetBool("LockOn"))
+        {
+            state = State.normal;
+        }
+        else
+        {
+            state = State.lockedOn;
+        }
+    }
 
     public void ControllerRumble(float intensity, float dur)
     {

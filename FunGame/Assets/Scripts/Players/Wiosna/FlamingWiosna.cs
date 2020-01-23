@@ -28,7 +28,7 @@ public class FlamingWiosna : ThingThatCanDie
 
         transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed);
 
-        transform.position += transform.forward * speed;
+        transform.position += transform.forward.normalized * speed * Time.deltaTime;
 
         remainingTime -= Time.deltaTime;
         if (remainingTime <= 0)
@@ -40,6 +40,7 @@ public class FlamingWiosna : ThingThatCanDie
     void OnTriggerEnter(Collider other)
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
+        print(player.name + "|" + player.tag + "|" + tag);
 
         if (player != null && player.tag != tag)
         {
@@ -81,7 +82,7 @@ public class FlamingWiosna : ThingThatCanDie
         owner = ownerTemp;
 
         if (id == "P1") { activeMaterial = mat0; }
-        else if(id == "P2"){ activeMaterial = mat1; }
+        else if (id == "P2") { activeMaterial = mat1; }
         else if (id == "P3") { activeMaterial = mat2; }
         else { activeMaterial = mat3; }
 
