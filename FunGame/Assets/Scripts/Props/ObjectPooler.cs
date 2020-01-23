@@ -52,7 +52,7 @@ public class ObjectPooler : BlankMono
 
     private void Start()
     {
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 16; i++)
         {
             #region Songbird Props
             poisonSmokeList.Add(Instantiate<GameObject>(poisonSmoke, transform.position, Quaternion.identity, transform));

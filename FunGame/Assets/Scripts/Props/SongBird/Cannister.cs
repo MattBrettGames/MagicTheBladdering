@@ -9,8 +9,8 @@ public class Cannister : BlankMono
     public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner, float impactDur, bool interrupt)
     {
         smoke.SetActive(true);
+        print("I've triggered a bomb");
         parts.SetActive(false);
-        parts.SetActive(true);
 
         smoke.transform.position = transform.position;
         smoke.transform.localScale = Vector3.zero;
@@ -23,6 +23,7 @@ public class Cannister : BlankMono
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smoke));
         }
+        parts.SetActive(true);
         Invoke("Vanish", 0.5f);
     }
 

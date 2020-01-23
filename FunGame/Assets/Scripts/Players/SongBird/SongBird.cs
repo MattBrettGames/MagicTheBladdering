@@ -26,6 +26,7 @@ public class SongBird : PlayerBase
     [SerializeField] int cannisterSmokeKnockback;
     [SerializeField] float cannisterImpactDur;
     [SerializeField] bool cannisterInterrupt;
+    private bool hasCannister;
 
     [Header("Dodge Cloud")]
     [SerializeField] int dodgeCloudSize;
@@ -42,11 +43,6 @@ public class SongBird : PlayerBase
     [SerializeField] int thrownSmokeKnockback;
     [SerializeField] float thrownImpactDur;
     [SerializeField] bool thrownInterrupt;
-
-
-    private bool hasCannister;
-
-
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
