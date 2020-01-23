@@ -521,7 +521,7 @@ public class UniverseController : BlankMono
         player.enabled = true;
         triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
-        player.gameObject.transform.position = new Vector3(0, 0.4f, 0);
+        player.gameObject.transform.position = Vector3.zero;
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)

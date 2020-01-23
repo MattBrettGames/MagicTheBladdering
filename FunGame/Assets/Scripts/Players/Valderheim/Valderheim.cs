@@ -194,6 +194,11 @@ public class Valderheim : PlayerBase
     {
         bonusSpeed = 0;
         base.Death(killer);
+        StopCoroutine(StopFrenzy());
+        dodgeDur -= 0.2f;
+        dodgeSpeed -= 5;
+        frenzy = false;
+        frenzyEffects.SetActive(false);
     }
 
     public override void LeaveCrack(Vector3 pos)
@@ -268,9 +273,9 @@ public class Valderheim : PlayerBase
 
         dodgeDur -= 0.2f;
         dodgeSpeed -= 5;
-
-        bonusSpeed -= frenzySpeedBuff;
         frenzy = false;
         frenzyEffects.SetActive(false);
+
+        bonusSpeed -= frenzySpeedBuff;
     }
 }

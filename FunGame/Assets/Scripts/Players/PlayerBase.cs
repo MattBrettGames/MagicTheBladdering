@@ -430,8 +430,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
         EndActing();
         anim.SetFloat("Movement", 0);
-        transform.localRotation = new Quaternion(0, 0, 0, 0);
-        visuals.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        //visuals.transform.eulerAngles = Vector3.zero;
     }
     protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); ExtraUpdate(); }
     public virtual void ExtraUpdate() { }
