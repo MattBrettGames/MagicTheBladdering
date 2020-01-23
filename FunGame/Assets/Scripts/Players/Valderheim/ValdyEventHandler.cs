@@ -14,7 +14,7 @@ public class ValdyEventHandler : BlankMono
     public void Vibration(float intensity, float dur) { valdy.ControllerRumble(intensity, dur); }
 
     public void BeginSlow() { valdy.BeginSlow(); }
-    public void EndSlow() { valdy.EndSlow(); }
+    public void EndSlow() { }// valdy.EndSlow(); }
 
     public void CreateCrack() { valdy.LeaveCrack(hammer.head.position); }
 

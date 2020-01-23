@@ -206,7 +206,6 @@ public class UniverseController : BlankMono
             GameObject p1 = selectedChars[0];
             p1.SetActive(true);
             PlayerBase playerCode = p1.GetComponent<PlayerBase>();
-            playerCode.enabled = true;
             playerCode.thisPlayer = "P1";
             p1.tag = "Player1";
             p1.transform.SetParent(GameObject.Find("CentreBase").transform);
@@ -232,7 +231,6 @@ public class UniverseController : BlankMono
             GameObject p2 = selectedChars[1];
             p2.SetActive(true);
             PlayerBase playerCode2 = p2.GetComponent<PlayerBase>();
-            playerCode2.enabled = true;
             playerCode2.thisPlayer = "P2";
             p2.tag = "Player2";
             p2.transform.parent = GameObject.Find("CentreBase").transform;
@@ -261,7 +259,6 @@ public class UniverseController : BlankMono
                 GameObject p3 = selectedChars[2];
                 p3.SetActive(true);
                 playerCode3 = p3.GetComponent<PlayerBase>();
-                playerCode3.enabled = true;
                 playerCode3.thisPlayer = "P3";
                 p3.tag = "Player3";
                 p3.transform.parent = GameObject.Find("CentreBase").transform;
@@ -292,7 +289,6 @@ public class UniverseController : BlankMono
                 GameObject p4 = selectedChars[3];
                 p4.SetActive(true);
                 playerCode4 = p4.GetComponent<PlayerBase>();
-                playerCode4.enabled = true;
                 playerCode4.thisPlayer = "P4";
                 p4.tag = "Player4";
                 p4.transform.parent = GameObject.Find("CentreBase").transform;
@@ -337,7 +333,7 @@ public class UniverseController : BlankMono
     IEnumerator DelayedStart(PlayerBase p1, PlayerBase p2, PlayerBase p3, PlayerBase p4)
     {
 
-        yield return new WaitForSecondsRealtime(4.3f);
+        yield return new WaitForSecondsRealtime(3.3f);
         p1.enabled = true;
         p2.enabled = true;
         p3.enabled = true;

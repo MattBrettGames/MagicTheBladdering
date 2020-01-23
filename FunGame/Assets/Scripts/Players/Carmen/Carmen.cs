@@ -62,6 +62,8 @@ public class Carmen : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
+        transform.position = new Vector3(transform.position.x, 0.4f, transform.position.z);
+
         switch (state)
         {
             case State.stun:

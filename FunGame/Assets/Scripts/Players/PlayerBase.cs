@@ -86,6 +86,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected string xSound;
     [SerializeField] protected string ySound;
     [SerializeField] protected string ouchSound;
+    [SerializeField] protected string deathSound;
 
     public virtual void Start()
     {
@@ -160,6 +161,8 @@ public abstract class PlayerBase : ThingThatCanDie
         aimTarget.position = transform.position + dir * 5;
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
+        transform.position = new Vector3(transform.position.x, 0.4f, transform.position.z);
 
         switch (state)
         {
@@ -382,6 +385,7 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             print("killer is null");
             universe.PlayerDeath(gameObject, null);
+            universe.PlaySound(deathSound);
         }
     }
     public virtual void KnockbackContinual()

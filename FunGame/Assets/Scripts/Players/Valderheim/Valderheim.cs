@@ -73,6 +73,7 @@ public class Valderheim : PlayerBase
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
+        transform.position = new Vector3(transform.position.x, 0.4f, transform.position.z);
 
         switch (state)
         {
@@ -185,9 +186,15 @@ public class Valderheim : PlayerBase
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
     public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
-    public void EndSlow() { bonusSpeed += ySpeedDebuff; }
+    public void EndSlow() { print("Ended Slow"); bonusSpeed += ySpeedDebuff; }
 
     private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
+
+    public override void Death(PlayerBase killer)
+    {
+        base.Death(killer);
+        bonusSpeed = 0;
+    }
 
     public override void LeaveCrack(Vector3 pos)
     {
