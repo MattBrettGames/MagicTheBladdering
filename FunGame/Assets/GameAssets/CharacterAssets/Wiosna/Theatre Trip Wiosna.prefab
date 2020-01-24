@@ -90,8 +90,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 35
-  dodgeSpeed: 300
+  dodgeSpeed: 500
   dodgeDur: 0.05
+  bonusSpeed: 0
   dir: {x: 0, y: 0, z: 0}
   damageMult: 1
   incomingMult: 1
@@ -105,7 +106,7 @@ MonoBehaviour:
   respawnEffects: {fileID: 7828602902415202222}
   hitEffects: {fileID: 3629938990238561978}
   aimTarget: {fileID: 0}
-  aCooldown: 3
+  aCooldown: 4
   bCooldown: 8
   xCooldown: 0.8
   yCooldown: 9
@@ -118,6 +119,7 @@ MonoBehaviour:
   xSound: WiosX
   ySound: WiosY
   ouchSound: WiosOuch
+  deathSound: 
   basicMelee: {fileID: 2127248274422558155}
   xDamage: 10
   xKnockback: 5

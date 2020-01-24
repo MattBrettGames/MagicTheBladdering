@@ -109,8 +109,9 @@ MonoBehaviour:
   numOfDeaths: 0
   pvp: 1
   speed: 35
-  dodgeSpeed: 300
+  dodgeSpeed: 500
   dodgeDur: 0.05
+  bonusSpeed: 0
   dir: {x: 0, y: 0, z: 0}
   damageMult: 1
   incomingMult: 1
@@ -124,7 +125,7 @@ MonoBehaviour:
   respawnEffects: {fileID: 5861957077375165391}
   hitEffects: {fileID: 3449728956758775188}
   aimTarget: {fileID: 0}
-  aCooldown: 3
+  aCooldown: 4
   bCooldown: 8
   xCooldown: 0.8
   yCooldown: 9
@@ -137,6 +138,7 @@ MonoBehaviour:
   xSound: WiosX
   ySound: WiosY
   ouchSound: WiosOuch
+  deathSound: 
   basicMelee: {fileID: 3148250441988357681}
   xDamage: 13
   xKnockback: 7
@@ -555,21 +557,6 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.86274517
       objectReference: {fileID: 0}
-    - target: {fileID: 7127593596350937692, guid: d232788264ebac44c97b97a99e04a877,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7127593596350937692, guid: d232788264ebac44c97b97a99e04a877,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.7843138
-      objectReference: {fileID: 0}
-    - target: {fileID: 7127593596350937692, guid: d232788264ebac44c97b97a99e04a877,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.86274517
-      objectReference: {fileID: 0}
     - target: {fileID: 6753715018780540968, guid: d232788264ebac44c97b97a99e04a877,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
@@ -596,6 +583,21 @@ PrefabInstance:
       value: 0.7843138
       objectReference: {fileID: 0}
     - target: {fileID: 8372759353991221445, guid: d232788264ebac44c97b97a99e04a877,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.86274517
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127593596350937692, guid: d232788264ebac44c97b97a99e04a877,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127593596350937692, guid: d232788264ebac44c97b97a99e04a877,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7843138
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127593596350937692, guid: d232788264ebac44c97b97a99e04a877,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.86274517
@@ -802,15 +804,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 467279912633589313, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 9028786311360747032, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467279912633589313, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8418277709593953252, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
         type: 3}
