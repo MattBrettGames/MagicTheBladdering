@@ -10,6 +10,7 @@ public class HUDController : BlankMono
     public GameObject healthBar;
     public GameObject barBorder;
     public Text characterName;
+    [SerializeField] Text healthText;
 
     [Header("Cooldowns")]
     public Image aBanner;
@@ -80,6 +81,7 @@ public class HUDController : BlankMono
     public void LateUpdate()
     {
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
+        healthText.text = targetPlayer.currentHealth + "/" + targetPlayer.healthMax;
 
         if (targetPlayer.aTimer <= 0)
         {
