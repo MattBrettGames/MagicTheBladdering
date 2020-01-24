@@ -44,7 +44,7 @@ public class FlamingWiosna : ThingThatCanDie
 
         if (player != null && player.tag != tag)
         {
-            player.TakeDamage(damage, Vector3.zero, 0, true, true, owner);
+            player.TakeDamage(damage, Vector3.zero, 0, true, false, owner); ;
             cloneBurst.transform.position = transform.position;
             cloneBurst.SetActive(true);
             Disappear();
