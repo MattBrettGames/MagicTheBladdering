@@ -317,7 +317,6 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
-            print("Taken " + damageInc + " damage");
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall(damageInc * 0.01f);
             hitEffects.SetActive(true);
