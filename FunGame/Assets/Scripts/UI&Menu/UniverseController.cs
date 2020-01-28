@@ -101,12 +101,16 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
+        numOfPlayers = 2;
+        /*
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
+        */
 
         if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
         if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
+
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP"); 
     }
@@ -357,6 +361,7 @@ public class UniverseController : BlankMono
         lockedInPlayers++;
         //gobject.transform.parent = gameObject.transform;
 
+        print(lockedInPlayers + " is the number of locked in players");
         if (lockedInPlayers == numOfPlayers)
         {
             GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("ArenaSelectorPVP");
