@@ -22,13 +22,18 @@ public class Cannister : BlankMono
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smoke));
         }
-        
-        Collider[] overlaps = Physics.OverlapSphere(transform.position, size);
+
+        Collider[] overlaps = Physics.OverlapSphere(transform.position, size + 1);
         if (overlaps.Length != 0)
         {
+            print(overlaps.Length + " is the number of things I hit, it was " + overlaps[0].name);
             for (int i = 0; i < overlaps.Length; i++)
             {
-                overlaps[i].GetComponent<ThingThatCanDie>().TakeDamage(damage, Vector3.zero, 0, true, interrupt, owner);
+                ThingThatCanDie thing = overlaps[i].GetComponent<ThingThatCanDie>();
+                if (thing != null)
+                {
+                    thing.TakeDamage(damage, Vector3.zero, 0, true, interrupt, owner);
+                }
             }
         }
 
