@@ -28,7 +28,9 @@ public class TriObjectiveCamera : MonoBehaviour
 
     public void LateUpdate()
     {
-        transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z);
+        //transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z);
+
+        Vector3.SmoothDamp(transform.position, new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), ref velocity, Time.deltaTime);
 
         blank.transform.LookAt(boundBox.center + lookatOffset + (new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * camShake));
         blank.transform.position = transform.position;
