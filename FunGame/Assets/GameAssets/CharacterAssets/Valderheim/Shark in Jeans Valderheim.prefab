@@ -352,6 +352,7 @@ MonoBehaviour:
   speed: 30
   dodgeSpeed: 10
   dodgeDur: 0.4
+  bonusSpeed: 0
   dir: {x: 0, y: 0, z: 0}
   damageMult: 1
   incomingMult: 1.2
@@ -583,6 +584,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -21.08392
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -48.973793
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 43.43192
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -21.691275
@@ -618,18 +631,6 @@ PrefabInstance:
     - target: {fileID: 400078, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -35.972855
-      objectReference: {fileID: 0}
-    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -21.08392
-      objectReference: {fileID: 0}
-    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -48.973793
-      objectReference: {fileID: 0}
-    - target: {fileID: 400010, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 43.43192
       objectReference: {fileID: 0}
     - target: {fileID: 400058, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -890,6 +891,26 @@ PrefabInstance:
     - target: {fileID: 400180, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -179.5494
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_Name
+      value: Character1_LeftHandIndex
+      objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_Name
+      value: Character1_LeftHandMiddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 100028, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_Name
+      value: Character1_LeftHandPinky
+      objectReference: {fileID: 0}
+    - target: {fileID: 100036, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_Name
+      value: Character1_LeftHandRing
+      objectReference: {fileID: 0}
+    - target: {fileID: 100044, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
+      propertyPath: m_Name
+      value: Character1_LeftHandThumb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 052efdf33af84ff4e93c635e06e7816b, type: 3}
