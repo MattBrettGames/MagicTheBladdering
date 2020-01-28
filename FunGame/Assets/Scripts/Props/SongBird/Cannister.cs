@@ -30,7 +30,7 @@ public class Cannister : BlankMono
             for (int i = 0; i < overlaps.Length; i++)
             {
                 ThingThatCanDie thing = overlaps[i].GetComponent<ThingThatCanDie>();
-                if (thing != null)
+                if (thing != null && thing.tag != tag)
                 {
                     thing.TakeDamage(damage, Vector3.zero, 0, true, interrupt, owner);
                 }
