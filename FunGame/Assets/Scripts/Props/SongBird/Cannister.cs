@@ -23,6 +23,13 @@ public class Cannister : BlankMono
         {
             StartCoroutine(smokeGrowth(i * 0.01f, smoke));
         }
+
+        Collider[] overlaps = Physics.OverlapSphere(transform.position, size);
+        for (int i = 0; i < overlaps.Length; i++)
+        {
+            overlaps[i].GetComponent<ThingThatCanDie>().TakeDamage(damage, Vector3.zero, 0, true, true, owner);
+        }
+
         parts.SetActive(true);
         Invoke("Vanish", 0.5f);
     }
