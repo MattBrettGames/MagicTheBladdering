@@ -156,7 +156,7 @@ public class Carmen : PlayerBase
                 break;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if (thisPlayer == "P2")
             {
