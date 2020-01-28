@@ -95,6 +95,8 @@ public class UniverseController : BlankMono
                 ReturnToMenu();
             }
         }
+
+
     }
 
     public void SelectedPlay()
@@ -103,12 +105,14 @@ public class UniverseController : BlankMono
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
 
-        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP");
+        if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
+        if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
+
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP"); 
     }
 
     public void SelectedBios() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("Bios"); }
     public void SelectedOptions() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("OptionsMenu"); }
-    // public void SelectedAdventure() { SceneManager.LoadScene("2CharacterSelectorPvE"); numOfPlayers = 2; playersAlive.Add(GameObject.FindGameObjectWithTag("Player1")); playersAlive.Add(GameObject.FindGameObjectWithTag("Player2")); }
     public void Restart() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu"); }
 
     private void OnLevelWasLoaded(int level)
