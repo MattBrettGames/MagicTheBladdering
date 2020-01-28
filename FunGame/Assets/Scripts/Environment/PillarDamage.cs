@@ -18,6 +18,7 @@ public class PillarDamage : ThingThatCanDie
 
     public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
     {
+        print("Taken " + damageInc + " damage");
         dir = dirTemp;
         if (damageInc >= 15)
         {
