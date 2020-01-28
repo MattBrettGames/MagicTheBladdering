@@ -95,6 +95,8 @@ public class UniverseController : BlankMono
                 ReturnToMenu();
             }
         }
+
+
     }
 
     public void SelectedPlay()
@@ -103,7 +105,10 @@ public class UniverseController : BlankMono
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
 
-        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP");
+        if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
+        if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
+
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP"); 
     }
 
     public void SelectedBios() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("Bios"); }
