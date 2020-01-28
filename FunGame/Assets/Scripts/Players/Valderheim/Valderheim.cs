@@ -32,6 +32,8 @@ public class Valderheim : PlayerBase
     public int frenzySpeedBuff;
     private bool frenzy;
     public GameObject frenzyEffects;
+    float dodgeDurDefault;
+    float dodgeSpeedDefault;
 
     [Header("Passives")]
     [SerializeField] private float comboTimeDur;
@@ -46,6 +48,8 @@ public class Valderheim : PlayerBase
     {
         base.Start();
         hammer.gameObject.tag = tag;
+        dodgeDurDefault = dodgeDur;
+        dodgeSpeedDefault = dodgeSpeed;
     }
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -199,6 +203,13 @@ public class Valderheim : PlayerBase
         dodgeSpeed -= 5;
         frenzy = false;
         frenzyEffects.SetActive(false);
+    }
+    public override void Respawn()
+    {
+        base.Respawn();
+        bonusSpeed = 0;
+        dodgeDur = dodgeDurDefault;
+        dodgeSpeed = dodgeSpeedDefault;
     }
 
     public override void LeaveCrack(Vector3 pos)

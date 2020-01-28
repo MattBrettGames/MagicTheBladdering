@@ -184,9 +184,9 @@ public abstract class PlayerBase : ThingThatCanDie
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
+                    if (player.GetButtonDown("BAttack")) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack") || Input.GetKeyDown(KeyCode.Y)) { YAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
 
                     anim.SetFloat("Movement", (Mathf.Abs(dir.normalized.x) + Mathf.Abs(dir.normalized.z)) * 0.5f);
                 }
@@ -317,6 +317,7 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
+            print("Taken " + damageInc + " damage");
             ControllerRumble(0.2f, 0.1f);
             universe.CameraRumbleCall(damageInc * 0.01f);
             hitEffects.SetActive(true);
