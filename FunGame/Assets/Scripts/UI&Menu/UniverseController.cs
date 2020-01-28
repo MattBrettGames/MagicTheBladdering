@@ -113,7 +113,6 @@ public class UniverseController : BlankMono
 
     private void OnLevelWasLoaded(int level)
     {
-
         StartCoroutine(NewLevelLoad(level));
     }
     IEnumerator NewLevelLoad(int level)
@@ -420,7 +419,7 @@ public class UniverseController : BlankMono
         if (numOfPlayers == 2)
         {
 
-            PlayerBase playerCode = player.GetComponent<PlayerBase>();            
+            PlayerBase playerCode = player.GetComponent<PlayerBase>();
             player.GetComponent<Rigidbody>().isKinematic = true;
 
             // dualCamCode.Death(playerCode.playerID);
