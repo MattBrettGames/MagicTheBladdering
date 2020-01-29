@@ -361,7 +361,6 @@ public class UniverseController : BlankMono
         lockedInPlayers++;
         //gobject.transform.parent = gameObject.transform;
 
-        print(lockedInPlayers + " is the number of locked in players");
         if (lockedInPlayers == numOfPlayers)
         {
             GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("ArenaSelectorPVP");

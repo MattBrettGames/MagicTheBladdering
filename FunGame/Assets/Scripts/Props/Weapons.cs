@@ -25,6 +25,7 @@ public class Weapons : BlankMono
         ownerTrue = owner;
         stopAttackTrue = stopAttack;
         head = trails.transform;
+        tag = owner.tag;
     }
 
     private void Start()
@@ -50,7 +51,10 @@ public class Weapons : BlankMono
     public virtual void OnTriggerEnter(Collider other)
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-        player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue);
-        ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+        if (other.tag != tag)
+        {
+            player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue);
+            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+        }
     }
 }
