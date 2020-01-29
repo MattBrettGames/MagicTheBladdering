@@ -26,7 +26,7 @@ public class FlamingWiosna : ThingThatCanDie
         looker.transform.LookAt(target.position - new Vector3(0, 5, 0));
         looker.transform.position = transform.position;
 
-        transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed);
+        transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed * Time.deltaTime);
 
         transform.position += transform.forward.normalized * speed * Time.deltaTime;
 
@@ -40,14 +40,13 @@ public class FlamingWiosna : ThingThatCanDie
     void OnTriggerEnter(Collider other)
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-        print(player.name + "|" + player.tag + "|" + tag);
 
-        if (player != null && player.tag != tag)
+        if (player != null && other.tag != tag)
         {
+            Disappear();
             player.TakeDamage(damage, Vector3.zero, 0, true, false, owner); ;
             cloneBurst.transform.position = transform.position;
             cloneBurst.SetActive(true);
-            Disappear();
         }
     }
 
@@ -62,11 +61,13 @@ public class FlamingWiosna : ThingThatCanDie
 
     void Disappear()
     {
+        print("Clone has been destoryed");
         gameObject.SetActive(false);
     }
 
     public void AwakenClone(Transform targetTemp)
     {
+        transform.forward = owner.visuals.transform.forward;
         remainingTime = lifeSpan;
         cloneBurst.SetActive(false);
         target = targetTemp;
@@ -80,6 +81,7 @@ public class FlamingWiosna : ThingThatCanDie
         gameObject.tag = newTag;
         cloneBurst = cloneExplosion;
         owner = ownerTemp;
+        tag = owner.tag;
 
         if (id == "P1") { activeMaterial = mat0; }
         else if (id == "P2") { activeMaterial = mat1; }

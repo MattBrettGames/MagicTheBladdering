@@ -24,7 +24,6 @@ public class WiosnaExplosions : MonoBehaviour
         gameObject.tag = owner.tag;
 
        // scaleChange = (damage + remaining) * 0.1f;
-        print(scaleChange);
 
         ownerTrue = owner;
         damageFull = damage;
@@ -72,7 +71,6 @@ public class WiosnaExplosions : MonoBehaviour
     
     public virtual void OnTriggerEnter(Collider other)
     {
-            print(other.name + " is the thing I hit");
         if (other.tag != tag || other.tag == "Untagged")
         {
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
