@@ -565,7 +565,7 @@ public class UniverseController : BlankMono
 
     public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
-        // dualCamCode = duoCam;
+        dualCamCode = duoCam;
        // triCamCode = triCam;
     }
 
