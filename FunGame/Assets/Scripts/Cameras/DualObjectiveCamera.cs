@@ -21,7 +21,7 @@ public class DualObjectiveCamera : MonoBehaviour
     public virtual void Start()
     {
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
-        universe.GetCam(this, GetComponent<TriObjectiveCamera>());
+        universe.GetCam(this, null);
         bothPlayersAlive = true;
     }
 

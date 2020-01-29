@@ -20,7 +20,7 @@ public class UniverseController : BlankMono
     public CharacterSelector charSelector4;
     public AnalyticsController analytics;
     public Player player;
-    //DualObjectiveCamera dualCamCode;
+    DualObjectiveCamera dualCamCode;
     TriObjectiveCamera triCamCode;
     AudioManager audioManager;
 
@@ -190,9 +190,9 @@ public class UniverseController : BlankMono
                 triCamCode.enabled = false;
             }
             else
-            {*/
-            // dualCamCode.enabled = false;
-            // }
+            {
+             dualCamCode.enabled = false;
+             }
 
             triCamCode.enabled = true;
 
@@ -206,7 +206,7 @@ public class UniverseController : BlankMono
             {
                 triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
             }
-
+            */
             PlayerBase[] playerBases = new PlayerBase[4];
 
             #region Player 1
@@ -467,10 +467,10 @@ public class UniverseController : BlankMono
                     winner = player.name;
                     print(winner + " is the winner");
                 }
-
+                /*
                 triCamCode.enabled = true;
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-
+                */
                 RemovePlayerFromTargets(playerCode.playerID - 1);
 
             }
@@ -511,10 +511,10 @@ public class UniverseController : BlankMono
                     winner = player.name;
                     Invoke("EndGame", 4);
                 }
-
+                /*
                 triCamCode.enabled = true;
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-
+                */
                 RemovePlayerFromTargets(playerCode.playerID + 1);
             }
         }
@@ -525,7 +525,7 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForSeconds(respawnTimer);
         player.enabled = true;
-        triCamCode.AddTarget(playerInt + 1);
+       // triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
         player.gameObject.transform.position = Vector3.zero;
     }
@@ -566,7 +566,7 @@ public class UniverseController : BlankMono
     public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
         // dualCamCode = duoCam;
-        triCamCode = triCam;
+       // triCamCode = triCam;
     }
 
     IEnumerator DelayedVictory()
@@ -580,7 +580,7 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CameraRumbleCall(float degree) { triCamCode.CamShake(degree); }
+    public void CameraRumbleCall(float degree) { dualCamCode.CamShake(degree); }
 
     public void PlaySound(string clip) { audioManager.Play(clip); }
 
