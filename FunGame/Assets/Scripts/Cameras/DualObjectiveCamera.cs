@@ -80,10 +80,11 @@ public class DualObjectiveCamera : MonoBehaviour
     public void CamShake(float dur)
     {
         rumble = true;
-        Invoke("EndRumble", dur);
+        StartCoroutine(EndRumble(dur));
     }
-    void EndRumble()
+    IEnumerator EndRumble(float dur)
     {
+        yield return new WaitForSecondsRealtime(dur);
         rumble = false;
     }
 

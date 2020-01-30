@@ -319,7 +319,7 @@ public abstract class PlayerBase : ThingThatCanDie
         if (!iFrames && !trueIFrames)
         {
             ControllerRumble(0.2f, 0.1f);
-            universe.CameraRumbleCall(damageInc * 0.01f);
+            universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             hitEffects.SetActive(true);
             if (fromAttack)
             {
