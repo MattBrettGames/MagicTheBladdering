@@ -68,6 +68,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform currentLockTran;
     protected bool onCooldown;
+    bool dead;
 
     [Header("Cooldowns")]
     public float aCooldown;
@@ -362,6 +363,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public virtual void Death(PlayerBase killer)
     {
         enabled = false;
+        dead = true;
 
         GainIFrames();
         respawnEffects.SetActive(false);
@@ -425,6 +427,7 @@ public abstract class PlayerBase : ThingThatCanDie
         damageMult = 1;
         incomingMult = 1;
         rb2d.isKinematic = false;
+        dead = false;
 
         respawnEffects.SetActive(true);
 
@@ -432,7 +435,18 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.SetFloat("Movement", 0);
         //visuals.transform.eulerAngles = Vector3.zero;
     }
-    protected IEnumerator PoisonTick() { yield return new WaitForSeconds(secsBetweenTicks); if (poison && !trueIFrames) { currentHealth -= poisonPerTick; ControllerRumble(0.1f, 0.05f); } StartCoroutine(PoisonTick()); ExtraUpdate(); }
+    protected IEnumerator PoisonTick()
+    {
+        yield return new WaitForSeconds(secsBetweenTicks);
+        if (poison && !trueIFrames && currentHealth > 1)
+        {
+            currentHealth -= poisonPerTick;
+            ControllerRumble(0.1f, 0.05f);
+        }
+        StartCoroutine(PoisonTick());
+        ExtraUpdate();
+        if (currentHealth < 1 && !dead) currentHealth = 1;
+    }
     public virtual void ExtraUpdate() { }
 
     public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
