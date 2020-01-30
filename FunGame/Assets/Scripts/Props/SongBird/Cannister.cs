@@ -23,6 +23,7 @@ public class Cannister : BlankMono
             StartCoroutine(smokeGrowth(i * 0.01f, smoke));
         }
 
+
         Collider[] overlaps = Physics.OverlapSphere(transform.position, size + 1);
         if (overlaps.Length != 0)
         {
@@ -35,13 +36,16 @@ public class Cannister : BlankMono
                     thing.TakeDamage(damage, Vector3.zero, 0, true, interrupt, owner);
                 }
             }
-        }
 
+        }
         parts.SetActive(true);
         Invoke("Vanish", 0.5f);
     }
 
-    void Vanish() { gameObject.SetActive(false); }
+    void Vanish() 
+    {
+        gameObject.SetActive(false); 
+    }
 
     private IEnumerator smokeGrowth(float time, GameObject smokecloud)
     {

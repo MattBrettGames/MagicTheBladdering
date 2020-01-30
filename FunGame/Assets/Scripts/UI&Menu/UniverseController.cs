@@ -112,7 +112,7 @@ public class UniverseController : BlankMono
         if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
 
 
-        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP"); 
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP");
     }
 
     public void SelectedBios() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("Bios"); }
@@ -125,7 +125,6 @@ public class UniverseController : BlankMono
     }
     IEnumerator NewLevelLoad(int level)
     {
-
         yield return new WaitForEndOfFrame();
 
         livingPlayers = numOfPlayers;
@@ -339,14 +338,12 @@ public class UniverseController : BlankMono
 
     IEnumerator DelayedStart(PlayerBase p1, PlayerBase p2, PlayerBase p3, PlayerBase p4)
     {
-
         yield return new WaitForSecondsRealtime(3.3f);
         p1.enabled = true;
         p2.enabled = true;
         p3.enabled = true;
         p4.enabled = true;
     }
-
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
     {
@@ -525,7 +522,7 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForSeconds(respawnTimer);
         player.enabled = true;
-       // triCamCode.AddTarget(playerInt + 1);
+        // triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
         player.gameObject.transform.position = Vector3.zero;
     }
@@ -566,7 +563,7 @@ public class UniverseController : BlankMono
     public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
         dualCamCode = duoCam;
-       // triCamCode = triCam;
+        // triCamCode = triCam;
     }
 
     IEnumerator DelayedVictory()
