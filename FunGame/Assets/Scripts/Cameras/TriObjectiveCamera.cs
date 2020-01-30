@@ -26,7 +26,7 @@ public class TriObjectiveCamera : MonoBehaviour
         universe.GetCam(null, this);
     }
 
-    public void LateUpdate()
+    public void Update()
     {
         transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z);
 
