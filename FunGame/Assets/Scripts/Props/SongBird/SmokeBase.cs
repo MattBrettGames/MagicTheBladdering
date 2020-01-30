@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SmokeBase : MonoBehaviour
 {
@@ -9,8 +10,16 @@ public class SmokeBase : MonoBehaviour
     int forceTrue;
     bool stopAttack;
 
-    virtual public void Begin(int damage, int force, float size, float time, PlayerBase ownerTemp, string tagtemp, float impactDur, bool stopAttackTemp)
+    virtual public void Begin(int damage, int force, float size, float time, PlayerBase ownerTemp, string tagtemp, float impactDur, bool stopAttackTemp, Color playerColour)
     {
+        ParticleSystem[] parts = GetComponentsInChildren<ParticleSystem>(true);
+
+        for (int i = 0; i < parts.Length; i++)
+        {
+            print(parts[i].name + " has had it's colour changed to " + playerColour);
+            parts[i].startColor = playerColour;
+        }
+
         CancelInvoke();
         StopAllCoroutines();
         tag = tagtemp;

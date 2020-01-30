@@ -14,6 +14,7 @@ public class SongBird : PlayerBase
     private GameObject smokeCloudCannister;
     private GameObject smokeCloudDodge;
     private GameObject cannister;
+    [SerializeField] Color playerColour;
 
     [Header("Dagger Swipe")]
     public int baseXDamage;
@@ -103,7 +104,7 @@ public class SongBird : PlayerBase
         else
         {
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this, cannisterImpactDur, cannisterInterrupt);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
             hasCannister = true;
             universe.PlaySound(bSoundBonus);
         }
@@ -122,7 +123,7 @@ public class SongBird : PlayerBase
             smokeCloudDodge.transform.localScale = Vector3.zero;
             smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
             smokeCloudDodge.SetActive(true);
-            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt);
+            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
 
             for (int i = 0; i < dodgeCloudSize; i++)
             {
@@ -145,7 +146,7 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale = Vector3.zero;
         smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
         smokeCloud.SetActive(true);
-        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt);
+        smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt, playerColour);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
