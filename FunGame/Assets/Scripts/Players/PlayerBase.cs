@@ -188,7 +188,7 @@ public abstract class PlayerBase : ThingThatCanDie
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                    anim.SetFloat("Movement", ((Mathf.Abs(dir.normalized.x) + Mathf.Abs(dir.normalized.z)) * 0.5f) + 0.025f);
+                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
                 }
                 else
                 {

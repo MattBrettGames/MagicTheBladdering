@@ -99,8 +99,7 @@ public class Valderheim : PlayerBase
                     if (player.GetButtonDown("AAction")) { AAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
-
-                    anim.SetFloat("Movement", ((Mathf.Abs(dir.normalized.x) + Mathf.Abs(dir.normalized.z)) * 0.5f) + 0.025f);
+                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
                 }
                 else
                 {
@@ -143,7 +142,7 @@ public class Valderheim : PlayerBase
             case State.knockback:
                 KnockbackContinual();
                 break;
-        }        
+        }
     }
 
     public override void XAction()
@@ -251,7 +250,7 @@ public class Valderheim : PlayerBase
         crack2.SetActive(true);
         StartCoroutine(EndCrack(crack2));
     }
-    
+
     public override void BAction()
     {
         if (!frenzy && bTimer <= 0)
@@ -261,7 +260,7 @@ public class Valderheim : PlayerBase
             //LeaveCrack(transform.position, true);
             StartCoroutine(StopFrenzy());
             anim.SetTrigger("BAttack");
-            
+
             bonusSpeed += frenzySpeedBuff;
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
