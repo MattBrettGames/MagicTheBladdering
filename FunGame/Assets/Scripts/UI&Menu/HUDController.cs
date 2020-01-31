@@ -102,8 +102,7 @@ public class HUDController : BlankMono
     public void UsedB() { bReady = true; }
     public void UsedX() { xReady = true; }
     public void UsedY() { yReady = true; }
-
-
+    
     public void Update()
     {
         healthBar.transform.localScale = Vector3.Lerp(healthBar.transform.localScale, new Vector3(targetPlayer.currentHealth / 50f, 0.2f, 1), 0.3f);
