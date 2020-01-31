@@ -19,6 +19,8 @@ public class FireJetHandler : MonoBehaviour
     [SerializeField]
     private int maxActive = 3;   //max no active at once.
 
+    [SerializeField]
+    private int maxToActivate = 5;
     public int currentActive = 0;
 
     void Start()
@@ -37,20 +39,27 @@ public class FireJetHandler : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(minTime, maxTime));
-           
-            foreach(GameObject go in JetObj)
+            int currentactivating = 0;
+            int toActivate = Random.Range(1, maxToActivate + 1);
+
+            toActivate -= currentActive;
+            if (currentActive != maxActive)
             {
-                FireJet fj = go.GetComponent<FireJet>();
-                if (!fj.isActive && currentActive < maxActive)
+                while (currentactivating < toActivate)
                 {
-                    fj.setActive(Random.Range(minDuration, maxDuration));
-                    currentActive += 1;
-                    break;
+                    GameObject go = JetObj[Random.Range(0, JetObj.Count)];
+                    FireJet fj = go.GetComponent<FireJet>();
+                    if (!fj.isActive && currentActive < maxActive)
+                    {
+                        currentactivating += 1;
+                        fj.setActive(Random.Range(minDuration, maxDuration));
+                        currentActive += 1;
+                    }
                 }
-                yield return null;
             }
+            currentactivating = 0;
         }
-    }
-
-
+            
+        }
+            
 }
