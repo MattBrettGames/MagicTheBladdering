@@ -73,7 +73,6 @@ public class CharacterSelector : BlankMono
         while (currentChar == otherChar1.currentChar && thisPInt != 0)
         {
             currentChar = UnityEngine.Random.Range(0, characters.Count);
-            print(currentChar + " is the currentChar");
         }
 
         UpdateDisplay();

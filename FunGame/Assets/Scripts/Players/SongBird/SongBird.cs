@@ -70,6 +70,8 @@ public class SongBird : PlayerBase
     {
         if (xTimer <= 0)
         {
+            base.XAction();
+
             anim.SetTrigger("XAttack");
             weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
@@ -81,6 +83,8 @@ public class SongBird : PlayerBase
     {
         if (yTimer <= 0)
         {
+            base.YAction();
+
             anim.SetTrigger("YAction");
             yTimer = yCooldown;
             universe.PlaySound(ySound);
@@ -93,6 +97,8 @@ public class SongBird : PlayerBase
         {
             if (bTimer <= 0)
             {
+                base.BAction();
+
                 cannister.transform.position = transform.position;
                 cannister.SetActive(true);
                 hasCannister = false;
@@ -114,6 +120,8 @@ public class SongBird : PlayerBase
     {
         if (aTimer <= 0 && dir != Vector3.zero)
         {
+            base.AAction();
+
             anim.SetTrigger("AAction");
             state = State.dodging;
 

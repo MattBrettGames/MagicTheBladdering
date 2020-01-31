@@ -60,6 +60,8 @@ public class Wiosna : PlayerBase
     {
         if (xTimer <= 0)
         {
+            base.XAction();
+
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
@@ -71,6 +73,8 @@ public class Wiosna : PlayerBase
     {
         if (aTimer <= 0)
         {
+            base.AAction();
+
             int thisLayer;
             if (playerID == 0)
             {
@@ -111,6 +115,8 @@ public class Wiosna : PlayerBase
     {
         if (yTimer <= 0)
         {
+            base.YAction();
+
             anim.SetTrigger("YAttack");
 
             blast1.transform.position = gameObject.transform.position;
@@ -126,6 +132,8 @@ public class Wiosna : PlayerBase
     {
         if (bTimer <= 0)
         {
+            base.BAction();
+
             flamingClone.transform.position = transform.position;
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
             flamingClone.SetActive(true);

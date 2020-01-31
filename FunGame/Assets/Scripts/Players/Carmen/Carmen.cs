@@ -85,7 +85,7 @@ public class Carmen : PlayerBase
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
@@ -182,6 +182,8 @@ public class Carmen : PlayerBase
     {
         if (xTimer <= 0)
         {
+            base.XAction();
+
             anim.SetTrigger("XAttack");
             spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false);
             state = State.dodging;
@@ -196,6 +198,8 @@ public class Carmen : PlayerBase
     {
         if (yTimer <= 0)
         {
+            base.YAction();
+
             enemyVisual = lockTargetList[currentLock].parent.GetComponentInChildren<Animator>().gameObject;
             float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
             anim.SetTrigger("YAttack");
@@ -229,9 +233,11 @@ public class Carmen : PlayerBase
     }
 
     public override void BAction()
-    {
+    {       
         if (bTimer <= 0)
         {
+            base.BAction();
+
             grapplingTrap.gameObject.transform.position = transform.position + new Vector3(0, 5, 0);
             grapplingTrap.transform.eulerAngles = transform.forward;
 

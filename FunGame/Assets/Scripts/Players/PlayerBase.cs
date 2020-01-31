@@ -60,7 +60,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected Player player;
     protected Transform walkDirection;
     protected UniverseController universe;
-
+    HUDController HUD;
 
     //{Header("Lockon Mechanics")]
     protected int currentLock;
@@ -99,6 +99,7 @@ public abstract class PlayerBase : ThingThatCanDie
         //StartCoroutine(PoisonTick());
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
+        HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
     }
 
     public virtual void SetInfo(UniverseController uni, int layerNew)
@@ -185,7 +186,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                     //Standard Inputs
                     if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
+                    if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
 
@@ -293,6 +294,8 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (aTimer <= 0 && dir != Vector3.zero)
         {
+            HUD.UsedA();
+
             anim.SetTrigger("AAction");
 
             state = State.dodging;
@@ -308,9 +311,18 @@ public abstract class PlayerBase : ThingThatCanDie
         aTimer = aCooldown;
     }
 
-    public virtual void BAction() { }
-    public virtual void XAction() { }
-    public virtual void YAction() { }
+    public virtual void BAction()
+    {
+        HUD.UsedB();
+    }
+    public virtual void XAction()
+    {
+        HUD.UsedX();
+    }
+    public virtual void YAction()
+    {
+       HUD.UsedY();
+    }
     #endregion
 
     #region Common Events
@@ -421,6 +433,12 @@ public abstract class PlayerBase : ThingThatCanDie
         poison = false;
         gameObject.SetActive(true);
         LoseIFrames();
+
+        aTimer = 0;
+        bTimer = 0;
+        xTimer = 0;
+        yTimer = 0;
+
         GainTrueFrames();
         StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");

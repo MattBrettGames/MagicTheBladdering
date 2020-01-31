@@ -23,9 +23,13 @@ public class HUDController : BlankMono
     Text yBannerText;
     [Space]
     [SerializeField] GameObject aParticle;
+    bool aReady;
     [SerializeField] GameObject bParticle;
+    bool bReady;
     [SerializeField] GameObject xParticle;
+    bool xReady;
     [SerializeField] GameObject yParticle;
+    bool yReady;
 
     [Header("Misc Stuff")]
     public GameObject playerBase;
@@ -77,12 +81,28 @@ public class HUDController : BlankMono
         {
             skulls[i].SetActive(false);
         }
+
+        Invoke("ProperStartup", 3.3f);
+    }
+
+    void ProperStartup()
+    {
+        aReady = true;
+        bReady = true;
+        xReady = true;
+        yReady = true;
     }
 
     public void PlayerDeath()
     {
         skulls[targetPlayer.numOfDeaths].SetActive(true);
     }
+
+    public void UsedA() { aReady = true; }
+    public void UsedB() { bReady = true; }
+    public void UsedX() { xReady = true; }
+    public void UsedY() { yReady = true; }
+
 
     public void Update()
     {
@@ -151,44 +171,48 @@ public class HUDController : BlankMono
     #region Particle Bursts
     void TriggerABurst()
     {
-        if (aParticle.activeInHierarchy)
+        if (aReady)
         {
             aParticle.SetActive(false);
             aParticle.transform.parent = targetPlayer.transform;
             aParticle.transform.localPosition = Vector3.zero;
             aParticle.SetActive(true);
+            aReady = false;
         }
     }
 
     void TriggerBBurst()
     {
-        if (bParticle.activeInHierarchy)
+        if (bReady)
         {
             bParticle.SetActive(false);
             bParticle.transform.parent = targetPlayer.transform;
             bParticle.transform.localPosition = Vector3.zero;
             bParticle.SetActive(true);
+            bReady = false;
         }
     }
 
     void TriggerXBurst()
     {
-        if (xParticle.activeInHierarchy)
+        if (xReady)
         {
             xParticle.SetActive(false);
             xParticle.transform.parent = targetPlayer.transform;
             xParticle.transform.localPosition = Vector3.zero;
             xParticle.SetActive(true);
+            xReady = false;
         }
     }
     void TriggerYBurst()
     {
-        if (yParticle.activeInHierarchy)
+        if (yReady)
         {
             yParticle.SetActive(false);
             yParticle.transform.parent = targetPlayer.transform;
             yParticle.transform.localPosition = Vector3.zero;
             yParticle.SetActive(true);
+            yReady = false;
         }
     }
     #endregion

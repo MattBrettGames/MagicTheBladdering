@@ -16,7 +16,6 @@ public class SmokeBase : MonoBehaviour
 
         for (int i = 0; i < parts.Length; i++)
         {
-            print(parts[i].name + " has had it's colour changed to " + playerColour);
             parts[i].startColor = playerColour;
         }
 
