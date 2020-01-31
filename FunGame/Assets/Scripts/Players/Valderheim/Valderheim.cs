@@ -64,7 +64,7 @@ public class Valderheim : PlayerBase
 
     public override void Update()
     {
-        if (player.GetButtonDown("BAttack")) { BAction(); }
+        if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
 
         if (aTimer > 0) aTimer -= Time.deltaTime;
         if (bTimer > 0) bTimer -= Time.deltaTime;
@@ -151,6 +151,8 @@ public class Valderheim : PlayerBase
         {
             if (xTimer <= 0)
             {
+                base.XAction();
+
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
@@ -178,6 +180,8 @@ public class Valderheim : PlayerBase
         {
             if (yTimer <= 0)
             {
+                base.YAction();
+
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
@@ -255,6 +259,7 @@ public class Valderheim : PlayerBase
     {
         if (!frenzy && bTimer <= 0)
         {
+            base.BAction();
 
             StopCoroutine(EndCrack(crack2));
             //LeaveCrack(transform.position, true);
