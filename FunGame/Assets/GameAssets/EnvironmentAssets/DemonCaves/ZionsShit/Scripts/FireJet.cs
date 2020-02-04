@@ -12,8 +12,6 @@ public class FireJet : MonoBehaviour
 
     public FireJetHandler fjh;
 
-    [SerializeField]
-    private GameObject lightSource;
 
     //[System.NonSerialized]
     public  bool isActive;
@@ -35,27 +33,26 @@ public class FireJet : MonoBehaviour
         //make emission fade in first;
         anim.SetBool("FadeIn", true);
 
-        lightSource.SetActive(true);
-
         yield return new WaitForSeconds(1f);
 
-        anim.SetBool("FadeIn", false);
+        
         //activate all visuals etc.
-        collisionBox.SetActive(true);
-        particleSystem.Play();
-        yield return new WaitForSeconds(duration - 1);
-        particleSystem.Stop();
-        collisionBox.SetActive(false);
+       // collisionBox.SetActive(true);
+       // particleSystem.Play();
+        yield return new WaitForSeconds(duration - 1f);
+        // particleSystem.Stop();
+        // collisionBox.SetActive(false);
+        anim.SetBool("FadeIn", false);
         anim.SetBool("FadeOut", true);
+        Debug.Log("stopFire");
+
         yield return new WaitForSeconds(1f);
         anim.SetBool("FadeOut", false);
 
-        Debug.Log("stopFire");
+       
 
         isActive = false;
         //set emission to fade
-
-        lightSource.SetActive(false);
 
         fjh.SetInactive();
         
