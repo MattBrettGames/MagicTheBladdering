@@ -18,6 +18,16 @@ public class KillHazard : BlankMono
 
     void OnCollisionEnter(Collision other)
     {
+        DealDamage(other.gameObject);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        DealDamage(other.gameObject);
+    }
+
+    void DealDamage(GameObject other)
+    {
         if (other.transform.tag != "Zone")
         {
             if (other.gameObject.GetComponent<PlayerBase>() != null)
@@ -37,7 +47,9 @@ public class KillHazard : BlankMono
                 }
             }
         }
+
     }
+
 
     IEnumerator EndPass(int otherLayer)
     {
