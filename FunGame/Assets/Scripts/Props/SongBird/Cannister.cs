@@ -9,11 +9,6 @@ public class Cannister : BlankMono
     public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner, float impactDur, bool interrupt, Color playerColour)
     {
         smoke.SetActive(true);
-        for (int i = 0; i < size; i++)
-        {
-            StartCoroutine(smokeGrowth(i * 0.01f, smoke));
-        }
-
         parts.SetActive(false);
 
         smoke.transform.position = transform.position;
@@ -22,13 +17,17 @@ public class Cannister : BlankMono
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
         smoke1.Begin(damage, knockback, size, time, owner, tag, impactDur, interrupt, playerColour);
-        
-        parts.SetActive(true);
-        Vanish();
+
+        for (int i = 0; i < size; i++)
+        {
+            StartCoroutine(smokeGrowth(i * 0.01f, smoke));
+        }
+
 
         Collider[] overlaps = Physics.OverlapSphere(transform.position, size + 1);
         if (overlaps.Length != 0)
         {
+            print(overlaps.Length + " is the number of things I hit, it was " + overlaps[0].name);
             for (int i = 0; i < overlaps.Length; i++)
             {
                 ThingThatCanDie thing = overlaps[i].GetComponent<ThingThatCanDie>();
@@ -39,6 +38,8 @@ public class Cannister : BlankMono
             }
 
         }
+        parts.SetActive(true);
+        Invoke("Vanish", 0.5f);
     }
 
     void Vanish() 
