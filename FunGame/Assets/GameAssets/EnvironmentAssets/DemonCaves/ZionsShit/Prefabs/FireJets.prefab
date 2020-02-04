@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 8580318736258038881}
   m_Layer: 0
   m_Name: FireJetCollider
-  m_TagString: Untagged
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,7 +235,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8580318736258038880}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToPlayer: 20
-  dir: {x: 0, y: 0, z: 0.001}
+  dir: {x: 0, y: 0, z: 0}
   force: 0
   hasAnimation: 0
   anims: {fileID: 0}
