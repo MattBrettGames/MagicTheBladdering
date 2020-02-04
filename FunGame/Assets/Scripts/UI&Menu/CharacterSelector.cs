@@ -43,6 +43,7 @@ public class CharacterSelector : BlankMono
     public Text skinText;
     public GameObject displayChar;
     public GameObject characterCover;
+    public GameObject[] characterAblityArray = new GameObject[4];
 
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
@@ -85,6 +86,7 @@ public class CharacterSelector : BlankMono
         {
             if (player.GetAxis("HoriMove") >= 0.4f && !inputCooldown)
             {
+                characterAblityArray[currentChar].SetActive(false);
                 currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
@@ -104,19 +106,19 @@ public class CharacterSelector : BlankMono
             }
             if (player.GetAxis("HoriMove") <= -0.4f && !inputCooldown)
             {
+                characterAblityArray[currentChar].SetActive(false);
+                currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar != 0)
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar--;
-                    currentSkin = 0;
                     UpdateDisplay(0.2f);
                 }
                 else
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar = characters.Count - 1;
-                    currentSkin = 0;
                     UpdateDisplay(0.2f);
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -157,17 +159,25 @@ public class CharacterSelector : BlankMono
             {
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
+                    characterAblityArray[currentChar].SetActive(false);
                     LockInCharacter();
                 }
             }
 
             if (player.GetButtonDown("YAttack"))
             {
+                characterAblityArray[currentChar].SetActive(false);
+
                 currentChar = UnityEngine.Random.Range(0, characters.Count);
                 currentSkin = UnityEngine.Random.Range(0, characters[currentChar].skins.Count);
 
                 UpdateDisplay();
             }
+            if (player.GetButtonDown("XAttack"))
+            {
+                characterAblityArray[currentChar].SetActive(!characterAblityArray[currentChar].activeSelf);
+            }
+
 
         }
         if (player.GetButtonDown("BAttack"))
