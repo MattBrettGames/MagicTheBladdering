@@ -193,7 +193,7 @@ public class Valderheim : PlayerBase
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
     public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
-    public void EndSlow() { print("Ended Slow"); bonusSpeed += ySpeedDebuff; }
+    public void EndSlow() { bonusSpeed += ySpeedDebuff; }
 
     private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
@@ -209,6 +209,7 @@ public class Valderheim : PlayerBase
     }
     public override void Respawn()
     {
+        CloseComboKick();
         base.Respawn();
         bonusSpeed = 0;
         dodgeDur = dodgeDurDefault;
