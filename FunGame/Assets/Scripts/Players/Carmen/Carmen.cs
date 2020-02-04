@@ -59,7 +59,7 @@ public class Carmen : PlayerBase
 
         aimTarget.position = transform.position + dir * 5;
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+       // if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
