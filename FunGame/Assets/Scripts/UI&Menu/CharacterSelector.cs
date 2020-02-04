@@ -160,6 +160,15 @@ public class CharacterSelector : BlankMono
                     LockInCharacter();
                 }
             }
+
+            if (player.GetButtonDown("YAttack"))
+            {
+                currentChar = UnityEngine.Random.Range(0, characters.Count);
+                currentSkin = UnityEngine.Random.Range(0, characters[currentChar].skins.Count);
+
+                UpdateDisplay();
+            }
+
         }
         if (player.GetButtonDown("BAttack"))
         {
