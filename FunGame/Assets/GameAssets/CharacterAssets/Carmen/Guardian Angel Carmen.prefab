@@ -35,19 +35,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!65 &59906019536857224
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 59906019536891875}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 31.931767, y: 21.796185, z: 107.13432}
-  m_Center: {x: -59.445084, y: 87.462585, z: 66.56727}
 --- !u!1 &59906021055628849
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +111,7 @@ MonoBehaviour:
   aCooldown: 0.2
   bCooldown: 3
   xCooldown: 1
-  yCooldown: 5
+  yCooldown: 4
   aTimer: 0
   bTimer: 0
   xTimer: 0
@@ -134,21 +121,21 @@ MonoBehaviour:
   xSound: CarX
   ySound: CarY
   ouchSound: CarOuch
-  deathSound: 
+  deathSound: CarDeath
   ySoundBonus: CarYBonus
   backStabBox: {fileID: 5157347797774301436}
   stabSymbol: {fileID: 3809547087997495018}
   stabDamage: 35
   stabKnockback: 1
-  slashDamage: 10
+  slashDamage: 15
   slashKnockback: 5
-  slashTravelDuration: 0.5
+  slashTravelDuration: 0.4
   spinSphere: {fileID: 7608921217202626050}
   spinRadius: 8
   grapplingSpeed: 5
   bDamage: 20
-  backstabAngle: 60
-  backStabDamageMult: 1.7
+  backstabAngle: 90
+  backStabDamageMult: 2
 --- !u!136 &59906021055628861
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1557,27 +1544,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 59906019536857219}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &59906019536891875 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100192, guid: b02c824101176c847bc31d7c49c0672d,
-    type: 3}
-  m_PrefabInstance: {fileID: 59906019536857219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &59906019536466525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400094, guid: b02c824101176c847bc31d7c49c0672d,
     type: 3}
   m_PrefabInstance: {fileID: 59906019536857219}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &59906019536466909 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400222, guid: b02c824101176c847bc31d7c49c0672d,
-    type: 3}
-  m_PrefabInstance: {fileID: 59906019536857219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &59906019536466915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400224, guid: b02c824101176c847bc31d7c49c0672d,
+    type: 3}
+  m_PrefabInstance: {fileID: 59906019536857219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &59906019536466909 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400222, guid: b02c824101176c847bc31d7c49c0672d,
     type: 3}
   m_PrefabInstance: {fileID: 59906019536857219}
   m_PrefabAsset: {fileID: 0}
@@ -1674,6 +1655,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59906019536466915}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlash
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1728,11 +1714,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlash
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}
@@ -1850,6 +1831,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59906019536466909}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlash
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1904,11 +1890,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlash
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}
