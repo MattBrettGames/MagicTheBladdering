@@ -116,8 +116,8 @@ public class Carmen : PlayerBase
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
 
-                    anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
-                    anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
+                    anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                    anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
                 }
                 aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
