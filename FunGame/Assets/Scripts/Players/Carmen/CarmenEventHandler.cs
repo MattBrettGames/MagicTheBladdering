@@ -11,25 +11,43 @@ public class CarmenEventHandler : MonoBehaviour
     [SerializeField] ParticleSystem leftWeaponParticles;
     [SerializeField] ParticleSystem rightWeaponParticles;
 
-    void Start()
+    public void NewStart()
     {
         leftWeaponParticles.gameObject.SetActive(true);
         rightWeaponParticles.gameObject.SetActive(true);
-        EndYAttack();
+        EndBladeTrails();
+    }
+
+     void Start()
+    {
+        leftWeaponParticles.gameObject.SetActive(true);
+        rightWeaponParticles.gameObject.SetActive(true);
+        EndBladeTrails();
     }
 
     public void BeginYAttack()
     {
         yAttackHitBox.StartAttack();
-        leftWeaponParticles.Clear();
-        rightWeaponParticles.Clear();
-        leftWeaponParticles.Play();
-        rightWeaponParticles.Play();
+        StartBladeTrails();
 
     }
     public void EndYAttack()
     {
         yAttackHitBox.EndAttack();
+        EndBladeTrails();
+    }
+
+    public void StartBladeTrails()
+    {
+        leftWeaponParticles.Clear();
+        rightWeaponParticles.Clear();
+        leftWeaponParticles.Play();
+        rightWeaponParticles.Play();
+    }
+
+    public void EndBladeTrails()
+    {
+        print("Stopped bladeTrails");
         leftWeaponParticles.Stop();
         rightWeaponParticles.Stop();
     }

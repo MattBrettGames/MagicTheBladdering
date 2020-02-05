@@ -38,6 +38,7 @@ public class Carmen : PlayerBase
         base.SetInfo(uni, layerNew);
         StartCoroutine(GainBack());
         spinSphere.GetComponent<SphereCollider>().radius = spinRadius;
+        GetComponentInChildren<CarmenEventHandler>().NewStart();
     }
 
     IEnumerator GainBack()
