@@ -6,11 +6,26 @@ public class CarmenEventHandler : MonoBehaviour
 {
 
     public Carmen carmen;
-    public Weapons leftDagger;
+    public Weapons yAttackHitBox;
     public Weapons spinSphere;
+    [SerializeField] ParticleSystem leftWeaponParticles;
+    [SerializeField] ParticleSystem rightWeaponParticles;
 
-    public void BothBeginAttack() { leftDagger.StartAttack(); }
-    public void BothEndAttack() { leftDagger.EndAttack(); }
+    public void BeginYAttack()
+    {
+        yAttackHitBox.StartAttack();
+        leftWeaponParticles.Clear();
+        rightWeaponParticles.Clear();
+        leftWeaponParticles.Play();
+        rightWeaponParticles.Play();
+
+    }
+    public void EndYAttack()
+    {
+        yAttackHitBox.EndAttack();
+        leftWeaponParticles.Stop();
+        rightWeaponParticles.Stop();
+    }
 
     public void spinSphereOn() { spinSphere.StartAttack(); }
     public void spinSphereOff() { spinSphere.EndAttack(); }
