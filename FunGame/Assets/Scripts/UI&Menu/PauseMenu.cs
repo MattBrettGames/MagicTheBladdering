@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
     private PlayerBase playerCode2;
     bool inputOnCooldown;
     List<Text> texts = new List<Text>();
+    bool ready;
 
     void Start()
     {
@@ -33,7 +34,9 @@ public class PauseMenu : MonoBehaviour
 
     IEnumerator TrueStart()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSecondsRealtime(4.3f);
+        ready = true;
+        print("Pause is ready");
         players = ReInput.players.GetPlayer(0);
         player2 = ReInput.players.GetPlayer(1);
 
@@ -52,10 +55,13 @@ public class PauseMenu : MonoBehaviour
     {
         if (players.GetButtonDown("Pause") || player2.GetButtonDown("Pause"))
         {
-            visuals.SetActive(true);
-            Time.timeScale = 0;
-            playerCode1.BeginActing();
-            playerCode2.BeginActing();
+            if (ready)
+            {
+                visuals.SetActive(true);
+                Time.timeScale = 0;
+                playerCode1.BeginActing();
+                playerCode2.BeginActing();
+            }
         }
 
         if (visuals.activeSelf)
@@ -88,7 +94,7 @@ public class PauseMenu : MonoBehaviour
                 StartCoroutine(EndCooldown());
                 inputOnCooldown = true;
             }
-            if (players.GetButtonDown("AAction"))
+            if (players.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
             {
                 texts[currentDisplay].color = selectedColour;
                 options[currentDisplay].transform.localScale = Vector3.one - (sizeChange * 2);
@@ -119,11 +125,9 @@ public class PauseMenu : MonoBehaviour
         playerCode2.gameObject.transform.position = new Vector3(15, 0, 0);
     }
 
-
     void Quit()
     {
         Time.timeScale = 1;
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
     }
-
 }
