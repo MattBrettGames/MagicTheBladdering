@@ -13,6 +13,8 @@ public class CarmenEventHandler : MonoBehaviour
 
     void Start()
     {
+        leftWeaponParticles.gameObject.SetActive(true);
+        rightWeaponParticles.gameObject.SetActive(true);
         EndYAttack();
     }
 
