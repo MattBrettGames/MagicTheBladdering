@@ -11,6 +11,11 @@ public class CarmenEventHandler : MonoBehaviour
     [SerializeField] ParticleSystem leftWeaponParticles;
     [SerializeField] ParticleSystem rightWeaponParticles;
 
+    void Start()
+    {
+        EndYAttack();
+    }
+
     public void BeginYAttack()
     {
         yAttackHitBox.StartAttack();
