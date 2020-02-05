@@ -121,10 +121,12 @@ public class Valderheim : PlayerBase
                     if (player.GetButtonDown("AAction")) { AAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
-
+                    /*
                     if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
                     else { anim.SetFloat("Movement", 0); }
+                    */
 
+                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
                     anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
                     anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
