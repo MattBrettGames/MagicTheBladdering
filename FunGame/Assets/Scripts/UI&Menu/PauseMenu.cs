@@ -101,6 +101,10 @@ public class PauseMenu : MonoBehaviour
                 Invoke(optionStrings[currentDisplay], 0);
                 currentDisplay = 0;
             }
+            if (players.GetButtonDown("BAttack") || player2.GetButtonDown("BAttack"))
+            {
+                Resume();
+            }
         }
     }
 
