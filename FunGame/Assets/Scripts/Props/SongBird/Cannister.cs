@@ -8,7 +8,6 @@ public class Cannister : BlankMono
 
     public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner, float impactDur, bool interrupt, Color playerColour)
     {
-        print("Triggered burst!");
 
         smoke.SetActive(true);
         parts.SetActive(false);

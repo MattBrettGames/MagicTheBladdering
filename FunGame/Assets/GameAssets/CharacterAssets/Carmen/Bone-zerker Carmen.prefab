@@ -74,6 +74,7 @@ MonoBehaviour:
   respawnEffects: {fileID: 3811617716398637766}
   hitEffects: {fileID: 5228314623157804336}
   aimTarget: {fileID: 0}
+  lockOnLerpSpeed: 0.4
   aCooldown: 0.2
   bCooldown: 4.5
   xCooldown: 1
@@ -97,9 +98,9 @@ MonoBehaviour:
   slashKnockback: 5
   slashTravelDuration: 0.4
   spinSphere: {fileID: 4816183013300720369}
-  spinRadius: 8
-  grapplingSpeed: 5
-  bDamage: 15
+  spinRadius: 7
+  grapplingSpeed: 6
+  bDamage: 10
   backstabAngle: 90
   backStabDamageMult: 2
 --- !u!136 &36155912143049836
@@ -38714,6 +38715,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4414422529823359814}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlashR
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -38784,11 +38790,6 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.6313726
       objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlashR
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}
 --- !u!4 &77617319074326005 stripped
@@ -38810,6 +38811,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4414422529823359812}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlashR
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -38879,11 +38885,6 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.6313726
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlashR
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}

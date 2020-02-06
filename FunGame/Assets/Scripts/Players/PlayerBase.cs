@@ -32,7 +32,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
-    protected bool acting;
+    [SerializeField] protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
     [HideInInspector] public State state;
@@ -221,7 +221,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                     aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
 
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
 
                     LockOnScroll();
                 }
@@ -319,7 +319,7 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public virtual void YAction()
     {
-       HUD.UsedY();
+        HUD.UsedY();
     }
     #endregion
 
@@ -333,7 +333,7 @@ public abstract class PlayerBase : ThingThatCanDie
             hitEffects.SetActive(true);
             if (fromAttack)
             {
-                StartCoroutine(HitStun(0.1f));
+                StartCoroutine(HitStop(0.1f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
@@ -341,7 +341,7 @@ public abstract class PlayerBase : ThingThatCanDie
             universe.PlaySound(ouchSound);
         }
     }
-    IEnumerator HitStun(float time)
+    IEnumerator HitStop(float time)
     {
         Time.timeScale = 0.2f;
         yield return new WaitForSecondsRealtime(time);
@@ -422,7 +422,10 @@ public abstract class PlayerBase : ThingThatCanDie
     public void GainIFrames() { iFrames = true; }
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
 
-    public void LoseIFrames() { iFrames = false; }
+    public void LoseIFrames()
+    {
+        iFrames = false;
+    }
     public IEnumerator LoseTrueFrames(float time) { yield return new WaitForSeconds(time); iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; poison = false; }
 
     public virtual void Respawn()

@@ -108,6 +108,7 @@ MonoBehaviour:
   respawnEffects: {fileID: 5696015857670170525}
   hitEffects: {fileID: 6965977582220495116}
   aimTarget: {fileID: 0}
+  lockOnLerpSpeed: 0.4
   aCooldown: 0.2
   bCooldown: 4.5
   xCooldown: 1
@@ -131,9 +132,9 @@ MonoBehaviour:
   slashKnockback: 5
   slashTravelDuration: 0.4
   spinSphere: {fileID: 7608921217202626050}
-  spinRadius: 8
-  grapplingSpeed: 5
-  bDamage: 20
+  spinRadius: 7
+  grapplingSpeed: 6
+  bDamage: 10
   backstabAngle: 90
   backStabDamageMult: 2
 --- !u!136 &59906021055628861
@@ -1655,6 +1656,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59906019536466915}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlash
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1709,11 +1715,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlash
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}
@@ -1831,6 +1832,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59906019536466909}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlash
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1885,11 +1891,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlash
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}

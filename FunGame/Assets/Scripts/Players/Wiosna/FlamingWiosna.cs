@@ -61,7 +61,6 @@ public class FlamingWiosna : ThingThatCanDie
 
     void Disappear()
     {
-        print("Clone has been destoryed");
         gameObject.SetActive(false);
     }
 
