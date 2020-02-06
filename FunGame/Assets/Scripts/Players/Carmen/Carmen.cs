@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Carmen : PlayerBase
 {
-
-    [SerializeField] string ySoundBonus;
+    AudioClip ySoundBonus;
 
     [Header("Unique Components")]
     public Weapons backStabBox;
@@ -193,7 +192,7 @@ public class Carmen : PlayerBase
             Invoke("StopKnockback", slashTravelDuration);
 
             xTimer = xCooldown;
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
@@ -219,12 +218,12 @@ public class Carmen : PlayerBase
                     StartCoroutine(HideSymbol(0.5f));
                 }
 
-                universe.PlaySound(ySoundBonus);
+                PlaySound(ySoundBonus);
             }
             else
             {
                 backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true);
-                universe.PlaySound(ySound);
+                PlaySound(ySound);
             }
         }
     }
@@ -249,7 +248,7 @@ public class Carmen : PlayerBase
             grapplingTrap.OnThrow(visuals.transform.forward, this, playerID + 13, bDamage);
 
             bTimer = bCooldown;
-            universe.PlaySound(bSound);
+            PlaySound(bSound);
         }
     }
 

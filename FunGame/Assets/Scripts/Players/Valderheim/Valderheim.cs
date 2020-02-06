@@ -158,14 +158,14 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
-                universe.PlaySound(xSound);
+                PlaySound(xSound);
             }
         }
         else
         {
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("Spin");
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
@@ -176,7 +176,7 @@ public class Valderheim : PlayerBase
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("ComboKick");
             comboTime = false;
-            universe.PlaySound(ySound);
+            PlaySound(ySound);
         }
         else
         {
@@ -187,7 +187,7 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
-                universe.PlaySound(ySound);
+                PlaySound(ySound);
             }
         }
     }
@@ -285,7 +285,7 @@ public class Valderheim : PlayerBase
             frenzyEffects.SetActive(true);
             bTimer = bCooldown;
 
-            universe.PlaySound(bSound);
+            PlaySound(bSound);
         }
     }
     private IEnumerator StopFrenzy()

@@ -81,13 +81,15 @@ public abstract class PlayerBase : ThingThatCanDie
     [HideInInspector] public float xTimer;
     [HideInInspector] public float yTimer;
 
-    [Header("Sound String")]
-    [SerializeField] protected string aSound;
-    [SerializeField] protected string bSound;
-    [SerializeField] protected string xSound;
-    [SerializeField] protected string ySound;
-    [SerializeField] protected string ouchSound;
-    [SerializeField] protected string deathSound;
+    [Header("Sounds")]
+    [SerializeField] protected AudioClip aSound;
+    [SerializeField] protected AudioClip bSound;
+    [SerializeField] protected AudioClip xSound;
+    [SerializeField] protected AudioClip ySound;
+    [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
+    [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
+    [SerializeField] protected AudioClip victorySound;
+    AudioSource audioSource;
 
     public virtual void Start()
     {
@@ -101,6 +103,8 @@ public abstract class PlayerBase : ThingThatCanDie
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
         HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
+        audioSource = gameObject.AddComponent<AudioSource>();
+
     }
 
     public virtual void SetInfo(UniverseController uni, int layerNew)
@@ -300,7 +304,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
             Invoke("EndDodge", dodgeDur);
 
-            universe.PlaySound(aSound);
+            PlaySound(aSound);
         }
     }
     public virtual void EndDodge()
@@ -323,6 +327,17 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     #endregion
 
+    #region SoundControl
+    public void PlaySound(AudioClip clipToPlay)
+    {
+        audioSource.PlayOneShot(clipToPlay);
+    }
+    public void PlaySound(AudioClip[] clipsToPlay)
+    {
+        audioSource.PlayOneShot(clipsToPlay[UnityEngine.Random.Range(0, clipsToPlay.Length)]);
+    }
+    #endregion
+
     #region Common Events
     public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
     {
@@ -338,7 +353,7 @@ public abstract class PlayerBase : ThingThatCanDie
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             Knockback(knockback, dirTemp);
-            universe.PlaySound(ouchSound);
+            PlaySound(ouchSounds);
         }
     }
     IEnumerator HitStop(float time)
@@ -395,7 +410,7 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             print("killer is null");
             universe.PlayerDeath(gameObject, null);
-            universe.PlaySound(deathSound);
+            PlaySound(deathSounds);
         }
     }
     public virtual void KnockbackContinual()

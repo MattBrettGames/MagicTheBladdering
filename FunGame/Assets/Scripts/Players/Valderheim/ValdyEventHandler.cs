@@ -27,4 +27,17 @@ public class ValdyEventHandler : BlankMono
     public void BeginActing() { valdy.BeginActing(); }
     public void EndActing() { valdy.EndActing(); }
 
+
+    #region Sound
+    public void PlaySound(AudioClip clipToPlay)
+    {
+        valdy.PlaySound(clipToPlay);
+    }
+    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
+    {
+        valdy.PlaySound(clipsToPlay);
+    }
+    #endregion
+
+
 }

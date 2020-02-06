@@ -37,6 +37,17 @@ public class CarmenEventHandler : MonoBehaviour
         EndBladeTrails();
     }
 
+    #region Sound
+    public void PlaySound(AudioClip clipToPlay)
+    {
+        carmen.PlaySound(clipToPlay);
+    }
+    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
+    {
+        carmen.PlaySound(clipsToPlay);
+    }
+    #endregion
+
     public void StartBladeTrails()
     {
         leftWeaponParticles.Clear();

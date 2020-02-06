@@ -27,5 +27,16 @@ public class SongBirdEventHandler : BlankMono
     public void EndDodge() { songBird.StopKnockback(); }
 
 
+    #region Sound
+    public void PlaySound(AudioClip clipToPlay)
+    {
+        songBird.PlaySound(clipToPlay);
+    }
+    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
+    {
+        songBird.PlaySound(clipsToPlay);
+    }
+    #endregion
+
 
 }

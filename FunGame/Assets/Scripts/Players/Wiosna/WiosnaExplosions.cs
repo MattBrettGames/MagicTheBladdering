@@ -19,7 +19,7 @@ public class WiosnaExplosions : MonoBehaviour
         transform.localScale += transform.localScale * scaleChange;
     }
 
-    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, string ySound)//, Vector3 newScale)
+    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, AudioClip ySound)//, Vector3 newScale)
     {
         gameObject.tag = owner.tag;
 
@@ -43,7 +43,7 @@ public class WiosnaExplosions : MonoBehaviour
         if (remaining > 0)
         {
             StartCoroutine(NextBlast(timeBetweenBlasts, nextBlast, remaining, uni, ySound));
-            uni.PlaySound(ySound);
+            owner.PlaySound(ySound);
         }
 
         parts.Play();
@@ -53,7 +53,7 @@ public class WiosnaExplosions : MonoBehaviour
     }
 
 
-    IEnumerator NextBlast(float time, WiosnaExplosions next, int remaining, UniverseController uni, string ySound)
+    IEnumerator NextBlast(float time, WiosnaExplosions next, int remaining, UniverseController uni, AudioClip ySound)
     {
         yield return new WaitForSeconds(time);
 

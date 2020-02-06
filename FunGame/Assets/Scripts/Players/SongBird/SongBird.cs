@@ -5,7 +5,7 @@ using UnityEngine;
 public class SongBird : PlayerBase
 {
 
-    [SerializeField] string bSoundBonus;
+    AudioClip bSoundBonus;
 
     [Header("More Components")]
     public CorvidDagger weapon;
@@ -75,7 +75,7 @@ public class SongBird : PlayerBase
             anim.SetTrigger("XAttack");
             weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
@@ -87,7 +87,7 @@ public class SongBird : PlayerBase
 
             anim.SetTrigger("YAction");
             yTimer = yCooldown;
-            universe.PlaySound(ySound);
+            PlaySound(ySound);
         }
     }
 
@@ -104,7 +104,7 @@ public class SongBird : PlayerBase
                 hasCannister = false;
                 anim.SetTrigger("BAction");
                 bTimer = bCooldown;
-                universe.PlaySound(bSound);
+                PlaySound(bSound);
             }
         }
         else
@@ -112,7 +112,7 @@ public class SongBird : PlayerBase
             smokeCloudCannister.transform.localScale = Vector3.one;
             cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
             hasCannister = true;
-            universe.PlaySound(bSoundBonus);
+            PlaySound(bSoundBonus);
         }
     }
 
@@ -137,8 +137,7 @@ public class SongBird : PlayerBase
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDodge));
             }
-
-            universe.PlaySound(aSound);
+            PlaySound(aSound);
         }
     }
 

@@ -65,7 +65,7 @@ public class Wiosna : PlayerBase
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
@@ -97,7 +97,7 @@ public class Wiosna : PlayerBase
             vanishEffect.transform.localPosition = transform.localPosition;
             vanishEffect.SetActive(true);
 
-            universe.PlaySound(aSound);
+            PlaySound(aSound);
         }
     }
     IEnumerator EndDig(int layer)
@@ -139,7 +139,7 @@ public class Wiosna : PlayerBase
             flamingClone.SetActive(true);
             bTimer = bCooldown;
 
-            universe.PlaySound(bSound);
+            PlaySound(bSound);
         }
     }
 }

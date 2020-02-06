@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
         StartCoroutine(TrueStart());
         visuals.SetActive(false);
     }
-
+     
     IEnumerator TrueStart()
     {
         yield return new WaitForSecondsRealtime(4.3f);

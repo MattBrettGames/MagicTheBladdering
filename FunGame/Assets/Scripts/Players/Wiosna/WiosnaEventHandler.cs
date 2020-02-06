@@ -22,4 +22,16 @@ public class WiosnaEventHandler : BlankMono
     public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur); }
     public void GainIFrmaes() { wiosna.GainIFrames(); }
     public void LoseIFrmaes() { wiosna.LoseIFrames(); }
+
+    #region Sound
+    public void PlaySound(AudioClip clipToPlay)
+    {
+        wiosna.PlaySound(clipToPlay);
+    }
+    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
+    {
+        wiosna.PlaySound(clipsToPlay);
+    }
+    #endregion
+
 }
