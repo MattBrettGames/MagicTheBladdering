@@ -47,7 +47,6 @@ public class CarmenEventHandler : MonoBehaviour
 
     public void EndBladeTrails()
     {
-        print("Stopped bladeTrails");
         leftWeaponParticles.Stop();
         rightWeaponParticles.Stop();
     }

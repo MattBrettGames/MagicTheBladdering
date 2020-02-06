@@ -46,7 +46,6 @@ public class Carmen : PlayerBase
         yield return new WaitForEndOfFrame();
         ObjectPooler pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         grapplingTrap = pooler.grapplerList[playerID].GetComponent<GrapplingTrap>();
-
     }
 
     public override void Update()
@@ -125,7 +124,7 @@ public class Carmen : PlayerBase
 
                 }
                 aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
                 LockOnScroll();
 
                 break;

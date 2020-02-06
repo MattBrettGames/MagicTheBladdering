@@ -62,7 +62,8 @@ public abstract class PlayerBase : ThingThatCanDie
     protected UniverseController universe;
     HUDController HUD;
 
-    //{Header("Lockon Mechanics")]
+    [Header("Lockon Mechanics")]
+    [SerializeField] protected float lockOnLerpSpeed = 0.3f;
     protected int currentLock;
     protected List<Transform> lockTargetList = new List<Transform>();
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
@@ -220,7 +221,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                     aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
 
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
 
                     LockOnScroll();
                 }

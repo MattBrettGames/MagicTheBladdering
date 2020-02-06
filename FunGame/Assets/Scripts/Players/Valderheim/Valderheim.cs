@@ -131,7 +131,7 @@ public class Valderheim : PlayerBase
                     anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
                     aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
                     LockOnScroll();
                 }
 

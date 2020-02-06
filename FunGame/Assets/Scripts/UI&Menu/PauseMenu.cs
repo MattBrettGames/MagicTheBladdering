@@ -36,7 +36,6 @@ public class PauseMenu : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(4.3f);
         ready = true;
-        print("Pause is ready");
         players = ReInput.players.GetPlayer(0);
         player2 = ReInput.players.GetPlayer(1);
 
