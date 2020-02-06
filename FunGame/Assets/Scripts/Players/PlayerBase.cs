@@ -32,7 +32,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
-    protected bool acting;
+    [SerializeField] protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
     [HideInInspector] public State state;
@@ -333,7 +333,7 @@ public abstract class PlayerBase : ThingThatCanDie
             hitEffects.SetActive(true);
             if (fromAttack)
             {
-                StartCoroutine(HitStun(0.1f));
+                StartCoroutine(HitStop(0.1f));
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
@@ -341,7 +341,7 @@ public abstract class PlayerBase : ThingThatCanDie
             universe.PlaySound(ouchSound);
         }
     }
-    IEnumerator HitStun(float time)
+    IEnumerator HitStop(float time)
     {
         Time.timeScale = 0.2f;
         yield return new WaitForSecondsRealtime(time);

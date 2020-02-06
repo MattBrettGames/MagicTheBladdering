@@ -37,7 +37,7 @@ public class Valderheim : PlayerBase
 
     [Header("Passives")]
     [SerializeField] private float comboTimeDur;
-    private bool comboTime;
+    [SerializeField] private bool comboTime;
 
     //[Header("Polish")]
     //[SerializeField] Color skinColour;
@@ -197,7 +197,13 @@ public class Valderheim : PlayerBase
     public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
     public void EndSlow() { bonusSpeed += ySpeedDebuff; }
 
-    private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
+    private void CloseComboKick()
+    {
+        comboTime = false;
+        anim.ResetTrigger("ComboKick");
+        anim.ResetTrigger("Spin");
+        outline.OutlineColor = new Color(0, 0, 0);
+    }
 
     public override void Death(PlayerBase killer)
     {
