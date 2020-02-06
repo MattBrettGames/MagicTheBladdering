@@ -29,7 +29,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] private float secsBetweenTicks;
     [SerializeField] public bool poison;
     private bool hyperArmour;
-    protected bool iFrames;
+    [SerializeField] protected bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
     protected bool acting;
@@ -221,7 +221,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                     aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
 
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
 
                     LockOnScroll();
                 }
@@ -319,7 +319,7 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public virtual void YAction()
     {
-       HUD.UsedY();
+        HUD.UsedY();
     }
     #endregion
 
@@ -419,10 +419,14 @@ public abstract class PlayerBase : ThingThatCanDie
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
 
-    public void GainIFrames() { iFrames = true; }
+    public void GainIFrames() { iFrames = true; print("Gained I frames"); }
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
 
-    public void LoseIFrames() { iFrames = false; }
+    public void LoseIFrames()
+    {
+        iFrames = false;
+        print("I have lost I frames");
+    }
     public IEnumerator LoseTrueFrames(float time) { yield return new WaitForSeconds(time); iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; poison = false; }
 
     public virtual void Respawn()

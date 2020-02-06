@@ -124,7 +124,7 @@ public class Carmen : PlayerBase
 
                 }
                 aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
                 LockOnScroll();
 
                 break;
