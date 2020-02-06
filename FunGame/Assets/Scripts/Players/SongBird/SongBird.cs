@@ -5,7 +5,7 @@ using UnityEngine;
 public class SongBird : PlayerBase
 {
 
-    AudioClip bSoundBonus;
+    [SerializeField] AudioClip bSoundBonus;
 
     [Header("More Components")]
     public CorvidDagger weapon;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Carmen : PlayerBase
 {
-    AudioClip ySoundBonus;
+    [SerializeField] AudioClip ySoundBonus;
 
     [Header("Unique Components")]
     public Weapons backStabBox;
@@ -58,7 +58,7 @@ public class Carmen : PlayerBase
 
         aimTarget.position = transform.position + dir * 5;
 
-       // if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+        // if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
@@ -235,7 +235,7 @@ public class Carmen : PlayerBase
     }
 
     public override void BAction()
-    {       
+    {
         if (bTimer <= 0)
         {
             base.BAction();
