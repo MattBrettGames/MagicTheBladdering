@@ -29,7 +29,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] private float secsBetweenTicks;
     [SerializeField] public bool poison;
     private bool hyperArmour;
-    [SerializeField] protected bool iFrames;
+    protected bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
     protected bool acting;
@@ -419,13 +419,12 @@ public abstract class PlayerBase : ThingThatCanDie
     public void GainHA() { hyperArmour = true; }
     public void LoseHA() { hyperArmour = false; }
 
-    public void GainIFrames() { iFrames = true; print("Gained I frames"); }
+    public void GainIFrames() { iFrames = true; }
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
 
     public void LoseIFrames()
     {
         iFrames = false;
-        print("I have lost I frames");
     }
     public IEnumerator LoseTrueFrames(float time) { yield return new WaitForSeconds(time); iFrames = false; trueIFrames = false; outline.OutlineColor = Color.black; poison = false; }
 
