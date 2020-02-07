@@ -120,6 +120,7 @@ MonoBehaviour:
   poison: 0
   trueIFrames: 0
   hazardFrames: 0
+  acting: 0
   state: 0
   visuals: {fileID: 570348887071278304}
   respawnEffects: {fileID: 5861957077375165391}
@@ -134,12 +135,19 @@ MonoBehaviour:
   bTimer: 0
   xTimer: 0
   yTimer: 0
-  aSound: WiosA
-  bSound: WiosB
-  xSound: WiosX
-  ySound: WiosY
-  ouchSound: WiosOuch
-  deathSound: WiosDeath
+  aSound: {fileID: 0}
+  bSound: {fileID: 8300000, guid: 4e126973eecf938479d2f058a87ab911, type: 3}
+  xSound: {fileID: 8300000, guid: 1145f22ccb0ae99459a0693b541885d2, type: 3}
+  ySound: {fileID: 8300000, guid: f502ae703f836d5489cee190519c4c9a, type: 3}
+  ouchSounds:
+  - {fileID: 8300000, guid: bac436314f368e9419ff5e4ccd7259b9, type: 3}
+  - {fileID: 8300000, guid: 4f2641921255a0646b6362014e14abd7, type: 3}
+  - {fileID: 8300000, guid: 76dcec7fe7e8008479a971ca7932f49d, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 7a1b5feb303952e4ba5397ce9f4c634d, type: 3}
+  - {fileID: 8300000, guid: f2eee29c8c19afc4696d0c56c5ffbedc, type: 3}
+  - {fileID: 8300000, guid: 22d4da342dc52984da83c618fb45770c, type: 3}
+  victorySound: {fileID: 8300000, guid: 43caa34f5be96c446af263f872e41d06, type: 3}
   basicMelee: {fileID: 1949167620993788036}
   xDamage: 13
   xKnockback: 7
@@ -847,35 +855,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 6.3999996
       objectReference: {fileID: 0}
-    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
+    - target: {fileID: 467279912633589313, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.857
-      objectReference: {fileID: 0}
-    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
-        type: 3}
-      propertyPath: m_LocalScale.z
+      propertyPath: m_Radius
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9028786311360747032, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 467279912633589313, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8418277709593953252, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
         type: 3}
@@ -946,6 +934,26 @@ PrefabInstance:
         type: 3}
       propertyPath: simulationSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.857
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907432130669297326, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6217870723291311173, guid: 3bafdd5fbe5efd045a9b90ba37724c7e,
         type: 3}
