@@ -136,12 +136,15 @@ public class Wiosna : PlayerBase
 
             anim.SetTrigger("BAttack");
 
-            flamingClone.transform.position = transform.position;
-            flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
-            flamingClone.SetActive(true);
-            bTimer = bCooldown;
-
             PlaySound(bSound);
         }
+    }
+
+    public void SummonClone()
+    {
+        flamingClone.transform.position = transform.position;
+        flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
+        flamingClone.SetActive(true);
+        bTimer = bCooldown;
     }
 }
