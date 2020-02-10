@@ -10,12 +10,11 @@ public class WiosnaExplosions : MonoBehaviour
     int knockFull;
     Vector3 knockDir;
     float spaceTrue;
-    ParticleSystem parts;
     float scaleChange; // = new Vector3(0.1f, 0.1f, 0.1f);
 
     public void Setup()
     {
-        parts = GetComponentInChildren<ParticleSystem>();
+//        parts = GetComponentInChildren<ParticleSystem>();
         transform.localScale += transform.localScale * scaleChange;
     }
 
@@ -30,9 +29,7 @@ public class WiosnaExplosions : MonoBehaviour
         knockFull = knockback;
         knockDir = dir;
         spaceTrue = spacing;
-        //transform.localScale -= new Vector3(0.1f,0.1f,0.1f);
 
-        parts.Clear();
         gameObject.SetActive(true);
 
         gameObject.transform.position += (dir * spacing);
@@ -46,7 +43,6 @@ public class WiosnaExplosions : MonoBehaviour
             owner.PlaySound(ySound);
         }
 
-        parts.Play();
 
         StartCoroutine(Fade(timeBetweenBlasts * 2f));
 
@@ -64,8 +60,6 @@ public class WiosnaExplosions : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        parts.Stop();
-        parts.Clear();
         gameObject.SetActive(false);
     }
     
