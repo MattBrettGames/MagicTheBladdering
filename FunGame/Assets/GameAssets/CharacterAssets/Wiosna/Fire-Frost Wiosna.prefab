@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wiosna: {fileID: 4682567264278004736}
   melee: {fileID: 1949167620993788036}
+  summonParticles: {fileID: 0}
 --- !u!1 &6396482908632093034
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,8 +157,8 @@ MonoBehaviour:
   ySpacing: 7
   yTimeBetweenBlasts: 0.1
   numberOfBlasts: 6
-  vanishEffect: {fileID: 0}
-  appearEffect: {fileID: 0}
+  vanishEffect: {fileID: 1179231317705750724}
+  appearEffect: {fileID: 5636457150713731605}
   cloneDamage: 25
   cloneColour: {r: 0.3372549, g: 0.8705883, b: 0.8705883, a: 1}
 --- !u!136 &6270515961559596575
@@ -660,6 +661,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f314dfc625c8cbb43b57e66509121ca9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 911da860d2e4a0542bf2bfbedceb9179, type: 3}
+--- !u!1 &5636457150713731605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
+    type: 3}
+  m_PrefabInstance: {fileID: 3906485316691336791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7301558386320758810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6008583760751543885, guid: 911da860d2e4a0542bf2bfbedceb9179,
@@ -1115,6 +1122,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f314dfc625c8cbb43b57e66509121ca9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb, type: 3}
+--- !u!1 &1179231317705750724 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7517441239134239878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4265357319563459275 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6008583760751543885, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
