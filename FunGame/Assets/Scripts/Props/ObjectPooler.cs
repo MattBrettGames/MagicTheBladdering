@@ -71,11 +71,7 @@ public class ObjectPooler : BlankMono
             #region Wiosna Props
             cloneList.Add(Instantiate(flamingClone, Vector3.zero, Quaternion.identity));
             cloneList[i].SetActive(false);
-            cloneList[i].name = "FlamingClone" + i;
-
-            blastList.Add(Instantiate(explosion, Vector3.zero, Quaternion.identity));
-            blastList[i].SetActive(false);
-            blastList[i].GetComponent<WiosnaExplosions>().Setup();
+            cloneList[i].name = "FlamingClone" + i;       
 
             cloneExplosionList.Add(Instantiate(cloneExplosion, Vector3.zero, Quaternion.identity));
             cloneExplosionList[i].SetActive(false);
