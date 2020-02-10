@@ -7,6 +7,7 @@ public class WiosnaEventHandler : BlankMono
 
     public Wiosna wiosna;
     public Weapons melee;
+    [SerializeField] GameObject summonParticles;
 
     void Start()
     {
@@ -19,7 +20,12 @@ public class WiosnaEventHandler : BlankMono
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
 
-    public void SummonClone() { wiosna.SummonClone(); }
+    public void SummonClone() 
+    {
+        wiosna.SummonClone(); 
+        summonParticles.SetActive(false);
+        summonParticles.SetActive(true);
+    }
 
     public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur); }
     public void GainIFrmaes() { wiosna.GainIFrames(); }
