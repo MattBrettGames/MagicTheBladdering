@@ -20,6 +20,7 @@ public class Wiosna : PlayerBase
     [SerializeField] float ySpacing;
     [SerializeField] float yTimeBetweenBlasts;
     [SerializeField] int numberOfBlasts;
+    [SerializeField] GameObject explosionPrefabs;
 
     WiosnaExplosions blast1;
     WiosnaExplosions blast2;
@@ -48,8 +49,8 @@ public class Wiosna : PlayerBase
 
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
 
-        blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
-        blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
+        blast1 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
+        blast2 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
 
         vanishEffect.transform.SetParent(gameObject.transform.parent);
         appearEffect.transform.SetParent(gameObject.transform.parent);
