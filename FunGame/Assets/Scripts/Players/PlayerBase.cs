@@ -88,7 +88,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip ySound;
     [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
     [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
-    [SerializeField] protected AudioClip victorySound;
+    [SerializeField] protected AudioClip victorySound;    
     AudioSource audioSource;
 
     public virtual void Start()
@@ -336,6 +336,10 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         audioSource.PlayOneShot(clipsToPlay[UnityEngine.Random.Range(0, clipsToPlay.Length)]);
     }
+    public void PlayVictorySound()
+    {
+        PlaySound(victorySound);
+    }
     #endregion
 
     #region Common Events
@@ -394,6 +398,7 @@ public abstract class PlayerBase : ThingThatCanDie
         respawnEffects.SetActive(false);
 
         dir = Vector3.zero;
+        
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
 

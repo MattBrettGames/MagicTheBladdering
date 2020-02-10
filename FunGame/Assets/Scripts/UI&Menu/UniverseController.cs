@@ -171,7 +171,7 @@ public class UniverseController : BlankMono
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = gameOverText.Replace("<winner>", winner);
             GameObject gam = GameObject.Find(winner);
-            gam.transform.SetParent(Camera.main.transform);
+            gam.transform.SetParent(Camera.main.transform); 
             GameObject.Find("CharacterStore").SetActive(false);
         }
         //Game-Level Setup

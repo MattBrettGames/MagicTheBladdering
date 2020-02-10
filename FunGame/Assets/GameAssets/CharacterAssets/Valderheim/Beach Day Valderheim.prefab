@@ -68,6 +68,7 @@ MonoBehaviour:
   poison: 0
   trueIFrames: 0
   hazardFrames: 0
+  acting: 0
   state: 0
   visuals: {fileID: 7104267251637402758}
   respawnEffects: {fileID: 7476149376689679346}
@@ -82,12 +83,15 @@ MonoBehaviour:
   bTimer: 0
   xTimer: 0
   yTimer: 0
-  aSound: ValdA
-  bSound: ValdB
-  xSound: ValdX
-  ySound: ValdY
-  ouchSound: ValdOuch
-  deathSound: 
+  aSound: {fileID: 8300000, guid: adbd5b610b8dc6b47930284df1ad42a5, type: 3}
+  bSound: {fileID: 8300000, guid: da7e3f2c73318d64e9530b64912b96d6, type: 3}
+  xSound: {fileID: 8300000, guid: e74dc6be4655b5d44a8220fcf50ac6f8, type: 3}
+  ySound: {fileID: 8300000, guid: 06e7898bcf2532b4cab474613b688b36, type: 3}
+  ouchSounds:
+  - {fileID: 8300000, guid: d0ca52b17d6d0b749a5241df04d81bfa, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: ac9f2003b9f072e4093105daa542f505, type: 3}
+  victorySound: {fileID: 8300000, guid: 673411452eade464fb33ec84967c9555, type: 3}
   hammer: {fileID: 7607678422022517705}
   xAttack: 15
   xKnockback: 2
@@ -103,6 +107,7 @@ MonoBehaviour:
   frenzySpeedBuff: 15
   frenzyEffects: {fileID: 3294276835542653533}
   comboTimeDur: 0.5
+  comboTime: 0
 --- !u!136 &4196285421342140624
 CapsuleCollider:
   m_ObjectHideFlags: 0

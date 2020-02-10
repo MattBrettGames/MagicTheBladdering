@@ -240,6 +240,8 @@ public class Carmen : PlayerBase
         {
             base.BAction();
 
+            anim.SetTrigger("BAttack");
+
             grapplingTrap.gameObject.transform.position = transform.position + new Vector3(0, 5, 0);
             grapplingTrap.transform.eulerAngles = transform.forward;
 
