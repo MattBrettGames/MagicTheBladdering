@@ -134,6 +134,8 @@ public class Wiosna : PlayerBase
         {
             base.BAction();
 
+            anim.SetTrigger("BAttack");
+
             flamingClone.transform.position = transform.position;
             flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
             flamingClone.SetActive(true);
