@@ -10,11 +10,13 @@ public class WiosnaExplosions : MonoBehaviour
     int knockFull;
     Vector3 knockDir;
     float spaceTrue;
-    float scaleChange; // = new Vector3(0.1f, 0.1f, 0.1f);
+    float scaleChange;
+    ParticleSystem parts;
 
-    public void Setup()
+    public void Start()
     {
-//        parts = GetComponentInChildren<ParticleSystem>();
+
+       parts = GetComponentInChildren<ParticleSystem>();
         transform.localScale += transform.localScale * scaleChange;
     }
 
@@ -29,6 +31,8 @@ public class WiosnaExplosions : MonoBehaviour
         knockFull = knockback;
         knockDir = dir;
         spaceTrue = spacing;
+        parts.Clear();
+        parts.Play();
 
         gameObject.SetActive(true);
 

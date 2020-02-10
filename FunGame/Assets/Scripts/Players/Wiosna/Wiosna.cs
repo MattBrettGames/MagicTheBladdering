@@ -34,6 +34,7 @@ public class Wiosna : PlayerBase
     [SerializeField] Color cloneColour;
     private GameObject flamingClone;
     GameObject cloneExplosion;
+    [SerializeField] GameObject summonParticles;
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
@@ -123,7 +124,7 @@ public class Wiosna : PlayerBase
             blast1.transform.position = gameObject.transform.position;
             blast2.transform.position = gameObject.transform.position;
 
-            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);//, Vector3.one);
+            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
 
             yTimer = yCooldown;
         }
@@ -133,10 +134,12 @@ public class Wiosna : PlayerBase
     {
         if (bTimer <= 0)
         {
+            summonParticles.SetActive(false);
             base.BAction();
 
             bTimer = bCooldown;
             anim.SetTrigger("BAttack");
+            summonParticles.SetActive(true);
 
             PlaySound(bSound);
         }
