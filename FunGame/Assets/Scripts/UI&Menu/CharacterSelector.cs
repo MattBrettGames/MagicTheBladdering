@@ -38,6 +38,10 @@ public class CharacterSelector : BlankMono
     [SerializeField] CharacterSelector otherChar2;
     [SerializeField] CharacterSelector otherChar3;
 
+    [Header("Sounds")]
+    [SerializeField] AudioClip[] chosenSounds = new AudioClip[0];
+    private AudioSource audioSource;
+
     [Header("UI Elements")]
     public GameObject characterText;
     public Text skinText;
@@ -53,7 +57,6 @@ public class CharacterSelector : BlankMono
 
     void Start()
     {
-
         store = transform.GetChild(0).gameObject;
         backStore = transform.parent.GetChild(1).gameObject;
         camOffsetBase = store.transform.position;
@@ -69,6 +72,7 @@ public class CharacterSelector : BlankMono
         player = ReInput.players.GetPlayer(thisPInt);
 
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
+        audioSource = gameObject.AddComponent<AudioSource>();
 
         currentChar = UnityEngine.Random.Range(0, characters.Count);
         while (currentChar == otherChar1.currentChar && thisPInt != 0)
@@ -77,7 +81,6 @@ public class CharacterSelector : BlankMono
         }
 
         UpdateDisplay();
-
     }
 
     void Update()
@@ -159,6 +162,7 @@ public class CharacterSelector : BlankMono
             {
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
+                    audioSource.PlayOneShot(chosenSounds[currentChar]);
                     characterAblityArray[currentChar].SetActive(false);
                     LockInCharacter();
                 }
