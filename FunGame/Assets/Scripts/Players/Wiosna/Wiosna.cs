@@ -146,9 +146,5 @@ public class Wiosna : PlayerBase
         flamingClone.transform.position = transform.position;
         flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
         flamingClone.SetActive(true);
-        anim.SetFloat("Movement_ZY", 0);
-        anim.SetFloat("Movement_X", 0);
-        anim.SetFloat("Movement", 0);
-        anim.SetBool("LockOn", false);
     }
 }
