@@ -33,7 +33,6 @@ public class Skjegg : PlayerBase
     [SerializeField] float[] totemLifeSpans = new float[5];
     [SerializeField, Tooltip("This is the time it takes for the totem options to cycle")] float timeBetweenTotems;
     int i_currentTotem;
-    bool hasTotemActive;
     bool isSelectingTotem;
 
     bool isTurtle;
@@ -176,7 +175,6 @@ public class Skjegg : PlayerBase
         totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position = transform.position + (visuals.transform.forward * 2);
         totemBaseList[totemChoiceList[i_currentTotem]].SummonTotem(totemLifeSpans[totemChoiceList[i_currentTotem]], this);
         totemBaseList[totemChoiceList[i_currentTotem]].gameObject.SetActive(true);
-        hasTotemActive = true;
 
         switch (totemBaseList[totemChoiceList[i_currentTotem]].thisTotemType)
         {
