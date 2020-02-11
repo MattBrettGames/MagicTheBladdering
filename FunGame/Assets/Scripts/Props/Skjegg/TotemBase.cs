@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TotemBase : ThingThatCanDie
 {
+    [SerializeField] int impactDamage;
     public TotemType thisTotemType;
     Vector3 trueTargetPos;
     bool isMoving;
@@ -24,9 +25,30 @@ public class TotemBase : ThingThatCanDie
             Vanish();
         }
     }
-    
+
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    {
+        base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker);
+        if(currentHealth <= 0)
+        {
+            Vanish();
+        }
+    }
+
+
+    public void OnColliderEnter(Collision other)
+    {
+        if(other.transform.tag != tag)
+        {
+            Vanish();
+            other.gameObject.GetComponent<ThingThatCanDie>().TakeDamage(impactDamage, Vector3.zero, 0, true, true, owner);
+        }
+    }
+
+
     public void SummonTotem(float tempLifeSpan, Skjegg skjegg)
     {
+        tag = skjegg.tag;
         isMoving = false;
         lifeSpan = tempLifeSpan;
         owner = skjegg;

@@ -14,6 +14,9 @@ public class SkjeggEventHandler : MonoBehaviour
     public void LeftFistOn() { leftFist.StartAttack(); }
     public void LeftFistOff() { leftFist.EndAttack(); }
 
+    public void GainHA() { skjegg.GainHA(); }
+    public void LoseHA() { skjegg.LoseHA(); }
+
     public void RightFistOff() { rightFist.EndAttack(); }
     public void RightFistOn() { rightFist.StartAttack(); }
 

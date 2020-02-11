@@ -19,6 +19,7 @@ public class Wiosna : PlayerBase
     [SerializeField] int yKnockback;
     [SerializeField] float ySpacing;
     [SerializeField] float yTimeBetweenBlasts;
+    [SerializeField] float yDelay;
     [SerializeField] int numberOfBlasts;
     [SerializeField] GameObject explosionPrefabs;
 
@@ -121,13 +122,18 @@ public class Wiosna : PlayerBase
 
             anim.SetTrigger("YAttack");
 
-            blast1.transform.position = gameObject.transform.position;
-            blast2.transform.position = gameObject.transform.position;
-
-            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
-
             yTimer = yCooldown;
         }
+    }
+
+    IEnumerator DelayedY()
+    {
+        yield return new WaitForSeconds(yDelay);
+
+        blast1.transform.position = gameObject.transform.position;
+        blast2.transform.position = gameObject.transform.position;
+
+        blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
     }
 
     public override void BAction()

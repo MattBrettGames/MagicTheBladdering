@@ -54,7 +54,7 @@ public class Weapons : BlankMono
         if (other.tag != tag)
         {
             player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue);
-            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f, true, player as PlayerBase);          
         }
     }
 }

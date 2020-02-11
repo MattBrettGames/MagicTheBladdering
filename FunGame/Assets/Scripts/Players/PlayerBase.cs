@@ -347,7 +347,7 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
-            ControllerRumble(0.2f, 0.1f);
+            ControllerRumble(0.2f, 0.1f, false, null);
             universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             hitEffects.SetActive(true);
             if (fromAttack)
@@ -436,8 +436,8 @@ public abstract class PlayerBase : ThingThatCanDie
     #region Utility Functions
     public virtual void HealthChange(int healthChange, PlayerBase attacker) { currentHealth += healthChange; if (currentHealth <= 0) { Death(attacker); } }
 
-    public void GainHA() { hyperArmour = true; }
-    public void LoseHA() { hyperArmour = false; }
+    public virtual void GainHA() { hyperArmour = true; }
+    public virtual void LoseHA() { hyperArmour = false; }
 
     public void GainIFrames() { iFrames = true; }
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
@@ -480,7 +480,7 @@ public abstract class PlayerBase : ThingThatCanDie
         if (poison && !trueIFrames && currentHealth > 1)
         {
             currentHealth -= poisonPerTick;
-            ControllerRumble(0.1f, 0.05f);
+            ControllerRumble(0.1f, 0.05f, false, null);
         }
         StartCoroutine(PoisonTick());
         ExtraUpdate();
@@ -503,7 +503,7 @@ public abstract class PlayerBase : ThingThatCanDie
         }
     }
 
-    public void ControllerRumble(float intensity, float dur)
+    public virtual void ControllerRumble(float intensity, float dur, bool isSkjegg, PlayerBase hitTarget)
     {
         player.SetVibration(1, intensity, dur);
         player.SetVibration(0, intensity, dur);
@@ -511,7 +511,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
-    public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f); CameraShake(); }
+    public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f, false, null); CameraShake(); }
 
     public virtual void CameraShake() { universe.CameraRumbleCall(0.1f); }
     #endregion
