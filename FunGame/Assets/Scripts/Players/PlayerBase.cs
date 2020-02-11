@@ -10,7 +10,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public string thisPlayer;
     public int playerID;
     [HideInInspector] public int numOfDeaths = 0;
-    public bool pvp;
+    [HideInInspector] public bool pvp = true;
 
     [Header("Movement Stats")]
     public float speed;
@@ -32,7 +32,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
-    [SerializeField] protected bool acting;
+    protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
     [HideInInspector] public State state;
@@ -88,8 +88,13 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip ySound;
     [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
     [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
-    [SerializeField] protected AudioClip victorySound;    
+    [SerializeField] protected AudioClip victorySound;
     AudioSource audioSource;
+
+    public void OnSelected()
+    {
+        healthMax = currentHealth;
+    }
 
     public virtual void Start()
     {
@@ -398,7 +403,7 @@ public abstract class PlayerBase : ThingThatCanDie
         respawnEffects.SetActive(false);
 
         dir = Vector3.zero;
-        
+
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
 

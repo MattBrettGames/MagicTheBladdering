@@ -107,12 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c287cfcadf1f7c448798295d1ecbabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
+  currentHealth: 130
   healthMax: 0
   thisPlayer: 
   playerID: 0
   numOfDeaths: 0
-  pvp: 0
+  pvp: 1
   speed: 33
   dodgeSpeed: 40
   dodgeDur: 0.3
@@ -128,8 +128,8 @@ MonoBehaviour:
   acting: 0
   state: 0
   visuals: {fileID: 2504058056037541175}
-  respawnEffects: {fileID: 0}
-  hitEffects: {fileID: 0}
+  respawnEffects: {fileID: 7807041153065922709}
+  hitEffects: {fileID: 91828517750367005}
   aimTarget: {fileID: 0}
   lockOnLerpSpeed: 0.3
   aCooldown: 1
@@ -147,8 +147,8 @@ MonoBehaviour:
   ouchSounds: []
   deathSounds: []
   victorySound: {fileID: 0}
-  leftFist: {fileID: 0}
-  rightFist: {fileID: 0}
+  leftFist: {fileID: 6720479324008502717}
+  rightFist: {fileID: 4398305334619222949}
   xDamage: 15
   xKnockback: 1
   yDamage: 30
@@ -275,8 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skjegg: {fileID: 7360431394424370519}
-  leftFist: {fileID: 0}
-  rightFist: {fileID: 0}
+  leftFist: {fileID: 6720479324008502717}
+  rightFist: {fileID: 4398305334619222949}
 --- !u!1 &5070998095310432045
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +478,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47b7195a52119494da8841a032f718fd, type: 3}
+--- !u!1 &7807041153065922709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5281597853586607707, guid: 47b7195a52119494da8841a032f718fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2671813064204451534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5927866716561727805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8597420670246363123, guid: 47b7195a52119494da8841a032f718fd,
@@ -558,6 +564,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}
+--- !u!1 &91828517750367005 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+    type: 3}
+  m_PrefabInstance: {fileID: 8615039633953142679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1453642228676793171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
