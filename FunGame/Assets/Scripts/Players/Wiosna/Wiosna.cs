@@ -76,6 +76,14 @@ public class Wiosna : PlayerBase
     {
         if (aTimer <= 0)
         {
+            anim.SetTrigger("AAction");
+
+            PlaySound(aSound);
+        }
+    }
+
+    public void DotheDodge()
+    {
             base.AAction();
 
             int thisLayer;
@@ -90,7 +98,6 @@ public class Wiosna : PlayerBase
             Physics.IgnoreLayerCollision(thisLayer, 12, true);
             outline.OutlineColor = Color.grey;
 
-            anim.SetTrigger("AAction");
 
             state = State.dodging;
 
@@ -99,10 +106,8 @@ public class Wiosna : PlayerBase
             appearEffect.SetActive(false);
             vanishEffect.transform.localPosition = transform.localPosition;
             vanishEffect.SetActive(true);
-
-            PlaySound(aSound);
-        }
     }
+
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
@@ -113,6 +118,7 @@ public class Wiosna : PlayerBase
         appearEffect.transform.localPosition = transform.localPosition;
         appearEffect.SetActive(true);
     }
+
 
     public override void YAction()
     {

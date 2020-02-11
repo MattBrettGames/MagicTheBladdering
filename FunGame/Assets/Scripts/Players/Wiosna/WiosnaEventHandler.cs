@@ -19,10 +19,9 @@ public class WiosnaEventHandler : BlankMono
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
 
-    public void SummonClone() 
-    {
-        wiosna.SummonClone(); 
-    }
+    public void DoTheDodge() { wiosna.DotheDodge(); }
+
+    public void SummonClone() { wiosna.SummonClone(); }
 
     public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur, false, null); }
     public void GainIFrmaes() { wiosna.GainIFrames(); }
