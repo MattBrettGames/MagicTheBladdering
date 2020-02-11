@@ -116,11 +116,11 @@ public class SongBird : PlayerBase
         }
     }
 
-    public override void AAction()
+    public override void AAction(bool playAnim)
     {
         if (aTimer <= 0 && dir != Vector3.zero)
         {
-            base.AAction();
+            base.AAction(false);
 
             anim.SetTrigger("AAction");
             state = State.dodging;

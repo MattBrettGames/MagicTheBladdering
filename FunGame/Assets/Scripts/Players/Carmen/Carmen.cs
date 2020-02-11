@@ -83,7 +83,7 @@ public class Carmen : PlayerBase
                     rb2d.velocity = dir * speed;
 
                     //Standard Inputs
-                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(true); }
                     if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
@@ -107,7 +107,7 @@ public class Carmen : PlayerBase
                 {
                     rb2d.velocity = dir * speed;
 
-                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(true); }
                     if (player.GetButtonDown("BAttack")) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }

@@ -96,7 +96,7 @@ public class Valderheim : PlayerBase
                     rb2d.velocity = dir * (speed + bonusSpeed);
 
                     //Standard Inputs
-                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(true); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
                     anim.SetFloat("Movement", dir.magnitude + 0.001f);
@@ -118,7 +118,7 @@ public class Valderheim : PlayerBase
                 {
                     rb2d.velocity = dir * (speed + bonusSpeed);
 
-                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(true); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
                     /*

@@ -195,7 +195,7 @@ public abstract class PlayerBase : ThingThatCanDie
                     rb2d.velocity = dir * (speed + bonusSpeed);
 
                     //Standard Inputs
-                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(true); }
                     if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
@@ -219,7 +219,7 @@ public abstract class PlayerBase : ThingThatCanDie
                 {
                     rb2d.velocity = dir * (speed + bonusSpeed);
 
-                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("AAction")) { AAction(true); }
                     if (player.GetButtonDown("BAttack")) { BAction(); }
                     if (player.GetButtonDown("XAttack")) { XAction(); }
                     if (player.GetButtonDown("YAttack")) { YAction(); }
@@ -297,13 +297,14 @@ public abstract class PlayerBase : ThingThatCanDie
     }
 
     #region Input Actions
-    public virtual void AAction()
+    public virtual void AAction(bool playAnim)
     {
         if (aTimer <= 0 && dir != Vector3.zero)
         {
             HUD.UsedA();
 
-            anim.SetTrigger("AAction");
+            if (playAnim)
+                anim.SetTrigger("AAction");
 
             state = State.dodging;
 

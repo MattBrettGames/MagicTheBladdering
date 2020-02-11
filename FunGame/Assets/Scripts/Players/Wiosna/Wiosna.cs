@@ -72,17 +72,18 @@ public class Wiosna : PlayerBase
         }
     }
 
-    public override void AAction()
+    public override void AAction(bool playAnim)
     {
         if (aTimer <= 0)
         {
             PlaySound(aSound);
+            anim.SetTrigger("AAction");
         }
     }
 
     public void DotheDodge()
     {
-            base.AAction();
+            base.AAction(false);
 
             int thisLayer;
             if (playerID == 0)
