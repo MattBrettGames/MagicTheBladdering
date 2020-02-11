@@ -121,6 +121,7 @@ public class Wiosna : PlayerBase
             base.YAction();
 
             anim.SetTrigger("YAttack");
+            StartCoroutine(DelayedY());
 
             yTimer = yCooldown;
         }
