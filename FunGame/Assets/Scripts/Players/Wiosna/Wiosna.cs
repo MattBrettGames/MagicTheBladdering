@@ -76,8 +76,6 @@ public class Wiosna : PlayerBase
     {
         if (aTimer <= 0)
         {
-            anim.SetTrigger("AAction");
-
             PlaySound(aSound);
         }
     }
