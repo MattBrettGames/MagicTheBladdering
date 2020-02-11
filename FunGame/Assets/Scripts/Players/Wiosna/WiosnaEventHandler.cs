@@ -24,7 +24,7 @@ public class WiosnaEventHandler : BlankMono
         wiosna.SummonClone(); 
     }
 
-    public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur); }
+    public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur, false, null); }
     public void GainIFrmaes() { wiosna.GainIFrames(); }
     public void LoseIFrmaes() { wiosna.LoseIFrames(); }
 

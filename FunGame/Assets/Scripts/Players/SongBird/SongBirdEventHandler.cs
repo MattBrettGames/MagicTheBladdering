@@ -17,7 +17,7 @@ public class SongBirdEventHandler : BlankMono
     public void GainHA() { songBird.GainHA(); }
     public void LoseHA() { songBird.LoseHA(); }
 
-    public void Vibration(float intensity, float dur) { songBird.ControllerRumble(intensity, dur); }
+    public void Vibration(float intensity, float dur) { songBird.ControllerRumble(intensity, dur, false, null); }
     public void GainIFrames() { songBird.GainIFrames(); }
     public void LoseIFrames() { songBird.LoseIFrames(); }
 

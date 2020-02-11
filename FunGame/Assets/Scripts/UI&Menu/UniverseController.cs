@@ -354,6 +354,7 @@ public class UniverseController : BlankMono
         yield return new WaitForSecondsRealtime(1);
 
         selectedChars[arrayIndex] = gobject;
+        gobject.GetComponent<PlayerBase>().OnSelected();
 
         lockedInPlayers++;
         //gobject.transform.parent = gameObject.transform;

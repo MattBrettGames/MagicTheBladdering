@@ -10,7 +10,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public string thisPlayer;
     public int playerID;
     [HideInInspector] public int numOfDeaths = 0;
-    public bool pvp;
+    [HideInInspector] public bool pvp = true;
 
     [Header("Movement Stats")]
     public float speed;
@@ -32,7 +32,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
-    [SerializeField] protected bool acting;
+    protected bool acting;
     protected Vector3 knockbackForce;
     private float knockBackPower;
     [HideInInspector] public State state;
@@ -88,8 +88,13 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip ySound;
     [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
     [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
-    [SerializeField] protected AudioClip victorySound;    
+    [SerializeField] protected AudioClip victorySound;
     AudioSource audioSource;
+
+    public void OnSelected()
+    {
+        healthMax = currentHealth;
+    }
 
     public virtual void Start()
     {
@@ -347,7 +352,7 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
-            ControllerRumble(0.2f, 0.1f);
+            ControllerRumble(0.2f, 0.1f, false, null);
             universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             hitEffects.SetActive(true);
             if (fromAttack)
@@ -398,7 +403,7 @@ public abstract class PlayerBase : ThingThatCanDie
         respawnEffects.SetActive(false);
 
         dir = Vector3.zero;
-        
+
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
 
@@ -436,8 +441,8 @@ public abstract class PlayerBase : ThingThatCanDie
     #region Utility Functions
     public virtual void HealthChange(int healthChange, PlayerBase attacker) { currentHealth += healthChange; if (currentHealth <= 0) { Death(attacker); } }
 
-    public void GainHA() { hyperArmour = true; }
-    public void LoseHA() { hyperArmour = false; }
+    public virtual void GainHA() { hyperArmour = true; }
+    public virtual void LoseHA() { hyperArmour = false; }
 
     public void GainIFrames() { iFrames = true; }
     public void GainTrueFrames() { iFrames = true; trueIFrames = true; outline.OutlineColor = Color.yellow; }
@@ -480,7 +485,7 @@ public abstract class PlayerBase : ThingThatCanDie
         if (poison && !trueIFrames && currentHealth > 1)
         {
             currentHealth -= poisonPerTick;
-            ControllerRumble(0.1f, 0.05f);
+            ControllerRumble(0.1f, 0.05f, false, null);
         }
         StartCoroutine(PoisonTick());
         ExtraUpdate();
@@ -503,7 +508,7 @@ public abstract class PlayerBase : ThingThatCanDie
         }
     }
 
-    public void ControllerRumble(float intensity, float dur)
+    public virtual void ControllerRumble(float intensity, float dur, bool isSkjegg, PlayerBase hitTarget)
     {
         player.SetVibration(1, intensity, dur);
         player.SetVibration(0, intensity, dur);
@@ -511,7 +516,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
 
-    public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f); CameraShake(); }
+    public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f, false, null); CameraShake(); }
 
     public virtual void CameraShake() { universe.CameraRumbleCall(0.1f); }
     #endregion
