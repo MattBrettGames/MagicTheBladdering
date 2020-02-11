@@ -31,7 +31,7 @@ public class Skjegg : PlayerBase
     [SerializeField] GameObject[] totemGameObjectArray = new GameObject[5];
     List<TotemBase> totemBaseList = new List<TotemBase>();
     [SerializeField] float[] totemLifeSpans = new float[5];
-    [SerializeField] float timeBetweenTotems;
+    [SerializeField, Tooltip("This is the time it takes for the totem options to cycle")] float timeBetweenTotems;
     int i_currentTotem;
     bool hasTotemActive;
     bool isSelectingTotem;
@@ -44,17 +44,15 @@ public class Skjegg : PlayerBase
 
     List<int> totemChoiceList = new List<int>();
 
-    [Space]
     [Header("Turtle Stats")]
     [SerializeField] int turtleHealthGainPerHit;
 
     [Header("Wolf Stats")]
     [SerializeField] float bleedDur;
     [SerializeField] float wolfAttackSpeed;
-
-
+    
     [Header("Bear Stats")]
-    [SerializeField] int bearDamageGainedOnAttack;
+    [SerializeField] float bearDamageGainedOnAttack;
 
     [Header("Ram Stats")]
     [SerializeField] float ramBurstDistance;

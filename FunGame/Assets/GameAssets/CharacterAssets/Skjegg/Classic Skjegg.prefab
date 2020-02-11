@@ -68,6 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947739376068138366}
   - component: {fileID: 7360431394424370519}
+  - component: {fileID: 8732362097778764278}
   m_Layer: 0
   m_Name: Classic Skjegg
   m_TagString: Untagged
@@ -125,7 +126,6 @@ MonoBehaviour:
   poison: 0
   trueIFrames: 0
   hazardFrames: 0
-  acting: 0
   state: 0
   visuals: {fileID: 2504058056037541175}
   respawnEffects: {fileID: 7807041153065922709}
@@ -161,28 +161,42 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   totemGameObjectArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 153615609314984722, guid: 349528d94971f56439815fa13b0dc5f0, type: 3}
+  - {fileID: 153615609314984722, guid: a2277638c6befda44923b465a369fde8, type: 3}
+  - {fileID: 153615609314984722, guid: f5718780d69dd9940aeeab3207da152f, type: 3}
+  - {fileID: 153615609314984722, guid: a5bca7c15efc63c4bad55251434322b7, type: 3}
+  - {fileID: 153615609314984722, guid: 5a14babea0be0a84bb4d3a4010ef7ccf, type: 3}
   totemLifeSpans:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  timeBetweenTotems: 0
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  timeBetweenTotems: 0.5
   turtleHealthGainPerHit: 4
   bleedDur: 0.4
   wolfAttackSpeed: 1.2
-  bearDamageGainedOnAttack: 0
-  ramBurstDistance: 0
-  ramBurstPower: 0
-  ramAttackKnockback: 0
-  birdBonusSpeed: 0
-  birdCritChance: 0
-  birdCritDamageBonus: 0
+  bearDamageGainedOnAttack: 0.05
+  ramBurstDistance: 7
+  ramBurstPower: 7
+  ramAttackKnockback: 5
+  birdBonusSpeed: 10
+  birdCritChance: 25
+  birdCritDamageBonus: 10
+--- !u!136 &8732362097778764278
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542806333920770793}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 3
+  m_Height: 15
+  m_Direction: 1
+  m_Center: {x: 0, y: 7, z: 0}
 --- !u!1 &2216907949878163477
 GameObject:
   m_ObjectHideFlags: 0
