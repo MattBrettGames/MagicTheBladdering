@@ -23,13 +23,13 @@ public class WiosnaEventHandler : BlankMono
 
     public void TurnFireOn() 
     {
-        if (SceneManager.GetActiveScene().name.Contains("Selector"))
+        if (SceneManager.GetActiveScene().name.Contains("Selector") || SceneManager.GetActiveScene().name.Contains("Menu") || SceneManager.GetActiveScene().name.Contains("Game"))
         {
             fireEffect.transform.localScale = new Vector3(15, 15, 15);
         }
         else
         {
-            fireEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            fireEffect.transform.localScale = new Vector3(1, 1, 1);
         }
         fireEffect.SetActive(true); 
     }
