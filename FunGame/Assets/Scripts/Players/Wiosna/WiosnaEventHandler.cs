@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WiosnaEventHandler : BlankMono
 {
@@ -20,8 +21,22 @@ public class WiosnaEventHandler : BlankMono
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
 
-    public void TurnFireOn() { fireEffect.SetActive(true); }
-    public void TurnFireOff() { fireEffect.SetActive(false); }
+    public void TurnFireOn() 
+    {
+        if (SceneManager.GetActiveScene().name.Contains("Selector"))
+        {
+            fireEffect.transform.localScale = new Vector3(15, 15, 15);
+        }
+        else
+        {
+            fireEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        }
+        fireEffect.SetActive(true); 
+    }
+    public void TurnFireOff() 
+    {
+        fireEffect.SetActive(false); 
+    }
 
 
     public void DoTheDodge() { wiosna.DotheDodge(); }
