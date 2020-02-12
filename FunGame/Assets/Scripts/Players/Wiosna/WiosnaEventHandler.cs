@@ -11,7 +11,6 @@ public class WiosnaEventHandler : BlankMono
 
     void Start()
     {
-        melee.gameObject.SetActive(false);
         fireEffect.SetActive(false);
     }
 
