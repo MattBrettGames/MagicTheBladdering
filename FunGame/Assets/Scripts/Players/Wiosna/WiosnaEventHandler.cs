@@ -9,10 +9,17 @@ public class WiosnaEventHandler : BlankMono
     public Wiosna wiosna;
     public Weapons melee;
     [SerializeField] GameObject fireEffect;
+    [SerializeField] Transform targetBone;
+    [SerializeField] Vector3 offset;
 
     void Start()
     {
         fireEffect.SetActive(false);
+    }
+
+    void Update()
+    {
+        fireEffect.transform.position = targetBone.position + offset;
     }
 
     public void BeginMelee() { melee.gameObject.SetActive(true); melee.StartAttack(); Invoke("EndMelee", 0.4f); }
