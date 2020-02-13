@@ -6,6 +6,9 @@ using System;
 
 public abstract class PlayerBase : ThingThatCanDie
 {
+
+    public bool isAI;
+
     [Header("GameMode Stuff")]
     public string thisPlayer;
     public int playerID;
@@ -161,101 +164,100 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void Update()
     {
-        if (aTimer > 0) aTimer -= Time.deltaTime;
-        if (bTimer > 0) bTimer -= Time.deltaTime;
-        if (xTimer > 0) xTimer -= Time.deltaTime;
-        if (yTimer > 0) yTimer -= Time.deltaTime;
-
-        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
-
-        aimTarget.position = transform.position + dir * 5;
-
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
-
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-
-        switch (state)
+        if (!isAI)
         {
-            case State.stun:
-                anim.SetBool("Stunned", true);
-                break;
+            if (aTimer > 0) aTimer -= Time.deltaTime;
+            if (bTimer > 0) bTimer -= Time.deltaTime;
+            if (xTimer > 0) xTimer -= Time.deltaTime;
+            if (yTimer > 0) yTimer -= Time.deltaTime;
 
-            case State.attack:
-                break;
+            dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
 
-            case State.normal:
+            aimTarget.position = transform.position + dir * 5;
 
-                anim.SetBool("LockOn", false);
-                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-                if (!acting)
-                {
-                    //Rotating the Character Model
-                    visuals.transform.LookAt(aimTarget);
-                    rb2d.velocity = dir * (speed + bonusSpeed);
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
-                    //Standard Inputs
-                    if (player.GetButtonDown("AAction")) { AAction(true); }
-                    if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
-                    if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack")) { YAction(); }
-
-                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                }
-                else
-                {
-                    dir = Vector3.zero;
-                }
-                break;
-
-            case State.lockedOn:
-
-                walkDirection.position = dir + transform.position;
-
-                anim.SetBool("LockOn", true);
-                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
-
-                if (!acting)
-                {
-                    rb2d.velocity = dir * (speed + bonusSpeed);
-
-                    if (player.GetButtonDown("AAction")) { AAction(true); }
-                    if (player.GetButtonDown("BAttack")) { BAction(); }
-                    if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack")) { YAction(); }
-
-                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
-                    anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
-
-                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
-
-                    LockOnScroll();
-                }
-
-                break;
-
-            case State.dodging:
-
-                if (aTimer <= 0)
-                {
-                    DodgeSliding(visuals.transform.forward);
-                }
-                break;
-
-            case State.knockback:
-                KnockbackContinual();
-                break;
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            if (thisPlayer != "P1")
+            switch (state)
             {
-                TakeDamage(3000, Vector3.zero, 0, true, false, this);
+                case State.stun:
+                    anim.SetBool("Stunned", true);
+                    break;
+
+                case State.attack:
+                    break;
+
+                case State.normal:
+
+                    anim.SetBool("LockOn", false);
+                    if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+
+                    if (!acting)
+                    {
+                        //Rotating the Character Model
+                        visuals.transform.LookAt(aimTarget);
+                        rb2d.velocity = dir * (speed + bonusSpeed);
+
+                        //Standard Inputs
+                        if (player.GetButtonDown("AAction")) { AAction(true); }
+                        if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
+                        if (player.GetButtonDown("XAttack")) { XAction(); }
+                        if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                    }
+                    else
+                    {
+                        dir = Vector3.zero;
+                    }
+                    break;
+
+                case State.lockedOn:
+
+                    walkDirection.position = dir + transform.position;
+
+                    anim.SetBool("LockOn", true);
+                    if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
+
+                    if (!acting)
+                    {
+                        rb2d.velocity = dir * (speed + bonusSpeed);
+
+                        if (player.GetButtonDown("AAction")) { AAction(true); }
+                        if (player.GetButtonDown("BAttack")) { BAction(); }
+                        if (player.GetButtonDown("XAttack")) { XAction(); }
+                        if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                        anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
+
+                        aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+
+                        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
+
+                        LockOnScroll();
+                    }
+
+                    break;
+
+                case State.dodging:
+
+                    if (aTimer <= 0)
+                    {
+                        DodgeSliding(visuals.transform.forward);
+                    }
+                    break;
+
+                case State.knockback:
+                    KnockbackContinual();
+                    break;
             }
+        }
+        else
+        {
+            print("This character does not support AI controls");
         }
     }
 
@@ -520,6 +522,21 @@ public abstract class PlayerBase : ThingThatCanDie
     public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f, false, null); CameraShake(); }
 
     public virtual void CameraShake() { universe.CameraRumbleCall(0.1f); }
+    #endregion
+
+
+    #region AI Controls
+
+    float detectionDistance = 15;
+
+    public void AILogic()
+    {
+        if (Vector3.Distance(transform.position, lockTargetList[currentLock].position) <= detectionDistance)
+        {
+            XAction();
+        }
+    }
+
     #endregion
 
 }
