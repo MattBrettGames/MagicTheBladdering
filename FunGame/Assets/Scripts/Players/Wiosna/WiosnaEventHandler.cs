@@ -9,16 +9,10 @@ public class WiosnaEventHandler : BlankMono
     public Wiosna wiosna;
     public Weapons melee;
     [SerializeField] GameObject fireEffect;
-    [SerializeField] Transform targetBone;
 
     void Start()
     {
         fireEffect.SetActive(false);
-    }
-
-    void Update()
-    {
-        fireEffect.transform.position = targetBone.position;
     }
 
     public void BeginMelee() { melee.gameObject.SetActive(true); melee.StartAttack(); Invoke("EndMelee", 0.4f); }
@@ -27,7 +21,7 @@ public class WiosnaEventHandler : BlankMono
     public void BeginActing() { wiosna.BeginActing(); }
     public void EndActing() { wiosna.EndActing(); }
 
-    public void TurnFireOn() 
+    public void TurnFireOn()
     {
         if (SceneManager.GetActiveScene().name.Contains("Selector") || SceneManager.GetActiveScene().name.Contains("Menu") || SceneManager.GetActiveScene().name.Contains("Game"))
         {
@@ -37,11 +31,11 @@ public class WiosnaEventHandler : BlankMono
         {
             fireEffect.transform.localScale = new Vector3(1, 1, 1);
         }
-        fireEffect.SetActive(true); 
+        fireEffect.SetActive(true);
     }
-    public void TurnFireOff() 
+    public void TurnFireOff()
     {
-        fireEffect.SetActive(false); 
+        fireEffect.SetActive(false);
     }
 
 

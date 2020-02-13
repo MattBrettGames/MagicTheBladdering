@@ -83,28 +83,28 @@ public class Wiosna : PlayerBase
 
     public void DotheDodge()
     {
-            base.AAction(false);
+        base.AAction(false);
 
-            int thisLayer;
-            if (playerID == 0)
-            {
-                thisLayer = 13;
-            }
-            else
-            {
-                thisLayer = 14;
-            }
-            Physics.IgnoreLayerCollision(thisLayer, 12, true);
-            outline.OutlineColor = Color.grey;
+        int thisLayer;
+        if (playerID == 0)
+        {
+            thisLayer = 13;
+        }
+        else
+        {
+            thisLayer = 14;
+        }
+        Physics.IgnoreLayerCollision(thisLayer, 12, true);
+        outline.OutlineColor = Color.grey;
 
 
-            state = State.dodging;
+        state = State.dodging;
 
-            StartCoroutine(EndDig(thisLayer));
-            vanishEffect.SetActive(false);
-            appearEffect.SetActive(false);
-            vanishEffect.transform.localPosition = transform.localPosition;
-            vanishEffect.SetActive(true);
+        StartCoroutine(EndDig(thisLayer));
+        vanishEffect.SetActive(false);
+        appearEffect.SetActive(false);
+        vanishEffect.transform.localPosition = transform.localPosition;
+        vanishEffect.SetActive(true);
     }
 
     IEnumerator EndDig(int layer)
@@ -117,7 +117,6 @@ public class Wiosna : PlayerBase
         appearEffect.transform.localPosition = transform.localPosition;
         appearEffect.SetActive(true);
     }
-
 
     public override void YAction()
     {

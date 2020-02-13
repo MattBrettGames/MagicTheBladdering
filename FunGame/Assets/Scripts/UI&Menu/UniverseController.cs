@@ -347,6 +347,7 @@ public class UniverseController : BlankMono
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
     {
+        print("Have recieved " + lockedInPlayers);
         StartCoroutine(DelayedCheckReady(arrayIndex, gobject, character, skin));
     }
     IEnumerator DelayedCheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
