@@ -156,7 +156,7 @@ public class Valderheim : PlayerBase
         else
         {
             aimTarget.transform.position = lockTargetList[currentLock].position + lookAtVariant;
-
+            dir = visuals.transform.forward;
             AILogic();
 
             if (aTimer > 0) aTimer -= Time.deltaTime;
@@ -164,7 +164,6 @@ public class Valderheim : PlayerBase
             if (xTimer > 0) xTimer -= Time.deltaTime;
             if (yTimer > 0) yTimer -= Time.deltaTime;
 
-            dir = visuals.transform.forward;
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
