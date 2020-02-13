@@ -1,23 +1,48 @@
 fileFormatVersion: 2
-guid: 2fa636c0deef8b544bd4ce4bab349ebf
+guid: 57da08429ed64bc4888dda19754f7776
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Skjegg_SkjeggBod
-    100002: //RootNode
-    100004: SkjeggEyes_Skjegg
-    400000: Skjegg_SkjeggBod
-    400002: //RootNode
-    400004: SkjeggEyes_Skjegg
-    2100000: Skjegg_SkjeggBodMat
-    2100002: SkjeggEyes_SkjeggMat
-    2300000: Skjegg_SkjeggBod
-    2300002: SkjeggEyes_Skjegg
-    3300000: Skjegg_SkjeggBod
-    3300002: SkjeggEyes_Skjegg
-    4300000: Skjegg_SkjeggBod
-    4300002: SkjeggEyes_Skjegg
-  externalObjects: {}
+    100000: //RootNode
+    100002: SkjeggApparell
+    100004: SkjeggBod
+    100006: SkjeggEyes
+    100008: SkjeggMustache
+    100010: SkjeggSmallBeard
+    400000: //RootNode
+    400002: SkjeggApparell
+    400004: SkjeggBod
+    400006: SkjeggEyes
+    400008: SkjeggMustache
+    400010: SkjeggSmallBeard
+    2100000: lambert2
+    2100002: lambert1
+    2300000: SkjeggApparell
+    2300002: SkjeggBod
+    2300004: SkjeggEyes
+    2300006: SkjeggMustache
+    2300008: SkjeggSmallBeard
+    3300000: SkjeggApparell
+    3300002: SkjeggBod
+    3300004: SkjeggEyes
+    3300006: SkjeggMustache
+    3300008: SkjeggSmallBeard
+    4300000: SkjeggMustache
+    4300002: SkjeggEyes
+    4300004: SkjeggBod
+    4300006: SkjeggSmallBeard
+    4300008: SkjeggApparell
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 78fc9b232ce8b2944ac91cd4330eb1b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: b9cf8b793da6a534499f6c851970dd5c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -68,7 +93,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
