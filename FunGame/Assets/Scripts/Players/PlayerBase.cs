@@ -614,16 +614,17 @@ public abstract class PlayerBase : ThingThatCanDie
     public void AILogic()
     {
         aiLooker.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+        aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        bool blockedPath = Physics.Raycast(transform.position, visuals.transform.forward, Mathf.Infinity, gameObject.layer);
+        bool blockedPath = Physics.Raycast(transform.position, aiLooker.transform.forward, distanceToTarget);
         print(blockedPath);
 
 
         if (blockedPath)
         {
             aimTarget.position = visuals.transform.forward * 5;
-            visuals.transform.Rotate(new Vector3(0, 0, 0.5f));
+            visuals.transform.Rotate(new Vector3(0, 1 * Time.deltaTime, 0));
         }
         else
         {
