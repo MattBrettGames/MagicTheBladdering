@@ -550,6 +550,7 @@ public abstract class PlayerBase : ThingThatCanDie
         yTimer = 0;
 
         GainTrueFrames();
+        outline.OutlineColor = Color.black;
         StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");
         damageMult = 1;
