@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class WiosnaEventHandler : BlankMono
 {
@@ -23,14 +22,6 @@ public class WiosnaEventHandler : BlankMono
 
     public void TurnFireOn()
     {
-        if (SceneManager.GetActiveScene().name.Contains("Selector") || SceneManager.GetActiveScene().name.Contains("Menu") || SceneManager.GetActiveScene().name.Contains("Game"))
-        {
-            fireEffect.transform.localScale = new Vector3(15, 15, 15);
-        }
-        else
-        {
-            fireEffect.transform.localScale = new Vector3(1, 1, 1);
-        }
         fireEffect.SetActive(true);
     }
     public void TurnFireOff()
