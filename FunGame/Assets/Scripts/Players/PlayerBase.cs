@@ -484,18 +484,18 @@ public abstract class PlayerBase : ThingThatCanDie
         enabled = false;
         dead = true;
 
-        GainIFrames();
+        GainTrueFrames();
         respawnEffects.SetActive(false);
 
         dir = Vector3.zero;
 
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
+        anim.SetBool("LockOn", false);
+        anim.SetTrigger("Death");
 
         GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
         Time.timeScale = 1;
-        anim.SetBool("LockOn", false);
-        anim.SetTrigger("Death");
         if (killer != null)
         {
             universe.PlayerDeath(gameObject, killer.gameObject);
@@ -561,7 +561,6 @@ public abstract class PlayerBase : ThingThatCanDie
 
         EndActing();
         anim.SetFloat("Movement", 0);
-        //visuals.transform.eulerAngles = Vector3.zero;
     }
     protected IEnumerator PoisonTick()
     {
