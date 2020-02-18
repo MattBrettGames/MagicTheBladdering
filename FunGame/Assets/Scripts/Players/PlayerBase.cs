@@ -55,6 +55,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public GameObject visuals;
     [SerializeField] GameObject respawnEffects;
     [SerializeField] GameObject hitEffects;
+    [SerializeField] GameObject invincibleEffect;
     [HideInInspector] public Transform aimTarget;
     protected Outline outline;
     protected Animator anim;
@@ -448,6 +449,11 @@ public abstract class PlayerBase : ThingThatCanDie
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             Knockback(knockback, dirTemp);
             PlaySound(ouchSounds);
+        }
+        if (iFrames || trueIFrames)
+        {
+            invincibleEffect.SetActive(false);
+            invincibleEffect.SetActive(true);
         }
     }
     IEnumerator HitStop(float time)
