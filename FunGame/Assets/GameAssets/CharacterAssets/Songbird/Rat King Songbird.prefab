@@ -74,28 +74,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.01, z: 0.1}
   m_Center: {x: 0, y: 0, z: -0.01}
---- !u!114 &495545894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6770962236213067009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce40f2c857997864a93498bbe390a64c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 0}
-  poisonActive: 0
---- !u!33 &3829892805082024483
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6770962236213067009}
-  m_Mesh: {fileID: 4300000, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
 --- !u!23 &2335763474517045569
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -133,6 +111,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!33 &3829892805082024483
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770962236213067009}
+  m_Mesh: {fileID: 4300000, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
+--- !u!114 &495545894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770962236213067009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce40f2c857997864a93498bbe390a64c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 0}
+  poisonActive: 0
 --- !u!96 &2991960800948032025
 TrailRenderer:
   serializedVersion: 2
@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 80
   healthMax: 0
+  isAI: 0
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
@@ -331,6 +332,10 @@ MonoBehaviour:
   playerColour: {r: 0, g: 0, b: 0, a: 0}
   baseXDamage: 10
   baseXKnockback: 2
+  smokeCloudPrefab: {fileID: 3455997052037556577, guid: 20ae84f7a5fd4314faafb15a2359cd6f,
+    type: 3}
+  cannisterPrefab: {fileID: 6075505490589839577, guid: 73994fc1c00806144b5d5098a8732389,
+    type: 3}
   cannisterCloudSize: 10
   cannisterBurstDamage: 25
   cannisterPoisonTime: 7

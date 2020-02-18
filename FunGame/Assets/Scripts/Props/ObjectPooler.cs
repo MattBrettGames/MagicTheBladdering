@@ -4,30 +4,11 @@ using UnityEngine;
 
 public class ObjectPooler : BlankMono
 {
-    #region Songbird
-    [Header("Songbird Inputs")]
-    public GameObject poisonSmoke;
-    public GameObject cannister;
-
-    [HideInInspector] public List<GameObject> poisonSmokeList = new List<GameObject>();
-    [HideInInspector] public List<GameObject> cannisters = new List<GameObject>();
-
-    public void ReturnToPoisonSmokePool(GameObject gameobject) { poisonSmokeList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
-
-    #endregion
 
     #region Carman
     [Header("Carmen")]
     public GameObject grappler;
     [HideInInspector] public List<GameObject> grapplerList = new List<GameObject>();
-    #endregion
-
-    #region Skjegg
-    [Header("Skjegg Input")]
-    public GameObject ghost;
-
-    [HideInInspector] public List<GameObject> ghostList = new List<GameObject>();
-    public void ReturnToGhostList(GameObject gameobject) { ghostList.Add(gameobject); gameobject.transform.position = transform.position; gameobject.SetActive(false); }
     #endregion
 
     #region Wiosna
@@ -54,13 +35,6 @@ public class ObjectPooler : BlankMono
     {
         for (int i = 0; i < 16; i++)
         {
-            #region Songbird Props
-            poisonSmokeList.Add(Instantiate<GameObject>(poisonSmoke, transform.position, Quaternion.identity, transform));
-            poisonSmokeList[i].SetActive(false);
-
-            cannisters.Add(Instantiate<GameObject>(cannister, transform.position, Quaternion.identity, transform));
-            cannisters[i].SetActive(false);
-            #endregion
 
             #region Carman Props
             grapplerList.Add(Instantiate<GameObject>(grappler, transform.position, Quaternion.identity, transform));
@@ -84,21 +58,5 @@ public class ObjectPooler : BlankMono
             #endregion
 
         }
-
-        for (int i = 0; i < 15; i++)
-        {
-            #region Skjegg & WarBanner Props
-            ghostList.Add(Instantiate<GameObject>(ghost, transform.position, Quaternion.identity));
-            ghostList[i].SetActive(false);
-            #endregion
-        }
-    }
-
-    public GameObject ReturnSmokeCloud(int listIndex)
-    {
-        GameObject poisonSmoke = poisonSmokeList[listIndex];
-        poisonSmokeList.RemoveAt(listIndex);
-        return poisonSmoke;
-
     }
 }

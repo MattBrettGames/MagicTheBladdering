@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2794448242613975470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 5649986583162665012}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 494918673836571954}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &494918673836571954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 5239521682017633542, guid: eb1fe8dcb2001d9409b58e6a7401efeb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5649986583162665012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2794448242613975470}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2754800137171749146}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3672090907512359710
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,7 +65,7 @@ Transform:
   - {fileID: 3672090909023925168}
   - {fileID: 9045582960477373567}
   - {fileID: 2312803858475730722}
-  - {fileID: 494918673836571954}
+  - {fileID: 2754800137171749146}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,6 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 80
   healthMax: 0
+  isAI: 0
   thisPlayer: P1
   playerID: 0
   numOfDeaths: 0
@@ -73,6 +105,7 @@ MonoBehaviour:
   respawnEffects: {fileID: 4869640282230543831}
   hitEffects: {fileID: 3851378883283793772}
   aimTarget: {fileID: 0}
+  lockOnLerpSpeed: 0.3
   aCooldown: 1.5
   bCooldown: 7
   xCooldown: 0.5
@@ -81,16 +114,22 @@ MonoBehaviour:
   bTimer: 0
   xTimer: 0
   yTimer: 0
-  aSound: SongA
-  bSound: SongB
-  xSound: SongX
-  ySound: SongY
-  ouchSound: SongOuch
-  deathSound: 
-  bSoundBonus: SongYOuch
+  aSound: {fileID: 0}
+  bSound: {fileID: 0}
+  xSound: {fileID: 0}
+  ySound: {fileID: 0}
+  ouchSounds: []
+  deathSounds: []
+  victorySound: {fileID: 0}
+  bSoundBonus: {fileID: 0}
   weapon: {fileID: 3672090909329855606}
+  playerColour: {r: 0, g: 0, b: 0, a: 0}
   baseXDamage: 10
   baseXKnockback: 2
+  smokeCloudPrefab: {fileID: 3455997052037556577, guid: 20ae84f7a5fd4314faafb15a2359cd6f,
+    type: 3}
+  cannisterPrefab: {fileID: 6075505490589839577, guid: 73994fc1c00806144b5d5098a8732389,
+    type: 3}
   cannisterCloudSize: 10
   cannisterBurstDamage: 25
   cannisterPoisonTime: 7
@@ -444,6 +483,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 0}
   poisonActive: 0
+--- !u!1 &5395311913856462783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 5649986583162665012}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2754800137171749146}
+  m_Layer: 0
+  m_Name: SongbirdPassiveGas (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2754800137171749146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 5649986583162665012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395311913856462783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 494918673836571954}
+  m_Father: {fileID: 3672090907512359681}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &781499100191660940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -806,11 +876,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3672090907512359681}
     m_Modifications:
-    - target: {fileID: 8812745814581602408, guid: eb1fe8dcb2001d9409b58e6a7401efeb,
-        type: 3}
-      propertyPath: m_Name
-      value: SongbirdPassiveGas
-      objectReference: {fileID: 0}
     - target: {fileID: 5239521682017633542, guid: eb1fe8dcb2001d9409b58e6a7401efeb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -866,11 +931,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8812745814581602408, guid: eb1fe8dcb2001d9409b58e6a7401efeb,
+        type: 3}
+      propertyPath: m_Name
+      value: SongbirdPassiveGas
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb1fe8dcb2001d9409b58e6a7401efeb, type: 3}
---- !u!4 &494918673836571954 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5239521682017633542, guid: eb1fe8dcb2001d9409b58e6a7401efeb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5649986583162665012}
-  m_PrefabAsset: {fileID: 0}

@@ -9,7 +9,6 @@ public class SongBird : PlayerBase
 
     [Header("More Components")]
     public CorvidDagger weapon;
-    private ObjectPooler pooler;
     private GameObject smokeCloud;
     private GameObject smokeCloudCannister;
     private GameObject smokeCloudDodge;
@@ -19,6 +18,10 @@ public class SongBird : PlayerBase
     [Header("Dagger Swipe")]
     public int baseXDamage;
     public int baseXKnockback;
+
+    [Header("All Prefabs for Instantiation")]
+    [SerializeField] GameObject smokeCloudPrefab;
+    [SerializeField] GameObject cannisterPrefab;
 
     [Header("Cannister Cloud")]
     [SerializeField] int cannisterCloudSize;
@@ -48,22 +51,29 @@ public class SongBird : PlayerBase
     public override void SetInfo(UniverseController uni, int layerNew)
     {
         base.SetInfo(uni, layerNew);
-        pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }
 
     void GainSmokes()
     {
-        smokeCloud = pooler.ReturnSmokeCloud(playerID);
+        smokeCloud = GenerateSmokeCloud();
         smokeCloud.tag = tag;
-        smokeCloudCannister = pooler.ReturnSmokeCloud(playerID + 8);
+        smokeCloudCannister = GenerateSmokeCloud();
         smokeCloudCannister.tag = tag;
-        smokeCloudDodge = pooler.ReturnSmokeCloud(playerID + 4);
+        smokeCloudDodge = GenerateSmokeCloud();
         smokeCloudDodge.tag = tag;
 
-        cannister = pooler.cannisters[playerID];
+        cannister = Instantiate(cannisterPrefab);
+        cannister.SetActive(false);
         cannister.tag = tag;
         hasCannister = true;
+    }
+
+    public GameObject GenerateSmokeCloud()
+    {
+        GameObject smoke = Instantiate(smokeCloudPrefab);
+        smoke.SetActive(false);
+        return smoke;
     }
 
     public override void XAction()
