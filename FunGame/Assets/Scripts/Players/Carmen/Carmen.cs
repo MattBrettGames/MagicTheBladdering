@@ -304,6 +304,7 @@ public class Carmen : PlayerBase
 
                 if (Vector3.Distance(transform.position, lockTargetList[currentLock].position) <= 11)
                 {
+                    enemyVisual.GetComponentInParent<PlayerBase>().enabled = false;
                     Time.timeScale = 0.2f;
                     StartCoroutine(HideSymbol(0.5f));
                 }
@@ -321,7 +322,8 @@ public class Carmen : PlayerBase
     IEnumerator HideSymbol(float time)
     {
         yield return new WaitForSecondsRealtime(time);
-        Time.timeScale = 1;
+        Time.timeScale = 1; 
+        enemyVisual.GetComponentInParent<PlayerBase>().enabled = true;
     }
 
     public override void BAction()
