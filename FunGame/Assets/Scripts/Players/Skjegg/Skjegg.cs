@@ -129,7 +129,6 @@ public class Skjegg : PlayerBase
                 PlaceTotem();
             }
         }
-
     }
 
     public override void ControllerRumble(float intensity, float dur, bool isSkjegg, PlayerBase hitTarget)
