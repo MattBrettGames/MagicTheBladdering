@@ -12,7 +12,7 @@ public class TotemBase : ThingThatCanDie
     void Update()
     {
         lifeSpan -= Time.deltaTime;
-        if(lifeSpan <= 0)
+        if(lifeSpan <= 0 && gameObject.activeSelf)
         {
             Vanish();
         }
