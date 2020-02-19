@@ -29,6 +29,7 @@ public class TotemBase : ThingThatCanDie
 
     public void SummonTotem(float tempLifeSpan, Skjegg skjegg)
     {
+        enabled = true;
         tag = skjegg.tag;
         lifeSpan = tempLifeSpan;
         owner = skjegg;
@@ -38,6 +39,7 @@ public class TotemBase : ThingThatCanDie
     {
         owner.EndTotemEffect(thisTotemType);
         gameObject.SetActive(false);
+        enabled = false;
     }
 
 }
