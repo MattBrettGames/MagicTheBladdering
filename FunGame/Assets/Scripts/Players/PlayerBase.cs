@@ -267,84 +267,8 @@ public abstract class PlayerBase : ThingThatCanDie
         // This bit is the AI
         else
         {
-            dir = visuals.transform.forward;
             AILogic();
-
-            if (aTimer > 0) aTimer -= Time.deltaTime;
-            if (bTimer > 0) bTimer -= Time.deltaTime;
-            if (xTimer > 0) xTimer -= Time.deltaTime;
-            if (yTimer > 0) yTimer -= Time.deltaTime;
-
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
-
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-
-            switch (state)
-            {
-                case State.stun:
-                    anim.SetBool("Stunned", true);
-                    break;
-
-                case State.attack:
-                    break;
-
-                case State.normal:
-
-                    anim.SetBool("LockOn", false);
-                    if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
-
-                    if (!acting)
-                    {
-                        //Rotating the Character Model
-                        rb2d.velocity = dir * (speed + bonusSpeed);
-
-
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    }
-                    else
-                    {
-                        dir = Vector3.zero;
-                    }
-                    break;
-
-                case State.lockedOn:
-
-                    walkDirection.position = dir + transform.position;
-
-                    anim.SetBool("LockOn", true);
-                    if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
-
-                    if (!acting)
-                    {
-                        rb2d.velocity = dir * (speed + bonusSpeed);
-
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                        anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
-                        anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
-
-                        aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-
-                        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
-
-                        LockOnScroll();
-                    }
-
-                    break;
-
-                case State.dodging:
-
-                    if (aTimer <= 0)
-                    {
-                        DodgeSliding(visuals.transform.forward);
-                    }
-                    break;
-
-                case State.knockback:
-                    KnockbackContinual();
-                    break;
-            }
-
-
+            AIUpdate();
         }
     }
 
@@ -621,6 +545,91 @@ public abstract class PlayerBase : ThingThatCanDie
 
     float detectionDistance = 15;
     Transform aiLooker;
+    float timeStationary = 0;
+    bool repathing;
+
+
+    public void AIUpdate()
+    {
+        dir = visuals.transform.forward;
+        AILogic();
+
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+        switch (state)
+        {
+            case State.stun:
+                anim.SetBool("Stunned", true);
+                break;
+
+            case State.attack:
+                break;
+
+            case State.normal:
+
+                anim.SetBool("LockOn", false);
+
+                if (!acting)
+                {
+                    //Rotating the Character Model
+                    if (!repathing) visuals.transform.LookAt(aimTarget);
+
+                    rb2d.velocity = dir * (speed + bonusSpeed);
+
+
+                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                }
+                else
+                {
+                    dir = Vector3.zero;
+                }
+                break;
+
+            case State.lockedOn:
+
+                walkDirection.position = dir + transform.position;
+
+                anim.SetBool("LockOn", true);
+
+                if (!acting)
+                {
+                    rb2d.velocity = dir * (speed + bonusSpeed);
+
+                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                    anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                    anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
+
+                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
+
+                    LockOnScroll();
+                }
+
+                break;
+
+            case State.dodging:
+
+                if (aTimer <= 0)
+                {
+                    DodgeSliding(visuals.transform.forward);
+                }
+                break;
+
+            case State.knockback:
+                KnockbackContinual();
+                break;
+        }
+
+
+    }
 
     public void AILogic()
     {
@@ -628,21 +637,28 @@ public abstract class PlayerBase : ThingThatCanDie
         aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        bool blockedPath = Physics.Raycast(transform.position, aiLooker.transform.forward, distanceToTarget, gameObject.layer);
-
-        Debug.DrawRay(transform.position, aiLooker.transform.forward);
-
-        if (blockedPath)
+        if (rb2d.velocity.sqrMagnitude <= 20)
         {
-            print("My path is blocked");
+            timeStationary += Time.deltaTime * 5;
+        }
+        else
+        {
+            timeStationary -= Time.deltaTime;
+        }
+
+        if (timeStationary <= 1f) repathing = false;
+        else repathing = true;
+
+
+        if (repathing)
+        {
             aimTarget.position = (visuals.transform.forward * 5);
-            visuals.transform.Rotate(new Vector3(0, 1 * Time.deltaTime, 0));
+            visuals.transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
         }
         else
         {
             aimTarget.transform.position = lockTargetList[currentLock].position + lookAtVariant;
         }
-
 
         if (distanceToTarget <= detectionDistance)
         {
