@@ -49,7 +49,7 @@ public class Skjegg : PlayerBase
     [Header("Wolf Stats")]
     [SerializeField] float bleedDur;
     [SerializeField] float wolfAttackSpeed;
-    
+
     [Header("Bear Stats")]
     [SerializeField] float bearDamageGainedOnAttack;
 
@@ -72,45 +72,56 @@ public class Skjegg : PlayerBase
         for (int i = 0; i < totemGameObjectArray.Length; i++)
         {
             totemBaseList.Add(Instantiate(totemGameObjectArray[i]).GetComponent<TotemBase>());
+            totemBaseList[i].gameObject.SetActive(false);
         }
         StartCoroutine(SkjeggUpdate());
+        anim.SetFloat("AttackSpeedMult", 1);
     }
 
 
     public IEnumerator SkjeggUpdate()
     {
         yield return new WaitForSeconds(timeBetweenTotems);
+        StartCoroutine(SkjeggUpdate());
 
         if (i_currentTotem < 2) i_currentTotem++;
         else i_currentTotem = 0;
 
         totemSprite.sprite = totemSymbolArray[totemChoiceList[i_currentTotem]];
-        StartCoroutine(SkjeggUpdate());
     }
 
     public override void XAction()
     {
-        base.XAction();
-        anim.SetTrigger("XAttack");
-        rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true);
-        leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true);
+        if (xTimer <= 0)
+        {
+            base.XAction();
+            anim.SetTrigger("XAttack");
+            rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true);
+            leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true);
+            xTimer = xCooldown;
+        }
     }
 
     public override void YAction()
     {
-        base.YAction();
-        anim.SetTrigger("YAttack");
-        rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true);
-        leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true);
+        if (yTimer <= 0)
+        {
+            base.YAction();
+            anim.SetTrigger("YAttack");
+            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true);
+            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true);
+            yTimer = yCooldown;
+        }
     }
 
 
     public override void BAction()
     {
-        base.BAction();
 
         if (bTimer <= 0)
         {
+            base.BAction();
+
             if (!isSelectingTotem)
             {
                 totemChoiceList.AddRange(new List<int> { 0, 1, 2, 3, 4 });
@@ -126,45 +137,44 @@ public class Skjegg : PlayerBase
                 totemSprite.gameObject.SetActive(false);
                 isSelectingTotem = false;
                 anim.SetTrigger("BAttack");
+                bTimer = bCooldown;
                 PlaceTotem();
             }
         }
     }
 
-    public override void ControllerRumble(float intensity, float dur, bool isSkjegg, PlayerBase hitTarget)
+    public override void OnHit(PlayerBase hitTarget)
     {
-        base.ControllerRumble(intensity, dur, isSkjegg, hitTarget);
+        base.OnHit(hitTarget);
+        print(isTurtle + "|" + isWolf + "|" + isBear + "|" + isRam + "|" + isBird);
 
-        if (isSkjegg)
+        if (isTurtle)
         {
-            if (isTurtle)
-            {
-                currentHealth += turtleHealthGainPerHit;
-                if (currentHealth > healthMax) currentHealth = healthMax;
-            }
+            currentHealth += turtleHealthGainPerHit;
+            if (currentHealth > healthMax) currentHealth = healthMax;
+        }
 
-            if (isWolf)
-            {
-                hitTarget.poison = true;
-                StartCoroutine(EndTargetPoison(hitTarget));
-            }
+        if (isWolf)
+        {
+            hitTarget.poison = true;
+            StartCoroutine(EndTargetPoison(hitTarget));
+        }
 
-            if (isBear)
-            {
-                damageMult += bearDamageGainedOnAttack;
-            }
+        if (isBear)
+        {
+            damageMult += bearDamageGainedOnAttack;
+        }
 
-            if (isRam)
-            {
-                hitTarget.Knockback(ramAttackKnockback, visuals.transform.forward);
-            }
+        if (isRam)
+        {
+            hitTarget.Knockback(ramAttackKnockback, visuals.transform.forward);
+        }
 
-            if (isBird)
+        if (isBird)
+        {
+            if (Random.Range(0, 100) <= birdCritChance)
             {
-                if (Random.Range(0, 100) <= birdCritChance)
-                {
-                    hitTarget.TakeDamage(birdCritDamageBonus, Vector3.zero, 0, false, true, this);
-                }
+                hitTarget.TakeDamage(birdCritDamageBonus, Vector3.zero, 0, false, true, this);
             }
         }
     }

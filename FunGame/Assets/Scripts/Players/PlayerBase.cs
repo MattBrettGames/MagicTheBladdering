@@ -531,6 +531,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #region Utility Functions
     public virtual void HealthChange(int healthChange, PlayerBase attacker) { currentHealth += healthChange; if (currentHealth <= 0) { Death(attacker); } }
 
+    public virtual void OnHit(PlayerBase target) { }
     public virtual void GainHA() { hyperArmour = true; }
     public virtual void LoseHA() { hyperArmour = false; }
 
