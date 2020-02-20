@@ -76,7 +76,6 @@ public class UniverseController : BlankMono
         {
             if (Input.GetButtonDown("AllBButton") || Input.GetKeyDown(KeyCode.H))
             {
-                print("Have gotten back Button");
                 GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("MainMenu");
                 selectedChars[0] = null;
                 selectedChars[1] = null;
@@ -88,15 +87,13 @@ public class UniverseController : BlankMono
         {
             if (Input.GetButtonDown("AllBButton"))
             {
+                ReturnToMenu();
                 Unlock(0);
                 Unlock(1);
                 Unlock(2);
                 Unlock(3);
-                ReturnToMenu();
             }
         }
-
-
     }
 
     public void SelectedPlay()
