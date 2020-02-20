@@ -198,17 +198,19 @@ public class CharacterSelector : BlankMono
         }
         if (player.GetAxis("LockOn") >= 0.4f && !inputCooldown)
         {
-            PlayerBase target = otherChar1.characters[otherChar1.currentChar].skins[otherChar1.currentSkin].Skin.GetComponent<PlayerBase>();
-            target.isAI = true;
-            otherChar1.LockInCharacter();
-            inputCooldown = true;
-            Invoke("EndCooldown", 0.3f);
+            if (!otherChar1.locked)
+            {
+                PlayerBase target = otherChar1.characters[otherChar1.currentChar].skins[otherChar1.currentSkin].Skin.GetComponent<PlayerBase>();
+                target.isAI = true;
+                otherChar1.LockInCharacter();
+                inputCooldown = true;
+                Invoke("EndCooldown", 0.3f);
+            }
         }
     }
 
     private void LockInCharacter()
     {
-        print(name + " has had LockIn called");
         backStore.transform.position += camOffsetLocked;
         cam.fieldOfView = camFOVLocked;
         lockedForward = displayChar.transform.forward;
