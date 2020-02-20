@@ -123,8 +123,6 @@ public class Skjegg : PlayerBase
 
             if (!isSelectingTotem)
             {
-                StopCoroutine(SkjeggUpdate());
-               // StartCoroutine(SkjeggUpdate());
                 totemChoiceList.AddRange(new List<int> { 0, 1, 2, 3, 4 });
                 for (int i = 0; i < 2; i++)
                 {
@@ -261,7 +259,7 @@ public class Skjegg : PlayerBase
 
     public override void BeginActing()
     {
-        if (isWolf)
+        if (!isWolf)
             base.BeginActing();
     }
     #endregion
