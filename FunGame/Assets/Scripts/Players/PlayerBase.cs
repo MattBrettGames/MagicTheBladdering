@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Rewired;
 using System;
 
@@ -108,7 +109,7 @@ public abstract class PlayerBase : ThingThatCanDie
         bTimer = bCooldown;
 
         healthMax = currentHealth;
-        //StartCoroutine(PoisonTick());
+        StartCoroutine(PoisonTick());
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
         HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
@@ -124,6 +125,10 @@ public abstract class PlayerBase : ThingThatCanDie
         RegainTargets();
 
         aiLooker = new GameObject("AILooker").transform;
+        if (isAI)
+        {
+            gameObject.AddComponent<NavMeshAgent>();
+        }
 
         aimTarget = new GameObject("Aimer").transform;
         StartCoroutine(PoisonTick());
@@ -291,7 +296,6 @@ public abstract class PlayerBase : ThingThatCanDie
                     if (!acting)
                     {
                         //Rotating the Character Model
-                        visuals.transform.LookAt(aimTarget);
                         rb2d.velocity = dir * (speed + bonusSpeed);
 
 
@@ -620,17 +624,18 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public void AILogic()
     {
-        aiLooker.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+        aiLooker.LookAt(lockTargetList[currentLock].position);
         aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        bool blockedPath = Physics.Raycast(transform.position, aiLooker.transform.forward, distanceToTarget);
-        print(blockedPath);
+        bool blockedPath = Physics.Raycast(transform.position, aiLooker.transform.forward, distanceToTarget, gameObject.layer);
 
+        Debug.DrawRay(transform.position, aiLooker.transform.forward);
 
         if (blockedPath)
         {
-            aimTarget.position = visuals.transform.forward * 5;
+            print("My path is blocked");
+            aimTarget.position = (visuals.transform.forward * 5);
             visuals.transform.Rotate(new Vector3(0, 1 * Time.deltaTime, 0));
         }
         else
