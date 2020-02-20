@@ -117,13 +117,14 @@ public class Skjegg : PlayerBase
 
     public override void BAction()
     {
-
         if (bTimer <= 0)
         {
             base.BAction();
 
             if (!isSelectingTotem)
             {
+                StopCoroutine(SkjeggUpdate());
+               // StartCoroutine(SkjeggUpdate());
                 totemChoiceList.AddRange(new List<int> { 0, 1, 2, 3, 4 });
                 for (int i = 0; i < 2; i++)
                 {
@@ -204,9 +205,10 @@ public class Skjegg : PlayerBase
 
             case TotemType.ram:
                 isRam = true;
-                if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) < ramBurstDistance)
+                print(Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position));
+                if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) <= ramBurstDistance)
                 {
-                    lockTargetList[currentLock].gameObject.GetComponent<PlayerBase>().Knockback(ramBurstPower,
+                    lockTargetList[currentLock].gameObject.GetComponentInParent<PlayerBase>().Knockback(ramBurstPower,
                         lockTargetList[currentLock].transform.position - totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position
                         );
                 }
