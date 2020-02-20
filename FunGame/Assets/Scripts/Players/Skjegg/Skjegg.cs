@@ -235,7 +235,7 @@ public class Skjegg : PlayerBase
 
             case TotemType.bear:
                 isBear = false;
-                damageMult = 0;
+                damageMult = 1;
                 break;
 
             case TotemType.ram:
