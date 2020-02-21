@@ -31,6 +31,7 @@ public class Skjegg : PlayerBase
     [SerializeField] GameObject[] totemGameObjectArray = new GameObject[5];
     List<TotemBase> totemBaseList = new List<TotemBase>();
     [SerializeField] float[] totemLifeSpans = new float[5];
+    [SerializeField] GameObject[] orbitingSymbols = new GameObject[5];
     [SerializeField, Tooltip("This is the time it takes for the totem options to cycle")] float timeBetweenTotems;
     int i_currentTotem;
     bool isSelectingTotem;
@@ -111,7 +112,6 @@ public class Skjegg : PlayerBase
         }
     }
 
-
     public override void BAction()
     {
         if (bTimer <= 0)
@@ -180,6 +180,7 @@ public class Skjegg : PlayerBase
         totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position = transform.position + (visuals.transform.forward * 2);
         totemBaseList[totemChoiceList[i_currentTotem]].SummonTotem(totemLifeSpans[totemChoiceList[i_currentTotem]], this);
         totemBaseList[totemChoiceList[i_currentTotem]].gameObject.SetActive(true);
+        orbitingSymbols[totemChoiceList[i_currentTotem]].SetActive(true);
 
         switch (totemBaseList[totemChoiceList[i_currentTotem]].thisTotemType)
         {
@@ -222,26 +223,31 @@ public class Skjegg : PlayerBase
         {
             case TotemType.turtle:
                 isTurtle = false;
+                orbitingSymbols[0].SetActive(false);
                 break;
 
             case TotemType.wolf:
                 isWolf = false;
                 anim.SetFloat("AttackSpeedMult", 1);
+                orbitingSymbols[1].SetActive(false);
 
                 break;
 
             case TotemType.bear:
                 isBear = false;
                 damageMult = 1;
+                orbitingSymbols[2].SetActive(false);
                 break;
 
             case TotemType.ram:
                 isRam = false;
+                orbitingSymbols[3].SetActive(false);
                 break;
 
             case TotemType.bird:
                 isBird = false;
                 bonusSpeed -= birdBonusSpeed;
+                orbitingSymbols[4].SetActive(false);
                 break;
         }
     }
