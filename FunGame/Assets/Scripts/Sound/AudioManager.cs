@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     SoundClip currentTrack = null;
 
     public float masterVolume = 1;
-    public float musicVolume = 1;
+    public float musicVolume = 0.5f;
     public float sfxVolume = 1;
 
     public void Start()

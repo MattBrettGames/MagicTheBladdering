@@ -123,14 +123,16 @@ public abstract class PlayerBase : ThingThatCanDie
         gameObject.layer = layerNew;
 
         RegainTargets();
-
+        
         aiLooker = new GameObject("AILooker").transform;
+        /*
         if (isAI)
         {
             gameObject.AddComponent<NavMeshAgent>();
         }
-
+        */
         aimTarget = new GameObject("Aimer").transform;
+        currentTarget = lockTargetList[currentLock].gameObject.GetComponentInParent<PlayerBase>();
         StartCoroutine(PoisonTick());
     }
 
@@ -547,7 +549,7 @@ public abstract class PlayerBase : ThingThatCanDie
     Transform aiLooker;
     float timeStationary = 0;
     bool repathing;
-
+    PlayerBase currentTarget;
 
     public void AIUpdate()
     {
@@ -645,6 +647,8 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             timeStationary -= Time.deltaTime;
         }
+
+        print(timeStationary);
 
         if (timeStationary <= 1f) repathing = false;
         else repathing = true;

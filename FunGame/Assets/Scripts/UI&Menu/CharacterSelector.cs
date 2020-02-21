@@ -196,7 +196,7 @@ public class CharacterSelector : BlankMono
                 universe.Unlock(thisPInt);
             }
         }
-        if (player.GetAxis("LockOn") >= 0.4f && !inputCooldown)
+        if ((player.GetAxis("LockOn") >= 0.4f && !inputCooldown) || Input.GetKeyDown(KeyCode.G))
         {
             if (!otherChar1.locked)
             {
