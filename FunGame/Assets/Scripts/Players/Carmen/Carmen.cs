@@ -45,6 +45,7 @@ public class Carmen : PlayerBase
         yield return new WaitForEndOfFrame();
         ObjectPooler pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         grapplingTrap = pooler.grapplerList[playerID].GetComponent<GrapplingTrap>();
+        EndDodge();
     }
 
     public override void Update()

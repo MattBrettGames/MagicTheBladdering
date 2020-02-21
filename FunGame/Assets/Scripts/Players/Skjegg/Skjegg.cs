@@ -60,10 +60,8 @@ public class Skjegg : PlayerBase
 
     [Header("Bird Stats")]
     [SerializeField] int birdBonusSpeed;
-    [SerializeField] int birdCritChance;
+    [SerializeField, Tooltip("This is as a percentage out of 100%")] int birdCritChance;
     [SerializeField] int birdCritDamageBonus;
-
-
 
     public override void Start()
     {
@@ -77,7 +75,6 @@ public class Skjegg : PlayerBase
         StartCoroutine(SkjeggUpdate());
         anim.SetFloat("AttackSpeedMult", 1);
     }
-
 
     public IEnumerator SkjeggUpdate()
     {
@@ -145,7 +142,6 @@ public class Skjegg : PlayerBase
     public override void OnHit(PlayerBase hitTarget)
     {
         base.OnHit(hitTarget);
-        print(isTurtle + "|" + isWolf + "|" + isBear + "|" + isRam + "|" + isBird);
 
         if (isTurtle)
         {
