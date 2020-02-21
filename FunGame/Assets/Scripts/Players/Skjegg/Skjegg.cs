@@ -126,6 +126,7 @@ public class Skjegg : PlayerBase
                     totemChoiceList.RemoveAt(Random.Range(0, totemChoiceList.Count));
                 }
                 isSelectingTotem = true;
+                totemSprite.sprite = null;
                 totemSprite.gameObject.SetActive(true);
             }
             else
