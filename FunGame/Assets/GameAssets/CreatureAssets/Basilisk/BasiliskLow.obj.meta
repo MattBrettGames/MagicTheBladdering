@@ -6,22 +6,38 @@ ModelImporter:
     100000: Basilisk_BasiliskEyes
     100002: BasiliskBod_Basilisk
     100004: //RootNode
+    100006: BasiliskLow:BasiliskBasiliskEyes
+    100008: BasiliskLow:BasiliskBodBasilisk
     400000: Basilisk_BasiliskEyes
     400002: BasiliskBod_Basilisk
     400004: //RootNode
+    400006: BasiliskLow:BasiliskBasiliskEyes
+    400008: BasiliskLow:BasiliskBodBasilisk
     2100000: Basilisk_BasiliskEyesMat
     2100002: BasiliskBod_BasiliskMat
+    2100004: BasiliskLow_initialShadingGroup
     2300000: Basilisk_BasiliskEyes
     2300002: BasiliskBod_Basilisk
+    2300004: BasiliskLow:BasiliskBasiliskEyes
+    2300006: BasiliskLow:BasiliskBodBasilisk
     3300000: Basilisk_BasiliskEyes
     3300002: BasiliskBod_Basilisk
+    3300004: BasiliskLow:BasiliskBasiliskEyes
+    3300006: BasiliskLow:BasiliskBodBasilisk
     4300000: Basilisk_BasiliskEyes
     4300002: BasiliskBod_Basilisk
+    4300004: BasiliskLow:BasiliskBasiliskEyes
+    4300006: BasiliskLow:BasiliskBodBasilisk
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: BasiliskBod_BasiliskMat
+    second: {fileID: 2100000, guid: d7ba77ad0839b14449a9c92d4f92af0f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BasiliskLow_initialShadingGroup
     second: {fileID: 2100000, guid: d7ba77ad0839b14449a9c92d4f92af0f, type: 2}
   - first:
       type: UnityEngine:Material
@@ -58,7 +74,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 10
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
