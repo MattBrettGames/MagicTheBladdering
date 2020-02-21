@@ -120,7 +120,7 @@ public class Skjegg : PlayerBase
 
             if (!isSelectingTotem)
             {
-                totemChoiceList.AddRange(new List<int> { 0, 1, 2, 3, 4 });
+                totemChoiceList = new List<int> { 0, 1, 2, 3, 4 };
                 for (int i = 0; i < 2; i++)
                 {
                     totemChoiceList.RemoveAt(Random.Range(0, totemChoiceList.Count));
