@@ -45,6 +45,7 @@ public class Carmen : PlayerBase
         yield return new WaitForEndOfFrame();
         ObjectPooler pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         grapplingTrap = pooler.grapplerList[playerID].GetComponent<GrapplingTrap>();
+        EndDodge();
     }
 
     public override void Update()
@@ -190,7 +191,7 @@ public class Carmen : PlayerBase
             anim.SetTrigger("XAttack");
             spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false);
             state = State.dodging;
-            Invoke("StopKnockback", slashTravelDuration);
+            Invoke("EndDodge", slashTravelDuration);
 
             xTimer = xCooldown;
             PlaySound(xSound);
