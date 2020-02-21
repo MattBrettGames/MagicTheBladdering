@@ -191,7 +191,7 @@ public class Carmen : PlayerBase
             anim.SetTrigger("XAttack");
             spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false);
             state = State.dodging;
-            Invoke("EndDodge", slashTravelDuration);
+            Invoke("StopKnockback", slashTravelDuration);
 
             xTimer = xCooldown;
             PlaySound(xSound);
