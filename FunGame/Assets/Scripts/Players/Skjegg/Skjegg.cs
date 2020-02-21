@@ -130,9 +130,9 @@ public class Skjegg : PlayerBase
             }
             else
             {
+                anim.SetTrigger("BAttack");
                 totemSprite.gameObject.SetActive(false);
                 isSelectingTotem = false;
-                anim.SetTrigger("BAttack");
                 bTimer = bCooldown;
                 PlaceTotem();
             }
