@@ -119,9 +119,9 @@ public class SongBird : PlayerBase
         }
         else
         {
+            hasCannister = true;
             smokeCloudCannister.transform.localScale = Vector3.one;
             cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
-            hasCannister = true;
             PlaySound(bSoundBonus);
         }
     }
