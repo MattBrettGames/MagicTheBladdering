@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1648162315942291220}
   - component: {fileID: 1648162315942291221}
   - component: {fileID: 1593682524499286044}
+  - component: {fileID: 4958469733058177435}
   m_Layer: 0
   m_Name: Chrome Conquerer Valderheim
   m_TagString: Common
@@ -236,6 +237,28 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Rewired.Components.PlayerController+EnabledStateChangedHandler, Rewired_Core,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!195 &4958469733058177435
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648162315942291210}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3808107777349958071
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +540,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6370377334176829194}
     m_Modifications:
+    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: m_Name
+      value: RageParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5467281613425460625, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -570,16 +603,6 @@ PrefabInstance:
     - target: {fileID: 5467281613425460625, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: m_Name
-      value: RageParticles
-      objectReference: {fileID: 0}
-    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
@@ -1487,32 +1510,32 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.6509804
       objectReference: {fileID: 0}
-    - target: {fileID: 6753715018780540968, guid: f4d8ca410d2ac9a40ba8092269b0d672,
+    - target: {fileID: 8372759353991221445, guid: f4d8ca410d2ac9a40ba8092269b0d672,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6753715018780540968, guid: f4d8ca410d2ac9a40ba8092269b0d672,
+    - target: {fileID: 8372759353991221445, guid: f4d8ca410d2ac9a40ba8092269b0d672,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 0.3019608
       objectReference: {fileID: 0}
-    - target: {fileID: 6753715018780540968, guid: f4d8ca410d2ac9a40ba8092269b0d672,
+    - target: {fileID: 8372759353991221445, guid: f4d8ca410d2ac9a40ba8092269b0d672,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.6509804
       objectReference: {fileID: 0}
-    - target: {fileID: 8372759353991221445, guid: f4d8ca410d2ac9a40ba8092269b0d672,
+    - target: {fileID: 6753715018780540968, guid: f4d8ca410d2ac9a40ba8092269b0d672,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8372759353991221445, guid: f4d8ca410d2ac9a40ba8092269b0d672,
+    - target: {fileID: 6753715018780540968, guid: f4d8ca410d2ac9a40ba8092269b0d672,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 0.3019608
       objectReference: {fileID: 0}
-    - target: {fileID: 8372759353991221445, guid: f4d8ca410d2ac9a40ba8092269b0d672,
+    - target: {fileID: 6753715018780540968, guid: f4d8ca410d2ac9a40ba8092269b0d672,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.6509804
@@ -1538,6 +1561,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6370377334176829194}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1607,16 +1640,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}

@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 6833410838750108043}
   - component: {fileID: 6833410838750108042}
   - component: {fileID: 6780083308931507843}
+  - component: {fileID: 5963947821533901395}
   m_Layer: 0
   m_Name: Flexecutioner Valderheim
   m_TagString: Common
@@ -342,6 +343,28 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Rewired.Components.PlayerController+EnabledStateChangedHandler, Rewired_Core,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!195 &5963947821533901395
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6833410838750108053}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!95 &8884567124167761195
 Animator:
   serializedVersion: 3
@@ -536,6 +559,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1180634111692419477}
     m_Modifications:
+    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: m_Name
+      value: RageParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5467281613425460625, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -591,16 +624,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+    - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
-      propertyPath: m_Name
-      value: RageParticles
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5467281613425460624, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+    - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
-      propertyPath: m_IsActive
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.5123967
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.163522
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 50114387620839390, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8b6fda6620317ed45899ab8556f5a766, type: 2}
     - target: {fileID: 3384927520223020529, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
@@ -630,51 +698,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 50114387620839390, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8b6fda6620317ed45899ab8556f5a766, type: 2}
-    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.163522
-      objectReference: {fileID: 0}
-    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: moveWithTransform
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1667305101713587477, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.gravityModifier.scalar
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.5123967
-      objectReference: {fileID: 0}
-    - target: {fileID: 4728126103028544115, guid: 07de65a9b6032dc4e9d7831cb81ed7e1,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07de65a9b6032dc4e9d7831cb81ed7e1, type: 3}
@@ -904,6 +927,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1180634111692419477}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -973,16 +1006,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}

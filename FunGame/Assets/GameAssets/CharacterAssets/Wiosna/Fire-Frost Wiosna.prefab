@@ -4800,6 +4800,7 @@ GameObject:
   - component: {fileID: 6270515961559596575}
   - component: {fileID: 6270515961559596574}
   - component: {fileID: 6270515961559596569}
+  - component: {fileID: 7682043977550480599}
   m_Layer: 0
   m_Name: Fire-Frost Wiosna
   m_TagString: Untagged
@@ -5026,6 +5027,28 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Rewired.Components.PlayerController+EnabledStateChangedHandler, Rewired_Core,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!195 &7682043977550480599
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6396482908632093034}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7837569914375991881
 GameObject:
   m_ObjectHideFlags: 0
@@ -5483,6 +5506,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 100150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
+      propertyPath: m_Name
+      value: Wiosna_frostfirebutnofirejustfrost
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5539,15 +5566,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 100150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
-      propertyPath: m_Name
-      value: Wiosna_frostfirebutnofirejustfrost
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
---- !u!4 &570348887071250638 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400152, guid: 8acf8282b46d2384d81df7dd918be6d4,
+--- !u!1 &570348887071278304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100150, guid: 8acf8282b46d2384d81df7dd918be6d4,
     type: 3}
   m_PrefabInstance: {fileID: 570348887071376342}
   m_PrefabAsset: {fileID: 0}
@@ -5557,9 +5580,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 570348887071376342}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &570348887071278304 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100150, guid: 8acf8282b46d2384d81df7dd918be6d4,
+--- !u!4 &570348887071250638 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400152, guid: 8acf8282b46d2384d81df7dd918be6d4,
     type: 3}
   m_PrefabInstance: {fileID: 570348887071376342}
   m_PrefabAsset: {fileID: 0}
@@ -5716,6 +5739,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
+        type: 3}
+      propertyPath: m_Name
+      value: TeleportEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6008583760751543885, guid: 911da860d2e4a0542bf2bfbedceb9179,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5769,16 +5802,6 @@ PrefabInstance:
     - target: {fileID: 6008583760751543885, guid: 911da860d2e4a0542bf2bfbedceb9179,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
-        type: 3}
-      propertyPath: m_Name
-      value: TeleportEnd
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8189647065353427274, guid: 911da860d2e4a0542bf2bfbedceb9179,
@@ -5954,15 +5977,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 982485b7ec4cabc44a280c4d590c52b6, type: 3}
---- !u!4 &4538926406430336573 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 303364576063463987, guid: 982485b7ec4cabc44a280c4d590c52b6,
-    type: 3}
-  m_PrefabInstance: {fileID: 4235712403365987342}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4514849826748054706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 319669820710041788, guid: 982485b7ec4cabc44a280c4d590c52b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 4235712403365987342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4538926406430336573 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 303364576063463987, guid: 982485b7ec4cabc44a280c4d590c52b6,
     type: 3}
   m_PrefabInstance: {fileID: 4235712403365987342}
   m_PrefabAsset: {fileID: 0}
@@ -6434,15 +6457,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e42fa38d1ea83254da8c441bf01bb79b, type: 3}
---- !u!1 &3559157475361589049 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7254250766324103043, guid: e42fa38d1ea83254da8c441bf01bb79b,
-    type: 3}
-  m_PrefabInstance: {fileID: 6181450518716543162}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5826458710951973790 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 365725248865510180, guid: e42fa38d1ea83254da8c441bf01bb79b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6181450518716543162}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3559157475361589049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7254250766324103043, guid: e42fa38d1ea83254da8c441bf01bb79b,
     type: 3}
   m_PrefabInstance: {fileID: 6181450518716543162}
   m_PrefabAsset: {fileID: 0}
@@ -6453,6 +6476,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6508,16 +6541,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}
 --- !u!1 &3449728956758775188 stripped
@@ -6539,6 +6562,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
+        type: 3}
+      propertyPath: m_Name
+      value: TeleportBegin
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6008583760751543885, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6592,16 +6625,6 @@ PrefabInstance:
     - target: {fileID: 6008583760751543885, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
-        type: 3}
-      propertyPath: m_Name
-      value: TeleportBegin
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8189647065353427274, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
