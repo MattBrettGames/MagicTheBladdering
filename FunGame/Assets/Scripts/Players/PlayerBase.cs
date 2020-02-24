@@ -29,8 +29,8 @@ public abstract class PlayerBase : ThingThatCanDie
     public float incomingMult = 1;
 
     [Header("Status Effects")]
-    [SerializeField] private int poisonPerTick;
-    [SerializeField] private float secsBetweenTicks;
+    [SerializeField] protected int poisonPerTick;
+    [SerializeField] protected float secsBetweenTicks;
     [SerializeField] public bool poison;
     private bool hyperArmour;
     protected bool iFrames;
@@ -74,7 +74,7 @@ public abstract class PlayerBase : ThingThatCanDie
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform currentLockTran;
     protected bool onCooldown;
-    bool dead;
+    protected bool dead;
 
     [Header("Cooldowns")]
     public float aCooldown;
@@ -109,7 +109,6 @@ public abstract class PlayerBase : ThingThatCanDie
         bTimer = bCooldown;
 
         healthMax = currentHealth;
-        StartCoroutine(PoisonTick());
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
         HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
@@ -123,7 +122,7 @@ public abstract class PlayerBase : ThingThatCanDie
         gameObject.layer = layerNew;
 
         RegainTargets();
-        
+
         aiLooker = new GameObject("AILooker").transform;
         /*
         if (isAI)
@@ -500,17 +499,19 @@ public abstract class PlayerBase : ThingThatCanDie
         EndActing();
         anim.SetFloat("Movement", 0);
     }
-    protected IEnumerator PoisonTick()
+
+    public virtual IEnumerator PoisonTick()
     {
         yield return new WaitForSeconds(secsBetweenTicks);
+        if (currentHealth < 1 && !dead) currentHealth = 1;
+        StartCoroutine(PoisonTick());
+        ExtraUpdate();
+
         if (poison && !trueIFrames && currentHealth > 1)
         {
             currentHealth -= poisonPerTick;
             ControllerRumble(0.1f, 0.05f, false, null);
         }
-        StartCoroutine(PoisonTick());
-        ExtraUpdate();
-        if (currentHealth < 1 && !dead) currentHealth = 1;
     }
     public virtual void ExtraUpdate() { }
 
@@ -647,8 +648,6 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             timeStationary -= Time.deltaTime;
         }
-
-        print(timeStationary);
 
         if (timeStationary <= 1f) repathing = false;
         else repathing = true;

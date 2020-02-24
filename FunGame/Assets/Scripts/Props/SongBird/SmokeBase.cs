@@ -41,7 +41,7 @@ public class SmokeBase : MonoBehaviour
         if (other.tag != tag)
         {
             ThingThatCanDie otherCode = other.GetComponent<ThingThatCanDie>();
-            if (otherCode.gameObject.name.Contains("Vald") || otherCode.gameObject.name.Contains("Song") || otherCode.gameObject.name.Contains("Carm") || otherCode.gameObject.name.Contains("Wios"))
+            if (otherCode.gameObject.name.Contains("Vald") || otherCode.gameObject.name.Contains("Song") || otherCode.gameObject.name.Contains("Carm") || otherCode.gameObject.name.Contains("Wios") || otherCode.gameObject.name.Contains("Skjegg"))
             {
                 PlayerBase otterCode = other.GetComponent<PlayerBase>();
                 otterCode.poison = true;
