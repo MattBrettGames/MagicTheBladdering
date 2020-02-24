@@ -61,7 +61,7 @@ public class Carmen : PlayerBase
             if (dir != Vector3.zero)
                 lastDir = dir;
 
-            aimTarget.position = transform.position + dir * 5;
+            aimTarget.position = transform.position + (dir * 2) + lastDir;
 
             // if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
