@@ -67,8 +67,6 @@ public class Valderheim : PlayerBase
         //This bit is the controls
         if (!isAI)
         {
-
-
             if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
 
             if (aTimer > 0) aTimer -= Time.deltaTime;
@@ -77,6 +75,8 @@ public class Valderheim : PlayerBase
             if (yTimer > 0) yTimer -= Time.deltaTime;
 
             dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+            if (dir != Vector3.zero)
+                lastDir = dir;
 
             aimTarget.position = transform.position + dir * 5;
 
@@ -155,7 +155,6 @@ public class Valderheim : PlayerBase
         // This bit is the AI
         else
         {
-            AILogic();
             AIUpdate();
         }
     }

@@ -56,8 +56,10 @@ public class Carmen : PlayerBase
             if (bTimer > 0) bTimer -= Time.deltaTime;
             if (xTimer > 0) xTimer -= Time.deltaTime;
             if (yTimer > 0) yTimer -= Time.deltaTime;
-
+            
             dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+            if (dir != Vector3.zero)
+                lastDir = dir;
 
             aimTarget.position = transform.position + dir * 5;
 
@@ -163,7 +165,6 @@ public class Carmen : PlayerBase
         }
         else
         {
-            AILogic();
             AIUpdate();
         }
     }
