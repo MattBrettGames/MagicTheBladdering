@@ -95,7 +95,6 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
     [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
     [SerializeField] protected AudioClip victorySound;
-    [SerializeField] protected AudioClip chosenSound;
     AudioSource audioSource;
 
     //[Header("AI Components")]
@@ -107,7 +106,6 @@ public abstract class PlayerBase : ThingThatCanDie
         aiAgent = GetComponent<NavMeshAgent>();
         healthMax = currentHealth;
         audioSource = gameObject.AddComponent<AudioSource>();
-        PlaySound(chosenSound);
     }
 
     public void TeleportPlayer(Vector3 newPos)

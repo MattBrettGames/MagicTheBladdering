@@ -5,7 +5,6 @@ using System;
 public class AudioManager : MonoBehaviour
 {
 
-    //[SerializeField] string menuTheme;
     [Space]
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
     SoundClip currentTrack = null;
