@@ -201,7 +201,6 @@ public class Skjegg : PlayerBase
 
             case TotemType.ram:
                 isRam = true;
-                print(Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position));
                 if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) <= ramBurstDistance)
                 {
                     lockTargetList[currentLock].gameObject.GetComponentInParent<PlayerBase>().Knockback(ramBurstPower,

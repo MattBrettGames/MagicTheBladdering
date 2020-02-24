@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 3672090907512359685}
   - component: {fileID: 3672090907512359682}
   - component: {fileID: 3672090907512359683}
+  - component: {fileID: 6952135952683188449}
   m_Layer: 0
   m_Name: Mama's Recipe Songbird
   m_TagString: Common
@@ -272,6 +273,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 3
+--- !u!195 &6952135952683188449
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3672090907512359710}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3672090908729394928
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +840,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3672090909023925176}
     m_Modifications:
+    - target: {fileID: 100002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
+      propertyPath: m_Name
+      value: Cane
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0039
@@ -873,10 +900,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
-      propertyPath: m_Name
-      value: Cane
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
 --- !u!1 &3672090909329953495 stripped
@@ -898,6 +921,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3672090907512359681}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -967,16 +1000,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}

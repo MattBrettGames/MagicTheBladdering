@@ -168,7 +168,7 @@ public class UniverseController : BlankMono
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = gameOverText.Replace("<winner>", winner);
             GameObject gam = GameObject.Find(winner);
-            gam.transform.SetParent(Camera.main.transform); 
+            gam.transform.SetParent(Camera.main.transform);
             GameObject.Find("CharacterStore").SetActive(false);
         }
         //Game-Level Setup
@@ -217,7 +217,7 @@ public class UniverseController : BlankMono
             GameObject parent1 = GameObject.Find("Player1Base");
             parent1.transform.SetParent(p1.transform);
             parent1.transform.localPosition = targetPos;
-            p1.transform.position = GameObject.Find("Player1Spawn").transform.position;
+            playerCode.TeleportPlayer(GameObject.Find("Player1Spawn").transform.position);
             p1.transform.localScale = Vector3.one;
             playerCode.visuals.transform.eulerAngles = targetLook;
             if (p1.name.Contains("Valderheim")) { charInts[0] = 0; }
@@ -243,7 +243,7 @@ public class UniverseController : BlankMono
             GameObject parent2 = GameObject.Find("Player2Base");
             parent2.transform.SetParent(p2.transform);
             parent2.transform.localPosition = targetPos;
-            p2.transform.position = GameObject.Find("Player2Spawn").transform.position;
+            playerCode2.TeleportPlayer(GameObject.Find("Player2Spawn").transform.position);
             playerCode2.visuals.transform.eulerAngles = targetLook;
             if (p2.name.Contains("Valderheim")) { charInts[1] = 0; }
             else if (p2.name.Contains("Songbird")) { charInts[1] = 1; }
@@ -272,7 +272,7 @@ public class UniverseController : BlankMono
                 GameObject parent3 = GameObject.Find("Player3Base");
                 parent3.transform.SetParent(p3.transform);
                 parent3.transform.localPosition = targetPos;
-                p3.transform.position = GameObject.Find("Player3Spawn").transform.position;
+                playerCode3.TeleportPlayer(GameObject.Find("Player3Spawn").transform.position);
                 playerCode3.visuals.transform.eulerAngles = targetLook;
                 if (p3.name.Contains("Valderheim")) { charInts[2] = 0; }
                 else if (p3.name.Contains("Songbird")) { charInts[2] = 1; }
@@ -303,7 +303,7 @@ public class UniverseController : BlankMono
                 GameObject parent4 = GameObject.Find("Player4Base");
                 parent4.transform.SetParent(p4.transform);
                 parent4.transform.localPosition = targetPos;
-                p4.transform.position = GameObject.Find("Player4Spawn").transform.position;
+                playerCode4.TeleportPlayer(GameObject.Find("Player4Spawn").transform.position);
                 playerCode4.visuals.transform.eulerAngles = targetLook;
                 if (p4.name.Contains("Valderheim")) { charInts[3] = 0; }
                 else if (p4.name.Contains("Songbird")) { charInts[3] = 1; }
@@ -526,7 +526,7 @@ public class UniverseController : BlankMono
         player.enabled = true;
         // triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
-        player.gameObject.transform.position = Vector3.zero;
+        player.TeleportPlayer(Vector3.zero);
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)

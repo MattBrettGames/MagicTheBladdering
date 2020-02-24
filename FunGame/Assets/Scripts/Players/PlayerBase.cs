@@ -29,8 +29,8 @@ public abstract class PlayerBase : ThingThatCanDie
     public float incomingMult = 1;
 
     [Header("Status Effects")]
-    [SerializeField] private int poisonPerTick;
-    [SerializeField] private float secsBetweenTicks;
+    [SerializeField] protected int poisonPerTick;
+    [SerializeField] protected float secsBetweenTicks;
     [SerializeField] public bool poison;
     private bool hyperArmour;
     protected bool iFrames;
@@ -74,7 +74,8 @@ public abstract class PlayerBase : ThingThatCanDie
     protected Vector3 lookAtVariant = new Vector3(0, -5, 0);
     protected Transform currentLockTran;
     protected bool onCooldown;
-    bool dead;
+    protected bool dead;
+    protected Vector3 lastDir;
 
     [Header("Cooldowns")]
     public float aCooldown;
@@ -96,9 +97,19 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip victorySound;
     AudioSource audioSource;
 
+    //[Header("AI Components")]
+    NavMeshAgent aiAgent;
+
+
     public void OnSelected()
     {
+        aiAgent = GetComponent<NavMeshAgent>();
         healthMax = currentHealth;
+    }
+
+    public void TeleportPlayer(Vector3 newPos)
+    {
+        aiAgent.Warp(newPos);
     }
 
     public virtual void Start()
@@ -108,8 +119,8 @@ public abstract class PlayerBase : ThingThatCanDie
         rb2d = gameObject.GetComponent<Rigidbody>();
         bTimer = bCooldown;
 
+
         healthMax = currentHealth;
-        StartCoroutine(PoisonTick());
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
         HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
@@ -123,16 +134,17 @@ public abstract class PlayerBase : ThingThatCanDie
         gameObject.layer = layerNew;
 
         RegainTargets();
-        
+
         aiLooker = new GameObject("AILooker").transform;
-        /*
+        
         if (isAI)
         {
-            gameObject.AddComponent<NavMeshAgent>();
+            aiAgent.stoppingDistance = 0;
+            aiAgent.angularSpeed = 360;
+            aiAgent.acceleration = speed;
         }
-        */
+        
         aimTarget = new GameObject("Aimer").transform;
-        currentTarget = lockTargetList[currentLock].gameObject.GetComponentInParent<PlayerBase>();
         StartCoroutine(PoisonTick());
     }
 
@@ -182,8 +194,10 @@ public abstract class PlayerBase : ThingThatCanDie
             if (yTimer > 0) yTimer -= Time.deltaTime;
 
             dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+            if (dir != Vector3.zero)
+                lastDir = dir;
 
-            aimTarget.position = transform.position + dir * 5;
+            aimTarget.position = transform.position + (dir * 2) + lastDir;
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
@@ -216,11 +230,11 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
                         anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    }
+                    }/*
                     else
                     {
                         dir = Vector3.zero;
-                    }
+                    }*/
                     break;
 
                 case State.lockedOn:
@@ -269,7 +283,6 @@ public abstract class PlayerBase : ThingThatCanDie
         // This bit is the AI
         else
         {
-            AILogic();
             AIUpdate();
         }
     }
@@ -426,6 +439,8 @@ public abstract class PlayerBase : ThingThatCanDie
 
         dir = Vector3.zero;
 
+        aiAgent.isStopped = true;
+
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
         anim.SetBool("LockOn", false);
@@ -446,8 +461,10 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public virtual void KnockbackContinual()
     {
-        transform.position += knockbackForce * knockBackPower * Time.deltaTime;
-        //visuals.transform.LookAt(lockTargetList.position + lookAtVariant);
+        if (isAI)
+            transform.position += knockbackForce * knockBackPower * Time.deltaTime;
+        else
+            aiAgent.Move(knockbackForce * knockBackPower * Time.deltaTime);
     }
     public override void Knockback(int power, Vector3 direction)
     {
@@ -487,6 +504,8 @@ public abstract class PlayerBase : ThingThatCanDie
         xTimer = 0;
         yTimer = 0;
 
+        aiAgent.isStopped = false;
+
         GainTrueFrames();
         StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");
@@ -500,17 +519,19 @@ public abstract class PlayerBase : ThingThatCanDie
         EndActing();
         anim.SetFloat("Movement", 0);
     }
-    protected IEnumerator PoisonTick()
+
+    public virtual IEnumerator PoisonTick()
     {
         yield return new WaitForSeconds(secsBetweenTicks);
+        if (currentHealth < 1 && !dead) currentHealth = 1;
+        StartCoroutine(PoisonTick());
+        ExtraUpdate();
+
         if (poison && !trueIFrames && currentHealth > 1)
         {
             currentHealth -= poisonPerTick;
             ControllerRumble(0.1f, 0.05f, false, null);
         }
-        StartCoroutine(PoisonTick());
-        ExtraUpdate();
-        if (currentHealth < 1 && !dead) currentHealth = 1;
     }
     public virtual void ExtraUpdate() { }
 
@@ -535,7 +556,18 @@ public abstract class PlayerBase : ThingThatCanDie
         player.SetVibration(0, intensity, dur);
     }
 
-    public virtual void DodgeSliding(Vector3 dir) { transform.position += dir * dodgeSpeed * Time.deltaTime; visuals.transform.LookAt(aimTarget); }
+    public virtual void DodgeSliding(Vector3 dir)
+    {
+        if (isAI)
+        {
+            aiAgent.Move(visuals.transform.forward * dodgeSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position += dir * dodgeSpeed * Time.deltaTime;
+            visuals.transform.LookAt(aimTarget);
+        }
+    }
 
     public virtual void LeaveCrack(Vector3 pos) { ControllerRumble(3, 0.3f, false, null); CameraShake(); }
 
@@ -547,14 +579,12 @@ public abstract class PlayerBase : ThingThatCanDie
 
     float detectionDistance = 15;
     Transform aiLooker;
-    float timeStationary = 0;
-    bool repathing;
-    PlayerBase currentTarget;
 
     public void AIUpdate()
     {
         dir = visuals.transform.forward;
         AILogic();
+
 
         if (aTimer > 0) aTimer -= Time.deltaTime;
         if (bTimer > 0) bTimer -= Time.deltaTime;
@@ -562,8 +592,6 @@ public abstract class PlayerBase : ThingThatCanDie
         if (yTimer > 0) yTimer -= Time.deltaTime;
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
-
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
         switch (state)
         {
@@ -580,41 +608,12 @@ public abstract class PlayerBase : ThingThatCanDie
 
                 if (!acting)
                 {
-                    //Rotating the Character Model
-                    if (!repathing) visuals.transform.LookAt(aimTarget);
-
-                    rb2d.velocity = dir * (speed + bonusSpeed);
-
-
                     anim.SetFloat("Movement", dir.magnitude + 0.001f);
                 }
                 else
                 {
                     dir = Vector3.zero;
                 }
-                break;
-
-            case State.lockedOn:
-
-                walkDirection.position = dir + transform.position;
-
-                anim.SetBool("LockOn", true);
-
-                if (!acting)
-                {
-                    rb2d.velocity = dir * (speed + bonusSpeed);
-
-                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
-                    anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
-
-                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
-
-                    LockOnScroll();
-                }
-
                 break;
 
             case State.dodging:
@@ -630,39 +629,21 @@ public abstract class PlayerBase : ThingThatCanDie
                 break;
         }
 
-
     }
 
     public void AILogic()
     {
+        if (name.Contains("Song"))
+            print("AI Logic is being called");
+
         aiLooker.LookAt(lockTargetList[currentLock].position);
         aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        if (rb2d.velocity.sqrMagnitude <= 20)
-        {
-            timeStationary += Time.deltaTime * 5;
-        }
-        else
-        {
-            timeStationary -= Time.deltaTime;
-        }
+        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, Time.deltaTime);
 
-        print(timeStationary);
-
-        if (timeStationary <= 1f) repathing = false;
-        else repathing = true;
-
-
-        if (repathing)
-        {
-            aimTarget.position = (visuals.transform.forward * 5);
-            visuals.transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
-        }
-        else
-        {
-            aimTarget.transform.position = lockTargetList[currentLock].position + lookAtVariant;
-        }
+        aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
+        aiAgent.speed = speed + bonusSpeed;
 
         if (distanceToTarget <= detectionDistance)
         {
