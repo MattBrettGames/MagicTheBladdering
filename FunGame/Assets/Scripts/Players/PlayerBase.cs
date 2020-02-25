@@ -224,12 +224,8 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("XAttack")) { XAction(); }
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.01f);
-                    }/*
-                    else
-                    {
-                        dir = Vector3.zero;
-                    }*/
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                    }
                     break;
 
                 case State.lockedOn:
@@ -248,7 +244,7 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("XAttack")) { XAction(); }
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.01f);
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
                         anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
                         anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
