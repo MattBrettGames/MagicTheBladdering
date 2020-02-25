@@ -164,6 +164,10 @@ public class SongBird : PlayerBase
         smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloudDodge.SetActive(true);
         smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
+        for (int i = 0; i < dodgeCloudSize; i++)
+        {
+            StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDodge));
+        }
     }
 
 
