@@ -51,12 +51,11 @@ public class Wiosna : PlayerBase
 
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
 
-        blast1 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
-        blast2 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
+        blast1 = Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
+        blast2 = Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
 
         vanishEffect.transform.SetParent(gameObject.transform.parent);
         appearEffect.transform.SetParent(gameObject.transform.parent);
-
     }
 
     public override void XAction()
@@ -72,46 +71,38 @@ public class Wiosna : PlayerBase
         }
     }
 
-    public override void AAction(bool playAnim)
-    {
-        if (aTimer <= 0)
-        {
-            PlaySound(aSound);
-            anim.SetTrigger("AAction");
-        }
-    }
-
-    public void DotheDodge()
+     public void DotheDodge()
     {
         base.AAction(false);
 
-        int thisLayer;
-        if (playerID == 0)
+        if (aTimer <= 0 && dir != Vector3.zero)
         {
-            thisLayer = 13;
+            int thisLayer;
+            if (playerID == 0)
+            {
+                thisLayer = 13;
+            }
+            else
+            {
+                thisLayer = 14;
+            }
+            Physics.IgnoreLayerCollision(thisLayer, 12, true);
+            outline.OutlineColor = Color.grey;
+
+            state = State.dodging;
+
+            StartCoroutine(EndDig(thisLayer));
+            vanishEffect.SetActive(false);
+            appearEffect.SetActive(false);
+            vanishEffect.transform.localPosition = transform.localPosition;
+            vanishEffect.SetActive(true);
         }
-        else
-        {
-            thisLayer = 14;
-        }
-        Physics.IgnoreLayerCollision(thisLayer, 12, true);
-        outline.OutlineColor = Color.grey;
-
-
-        state = State.dodging;
-
-        StartCoroutine(EndDig(thisLayer));
-        vanishEffect.SetActive(false);
-        appearEffect.SetActive(false);
-        vanishEffect.transform.localPosition = transform.localPosition;
-        vanishEffect.SetActive(true);
     }
 
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
         outline.OutlineColor = Color.black;
-        aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
         appearEffect.transform.localPosition = transform.localPosition;
