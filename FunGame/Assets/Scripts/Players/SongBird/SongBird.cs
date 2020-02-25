@@ -157,6 +157,16 @@ public class SongBird : PlayerBase
         smokecloud.transform.localScale += Vector3.one;
     }
 
+    public void DeathVial()
+    {
+        smokeCloudDodge.transform.position = transform.position;
+        smokeCloudDodge.transform.localScale = Vector3.zero;
+        smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
+        smokeCloudDodge.SetActive(true);
+        smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
+    }
+
+
     public void ThrowVial()
     {
         smokeCloud.transform.position = transform.position;
