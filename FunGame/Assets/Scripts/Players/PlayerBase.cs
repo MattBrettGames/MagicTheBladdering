@@ -97,10 +97,6 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip victorySound;
     AudioSource audioSource;
 
-    //[Header("AI Components")]
-    NavMeshAgent aiAgent;
-
-
     public void OnSelected()
     {
         aiAgent = GetComponent<NavMeshAgent>();
@@ -138,7 +134,7 @@ public abstract class PlayerBase : ThingThatCanDie
         if (isAI)
         {
             aiAgent.stoppingDistance = 0;
-            aiAgent.angularSpeed = 360;
+            aiAgent.angularSpeed = Mathf.Infinity;
             aiAgent.acceleration = speed;
         }
         else aiAgent.enabled = false;
@@ -228,7 +224,7 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("XAttack")) { XAction(); }
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement", dir.magnitude + 0.01f);
                     }/*
                     else
                     {
@@ -252,7 +248,7 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("XAttack")) { XAction(); }
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement", dir.magnitude + 0.01f);
                         anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
                         anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
@@ -576,6 +572,8 @@ public abstract class PlayerBase : ThingThatCanDie
 
     #region AI Controls
 
+    //[Header("AI Components")]
+    NavMeshAgent aiAgent;
     float detectionDistance = 15;
     Transform aiLooker;
 
@@ -631,11 +629,11 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public void AILogic()
     {
-        aiLooker.LookAt(lockTargetList[currentLock].position);
+        aiLooker.LookAt(lockTargetList[currentLock].position + lookAtVariant);
         aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, Time.deltaTime);
+        //visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, Time.deltaTime);
 
         aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
         aiAgent.speed = speed + bonusSpeed;
