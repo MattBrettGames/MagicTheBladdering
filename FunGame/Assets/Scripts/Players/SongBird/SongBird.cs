@@ -139,7 +139,7 @@ public class SongBird : PlayerBase
 
             smokeCloudDodge.transform.position = transform.position;
             smokeCloudDodge.transform.localScale = Vector3.zero;
-            smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
+            smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
             smokeCloudDodge.SetActive(true);
             smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
 
@@ -161,7 +161,7 @@ public class SongBird : PlayerBase
     {
         smokeCloudDodge.transform.position = transform.position;
         smokeCloudDodge.transform.localScale = Vector3.zero;
-        smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
+        smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloudDodge.SetActive(true);
         smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
     }
@@ -171,7 +171,7 @@ public class SongBird : PlayerBase
     {
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
-        smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
+        smokeCloud.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt, playerColour);
 
