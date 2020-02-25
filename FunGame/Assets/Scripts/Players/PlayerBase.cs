@@ -573,8 +573,9 @@ public abstract class PlayerBase : ThingThatCanDie
     NavMeshAgent aiAgent;
     float detectionDistance = 15;
     Transform aiLooker;
-    AIState logicState;
+    bool hasGainedFleeTarget;
     PlayerBase currentPlayerTarget;
+    AIState logicState;
     public enum AIState
     {
         idle,
@@ -633,49 +634,75 @@ public abstract class PlayerBase : ThingThatCanDie
         }
     }
 
-    public void AILogic()
+    public virtual void AILogic()
     {
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
+        print(distanceToTarget + " Is the distance between targets");
+
         aiAgent.speed = speed + bonusSpeed;
 
         switch (logicState)
         {
 
             case AIState.idle:
+                anim.SetFloat("Movement", 0);
+
+                if (distanceToTarget <= detectionDistance * 3)
+                    logicState = AIState.fleeing;
+
+                else
+                    logicState = AIState.aggresive;
+
                 break;
 
 
             case AIState.fleeing:
+                anim.SetFloat("Movement", 1);
+                if (!hasGainedFleeTarget)
+                    aiAgent.SetDestination(transform.position + new Vector3(UnityEngine.Random.Range(-detectionDistance * 3, detectionDistance * 3), 0, UnityEngine.Random.Range(-detectionDistance * 3, detectionDistance * 3)));
 
-                aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
+                if (Vector3.Distance(transform.position, aiAgent.destination) >= 5)
+                    logicState = AIState.idle;
 
+                hasGainedFleeTarget = true;
+
+                if (currentPlayerTarget.acting)
+                {
+                    AAction(false);
+                    logicState = AIState.aggresive;
+                }
 
                 if (currentHealth >= currentPlayerTarget.currentHealth) logicState = AIState.aggresive;
 
                 break;
 
-
+                
             case AIState.aggresive:
+                anim.SetFloat("Movement", 1);
+                hasGainedFleeTarget = false;
+
+                aiLooker.transform.position = transform.position;
+                aiLooker.transform.LookAt(lockTargetList[currentLock].transform.position + lookAtVariant);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, lockOnLerpSpeed);
 
                 aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
+                AttackLogic(distanceToTarget);
+
                 if (currentHealth <= currentPlayerTarget.currentHealth) logicState = AIState.fleeing;
 
                 break;
 
         }
-
-
-
         AttackLogic(distanceToTarget);
-
     }
 
     void AttackLogic(float distanceToTarget)
     {
-
-
-
-
+        if (distanceToTarget <= detectionDistance)
+        {
+            XAction();
+            logicState = AIState.idle;
+        }
     }
 
 
