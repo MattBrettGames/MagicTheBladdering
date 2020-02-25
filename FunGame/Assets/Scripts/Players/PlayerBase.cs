@@ -224,7 +224,7 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("XAttack")) { XAction(); }
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement", dir.magnitude + 0.1f);
                     }
                     break;
 
@@ -244,7 +244,7 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("XAttack")) { XAction(); }
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement", dir.magnitude + 0.1f);
                         anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
                         anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
@@ -625,14 +625,16 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public void AILogic()
     {
+        #region Movement Controls
         aiLooker.LookAt(lockTargetList[currentLock].position + lookAtVariant);
         aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        //visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, Time.deltaTime);
-
         aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
         aiAgent.speed = speed + bonusSpeed;
+
+        #endregion
+
 
         if (distanceToTarget <= detectionDistance)
         {
