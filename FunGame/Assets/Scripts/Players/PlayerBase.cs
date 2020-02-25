@@ -120,12 +120,10 @@ public abstract class PlayerBase : ThingThatCanDie
         rb2d = gameObject.GetComponent<Rigidbody>();
         bTimer = bCooldown;
 
-
         healthMax = currentHealth;
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
         HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
-
     }
 
     public virtual void SetInfo(UniverseController uni, int layerNew)
@@ -136,14 +134,15 @@ public abstract class PlayerBase : ThingThatCanDie
         RegainTargets();
 
         aiLooker = new GameObject("AILooker").transform;
-        
+
         if (isAI)
         {
             aiAgent.stoppingDistance = 0;
             aiAgent.angularSpeed = 360;
             aiAgent.acceleration = speed;
         }
-        
+        else aiAgent.enabled = false;
+
         aimTarget = new GameObject("Aimer").transform;
         StartCoroutine(PoisonTick());
     }
@@ -628,14 +627,10 @@ public abstract class PlayerBase : ThingThatCanDie
                 KnockbackContinual();
                 break;
         }
-
     }
 
     public void AILogic()
     {
-        if (name.Contains("Song"))
-            print("AI Logic is being called");
-
         aiLooker.LookAt(lockTargetList[currentLock].position);
         aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
