@@ -37,7 +37,7 @@ public class Valderheim : PlayerBase
 
     [Header("Passives")]
     [SerializeField] private float comboTimeDur;
-    private bool comboTime;
+    [SerializeField] private bool comboTime;
 
     //[Header("Polish")]
     //[SerializeField] Color skinColour;
@@ -64,86 +64,98 @@ public class Valderheim : PlayerBase
 
     public override void Update()
     {
-        if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
-
-        if (aTimer > 0) aTimer -= Time.deltaTime;
-        if (bTimer > 0) bTimer -= Time.deltaTime;
-        if (xTimer > 0) xTimer -= Time.deltaTime;
-        if (yTimer > 0) yTimer -= Time.deltaTime;
-
-        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
-
-        aimTarget.position = transform.position + dir * 5;
-
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
-
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-
-        switch (state)
+        //This bit is the controls
+        if (!isAI)
         {
-            case State.attack:
-                break;
+            if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
 
-            case State.normal:
+            if (aTimer > 0) aTimer -= Time.deltaTime;
+            if (bTimer > 0) bTimer -= Time.deltaTime;
+            if (xTimer > 0) xTimer -= Time.deltaTime;
+            if (yTimer > 0) yTimer -= Time.deltaTime;
 
-                anim.SetBool("LockOn", false);
-                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+            dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+            if (dir != Vector3.zero)
+                lastDir = dir;
 
-                if (!acting)
-                {
-                    //Rotating the Character Model
-                    visuals.transform.LookAt(aimTarget);
-                    rb2d.velocity = dir * (speed + bonusSpeed);
+            aimTarget.position = transform.position + (dir * 2) + lastDir;
 
-                    //Standard Inputs
-                    if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack")) { YAction(); }
-                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                }
-                else
-                {
-                    dir = Vector3.zero;
-                }
-                break;
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
 
-            case State.lockedOn:
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
-                walkDirection.position = dir + transform.position;
+            switch (state)
+            {
+                case State.attack:
+                    break;
 
-                anim.SetBool("LockOn", true);
-                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
+                case State.normal:
 
-                if (!acting)
-                {
-                    rb2d.velocity = dir * (speed + bonusSpeed);
+                    anim.SetBool("LockOn", false);
+                    if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
 
-                    if (player.GetButtonDown("AAction")) { AAction(); }
-                    if (player.GetButtonDown("XAttack")) { XAction(); }
-                    if (player.GetButtonDown("YAttack")) { YAction(); }
-                    /*
-                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
-                    else { anim.SetFloat("Movement", 0); }
-                    */
+                    if (!acting)
+                    {
+                        //Rotating the Character Model
+                        visuals.transform.LookAt(aimTarget);
+                        rb2d.velocity = dir * (speed + bonusSpeed);
 
-                    anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
-                    anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
+                        //Standard Inputs
+                        if (player.GetButtonDown("AAction")) { AAction(true); }
+                        if (player.GetButtonDown("XAttack")) { XAction(); }
+                        if (player.GetButtonDown("YAttack")) { YAction(); }
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                    }
+                    else
+                    {
+                        dir = Vector3.zero;
+                    }
+                    break;
 
-                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed * Time.deltaTime);
-                    LockOnScroll();
-                }
+                case State.lockedOn:
 
-                break;
+                    walkDirection.position = dir + transform.position;
 
-            case State.dodging:
-                if (aTimer <= 0) DodgeSliding(dir);
-                break;
+                    anim.SetBool("LockOn", true);
+                    if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
-            case State.knockback:
-                KnockbackContinual();
-                break;
+                    if (!acting)
+                    {
+                        rb2d.velocity = dir * (speed + bonusSpeed);
+
+                        if (player.GetButtonDown("AAction")) { AAction(true); }
+                        if (player.GetButtonDown("XAttack")) { XAction(); }
+                        if (player.GetButtonDown("YAttack")) { YAction(); }
+                        /*
+                        if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                        else { anim.SetFloat("Movement", 0); }
+                        */
+
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                        anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
+
+                        aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+                        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
+                        LockOnScroll();
+                    }
+
+                    break;
+
+                case State.dodging:
+                    if (aTimer <= 0) DodgeSliding(dir);
+                    break;
+
+                case State.knockback:
+                    KnockbackContinual();
+                    break;
+            }
+        }
+
+        // This bit is the AI
+        else
+        {
+            AIUpdate();
         }
     }
 
@@ -158,14 +170,14 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
-                universe.PlaySound(xSound);
+                PlaySound(xSound);
             }
         }
         else
         {
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("Spin");
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
@@ -176,7 +188,7 @@ public class Valderheim : PlayerBase
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("ComboKick");
             comboTime = false;
-            universe.PlaySound(ySound);
+            PlaySound(ySound);
         }
         else
         {
@@ -187,7 +199,7 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
-                universe.PlaySound(ySound);
+                PlaySound(ySound);
             }
         }
     }
@@ -197,7 +209,13 @@ public class Valderheim : PlayerBase
     public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
     public void EndSlow() { bonusSpeed += ySpeedDebuff; }
 
-    private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
+    private void CloseComboKick()
+    {
+        comboTime = false;
+        anim.ResetTrigger("ComboKick");
+        anim.ResetTrigger("Spin");
+        outline.OutlineColor = new Color(0, 0, 0);
+    }
 
     public override void Death(PlayerBase killer)
     {
@@ -279,7 +297,7 @@ public class Valderheim : PlayerBase
             frenzyEffects.SetActive(true);
             bTimer = bCooldown;
 
-            universe.PlaySound(bSound);
+            PlaySound(bSound);
         }
     }
     private IEnumerator StopFrenzy()

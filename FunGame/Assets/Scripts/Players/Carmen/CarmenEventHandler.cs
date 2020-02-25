@@ -18,7 +18,7 @@ public class CarmenEventHandler : MonoBehaviour
         EndBladeTrails();
     }
 
-     void Start()
+    void Start()
     {
         leftWeaponParticles.gameObject.SetActive(true);
         rightWeaponParticles.gameObject.SetActive(true);
@@ -37,6 +37,17 @@ public class CarmenEventHandler : MonoBehaviour
         EndBladeTrails();
     }
 
+    #region Sound
+    public void PlaySound(AudioClip clipToPlay)
+    {
+        carmen.PlaySound(clipToPlay);
+    }
+    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
+    {
+        carmen.PlaySound(clipsToPlay);
+    }
+    #endregion
+
     public void StartBladeTrails()
     {
         leftWeaponParticles.Clear();
@@ -53,7 +64,8 @@ public class CarmenEventHandler : MonoBehaviour
 
     public void spinSphereOn() { spinSphere.StartAttack(); }
     public void spinSphereOff() { spinSphere.EndAttack(); }
-    public void Vibration(float intensity, float dur) { carmen.ControllerRumble(intensity, dur); }
+    public void Vibration(float intensity, float dur) { carmen.ControllerRumble(intensity, dur, false, null); }
+
     public void GainIFrames() { carmen.GainIFrames(); }
     public void LoseIFrames() { carmen.LoseIFrames(); }
 

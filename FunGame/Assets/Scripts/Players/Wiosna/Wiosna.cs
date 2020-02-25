@@ -19,7 +19,9 @@ public class Wiosna : PlayerBase
     [SerializeField] int yKnockback;
     [SerializeField] float ySpacing;
     [SerializeField] float yTimeBetweenBlasts;
+    [SerializeField] float yDelay;
     [SerializeField] int numberOfBlasts;
+    [SerializeField] GameObject explosionPrefabs;
 
     WiosnaExplosions blast1;
     WiosnaExplosions blast2;
@@ -33,6 +35,7 @@ public class Wiosna : PlayerBase
     [SerializeField] Color cloneColour;
     private GameObject flamingClone;
     GameObject cloneExplosion;
+    [SerializeField] GameObject summonParticles;
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
@@ -48,8 +51,8 @@ public class Wiosna : PlayerBase
 
         flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
 
-        blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
-        blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
+        blast1 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
+        blast2 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
 
         vanishEffect.transform.SetParent(gameObject.transform.parent);
         appearEffect.transform.SetParent(gameObject.transform.parent);
@@ -65,41 +68,45 @@ public class Wiosna : PlayerBase
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
-    public override void AAction()
+    public override void AAction(bool playAnim)
     {
         if (aTimer <= 0)
         {
-            base.AAction();
-
-            int thisLayer;
-            if (playerID == 0)
-            {
-                thisLayer = 13;
-            }
-            else
-            {
-                thisLayer = 14;
-            }
-            Physics.IgnoreLayerCollision(thisLayer, 12, true);
-            outline.OutlineColor = Color.grey;
-
+            PlaySound(aSound);
             anim.SetTrigger("AAction");
-
-            state = State.dodging;
-
-            StartCoroutine(EndDig(thisLayer));
-            vanishEffect.SetActive(false);
-            appearEffect.SetActive(false);
-            vanishEffect.transform.localPosition = transform.localPosition;
-            vanishEffect.SetActive(true);
-
-            universe.PlaySound(aSound);
         }
     }
+
+    public void DotheDodge()
+    {
+        base.AAction(false);
+
+        int thisLayer;
+        if (playerID == 0)
+        {
+            thisLayer = 13;
+        }
+        else
+        {
+            thisLayer = 14;
+        }
+        Physics.IgnoreLayerCollision(thisLayer, 12, true);
+        outline.OutlineColor = Color.grey;
+
+
+        state = State.dodging;
+
+        StartCoroutine(EndDig(thisLayer));
+        vanishEffect.SetActive(false);
+        appearEffect.SetActive(false);
+        vanishEffect.transform.localPosition = transform.localPosition;
+        vanishEffect.SetActive(true);
+    }
+
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
@@ -118,28 +125,41 @@ public class Wiosna : PlayerBase
             base.YAction();
 
             anim.SetTrigger("YAttack");
-
-            blast1.transform.position = gameObject.transform.position;
-            blast2.transform.position = gameObject.transform.position;
-
-            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);//, Vector3.one);
+            StartCoroutine(DelayedY());
 
             yTimer = yCooldown;
         }
+    }
+
+    IEnumerator DelayedY()
+    {
+        yield return new WaitForSeconds(yDelay);
+
+        blast1.transform.position = gameObject.transform.position;
+        blast2.transform.position = gameObject.transform.position;
+
+        blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
     }
 
     public override void BAction()
     {
         if (bTimer <= 0)
         {
+            summonParticles.SetActive(false);
             base.BAction();
 
-            flamingClone.transform.position = transform.position;
-            flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
-            flamingClone.SetActive(true);
             bTimer = bCooldown;
+            anim.SetTrigger("BAttack");
+            summonParticles.SetActive(true);
 
-            universe.PlaySound(bSound);
+            PlaySound(bSound);
         }
+    }
+
+    public void SummonClone()
+    {
+        flamingClone.transform.position = transform.position;
+        flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
+        flamingClone.SetActive(true);
     }
 }

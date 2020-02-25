@@ -5,11 +5,10 @@ using UnityEngine;
 public class SongBird : PlayerBase
 {
 
-    [SerializeField] string bSoundBonus;
+    [SerializeField] AudioClip bSoundBonus;
 
     [Header("More Components")]
     public CorvidDagger weapon;
-    private ObjectPooler pooler;
     private GameObject smokeCloud;
     private GameObject smokeCloudCannister;
     private GameObject smokeCloudDodge;
@@ -19,6 +18,10 @@ public class SongBird : PlayerBase
     [Header("Dagger Swipe")]
     public int baseXDamage;
     public int baseXKnockback;
+
+    [Header("All Prefabs for Instantiation")]
+    [SerializeField] GameObject smokeCloudPrefab;
+    [SerializeField] GameObject cannisterPrefab;
 
     [Header("Cannister Cloud")]
     [SerializeField] int cannisterCloudSize;
@@ -48,22 +51,29 @@ public class SongBird : PlayerBase
     public override void SetInfo(UniverseController uni, int layerNew)
     {
         base.SetInfo(uni, layerNew);
-        pooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         Invoke("GainSmokes", 0.1f);
     }
 
     void GainSmokes()
     {
-        smokeCloud = pooler.ReturnSmokeCloud(playerID);
+        smokeCloud = GenerateSmokeCloud();
         smokeCloud.tag = tag;
-        smokeCloudCannister = pooler.ReturnSmokeCloud(playerID + 8);
+        smokeCloudCannister = GenerateSmokeCloud();
         smokeCloudCannister.tag = tag;
-        smokeCloudDodge = pooler.ReturnSmokeCloud(playerID + 4);
+        smokeCloudDodge = GenerateSmokeCloud();
         smokeCloudDodge.tag = tag;
 
-        cannister = pooler.cannisters[playerID];
+        cannister = Instantiate(cannisterPrefab);
+        cannister.SetActive(false);
         cannister.tag = tag;
         hasCannister = true;
+    }
+
+    public GameObject GenerateSmokeCloud()
+    {
+        GameObject smoke = Instantiate(smokeCloudPrefab);
+        smoke.SetActive(false);
+        return smoke;
     }
 
     public override void XAction()
@@ -75,7 +85,7 @@ public class SongBird : PlayerBase
             anim.SetTrigger("XAttack");
             weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true);
             xTimer = xCooldown;
-            universe.PlaySound(xSound);
+            PlaySound(xSound);
         }
     }
 
@@ -87,7 +97,7 @@ public class SongBird : PlayerBase
 
             anim.SetTrigger("YAction");
             yTimer = yCooldown;
-            universe.PlaySound(ySound);
+            PlaySound(ySound);
         }
     }
 
@@ -104,23 +114,23 @@ public class SongBird : PlayerBase
                 hasCannister = false;
                 anim.SetTrigger("BAction");
                 bTimer = bCooldown;
-                universe.PlaySound(bSound);
+                PlaySound(bSound);
             }
         }
         else
         {
+            hasCannister = true;
             smokeCloudCannister.transform.localScale = Vector3.one;
             cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
-            hasCannister = true;
-            universe.PlaySound(bSoundBonus);
+            PlaySound(bSoundBonus);
         }
     }
 
-    public override void AAction()
+    public override void AAction(bool playAnim)
     {
         if (aTimer <= 0 && dir != Vector3.zero)
         {
-            base.AAction();
+            base.AAction(false);
 
             anim.SetTrigger("AAction");
             state = State.dodging;
@@ -137,8 +147,7 @@ public class SongBird : PlayerBase
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDodge));
             }
-
-            universe.PlaySound(aSound);
+            PlaySound(aSound);
         }
     }
 

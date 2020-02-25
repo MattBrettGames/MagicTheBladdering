@@ -33,19 +33,21 @@ public class Weapons : BlankMono
         hitBox = gameObject.GetComponent<Collider>();
         hitBox.enabled = false;
         trails = gameObject.GetComponentInChildren<TrailRenderer>();
-        trails.enabled = false;
+        trails.gameObject.SetActive(false);
     }
 
     public void StartAttack()
     {
         hitBox.enabled = true;
         trails.enabled = true;
+        trails.gameObject.SetActive(true);
     }
 
     public void EndAttack()
     {
         hitBox.enabled = false;
         trails.enabled = false;
+        trails.gameObject.SetActive(false);
     }
 
     public virtual void OnTriggerEnter(Collider other)
@@ -54,7 +56,8 @@ public class Weapons : BlankMono
         if (other.tag != tag)
         {
             player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue);
-            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f, true, player as PlayerBase);
+            ownerTrue.OnHit(player as PlayerBase);
         }
     }
 }
