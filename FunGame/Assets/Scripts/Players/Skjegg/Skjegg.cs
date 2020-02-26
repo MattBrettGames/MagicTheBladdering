@@ -86,6 +86,9 @@ public class Skjegg : PlayerBase
         else i_currentTotem = 0;
 
         totemSprite.sprite = totemSymbolArray[totemChoiceList[i_currentTotem]];
+
+        anim.ResetTrigger("XAttack");
+        anim.ResetTrigger("YAttack");
     }
 
     public override void XAction()

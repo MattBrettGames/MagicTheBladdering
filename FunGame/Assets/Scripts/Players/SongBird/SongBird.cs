@@ -12,6 +12,7 @@ public class SongBird : PlayerBase
     private GameObject smokeCloud;
     private GameObject smokeCloudCannister;
     private GameObject smokeCloudDodge;
+    private GameObject smokeCloudDeath;
     private GameObject cannister;
     [SerializeField] Color playerColour;
 
@@ -26,8 +27,8 @@ public class SongBird : PlayerBase
     [Header("Cannister Cloud")]
     [SerializeField] int cannisterCloudSize;
     [SerializeField] int cannisterBurstDamage;
-    [SerializeField] float cannisterPoisonTime;
     [SerializeField] int cannisterSmokeKnockback;
+    [SerializeField] float cannisterCloudTime;
     [SerializeField] float cannisterImpactDur;
     [SerializeField] bool cannisterInterrupt;
     private bool hasCannister;
@@ -35,18 +36,27 @@ public class SongBird : PlayerBase
     [Header("Dodge Cloud")]
     [SerializeField] int dodgeCloudSize;
     [SerializeField] int dodgeBurstDamage;
-    [SerializeField] float dodgePoisonTime;
     [SerializeField] int dodgeSmokeKnockback;
+    [SerializeField] float dodgeCloudTime;
     [SerializeField] float dodgeImpactdur;
     [SerializeField] bool dodgeInterrupt;
 
     [Header("Thrown Cloud")]
     [SerializeField] int thrownCloudSize;
     [SerializeField] int thrownBurstDamage;
-    [SerializeField] float thrownCloudTime;
     [SerializeField] int thrownSmokeKnockback;
+    [SerializeField] float thrownCloudTime;
     [SerializeField] float thrownImpactDur;
     [SerializeField] bool thrownInterrupt;
+
+    [Header("Death Cloud")]
+    [SerializeField] int deathCloudSize;
+    [SerializeField] int deathBurstDamage;
+    [SerializeField] int deathSmokeKnockback;
+    [SerializeField] float deathCloudTime;
+    [SerializeField] float deathImpactDur;
+    [SerializeField] bool deathInterrupt;
+
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
@@ -57,11 +67,9 @@ public class SongBird : PlayerBase
     void GainSmokes()
     {
         smokeCloud = GenerateSmokeCloud();
-        smokeCloud.tag = tag;
         smokeCloudCannister = GenerateSmokeCloud();
-        smokeCloudCannister.tag = tag;
         smokeCloudDodge = GenerateSmokeCloud();
-        smokeCloudDodge.tag = tag;
+        smokeCloudDeath = GenerateSmokeCloud();
 
         cannister = Instantiate(cannisterPrefab);
         cannister.SetActive(false);
@@ -72,6 +80,7 @@ public class SongBird : PlayerBase
     public GameObject GenerateSmokeCloud()
     {
         GameObject smoke = Instantiate(smokeCloudPrefab);
+        smoke.tag = tag;
         smoke.SetActive(false);
         return smoke;
     }
@@ -121,7 +130,7 @@ public class SongBird : PlayerBase
         {
             hasCannister = true;
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterPoisonTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterCloudTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
             PlaySound(bSoundBonus);
         }
     }
@@ -139,9 +148,9 @@ public class SongBird : PlayerBase
 
             smokeCloudDodge.transform.position = transform.position;
             smokeCloudDodge.transform.localScale = Vector3.zero;
-            smokeCloudDodge.transform.rotation = new Quaternion(0, 0, 180, 0);
+            smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
             smokeCloudDodge.SetActive(true);
-            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgePoisonTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
+            smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgeCloudTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
 
             for (int i = 0; i < dodgeCloudSize; i++)
             {
@@ -157,11 +166,24 @@ public class SongBird : PlayerBase
         smokecloud.transform.localScale += Vector3.one;
     }
 
+    public void DeathVial()
+    {
+        smokeCloudDeath.transform.position = transform.position;
+        smokeCloudDeath.transform.localScale = Vector3.zero;
+        smokeCloudDeath.transform.eulerAngles = new Vector3(0, 0, 180);
+        smokeCloudDeath.SetActive(true);
+        smokeCloudDeath.GetComponent<SmokeBase>().Begin(deathBurstDamage, deathSmokeKnockback, deathCloudSize, deathCloudTime, this, tag, deathImpactDur, deathInterrupt, playerColour);
+
+        for (int i = 0; i < deathCloudSize; i++) 
+            StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDeath));
+    }
+
+
     public void ThrowVial()
     {
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
-        smokeCloud.transform.rotation = new Quaternion(0, 0, 180, 0);
+        smokeCloud.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt, playerColour);
 

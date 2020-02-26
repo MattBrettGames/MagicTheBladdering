@@ -13,6 +13,8 @@ public class SongBirdEventHandler : BlankMono
     public void BeginAttack() { weapon.StartAttack(); }
     public void EndAttack() { weapon.EndAttack(); }
 
+    public void DeathVial() { songBird.DeathVial(); }
+
     //Common
     public void GainHA() { songBird.GainHA(); }
     public void LoseHA() { songBird.LoseHA(); }
