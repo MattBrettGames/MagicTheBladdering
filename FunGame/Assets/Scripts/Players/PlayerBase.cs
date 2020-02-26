@@ -659,12 +659,12 @@ public abstract class PlayerBase : ThingThatCanDie
             case AIState.fleeing:
                 anim.SetFloat("Movement", 1);
                 if (!hasGainedFleeTarget)
-                    aiAgent.SetDestination(transform.position + new Vector3(UnityEngine.Random.Range(-detectionDistance * 3, detectionDistance * 3), 0, UnityEngine.Random.Range(-detectionDistance * 3, detectionDistance * 3)));
+                    aiAgent.SetDestination(transform.position + new Vector3(UnityEngine.Random.Range(-detectionDistance, detectionDistance), 0, UnityEngine.Random.Range(-detectionDistance, detectionDistance)) * 3);
+                hasGainedFleeTarget = true;
 
-                if (Vector3.Distance(transform.position, aiAgent.destination) >= 5)
+                if (Vector3.Distance(transform.position, aiAgent.destination) >= 3)
                     logicState = AIState.idle;
 
-                hasGainedFleeTarget = true;
 
                 if (currentPlayerTarget.acting)
                 {
@@ -676,7 +676,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
                 break;
 
-                
+
             case AIState.aggresive:
                 anim.SetFloat("Movement", 1);
                 hasGainedFleeTarget = false;
