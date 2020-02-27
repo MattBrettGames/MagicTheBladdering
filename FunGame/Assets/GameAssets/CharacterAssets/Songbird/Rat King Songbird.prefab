@@ -317,22 +317,28 @@ MonoBehaviour:
     type: 3}
   cannisterCloudSize: 10
   cannisterBurstDamage: 25
-  cannisterPoisonTime: 7
   cannisterSmokeKnockback: 2
+  cannisterCloudTime: 7
   cannisterImpactDur: 0.2
   cannisterInterrupt: 1
   dodgeCloudSize: 7
   dodgeBurstDamage: 15
-  dodgePoisonTime: 2
   dodgeSmokeKnockback: 2
+  dodgeCloudTime: 10
   dodgeImpactdur: 0.1
   dodgeInterrupt: 0
   thrownCloudSize: 15
   thrownBurstDamage: 15
-  thrownCloudTime: 4
   thrownSmokeKnockback: 2
+  thrownCloudTime: 4
   thrownImpactDur: 0.1
   thrownInterrupt: 0
+  deathCloudSize: 10
+  deathBurstDamage: 20
+  deathSmokeKnockback: 0
+  deathCloudTime: 5
+  deathImpactDur: 0.2
+  deathInterrupt: 1
 --- !u!114 &3886128637265820348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,6 +571,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6770962236240589834}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -634,16 +650,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}
@@ -873,6 +879,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8107741570313350294}
     m_Modifications:
+    - target: {fileID: 100002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
+      propertyPath: m_Name
+      value: Cane (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0012
@@ -917,10 +927,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 195.954
       objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
-      propertyPath: m_Name
-      value: Cane (1)
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2300000, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
     - {fileID: 3300000, guid: ee13790e06a8b9648811d4a099f0d00f, type: 3}
@@ -944,6 +950,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6770962236240589834}
     m_Modifications:
+    - target: {fileID: 100130, guid: 513e5dbe17f33a040bb1f25403bff3cd, type: 3}
+      propertyPath: m_Name
+      value: songbird_gold
+      objectReference: {fileID: 0}
     - target: {fileID: 400130, guid: 513e5dbe17f33a040bb1f25403bff3cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -999,10 +1009,6 @@ PrefabInstance:
     - target: {fileID: 400130, guid: 513e5dbe17f33a040bb1f25403bff3cd, type: 3}
       propertyPath: m_LocalScale.z
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 100130, guid: 513e5dbe17f33a040bb1f25403bff3cd, type: 3}
-      propertyPath: m_Name
-      value: songbird_gold
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 513e5dbe17f33a040bb1f25403bff3cd, type: 3}
