@@ -15,9 +15,9 @@ public class OptionMenuController : MonoBehaviour
     [SerializeField] Text[] displays = new Text[0];
 
     [Header("Values")]
-    [SerializeField] static float masterVolume;
-    [SerializeField] static float musicVolume;
-    [SerializeField] static float sfxVolume;
+    [SerializeField] public static float masterVolume;
+    [SerializeField] public static float musicVolume;
+    [SerializeField] public static float sfxVolume;
 
     bool inputOnCooldown;
     UniverseController uni;
@@ -87,7 +87,6 @@ public class OptionMenuController : MonoBehaviour
         aud.masterVolume = masterVolume;
         aud.musicVolume = musicVolume;
         aud.sfxVolume = sfxVolume;
-        print("I've been saved - " + masterVolume + "|" + aud.masterVolume + "|" + musicVolume + "|" + aud.musicVolume + "|" + sfxVolume + "|" + aud.sfxVolume);
     }
 
     void EndCooldown() { inputOnCooldown = false; }
