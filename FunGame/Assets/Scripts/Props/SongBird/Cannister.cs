@@ -10,6 +10,7 @@ public class Cannister : BlankMono
     {
 
         smoke.SetActive(true);
+        print(smoke.activeInHierarchy);
         parts.SetActive(false);
 
         smoke.transform.position = transform.position;
@@ -38,6 +39,7 @@ public class Cannister : BlankMono
         }
         parts.SetActive(true);
         StartCoroutine(Vanish());
+        print(smoke.activeInHierarchy);
     }
 
     IEnumerator Vanish()

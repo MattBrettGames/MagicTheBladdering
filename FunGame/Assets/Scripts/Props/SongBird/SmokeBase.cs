@@ -12,13 +12,6 @@ public class SmokeBase : MonoBehaviour
 
     virtual public void Begin(int damage, int force, float size, float time, PlayerBase ownerTemp, string tagtemp, float impactDur, bool stopAttackTemp, Color playerColour)
     {
-        ParticleSystem[] parts = GetComponentsInChildren<ParticleSystem>(true);
-
-        for (int i = 0; i < parts.Length; i++)
-        {
-            parts[i].startColor = playerColour;
-        }
-
         CancelInvoke();
         StopAllCoroutines();
         tag = tagtemp;
