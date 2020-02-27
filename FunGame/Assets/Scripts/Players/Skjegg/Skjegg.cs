@@ -97,8 +97,8 @@ public class Skjegg : PlayerBase
         {
             base.XAction();
             anim.SetTrigger("XAttack");
-            rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true);
-            leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true);
+            rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X);
+            leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X);
             xTimer = xCooldown;
         }
     }
@@ -109,8 +109,8 @@ public class Skjegg : PlayerBase
         {
             base.YAction();
             anim.SetTrigger("YAttack");
-            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true);
-            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true);
+            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y);
+            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y);
             yTimer = yCooldown;
         }
     }
@@ -143,9 +143,9 @@ public class Skjegg : PlayerBase
         }
     }
 
-    public override void OnHit(PlayerBase hitTarget)
+    public override void OnHit(PlayerBase hitTarget, AttackType hitWith)
     {
-        base.OnHit(hitTarget);
+        base.OnHit(hitTarget, hitWith);
 
         if (isTurtle)
         {

@@ -66,7 +66,7 @@ public class Wiosna : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true);
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X);
             xTimer = xCooldown;
             PlaySound(xSound);
         }

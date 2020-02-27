@@ -5,6 +5,11 @@ using UnityEngine.AI;
 using Rewired;
 using System;
 
+public enum AttackType
+{
+    A,B,X,Y
+}
+
 public abstract class PlayerBase : ThingThatCanDie
 {
 
@@ -471,7 +476,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #region Utility Functions
     public virtual void HealthChange(int healthChange, PlayerBase attacker) { currentHealth += healthChange; if (currentHealth <= 0) { Death(attacker); } }
 
-    public virtual void OnHit(PlayerBase target) { }
+    public virtual void OnHit(PlayerBase target, AttackType hitWith) { }
     public virtual void GainHA() { hyperArmour = true; }
     public virtual void LoseHA() { hyperArmour = false; }
 

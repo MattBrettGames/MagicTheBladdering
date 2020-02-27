@@ -92,7 +92,7 @@ public class SongBird : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true);
+            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X);
             xTimer = xCooldown;
             PlaySound(xSound);
         }

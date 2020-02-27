@@ -56,7 +56,7 @@ public class Carmen : PlayerBase
             if (bTimer > 0) bTimer -= Time.deltaTime;
             if (xTimer > 0) xTimer -= Time.deltaTime;
             if (yTimer > 0) yTimer -= Time.deltaTime;
-            
+
             dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
             if (dir != Vector3.zero)
                 lastDir = dir;
@@ -169,6 +169,16 @@ public class Carmen : PlayerBase
         }
     }
 
+    public override void OnHit(PlayerBase target, AttackType hitWith)
+    {
+        base.OnHit(target, hitWith);
+
+        if (hitWith == AttackType.Y && stabSymbol.activeSelf)
+        {
+            PlaySound(ySoundBonus);
+        }
+    }
+
     public void LateUpdate()
     {
         float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
@@ -190,7 +200,7 @@ public class Carmen : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false, AttackType.X);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
@@ -213,7 +223,7 @@ public class Carmen : PlayerBase
 
             if (lookDif <= backstabAngle)
             {
-                backStabBox.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true);
+                backStabBox.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y);
 
                 if (Vector3.Distance(transform.position, lockTargetList[currentLock].position) <= 11)
                 {
@@ -222,12 +232,10 @@ public class Carmen : PlayerBase
                     Time.timeScale = 0.2f;
                     StartCoroutine(HideSymbol(0.5f, target));
                 }
-
-                PlaySound(ySoundBonus);
             }
             else
             {
-                backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true);
+                backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y);
                 PlaySound(ySound);
             }
         }
