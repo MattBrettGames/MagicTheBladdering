@@ -7,7 +7,7 @@ using System;
 
 public enum AttackType
 {
-    A,B,X,Y
+    A, B, X, Y
 }
 
 public abstract class PlayerBase : ThingThatCanDie
@@ -358,20 +358,31 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     #endregion
 
+
     #region SoundControl
     public void PlaySound(AudioClip clipToPlay)
     {
-        audioSource.PlayOneShot(clipToPlay);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
+            audioSource.PlayOneShot(clipToPlay);
+        }
+
     }
     public void PlaySound(AudioClip[] clipsToPlay)
     {
-        audioSource.PlayOneShot(clipsToPlay[UnityEngine.Random.Range(0, clipsToPlay.Length)]);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
+            audioSource.PlayOneShot(clipsToPlay[UnityEngine.Random.Range(0, clipsToPlay.Length)]);
+        }
     }
     public void PlayVictorySound()
     {
         PlaySound(victorySound);
     }
     #endregion
+
 
     #region Common Events
     public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
