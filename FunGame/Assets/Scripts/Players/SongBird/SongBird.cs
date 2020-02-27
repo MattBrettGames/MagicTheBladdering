@@ -9,10 +9,10 @@ public class SongBird : PlayerBase
 
     [Header("More Components")]
     public CorvidDagger weapon;
-    [SerializeField] private GameObject smokeCloud;
-    [SerializeField] private GameObject smokeCloudCannister;
-    [SerializeField] private GameObject smokeCloudDodge;
-    [SerializeField] private GameObject smokeCloudDeath;
+    private GameObject smokeCloud;
+    private GameObject smokeCloudCannister;
+    private GameObject smokeCloudDodge;
+    private GameObject smokeCloudDeath;
     private GameObject cannister;
     [SerializeField] Color playerColour;
 
@@ -67,13 +67,9 @@ public class SongBird : PlayerBase
     void GainSmokes()
     {
         smokeCloud = GenerateSmokeCloud();
-        smokeCloud.SetActive(false);
         smokeCloudCannister = GenerateSmokeCloud();
-        smokeCloudCannister.SetActive(false);
         smokeCloudDodge = GenerateSmokeCloud();
-        smokeCloudDodge.SetActive(false);
         smokeCloudDeath = GenerateSmokeCloud();
-        smokeCloudDeath.SetActive(false);
 
         cannister = Instantiate(cannisterPrefab);
         cannister.SetActive(false);
@@ -85,6 +81,7 @@ public class SongBird : PlayerBase
     {
         GameObject smoke = Instantiate(smokeCloudPrefab);
         smoke.tag = tag;
+        smoke.SetActive(false);
         return smoke;
     }
 
@@ -149,10 +146,10 @@ public class SongBird : PlayerBase
 
             Invoke("EndDodge", dodgeDur);
 
-            smokeCloudDodge.SetActive(true);
             smokeCloudDodge.transform.position = transform.position;
             smokeCloudDodge.transform.localScale = Vector3.zero;
             smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
+            smokeCloudDodge.SetActive(true);
             smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgeCloudTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
 
             for (int i = 0; i < dodgeCloudSize; i++)
@@ -177,9 +174,10 @@ public class SongBird : PlayerBase
         smokeCloudDeath.SetActive(true);
         smokeCloudDeath.GetComponent<SmokeBase>().Begin(deathBurstDamage, deathSmokeKnockback, deathCloudSize, deathCloudTime, this, tag, deathImpactDur, deathInterrupt, playerColour);
 
-        for (int i = 0; i < deathCloudSize; i++)
+        for (int i = 0; i < deathCloudSize; i++) 
             StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDeath));
     }
+
 
     public void ThrowVial()
     {
@@ -208,4 +206,5 @@ public class SongBird : PlayerBase
         yield return new WaitForSeconds(1);
         smokeCloud.transform.localScale -= Vector3.one;
     }
-}
+
+};
