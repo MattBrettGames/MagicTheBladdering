@@ -317,7 +317,7 @@ public abstract class PlayerBase : ThingThatCanDie
     IEnumerator OffCooldown()
     {
         onCooldown = true;
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         onCooldown = false;
     }
 
@@ -642,7 +642,6 @@ public abstract class PlayerBase : ThingThatCanDie
     public virtual void AILogic()
     {
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
-        print(distanceToTarget + " Is the distance between targets");
 
         aiAgent.speed = speed + bonusSpeed;
 
