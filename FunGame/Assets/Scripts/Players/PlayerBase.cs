@@ -453,7 +453,7 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public virtual void KnockbackContinual()
     {
-        if (isAI)
+        if (!isAI)
             transform.position += knockbackForce * knockBackPower * Time.deltaTime;
         else
             aiAgent.Move(knockbackForce * knockBackPower * Time.deltaTime);
