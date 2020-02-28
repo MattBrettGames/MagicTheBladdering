@@ -362,20 +362,27 @@ public abstract class PlayerBase : ThingThatCanDie
     #region SoundControl
     public void PlaySound(AudioClip clipToPlay)
     {
-        if (!audioSource.isPlaying)
+        if (audioSource.clip != clipToPlay)
         {
             audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
-            audioSource.PlayOneShot(clipToPlay);
-        }
 
+            audioSource.Stop();
+            audioSource.clip = clipToPlay;
+            audioSource.Play();
+        }
     }
     public void PlaySound(AudioClip[] clipsToPlay)
     {
-        if (!audioSource.isPlaying)
+        int rando = UnityEngine.Random.Range(0, clipsToPlay.Length);
+        
+        if (audioSource.clip != clipsToPlay[rando])
         {
             audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
-            audioSource.PlayOneShot(clipsToPlay[UnityEngine.Random.Range(0, clipsToPlay.Length)]);
-        }
+
+            audioSource.Stop();
+            audioSource.clip = clipsToPlay[rando];
+            audioSource.Play();
+        }       
     }
     public void PlayVictorySound()
     {
