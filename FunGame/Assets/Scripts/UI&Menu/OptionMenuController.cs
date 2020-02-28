@@ -15,9 +15,9 @@ public class OptionMenuController : MonoBehaviour
     [SerializeField] Text[] displays = new Text[0];
 
     [Header("Values")]
-    [SerializeField] float masterVolume;
-    [SerializeField] float musicVolume;
-    [SerializeField] float sfxVolume;
+    [SerializeField] public static float masterVolume;
+    [SerializeField] public static float musicVolume;
+    [SerializeField] public static float sfxVolume;
 
     bool inputOnCooldown;
     UniverseController uni;
@@ -63,7 +63,8 @@ public class OptionMenuController : MonoBehaviour
 
         if (currentDisplay == 0 || currentDisplay == 1 || currentDisplay == 2)
         {
-            sliders[currentDisplay].value += (player1.GetAxis("HoriMove") + player2.GetAxis("HoriMove")) * Time.deltaTime;
+            if (Mathf.Abs(player1.GetAxis("HoriMove") + player2.GetAxis("HoriMove")) > 0.3f)
+                sliders[currentDisplay].value += (player1.GetAxis("HoriMove") + player2.GetAxis("HoriMove")) * Time.deltaTime * 0.3f;
 
             if (sliders[currentDisplay].value < 0) sliders[currentDisplay].value = 0;
             if (sliders[currentDisplay].value > 1) sliders[currentDisplay].value = 1;
@@ -86,7 +87,6 @@ public class OptionMenuController : MonoBehaviour
         aud.masterVolume = masterVolume;
         aud.musicVolume = musicVolume;
         aud.sfxVolume = sfxVolume;
-        print("I've been saved - " + masterVolume + "|" + aud.masterVolume + "|" + musicVolume + "|" + aud.musicVolume + "|" + sfxVolume + "|" + aud.sfxVolume);
     }
 
     void EndCooldown() { inputOnCooldown = false; }

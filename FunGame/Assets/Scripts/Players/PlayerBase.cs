@@ -5,6 +5,11 @@ using UnityEngine.AI;
 using Rewired;
 using System;
 
+public enum AttackType
+{
+    A, B, X, Y
+}
+
 public abstract class PlayerBase : ThingThatCanDie
 {
 
@@ -97,10 +102,6 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected AudioClip victorySound;
     AudioSource audioSource;
 
-    //[Header("AI Components")]
-    NavMeshAgent aiAgent;
-
-
     public void OnSelected()
     {
         aiAgent = GetComponent<NavMeshAgent>();
@@ -120,12 +121,10 @@ public abstract class PlayerBase : ThingThatCanDie
         rb2d = gameObject.GetComponent<Rigidbody>();
         bTimer = bCooldown;
 
-
         healthMax = currentHealth;
         player = ReInput.players.GetPlayer(playerID);
         walkDirection = new GameObject("WalkDirection").transform;
         HUD = GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>();
-
     }
 
     public virtual void SetInfo(UniverseController uni, int layerNew)
@@ -134,16 +133,18 @@ public abstract class PlayerBase : ThingThatCanDie
         gameObject.layer = layerNew;
 
         RegainTargets();
+        if (isAI) currentPlayerTarget = lockTargetList[currentLock].GetComponentInParent<PlayerBase>();
 
         aiLooker = new GameObject("AILooker").transform;
-        
+
         if (isAI)
         {
             aiAgent.stoppingDistance = 0;
-            aiAgent.angularSpeed = 360;
+            aiAgent.angularSpeed = Mathf.Infinity;
             aiAgent.acceleration = speed;
         }
-        
+        else aiAgent.enabled = false;
+
         aimTarget = new GameObject("Aimer").transform;
         StartCoroutine(PoisonTick());
     }
@@ -230,11 +231,7 @@ public abstract class PlayerBase : ThingThatCanDie
                         if (player.GetButtonDown("YAttack")) { YAction(); }
 
                         anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    }/*
-                    else
-                    {
-                        dir = Vector3.zero;
-                    }*/
+                    }
                     break;
 
                 case State.lockedOn:
@@ -320,7 +317,7 @@ public abstract class PlayerBase : ThingThatCanDie
     IEnumerator OffCooldown()
     {
         onCooldown = true;
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         onCooldown = false;
     }
 
@@ -361,20 +358,38 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     #endregion
 
+
     #region SoundControl
     public void PlaySound(AudioClip clipToPlay)
     {
-        audioSource.PlayOneShot(clipToPlay);
+        if (audioSource.clip != clipToPlay)
+        {
+            audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
+
+            audioSource.Stop();
+            audioSource.clip = clipToPlay;
+            audioSource.Play();
+        }
     }
     public void PlaySound(AudioClip[] clipsToPlay)
     {
-        audioSource.PlayOneShot(clipsToPlay[UnityEngine.Random.Range(0, clipsToPlay.Length)]);
+        int rando = UnityEngine.Random.Range(0, clipsToPlay.Length);
+        
+        if (audioSource.clip != clipsToPlay[rando])
+        {
+            audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
+
+            audioSource.Stop();
+            audioSource.clip = clipsToPlay[rando];
+            audioSource.Play();
+        }       
     }
     public void PlayVictorySound()
     {
         PlaySound(victorySound);
     }
     #endregion
+
 
     #region Common Events
     public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
@@ -479,7 +494,7 @@ public abstract class PlayerBase : ThingThatCanDie
     #region Utility Functions
     public virtual void HealthChange(int healthChange, PlayerBase attacker) { currentHealth += healthChange; if (currentHealth <= 0) { Death(attacker); } }
 
-    public virtual void OnHit(PlayerBase target) { }
+    public virtual void OnHit(PlayerBase target, AttackType hitWith) { }
     public virtual void GainHA() { hyperArmour = true; }
     public virtual void LoseHA() { hyperArmour = false; }
 
@@ -577,8 +592,20 @@ public abstract class PlayerBase : ThingThatCanDie
 
     #region AI Controls
 
+    //[Header("AI Components")]
+    NavMeshAgent aiAgent;
     float detectionDistance = 15;
     Transform aiLooker;
+    bool hasGainedFleeTarget;
+    PlayerBase currentPlayerTarget;
+    AIState logicState;
+    public enum AIState
+    {
+        idle,
+        fleeing,
+        aggresive
+    }
+
 
     public void AIUpdate()
     {
@@ -628,28 +655,78 @@ public abstract class PlayerBase : ThingThatCanDie
                 KnockbackContinual();
                 break;
         }
-
     }
 
-    public void AILogic()
+    public virtual void AILogic()
     {
-        if (name.Contains("Song"))
-            print("AI Logic is being called");
-
-        aiLooker.LookAt(lockTargetList[currentLock].position);
-        aiLooker.transform.position = transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, lockTargetList[currentLock].position);
 
-        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, Time.deltaTime);
-
-        aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
         aiAgent.speed = speed + bonusSpeed;
 
+        switch (logicState)
+        {
+
+            case AIState.idle:
+                anim.SetFloat("Movement", 0);
+
+                if (distanceToTarget <= detectionDistance * 3)
+                    logicState = AIState.fleeing;
+
+                else
+                    logicState = AIState.aggresive;
+
+                break;
+
+
+            case AIState.fleeing:
+                anim.SetFloat("Movement", 1);
+                if (!hasGainedFleeTarget)
+                    aiAgent.SetDestination(transform.position + new Vector3(UnityEngine.Random.Range(-detectionDistance, detectionDistance), 0, UnityEngine.Random.Range(-detectionDistance, detectionDistance)) * 3);
+                hasGainedFleeTarget = true;
+
+                if (Vector3.Distance(transform.position, aiAgent.destination) >= 3)
+                    logicState = AIState.idle;
+
+
+                if (currentPlayerTarget.acting)
+                {
+                    AAction(false);
+                    logicState = AIState.aggresive;
+                }
+
+                if (currentHealth >= currentPlayerTarget.currentHealth) logicState = AIState.aggresive;
+
+                break;
+
+
+            case AIState.aggresive:
+                anim.SetFloat("Movement", 1);
+                hasGainedFleeTarget = false;
+
+                aiLooker.transform.position = transform.position;
+                aiLooker.transform.LookAt(lockTargetList[currentLock].transform.position + lookAtVariant);
+                visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aiLooker.transform.forward, lockOnLerpSpeed);
+
+                aiAgent.SetDestination(new Vector3(lockTargetList[currentLock].position.x, 0, lockTargetList[currentLock].position.z));
+                AttackLogic(distanceToTarget);
+
+                if (currentHealth <= currentPlayerTarget.currentHealth) logicState = AIState.fleeing;
+
+                break;
+
+        }
+        AttackLogic(distanceToTarget);
+    }
+
+    void AttackLogic(float distanceToTarget)
+    {
         if (distanceToTarget <= detectionDistance)
         {
             XAction();
+            logicState = AIState.idle;
         }
     }
+
 
     #endregion
 
