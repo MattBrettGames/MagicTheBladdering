@@ -41,7 +41,7 @@ public class UniverseController : BlankMono
 
     [Header("Determining Victory")]
     [SerializeField] string gameOverText;
-    private string winner;
+    private GameObject winner;
     private Text victoryText;
 
     [Header("Settings")]
@@ -166,10 +166,16 @@ public class UniverseController : BlankMono
         {
             Time.timeScale = 1;
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
-            victoryText.text = gameOverText.Replace("<winner>", winner);
-            GameObject gam = GameObject.Find(winner);
-            gam.transform.SetParent(Camera.main.transform);
-            GameObject.Find("CharacterStore").SetActive(false);
+            victoryText.text = gameOverText.Replace("<winner>", winner.name);
+
+            winner.transform.SetParent(GameObject.Find("CharacterPlaceHolder").transform);
+            winner.transform.localPosition = Vector3.zero;
+            winner.transform.localScale = Vector3.one;
+            PlayerBase winnerCode = winner.GetComponent<PlayerBase>();
+
+            winnerCode.visuals.transform.LookAt(Camera.main.transform);
+            winnerCode.visuals.transform.eulerAngles = new Vector3(0, winnerCode.visuals.transform.eulerAngles.y, 0);
+            winnerCode.enabled = false;
         }
         //Game-Level Setup
         else if (level >= firstArenaID)
@@ -461,10 +467,11 @@ public class UniverseController : BlankMono
                         player = GameObject.FindGameObjectWithTag("Player4");
                     }
                     */
+                    winner = player;
+                    winner.transform.parent = transform;
                     Invoke("EndGame", 2);
                     Time.timeScale = 0.5f;
-                    winner = player.name;
-                    print(winner + " is the winner");
+                    print(winner.name + " is the winner");
                 }
                 /*
                 triCamCode.enabled = true;
@@ -507,7 +514,7 @@ public class UniverseController : BlankMono
                         player = GameObject.FindGameObjectWithTag("Player4");
                     }
 
-                    winner = player.name;
+                    winner = player;
                     Invoke("EndGame", 4);
                 }
                 /*
@@ -518,7 +525,7 @@ public class UniverseController : BlankMono
             }
         }
     }
-    void EndGame() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("GameOver"); }
+    void EndGame() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver"); }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
@@ -575,7 +582,7 @@ public class UniverseController : BlankMono
         GameObject[] gams = GameObject.FindGameObjectsWithTag("Boss");
         for (int i = 0; i < gams.Length; i++)
         {
-            if (gams[i].name == winner) { gams[i].SetActive(true); }
+            if (gams[i].name == winner.name) { gams[i].SetActive(true); }
         }
     }
 

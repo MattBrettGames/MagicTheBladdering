@@ -179,6 +179,12 @@ public class Carmen : PlayerBase
         }
     }
 
+    public override void OnKill()
+    {
+        base.OnKill();
+        stabSymbol.SetActive(false);
+    }
+
     public void LateUpdate()
     {
         float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
@@ -286,7 +292,12 @@ public class Carmen : PlayerBase
     {
         anim.SetBool("Grappling", false);
         base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker);
+    }
 
+    public override void Death(PlayerBase killer)
+    {
+        base.Death(killer);
+        stabSymbol.SetActive(false);
     }
 
     public override void Respawn()
