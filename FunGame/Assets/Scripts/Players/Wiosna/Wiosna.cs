@@ -76,8 +76,8 @@ public class Wiosna : PlayerBase
     {
         if (aTimer <= 0)
         {
-            PlaySound(aSound);
             anim.SetTrigger("AAction");
+            PlaySound(aSound);
         }
     }
 
@@ -96,8 +96,7 @@ public class Wiosna : PlayerBase
         }
         Physics.IgnoreLayerCollision(thisLayer, 12, true);
         outline.OutlineColor = Color.grey;
-
-
+        
         state = State.dodging;
 
         StartCoroutine(EndDig(thisLayer));
@@ -110,8 +109,8 @@ public class Wiosna : PlayerBase
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
+        print("Ended Dodge");
         outline.OutlineColor = Color.black;
-        aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
         appearEffect.transform.localPosition = transform.localPosition;
