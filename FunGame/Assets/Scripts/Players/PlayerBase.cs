@@ -539,6 +539,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
         EndActing();
         anim.SetFloat("Movement", 0);
+        anim.ResetTrigger("Respawn");
     }
 
     public virtual IEnumerator PoisonTick()
@@ -556,7 +557,22 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public virtual void ExtraUpdate() { }
 
-    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
+    public virtual void BeginActing()
+    {
+        acting = true;
+        rb2d.velocity = Vector3.zero;
+        state = State.attack;
+        ResetTriggers();
+    }
+
+    private void ResetTriggers()
+    {
+        anim.ResetTrigger("XAttack");
+        anim.ResetTrigger("YAttack");
+        anim.ResetTrigger("AAction");
+        anim.ResetTrigger("BAttack");
+    }
+
     public void EndActing()
     {
         acting = false;

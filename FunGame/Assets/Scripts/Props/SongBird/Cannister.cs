@@ -15,7 +15,7 @@ public class Cannister : BlankMono
 
         smoke.transform.position = transform.position;
         smoke.transform.localScale = Vector3.zero;
-        smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
+        //smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
         smoke1.Begin(damage, knockback, size, time, owner, tag, impactDur, interrupt, playerColour);
