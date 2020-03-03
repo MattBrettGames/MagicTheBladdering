@@ -71,7 +71,6 @@ public class SongBird : PlayerBase
         smokeCloudCannister = GenerateSmokeCloud();
         smokeCloudDodge = GenerateSmokeCloud();
         smokeCloudDeath = GenerateSmokeCloud();
-        deathExplosion = Instantiate(deathExplosion);
 
         cannister = Instantiate(cannisterPrefab);
         cannister.SetActive(false);

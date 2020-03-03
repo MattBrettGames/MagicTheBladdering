@@ -4876,7 +4876,7 @@ MonoBehaviour:
   bTimer: 0
   xTimer: 0
   yTimer: 0
-  aSound: {fileID: 0}
+  aSound: {fileID: 8300000, guid: e6d80630cc61da14cb2a273fe2dba4bd, type: 3}
   bSound: {fileID: 8300000, guid: 4e126973eecf938479d2f058a87ab911, type: 3}
   xSound: {fileID: 8300000, guid: 1145f22ccb0ae99459a0693b541885d2, type: 3}
   ySound: {fileID: 8300000, guid: f502ae703f836d5489cee190519c4c9a, type: 3}
@@ -4902,6 +4902,7 @@ MonoBehaviour:
     type: 3}
   vanishEffect: {fileID: 1179231317705750724}
   appearEffect: {fileID: 5636457150713731605}
+  dodgeDistance: 30
   cloneDamage: 25
   cloneColour: {r: 0.3372549, g: 0.8705883, b: 0.8705883, a: 1}
   summonParticles: {fileID: 3559157475361589049}
@@ -5506,6 +5507,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 100150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
+      propertyPath: m_Name
+      value: Wiosna_frostfirebutnofirejustfrost
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5561,10 +5566,6 @@ PrefabInstance:
     - target: {fileID: 400150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 100150, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
-      propertyPath: m_Name
-      value: Wiosna_frostfirebutnofirejustfrost
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8acf8282b46d2384d81df7dd918be6d4, type: 3}
@@ -5739,6 +5740,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
+        type: 3}
+      propertyPath: m_Name
+      value: TeleportEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6008583760751543885, guid: 911da860d2e4a0542bf2bfbedceb9179,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5792,16 +5803,6 @@ PrefabInstance:
     - target: {fileID: 6008583760751543885, guid: 911da860d2e4a0542bf2bfbedceb9179,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
-        type: 3}
-      propertyPath: m_Name
-      value: TeleportEnd
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: 911da860d2e4a0542bf2bfbedceb9179,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8189647065353427274, guid: 911da860d2e4a0542bf2bfbedceb9179,
@@ -6476,6 +6477,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6531,16 +6542,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}
 --- !u!1 &3449728956758775188 stripped
@@ -6562,6 +6563,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6396482908631600458}
     m_Modifications:
+    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
+        type: 3}
+      propertyPath: m_Name
+      value: TeleportBegin
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6008583760751543885, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6615,16 +6626,6 @@ PrefabInstance:
     - target: {fileID: 6008583760751543885, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
-        type: 3}
-      propertyPath: m_Name
-      value: TeleportBegin
-      objectReference: {fileID: 0}
-    - target: {fileID: 8650896296433550402, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8189647065353427274, guid: cd1b8b4b7b01abd4e9dbb05af4c254cb,
