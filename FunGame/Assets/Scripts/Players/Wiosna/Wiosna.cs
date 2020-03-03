@@ -29,6 +29,7 @@ public class Wiosna : PlayerBase
     [Header("Teleport")]
     [SerializeField] GameObject vanishEffect;
     [SerializeField] GameObject appearEffect;
+    [SerializeField] float dodgeDistance;
 
     [Header("Flaming Clone")]
     [SerializeField] int cloneDamage;
@@ -96,8 +97,8 @@ public class Wiosna : PlayerBase
         }
         Physics.IgnoreLayerCollision(thisLayer, 12, true);
         outline.OutlineColor = Color.grey;
-        
-        state = State.dodging;
+
+        TeleportPlayer(transform.position + (visuals.transform.forward * dodgeDistance));
 
         StartCoroutine(EndDig(thisLayer));
         vanishEffect.SetActive(false);
@@ -109,7 +110,6 @@ public class Wiosna : PlayerBase
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
-        print("Ended Dodge");
         outline.OutlineColor = Color.black;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
