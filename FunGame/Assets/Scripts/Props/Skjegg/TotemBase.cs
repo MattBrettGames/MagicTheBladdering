@@ -6,13 +6,12 @@ public class TotemBase : ThingThatCanDie
 {
     public TotemType thisTotemType;
     float lifeSpan;
-    Skjegg owner; 
-
+    Skjegg owner;
 
     void Update()
     {
         lifeSpan -= Time.deltaTime;
-        if(lifeSpan <= 0 && gameObject.activeSelf)
+        if (lifeSpan <= 0 && gameObject.activeSelf)
         {
             Vanish();
         }
@@ -21,7 +20,7 @@ public class TotemBase : ThingThatCanDie
     public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
     {
         base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker);
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Vanish();
         }

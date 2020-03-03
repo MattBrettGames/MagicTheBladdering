@@ -172,10 +172,14 @@ public class UniverseController : BlankMono
             winner.transform.localPosition = Vector3.zero;
             winner.transform.localScale = Vector3.one;
             PlayerBase winnerCode = winner.GetComponent<PlayerBase>();
+            winnerCode.OnVictory();
+            winnerCode.enabled = false;
+            Rigidbody winnerRB = winnerCode.GetComponent<Rigidbody>();
+            winnerRB.isKinematic = true;
+            winnerRB.velocity = Vector3.zero;
 
             winnerCode.visuals.transform.LookAt(Camera.main.transform);
             winnerCode.visuals.transform.eulerAngles = new Vector3(0, winnerCode.visuals.transform.eulerAngles.y, 0);
-            winnerCode.enabled = false;
         }
         //Game-Level Setup
         else if (level >= firstArenaID)

@@ -185,6 +185,12 @@ public class Carmen : PlayerBase
         stabSymbol.SetActive(false);
     }
 
+    public override void OnVictory()
+    {
+        base.OnVictory();
+        stabSymbol.SetActive(false);
+    }
+
     public void LateUpdate()
     {
         float lookDif = Vector3.Angle(visuals.transform.forward, enemyVisual.transform.forward);
