@@ -19,6 +19,7 @@
 			_DepthFactor("Depth Factor", float) = 1.0
 
 			_Height("Height", float) = 0.0
+			_EffectOffset("Effect offset", float)=0.0
 			_WaveAmp("Wave amp", float) = 0.0
 			_WaveSpeed("Wave Speed",float) = 0.0
 			_NoiseTex("Noise texture",2D) = "white" {}
@@ -129,6 +130,7 @@
 			float _Height;
 			float _WaveSpeed;
 			float _WaveAmp;
+			float _EffectOffset;
 			sampler2D _NoiseTex;
 			vertexOutput vert(vertexInput input)
 			  {
@@ -144,7 +146,7 @@
 				// convert obj-space position to camera clip space
 				output.pos = UnityObjectToClipPos(input.vertex);
 				float noiseSample = tex2Dlod(_NoiseTex, float4(input.texCoord.xy, 0, 0));
-				output.pos.y += sin(_Time * _WaveSpeed * noiseSample) * _WaveAmp;
+				output.pos.y -= (sin(_Time * _WaveSpeed * noiseSample) * _WaveAmp * _EffectOffset);
 				output.pos.x += cos(_Time * _WaveSpeed * noiseSample) * _WaveAmp;
 
 				// compute depth (screenPos is a float4)

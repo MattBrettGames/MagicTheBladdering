@@ -207,4 +207,17 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale -= Vector3.one;
     }
 
-};
+
+    public override void Death(PlayerBase killer)
+    {
+        base.Death(killer);
+        MeshRenderer[] meshes = visuals.GetComponentsInChildren<MeshRenderer>();
+
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            meshes[i].enabled = true;
+        }       
+    }
+
+
+}
