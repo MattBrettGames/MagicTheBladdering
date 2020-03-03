@@ -84,7 +84,7 @@ public class Wiosna : PlayerBase
 
     public void DotheDodge()
     {
-        base.AAction(false);
+        // base.AAction(false);
 
         int thisLayer;
         if (playerID == 0)
@@ -98,13 +98,14 @@ public class Wiosna : PlayerBase
         Physics.IgnoreLayerCollision(thisLayer, 12, true);
         outline.OutlineColor = Color.grey;
 
+        vanishEffect.SetActive(false);
+        vanishEffect.transform.localPosition = transform.localPosition;
+        vanishEffect.SetActive(true);
+
         TeleportPlayer(transform.position + (visuals.transform.forward * dodgeDistance));
 
         StartCoroutine(EndDig(thisLayer));
-        vanishEffect.SetActive(false);
         appearEffect.SetActive(false);
-        vanishEffect.transform.localPosition = transform.localPosition;
-        vanishEffect.SetActive(true);
     }
 
     IEnumerator EndDig(int layer)
