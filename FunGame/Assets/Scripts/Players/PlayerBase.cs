@@ -38,7 +38,7 @@ public abstract class PlayerBase : ThingThatCanDie
     [SerializeField] protected float secsBetweenTicks;
     [SerializeField] public bool poison;
     private bool hyperArmour;
-    protected bool iFrames;
+    [HideInInspector] public bool iFrames;
     [HideInInspector] public bool trueIFrames;
     [HideInInspector] public bool hazardFrames;
     protected bool acting;
