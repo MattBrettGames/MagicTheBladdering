@@ -537,7 +537,7 @@ public class UniverseController : BlankMono
         player.enabled = true;
         // triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
-        player.TeleportPlayer(Vector3.zero);
+        player.TeleportPlayer(GameObject.Find("PlayerRespawnPoint").transform.position);
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)
