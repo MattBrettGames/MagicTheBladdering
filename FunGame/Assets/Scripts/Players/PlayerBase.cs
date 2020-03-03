@@ -539,7 +539,6 @@ public abstract class PlayerBase : ThingThatCanDie
 
         EndActing();
         anim.SetFloat("Movement", 0);
-        anim.ResetTrigger("Respawn");
     }
 
     public virtual IEnumerator PoisonTick()
