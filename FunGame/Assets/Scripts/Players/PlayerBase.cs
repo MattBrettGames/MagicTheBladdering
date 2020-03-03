@@ -374,7 +374,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public void PlaySound(AudioClip[] clipsToPlay)
     {
         int rando = UnityEngine.Random.Range(0, clipsToPlay.Length);
-        
+
         if (audioSource.clip != clipsToPlay[rando])
         {
             audioSource.volume = OptionMenuController.masterVolume * OptionMenuController.sfxVolume;
@@ -382,7 +382,7 @@ public abstract class PlayerBase : ThingThatCanDie
             audioSource.Stop();
             audioSource.clip = clipsToPlay[rando];
             audioSource.Play();
-        }       
+        }
     }
     public void PlayVictorySound()
     {
@@ -396,7 +396,6 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
-            ControllerRumble(0.2f, 0.1f, false, null);
             universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             hitEffects.SetActive(true);
             if (fromAttack)
@@ -443,8 +442,16 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void OnKill() { }
 
+    public virtual void OnVictory()
+    {
+        anim.SetFloat("Movement", 0);
+        anim.SetBool("LockOn", false);
+    }
+
+
     public virtual void Death(PlayerBase killer)
     {
+        anim.SetTrigger("Death");
         enabled = false;
         dead = true;
 
@@ -459,7 +466,6 @@ public abstract class PlayerBase : ThingThatCanDie
         rb2d.velocity = Vector3.zero;
         anim.SetFloat("Movement", 0);
         anim.SetBool("LockOn", false);
-        anim.SetTrigger("Death");
 
         GameObject.Find(thisPlayer + "HUDController").GetComponent<HUDController>().PlayerDeath();
         Time.timeScale = 1;
@@ -545,7 +551,7 @@ public abstract class PlayerBase : ThingThatCanDie
         if (poison && !trueIFrames && currentHealth > 1)
         {
             currentHealth -= poisonPerTick;
-            ControllerRumble(0.1f, 0.05f, false, null);
+            //ControllerRumble(0.1f, 0.05f, false, null);
         }
     }
     public virtual void ExtraUpdate() { }

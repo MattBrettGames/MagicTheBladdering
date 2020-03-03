@@ -215,7 +215,6 @@ public class SongBird : PlayerBase
     public override void Respawn()
     {
         visuals.SetActive(true);
-
         base.Respawn();
     }
 }
