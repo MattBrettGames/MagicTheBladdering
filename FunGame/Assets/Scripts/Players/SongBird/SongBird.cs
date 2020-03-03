@@ -177,6 +177,7 @@ public class SongBird : PlayerBase
 
         //deathExplosion.transform.position = transform.position;
         deathExplosion.SetActive(true);
+        visuals.SetActive(false);
 
         for (int i = 0; i < deathCloudSize; i++)
             StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDeath));
@@ -213,13 +214,7 @@ public class SongBird : PlayerBase
 
     public override void Respawn()
     {
-        MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
-
-        for (int i = 0; i < meshes.Length; i++)
-        {
-            meshes[i].enabled = true;
-        }
-        deathExplosion.SetActive(false);
+        visuals.SetActive(true);
 
         base.Respawn();
     }
