@@ -175,7 +175,10 @@ public class SongBird : PlayerBase
         smokeCloudDeath.SetActive(true);
         smokeCloudDeath.GetComponent<SmokeBase>().Begin(deathBurstDamage, deathSmokeKnockback, deathCloudSize, deathCloudTime, this, tag, deathImpactDur, deathInterrupt, playerColour);
 
-        for (int i = 0; i < deathCloudSize; i++) 
+        //deathExplosion.transform.position = transform.position;
+        deathExplosion.SetActive(true);
+
+        for (int i = 0; i < deathCloudSize; i++)
             StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDeath));
     }
 
@@ -187,9 +190,6 @@ public class SongBird : PlayerBase
         smokeCloud.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt, playerColour);
-
-        //deathExplosion.transform.position = transform.position;
-        deathExplosion.SetActive(true);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
@@ -218,7 +218,7 @@ public class SongBird : PlayerBase
         for (int i = 0; i < meshes.Length; i++)
         {
             meshes[i].enabled = true;
-        }       
+        }
         deathExplosion.SetActive(false);
 
         base.Respawn();
