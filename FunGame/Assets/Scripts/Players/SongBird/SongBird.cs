@@ -56,6 +56,7 @@ public class SongBird : PlayerBase
     [SerializeField] float deathCloudTime;
     [SerializeField] float deathImpactDur;
     [SerializeField] bool deathInterrupt;
+    [SerializeField] GameObject deathExplosion;
 
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -70,6 +71,7 @@ public class SongBird : PlayerBase
         smokeCloudCannister = GenerateSmokeCloud();
         smokeCloudDodge = GenerateSmokeCloud();
         smokeCloudDeath = GenerateSmokeCloud();
+        deathExplosion = Instantiate(deathExplosion);
 
         cannister = Instantiate(cannisterPrefab);
         cannister.SetActive(false);
@@ -186,6 +188,8 @@ public class SongBird : PlayerBase
         smokeCloud.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt, playerColour);
+        deathExplosion.transform.position = transform.position;
+        deathExplosion.SetActive(true);
 
         for (int i = 0; i < thrownCloudSize; i++)
         {
@@ -207,17 +211,15 @@ public class SongBird : PlayerBase
         smokeCloud.transform.localScale -= Vector3.one;
     }
 
-
-    public override void Death(PlayerBase killer)
+    public override void Respawn()
     {
-        base.Death(killer);
+        base.Respawn();
         MeshRenderer[] meshes = visuals.GetComponentsInChildren<MeshRenderer>();
 
         for (int i = 0; i < meshes.Length; i++)
         {
             meshes[i].enabled = true;
         }       
+        deathExplosion.SetActive(false);
     }
-
-
 }
