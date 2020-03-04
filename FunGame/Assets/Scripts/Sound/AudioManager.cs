@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 
+/*
 public class AudioManager : MonoBehaviour
 {
 
@@ -76,3 +77,4 @@ public class SoundClip
     [Range(0, 3)] public float pitch = 1;
 
 }
+*/

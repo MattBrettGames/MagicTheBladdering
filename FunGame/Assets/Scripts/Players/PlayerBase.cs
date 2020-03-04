@@ -444,6 +444,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void OnVictory()
     {
+        PlayVictorySound();
         anim.SetFloat("Movement", 0);
         anim.SetBool("LockOn", false);
     }

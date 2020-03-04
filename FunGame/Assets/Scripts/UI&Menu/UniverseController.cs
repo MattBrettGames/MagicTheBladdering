@@ -22,7 +22,7 @@ public class UniverseController : BlankMono
     public Player player;
     DualObjectiveCamera dualCamCode;
     TriObjectiveCamera triCamCode;
-    AudioManager audioManager;
+//    AudioManager audioManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -51,7 +51,7 @@ public class UniverseController : BlankMono
     {
         player = ReInput.players.GetPlayer("System");
 
-        audioManager = GetComponentInChildren<AudioManager>();
+      //  audioManager = GetComponentInChildren<AudioManager>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -592,6 +592,6 @@ public class UniverseController : BlankMono
 
     public void CameraRumbleCall(float degree) { dualCamCode.CamShake(degree); }
 
-    public void PlaySound(string clip) { audioManager.Play(clip); }
+   // public void PlaySound(string clip) { audioManager.Play(clip); }
 
 }
