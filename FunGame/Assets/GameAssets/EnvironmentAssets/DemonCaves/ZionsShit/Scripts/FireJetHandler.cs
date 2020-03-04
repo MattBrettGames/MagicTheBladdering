@@ -20,46 +20,61 @@ public class FireJetHandler : MonoBehaviour
     private int maxActive = 3;   //max no active at once.
 
     [SerializeField]
-    private int maxToActivate = 5;
-    public int currentActive = 0;
+    private int maxToActivate = 6;
+    [SerializeField]
+    private int currentActive;
 
     void Start()
     {
         StartCoroutine(outburstTimer()); //get going.
+        currentActive = 0;
     }
 
 
     public void SetInactive()
     {
-        currentActive -= 1;
+        Debug.Log("Set inactive");
+        currentActive--;      
     }
+    public int toActivate;
+    public int currentActivating;
 
     IEnumerator outburstTimer()
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(minTime, maxTime));
-            int currentactivating = 0;
-            int toActivate = Random.Range(1, maxToActivate + 1);
-
-            toActivate -= currentActive;
-            if (currentActive != maxActive)
+            if (currentActive < maxActive)
             {
-                while (currentactivating < toActivate)
+                yield return new WaitForSeconds(Random.Range(minTime, maxTime));
+                currentActivating = 0;
+                toActivate = Random.Range(1, (maxToActivate + 1));
+
+                if (currentActive < maxActive && toActivate > 0)
                 {
-                    GameObject go = JetObj[Random.Range(0, JetObj.Count)];
-                    FireJet fj = go.GetComponent<FireJet>();
-                    if (!fj.isActive && currentActive < maxActive)
+                    if (toActivate + currentActive > maxActive) toActivate = maxActive - currentActive;
+                    while (currentActivating < toActivate)
                     {
-                        currentactivating += 1;
-                        fj.setActive(Random.Range(minDuration, maxDuration));
-                        currentActive += 1;
+                        GameObject go = JetObj[Random.Range(0, JetObj.Count)];
+                        FireJet fj = go.GetComponent<FireJet>();
+                        if (!fj.isActive)
+                        {
+                            currentActivating += 1;
+                            fj.setActive(Random.Range(minDuration, maxDuration));
+                            currentActive += 1;
+                        }
                     }
+                    toActivate = 0;
                 }
             }
-            currentactivating = 0;
+            else
+            {
+                yield return new WaitForSeconds(maxDuration);
+                currentActive = 0;
+            }
+            yield return null;
+           // currentactivating = 0;
         }
-            
-        }
-            
+
+    }
+
 }

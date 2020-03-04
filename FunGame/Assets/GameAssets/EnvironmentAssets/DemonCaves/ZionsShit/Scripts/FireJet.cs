@@ -17,6 +17,7 @@ public class FireJet : MonoBehaviour
     public  bool isActive;
     void Start()
     {
+      //  fjh = GameObject.Find("FireJetMaster").GetComponent<FireJetHandler>();
         anim = GetComponent<Animator>();
         isActive = false;
     }
@@ -25,6 +26,11 @@ public class FireJet : MonoBehaviour
         isActive = true;
         StartCoroutine(fire(Duration));
     }
+    public void ThisSetInactive()
+    {
+            isActive = false;
+            fjh.SetInactive();
+    }
 
     IEnumerator fire(float duration)
     {
@@ -32,32 +38,19 @@ public class FireJet : MonoBehaviour
         //allow light and emission to fade in;
         //make emission fade in first;
         anim.SetBool("FadeIn", true);
-
-        yield return new WaitForSeconds(1f);
-
-        
-        //activate all visuals etc.
-       // collisionBox.SetActive(true);
-       // particleSystem.Play();
-        yield return new WaitForSeconds(duration - 1f);
-        // particleSystem.Stop();
-        // collisionBox.SetActive(false);
+        yield return new WaitForSeconds(duration - 1);
         anim.SetBool("FadeIn", false);
         anim.SetBool("FadeOut", true);
         Debug.Log("stopFire");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1);
         anim.SetBool("FadeOut", false);
+        yield return null;
 
-       
-
-        isActive = false;
-        //set emission to fade
-
-        fjh.SetInactive();
+        ThisSetInactive();
         
 
-        //StopCoroutine(fire(0));
+       // StopCoroutine(fire(0));
     }
 
 }
