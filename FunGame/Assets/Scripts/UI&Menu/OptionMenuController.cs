@@ -21,18 +21,18 @@ public class OptionMenuController : MonoBehaviour
 
     bool inputOnCooldown;
     UniverseController uni;
-    AudioManager aud;
+//    AudioManager aud;
 
     void Start()
     {
 
         uni = GameObject.FindGameObjectWithTag("UniverseController").GetComponent<UniverseController>();
-        aud = uni.gameObject.GetComponentInChildren<AudioManager>();
+     /*   aud = uni.gameObject.GetComponentInChildren<AudioManager>();
 
         sliders[0].value = aud.masterVolume;
         sliders[1].value = aud.musicVolume;
         sliders[2].value = aud.sfxVolume;
-
+        */
         for (int i = 0; i < sliders.Length; i++)
         {
             displays[i].text = Mathf.RoundToInt(sliders[i].value * 100) + "%";
@@ -82,11 +82,13 @@ public class OptionMenuController : MonoBehaviour
         musicVolume = sliders[1].value;
         sfxVolume = sliders[2].value;
 
+        /*
         aud.UpdateSettings();
 
         aud.masterVolume = masterVolume;
         aud.musicVolume = musicVolume;
         aud.sfxVolume = sfxVolume;
+        */
     }
 
     void EndCooldown() { inputOnCooldown = false; }
