@@ -165,7 +165,6 @@ public class UniverseController : BlankMono
         }
         else if (level == 5)
         {
-            print(victoryScene + " is where the game took place");
             Time.timeScale = 1;
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = gameOverText.Replace("<winner>", winner.name);
@@ -183,7 +182,7 @@ public class UniverseController : BlankMono
             winnerCode.visuals.transform.LookAt(Camera.main.transform);
             winnerCode.visuals.transform.eulerAngles = new Vector3(0, winnerCode.visuals.transform.eulerAngles.y, 0);
 
-            GameObject.Find(victoryScene).SetActive(true);
+            GameObject.Find("BackgroundController").GetComponent<GameOverBackgroundController>().SetBackground(victoryScene);
         }
         //Game-Level Setup
         else if (level >= firstArenaID)
