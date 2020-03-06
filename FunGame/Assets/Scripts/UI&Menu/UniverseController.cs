@@ -43,6 +43,7 @@ public class UniverseController : BlankMono
     [SerializeField] string gameOverText;
     private GameObject winner;
     private Text victoryText;
+    private string victoryScene;
 
     [Header("Settings")]
     [HideInInspector] public bool isPostProcessing = true;
@@ -164,6 +165,7 @@ public class UniverseController : BlankMono
         }
         else if (level == 5)
         {
+            print(victoryScene + " is where the game took place");
             Time.timeScale = 1;
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
             victoryText.text = gameOverText.Replace("<winner>", winner.name);
@@ -180,6 +182,8 @@ public class UniverseController : BlankMono
 
             winnerCode.visuals.transform.LookAt(Camera.main.transform);
             winnerCode.visuals.transform.eulerAngles = new Vector3(0, winnerCode.visuals.transform.eulerAngles.y, 0);
+
+            GameObject.Find(victoryScene).SetActive(true);
         }
         //Game-Level Setup
         else if (level >= firstArenaID)
@@ -529,7 +533,11 @@ public class UniverseController : BlankMono
             }
         }
     }
-    void EndGame() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver"); }
+    void EndGame() 
+    {
+        victoryScene = SceneManager.GetActiveScene().name;
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver"); 
+    }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
