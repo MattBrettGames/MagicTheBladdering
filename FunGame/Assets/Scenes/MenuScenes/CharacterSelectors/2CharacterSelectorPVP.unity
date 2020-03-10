@@ -1986,6 +1986,7 @@ Transform:
   m_LocalScale: {x: 0.30000016, y: 0.3, z: 0.30000016}
   m_Children:
   - {fileID: 1011073850}
+  - {fileID: 1860897526}
   m_Father: {fileID: 1491853139}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10295,6 +10296,109 @@ RectTransform:
   m_AnchoredPosition: {x: -483, y: -107}
   m_SizeDelta: {x: 3232, y: 272.45}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1284647391
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1886065437}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_Name
+      value: Ocean Spirit Skjegg
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 9.971706
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.971706
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 9.971706
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+--- !u!4 &1284647392 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1284647391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1284647393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 65f1793c51268b44cb0a2eaccd89384c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1284647391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1284647394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284647393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1288484903
 GameObject:
   m_ObjectHideFlags: 0
@@ -12040,6 +12144,10 @@ MonoBehaviour:
     - charSel: {fileID: 0}
       name: Native Beardsman
       Skin: {fileID: 401898823}
+      lockedChar: 0
+    - charSel: {fileID: 0}
+      name: Ocean Spirit
+      Skin: {fileID: 1284647393}
       lockedChar: 0
   locked: 0
   universe: {fileID: 0}
@@ -14664,6 +14772,109 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855516197}
   m_CullTransparentMesh: 0
+--- !u!1001 &1860897525
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 238316463}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_Name
+      value: Ocean Spirit Skjegg
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.000017293265
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.7199998
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 192.22304
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 9.971706
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.971705
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 9.971706
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 65f1793c51268b44cb0a2eaccd89384c, type: 3}
+--- !u!4 &1860897526 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 65f1793c51268b44cb0a2eaccd89384c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1860897525}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1860897527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 65f1793c51268b44cb0a2eaccd89384c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1860897525}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1860897528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860897527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1864215537
 GameObject:
   m_ObjectHideFlags: 0
@@ -14996,6 +15207,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 401898822}
+  - {fileID: 1284647392}
   m_Father: {fileID: 1199422747}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16183,6 +16395,10 @@ MonoBehaviour:
     - charSel: {fileID: 0}
       name: Native Beardsman
       Skin: {fileID: 1011073851}
+      lockedChar: 0
+    - charSel: {fileID: 0}
+      name: Ocean Spirit
+      Skin: {fileID: 1860897527}
       lockedChar: 0
   locked: 0
   universe: {fileID: 0}
