@@ -16,9 +16,10 @@ public class SongBird : PlayerBase
     private GameObject cannister;
     [SerializeField] Color playerColour;
 
-    [Header("Dagger Swipe")]
+    [Header("Cane Swipe")]
     public int baseXDamage;
     public int baseXKnockback;
+    [SerializeField] float xKnockbackDur;
 
     [Header("All Prefabs for Instantiation")]
     [SerializeField] GameObject smokeCloudPrefab;
@@ -28,6 +29,7 @@ public class SongBird : PlayerBase
     [SerializeField] int cannisterCloudSize;
     [SerializeField] int cannisterBurstDamage;
     [SerializeField] int cannisterSmokeKnockback;
+    [Space, SerializeField] float cannisterBurstKnockbackDuration;
     [SerializeField] float cannisterCloudTime;
     [SerializeField] float cannisterImpactDur;
     [SerializeField] bool cannisterInterrupt;
@@ -93,7 +95,7 @@ public class SongBird : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X);
+            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDur);
             xTimer = xCooldown;
             PlaySound(xSound);
         }
@@ -131,7 +133,7 @@ public class SongBird : PlayerBase
         {
             hasCannister = true;
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterCloudTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterCloudTime, this, cannisterImpactDur, cannisterInterrupt, playerColour, cannisterBurstKnockbackDuration);
             PlaySound(bSoundBonus);
         }
     }

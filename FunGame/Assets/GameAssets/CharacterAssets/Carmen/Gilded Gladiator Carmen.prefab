@@ -4689,6 +4689,7 @@ MonoBehaviour:
   poisonPerTick: 3
   secsBetweenTicks: 0.4
   poison: 0
+  iFrames: 0
   trueIFrames: 0
   hazardFrames: 0
   state: 0
@@ -4726,6 +4727,7 @@ MonoBehaviour:
   stabKnockback: 1
   slashDamage: 15
   slashKnockback: 5
+  slashKnockbackDuration: 0.1
   slashTravelDuration: 0.4
   spinSphere: {fileID: 516799142119920584}
   spinRadius: 7
@@ -5373,6 +5375,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5006592551857591640}
     m_Modifications:
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5442,16 +5454,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a43527da9a0175244ab885aea78e8689, type: 3}
@@ -5709,6 +5711,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2304488729965535832}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlash
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5764,11 +5771,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlash
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}
 --- !u!198 &2786216766045411916 stripped
@@ -5790,6 +5792,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2304488729965535834}
     m_Modifications:
+    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponSlash
+      objectReference: {fileID: 0}
     - target: {fileID: 2345615030762990309, guid: 6968cf351b97cda489876b035eae9e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5844,11 +5851,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718115050619492443, guid: 6968cf351b97cda489876b035eae9e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlash
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6968cf351b97cda489876b035eae9e3f, type: 3}
