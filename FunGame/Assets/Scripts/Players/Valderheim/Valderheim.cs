@@ -11,20 +11,24 @@ public class Valderheim : PlayerBase
     [Header("Wide Swing")]
     public int xAttack;
     public int xKnockback;
+    [SerializeField] float xKnockbackDuration;
 
     [Header("Spin")]
     public int spinDamage;
     public int spinKnockback;
+    [SerializeField] float spinKnockbackDuration;
 
     [Header("Ground Slam")]
     public int slamAttack;
     public int slamKnockback;
     private float overheadStun;
     [SerializeField] int ySpeedDebuff = 10;
+    [SerializeField] float slamKnockbackDuration;
 
     [Header("Kick Up")]
     public int kickAttack;
     public int kickKnockback;
+    [SerializeField] float kickKnockbackDuration;
 
     [Header("Frenzy")]
     public int frenzyDuration;
@@ -163,11 +167,11 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            if (xTimer <= 0)
+            if (xTimer <= 0 && !acting)
             {
                 base.XAction();
 
-                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X);
+                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
                 PlaySound(xSound);
@@ -175,7 +179,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
-            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X);
+            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, spinKnockbackDuration);
             anim.SetTrigger("Spin");
             PlaySound(xSound);
         }
@@ -183,24 +187,24 @@ public class Valderheim : PlayerBase
 
     public override void YAction()
     {
-        if (comboTime)
+        if (!comboTime)
         {
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y);
-            anim.SetTrigger("ComboKick");
-            comboTime = false;
-            PlaySound(ySound);
-        }
-        else
-        {
-            if (yTimer <= 0)
+            if (yTimer <= 0 && !acting)
             {
                 base.YAction();
 
-                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y);
+                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y, slamKnockbackDuration);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
                 PlaySound(ySound);
             }
+        }
+        else
+        {           
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y, kickKnockbackDuration);
+            anim.SetTrigger("ComboKick");
+            comboTime = false;
+            PlaySound(ySound);
         }
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }

@@ -20,10 +20,12 @@ public class Skjegg : PlayerBase
     [Header("X Attack")]
     [SerializeField] int xDamage;
     [SerializeField] int xKnockback;
+    [SerializeField] float xKnockbackDuration;
 
     [Header("Y Attack")]
     [SerializeField] int yDamage;
     [SerializeField] int yKnockback;
+    [SerializeField] float yKnockbackDuration;
 
     [Header("Totem Vars")]
     [SerializeField] SpriteRenderer totemSprite;
@@ -55,9 +57,11 @@ public class Skjegg : PlayerBase
     [SerializeField] float bearDamageGainedOnAttack;
 
     [Header("Ram Stats")]
-    [SerializeField] float ramBurstDistance;
+    [SerializeField] float ramBurstRadius;
     [SerializeField] int ramBurstPower;
+    [SerializeField] float ramBurstKnockbackDur;
     [SerializeField] int ramAttackKnockback;
+    [SerializeField] float ramAttackKnockbackDur;
 
     [Header("Bird Stats")]
     [SerializeField] int birdBonusSpeed;
@@ -97,8 +101,8 @@ public class Skjegg : PlayerBase
         {
             base.XAction();
             anim.SetTrigger("XAttack");
-            rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X);
-            leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X);
+            rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xKnockbackDuration);
+            leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xKnockbackDuration);
             xTimer = xCooldown;
         }
     }
@@ -109,8 +113,8 @@ public class Skjegg : PlayerBase
         {
             base.YAction();
             anim.SetTrigger("YAttack");
-            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y);
-            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y);
+            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y, yKnockbackDuration);
+            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y, yKnockbackDuration);
             yTimer = yCooldown;
         }
     }
@@ -166,14 +170,14 @@ public class Skjegg : PlayerBase
 
         if (isRam)
         {
-            hitTarget.Knockback(ramAttackKnockback, visuals.transform.forward);
+            hitTarget.Knockback(ramAttackKnockback, visuals.transform.forward, ramAttackKnockbackDur);
         }
 
         if (isBird)
         {
             if (Random.Range(0, 100) <= birdCritChance)
             {
-                hitTarget.TakeDamage(birdCritDamageBonus, Vector3.zero, 0, false, true, this);
+                hitTarget.TakeDamage(birdCritDamageBonus, Vector3.zero, 0, false, true, this, 0);
             }
         }
     }
@@ -204,11 +208,11 @@ public class Skjegg : PlayerBase
 
             case TotemType.ram:
                 isRam = true;
-                if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) <= ramBurstDistance)
+                if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) <= ramBurstRadius)
                 {
                     lockTargetList[currentLock].gameObject.GetComponentInParent<PlayerBase>().Knockback(ramBurstPower,
                         lockTargetList[currentLock].transform.position - totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position
-                        );
+                        , ramBurstKnockbackDur);
                 }
                 break;
 

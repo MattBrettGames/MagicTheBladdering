@@ -10,6 +10,7 @@ public class KillHazard : BlankMono
     [Header("Knockback")]
     public Vector3 dir;
     public int force;
+    [SerializeField] float knockbackDuration = 0.1f;
 
     [Header("Animation?")]
     [SerializeField] bool hasAnimation;
@@ -33,7 +34,7 @@ public class KillHazard : BlankMono
             if (other.gameObject.GetComponent<PlayerBase>() != null)
             {
                 PlayerBase code = other.gameObject.GetComponent<PlayerBase>();
-                code.TakeDamage(damageToPlayer, dir, force, false, false, null);
+                code.TakeDamage(damageToPlayer, dir, force, false, false, null, knockbackDuration);
 
                 if (hasAnimation)
                 {

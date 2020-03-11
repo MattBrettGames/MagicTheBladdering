@@ -342,6 +342,7 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         state = State.normal;
         aTimer = aCooldown;
+        TeleportPlayer(transform.position);
     }
 
     public virtual void BAction()
@@ -392,7 +393,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
 
     #region Common Events
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker, float knockbackDur)
     {
         if (!iFrames && !trueIFrames)
         {
@@ -404,7 +405,7 @@ public abstract class PlayerBase : ThingThatCanDie
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
-            Knockback(knockback, dirTemp);
+            Knockback(knockback, dirTemp, knockbackDur);
             PlaySound(ouchSounds);
         }
         if (iFrames || trueIFrames)
@@ -452,6 +453,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void Death(PlayerBase killer)
     {
+        anim.ResetTrigger("Respawn");
         anim.SetTrigger("Death");
         enabled = false;
         dead = true;
@@ -481,21 +483,27 @@ public abstract class PlayerBase : ThingThatCanDie
         }
         PlaySound(deathSounds);
     }
+
+    #region Knockback Controls
     public virtual void KnockbackContinual()
     {
-        if (isAI)
-            transform.position += knockbackForce * knockBackPower * Time.deltaTime;
-        else
-            aiAgent.Move(knockbackForce * knockBackPower * Time.deltaTime);
+        transform.position += knockbackForce * knockBackPower * Time.deltaTime;
     }
-    public override void Knockback(int power, Vector3 direction)
+    public override void Knockback(int power, Vector3 direction, float knockbackDur)
     {
         knockbackForce = direction;
         knockBackPower = power * 10;
         state = State.knockback;
-        Invoke("StopKnockback", power * 0.01f);
+        Invoke("StopKnockback", knockbackDur);
     }
-    public virtual void StopKnockback() { knockbackForce = Vector3.zero; state = State.normal; }
+    public virtual void StopKnockback()
+    {
+        knockbackForce = Vector3.zero;
+        state = State.normal;
+        TeleportPlayer(transform.position);
+    }
+    #endregion
+
     #endregion
 
     #region Utility Functions

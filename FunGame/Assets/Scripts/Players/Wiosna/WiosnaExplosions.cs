@@ -12,6 +12,7 @@ public class WiosnaExplosions : MonoBehaviour
     float spaceTrue;
     float scaleChange;
     ParticleSystem parts;
+    float knockbackDuration;
 
     public void Start()
     {
@@ -21,7 +22,7 @@ public class WiosnaExplosions : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, AudioClip ySound)//, Vector3 newScale)
+    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, AudioClip ySound, float knockDur)
     {
         gameObject.tag = owner.tag;
 
@@ -34,6 +35,7 @@ public class WiosnaExplosions : MonoBehaviour
         spaceTrue = spacing;
         parts.Clear();
         parts.Play();
+        knockbackDuration = knockDur;
 
         gameObject.SetActive(true);
 
@@ -58,7 +60,7 @@ public class WiosnaExplosions : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound);//, transform.localScale - (transform.localScale / scaleChange));
+        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound, knockbackDuration);//, transform.localScale - (transform.localScale / scaleChange));
     }
 
     IEnumerator Fade(float time)
@@ -73,7 +75,7 @@ public class WiosnaExplosions : MonoBehaviour
         if (other.tag != tag || other.tag == "Untagged")
         {
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-            player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue);
+            player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue, knockbackDuration);
             ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f, false, null);
         }
     }

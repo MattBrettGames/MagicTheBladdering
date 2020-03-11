@@ -301,6 +301,7 @@ MonoBehaviour:
   playerColour: {r: 0, g: 0, b: 0, a: 0}
   baseXDamage: 10
   baseXKnockback: 2
+  xKnockbackDur: 0
   smokeCloudPrefab: {fileID: 3455997052037556577, guid: be84c7d8890f3de48b9b0e9967847983,
     type: 3}
   cannisterPrefab: {fileID: 6075505490589839577, guid: 87f0d95c51d44b04eac4db9a09bd34a6,
@@ -308,6 +309,7 @@ MonoBehaviour:
   cannisterCloudSize: 10
   cannisterBurstDamage: 25
   cannisterSmokeKnockback: 2
+  cannisterBurstKnockbackDuration: 0.2
   cannisterCloudTime: 7
   cannisterImpactDur: 0.2
   cannisterInterrupt: 1
@@ -923,6 +925,16 @@ PrefabInstance:
       propertyPath: InitialModule.startSpeed.scalar
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 848093132383877263, guid: 1bb882979507c9c4fa09b780d042a63a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0001dff8d4f5262469aec38163324f34, type: 2}
+    - target: {fileID: 92553262147820905, guid: 1bb882979507c9c4fa09b780d042a63a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0001dff8d4f5262469aec38163324f34, type: 2}
     - target: {fileID: 1937539829063516119, guid: 1bb882979507c9c4fa09b780d042a63a,
         type: 3}
       propertyPath: TrailModule.dieWithParticles
@@ -943,16 +955,6 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.scalar
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 92553262147820905, guid: 1bb882979507c9c4fa09b780d042a63a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 0001dff8d4f5262469aec38163324f34, type: 2}
-    - target: {fileID: 848093132383877263, guid: 1bb882979507c9c4fa09b780d042a63a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 0001dff8d4f5262469aec38163324f34, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bb882979507c9c4fa09b780d042a63a, type: 3}
 --- !u!1 &3590670836191533867 stripped
@@ -1079,10 +1081,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SongbirdCultist_Skelemesh
       objectReference: {fileID: 0}
-    - target: {fileID: 100010, guid: 3675aaf32157d1748abd634a0247e931, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400132, guid: 3675aaf32157d1748abd634a0247e931, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1138,6 +1136,10 @@ PrefabInstance:
     - target: {fileID: 400132, guid: 3675aaf32157d1748abd634a0247e931, type: 3}
       propertyPath: m_LocalScale.z
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 3675aaf32157d1748abd634a0247e931, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 13700008, guid: 3675aaf32157d1748abd634a0247e931, type: 3}
       propertyPath: m_Enabled

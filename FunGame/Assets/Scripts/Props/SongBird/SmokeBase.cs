@@ -42,7 +42,7 @@ public class SmokeBase : MonoBehaviour
 
             if (isBurst)
             {
-                otherCode.TakeDamage(damageTrue, transform.position - other.transform.position, forceTrue, true, stopAttack, owner);
+                otherCode.TakeDamage(damageTrue, transform.position - other.transform.position, forceTrue, true, stopAttack, owner, 0);
             }
         }
     }

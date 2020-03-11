@@ -15,8 +15,9 @@ public class Weapons : BlankMono
     bool stopAttackTrue;
     [HideInInspector] public Transform head;
     AttackType currentAttack;
+    float currentKnockback;
 
-    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner, bool stopAttack, AttackType attackType)
+    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner, bool stopAttack, AttackType attackType, float knockDur)
     {
         damageFull = damage;
         knockFull = knockback;
@@ -28,6 +29,7 @@ public class Weapons : BlankMono
         head = trails.transform;
         tag = owner.tag;
         currentAttack = attackType;
+        currentKnockback = knockDur;
     }
 
     private void Start()
@@ -57,7 +59,7 @@ public class Weapons : BlankMono
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
         if (other.tag != tag)
         {
-            player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue);
+            player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue, currentKnockback);
             PlayerBase newPlayer = (PlayerBase)player;
             if (!newPlayer.iFrames && !newPlayer.trueIFrames)
             {
