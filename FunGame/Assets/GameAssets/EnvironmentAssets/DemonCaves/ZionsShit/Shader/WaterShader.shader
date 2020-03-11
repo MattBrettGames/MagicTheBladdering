@@ -11,6 +11,7 @@
 		_EmissionMap("Emission",2D) = "Black"{}
 		_EmissionColor("Emission Color", Color) = (0,0,0,0)
 		_Metallic("Metallic", Range(0,1)) = 0.0
+		_HeightFactor("Height Factor",float ) = 1.0
 
 		[Space(30)]
 
@@ -188,6 +189,7 @@ float _Height;
 float _WaveSpeed;
 float _WaveAmp;
 sampler2D _NoiseTex;
+float _HeightFactor;
 vertexOutput vert(vertexInput input)
   {
 	vertexOutput output;
@@ -202,8 +204,8 @@ vertexOutput vert(vertexInput input)
 	// convert obj-space position to camera clip space
 	output.pos = UnityObjectToClipPos(input.vertex);
 	float noiseSample = tex2Dlod(_NoiseTex, float4(input.texCoord.xy, 0, 0));
-	output.pos.y += sin(_Time * _WaveSpeed * noiseSample) * _WaveAmp;
-	output.pos.x += cos(_Time * _WaveSpeed * noiseSample) * _WaveAmp;
+	output.pos.y += sin(_Time * _WaveSpeed * noiseSample) * _WaveAmp * -_HeightFactor;
+	output.pos.x += cos(_Time * _WaveSpeed * noiseSample) * _WaveAmp  ;
 
 	// compute depth (screenPos is a float4)
 	output.screenPos = ComputeScreenPos(output.pos);
@@ -216,6 +218,7 @@ sampler2D _MainTex;
 fixed4 _Color2;
 fixed4 _EdgeColor;
 float _DepthFactor;
+
 
 float4 frag(vertexOutput input) : COLOR
 {
