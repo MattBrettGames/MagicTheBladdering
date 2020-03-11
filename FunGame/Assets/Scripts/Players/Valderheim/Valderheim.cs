@@ -24,6 +24,7 @@ public class Valderheim : PlayerBase
     private float overheadStun;
     [SerializeField] int ySpeedDebuff = 10;
     [SerializeField] float slamKnockbackDuration;
+    bool canInput;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -45,8 +46,7 @@ public class Valderheim : PlayerBase
 
     //[Header("Polish")]
     //[SerializeField] Color skinColour;
-    GameObject crack1;
-    GameObject crack2;
+    [SerializeField] GameObject crackEffect;
 
     public override void Start()
     {
@@ -61,8 +61,8 @@ public class Valderheim : PlayerBase
         base.SetInfo(uni, layerNew);
 
         ObjectPooler objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
-        crack1 = objectPooler.crackList[playerID * 2];
-        crack2 = objectPooler.crackList[(playerID * 2) + 1];
+        crackEffect = Instantiate(crackEffect);
+        crackEffect.SetActive(false);
     }
 
 
@@ -167,10 +167,11 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            if (xTimer <= 0 && !acting)
+            if (xTimer <= 0 && canInput)
             {
                 base.XAction();
 
+                canInput = false;
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
@@ -179,6 +180,7 @@ public class Valderheim : PlayerBase
         }
         else
         {
+            canInput = false;
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, spinKnockbackDuration);
             anim.SetTrigger("Spin");
             PlaySound(xSound);
@@ -189,8 +191,9 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            if (yTimer <= 0 && !acting)
+            if (yTimer <= 0 && canInput)
             {
+                canInput = false;
                 base.YAction();
 
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y, slamKnockbackDuration);
@@ -200,7 +203,8 @@ public class Valderheim : PlayerBase
             }
         }
         else
-        {           
+        {
+            canInput = false;
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y, kickKnockbackDuration);
             anim.SetTrigger("ComboKick");
             comboTime = false;
@@ -210,8 +214,14 @@ public class Valderheim : PlayerBase
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
-    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
+    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1);  canInput = false; }
     public void EndSlow() { bonusSpeed += ySpeedDebuff; }
+
+    public override void EndActing()
+    {
+        canInput = true;
+        base.EndActing();
+    }
 
     private void CloseComboKick()
     {
@@ -242,43 +252,27 @@ public class Valderheim : PlayerBase
 
     public override void LeaveCrack(Vector3 pos)
     {
-        crack1.transform.position = new Vector3(pos.x, 0.4f, pos.z);
-        crack1.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
+        crackEffect.transform.position = new Vector3(pos.x, 0.4f, pos.z);
+        crackEffect.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
         if (frenzy)
         {
-            crack1.transform.localScale = new Vector3(1f, 1f, 1f);
+            crackEffect.transform.localScale = new Vector3(1f, 1f, 1f);
         }
         else
         {
-            crack1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            crackEffect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
-        crack1.SetActive(true);
-        StartCoroutine(EndCrack(crack1));
+        crackEffect.SetActive(true);
+        StartCoroutine(EndCrack(crackEffect));
     }
     IEnumerator EndCrack(GameObject crack)
     {
         yield return new WaitForSeconds(2);
         crack.SetActive(false);
     }
-    public void LeaveCrack(Vector3 pos, bool isCrack)
-    {
-        crack2.transform.position = new Vector3(pos.x, 0.4f, pos.z);
-        crack2.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
-
-        if (frenzy)
-        {
-            crack2.transform.localScale = new Vector3(1f, 1f, 1f);
-        }
-        else
-        {
-            crack2.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        }
-
-        crack2.SetActive(true);
-        StartCoroutine(EndCrack(crack2));
-    }
+    
 
     public override void BAction()
     {
@@ -286,7 +280,6 @@ public class Valderheim : PlayerBase
         {
             base.BAction();
 
-            StopCoroutine(EndCrack(crack2));
             //LeaveCrack(transform.position, true);
             StartCoroutine(StopFrenzy());
             anim.SetTrigger("BAttack");

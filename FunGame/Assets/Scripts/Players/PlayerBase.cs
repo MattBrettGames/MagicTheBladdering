@@ -581,7 +581,7 @@ public abstract class PlayerBase : ThingThatCanDie
         anim.ResetTrigger("BAttack");
     }
 
-    public void EndActing()
+    public virtual void EndActing()
     {
         acting = false;
         rb2d.velocity = Vector3.zero;
