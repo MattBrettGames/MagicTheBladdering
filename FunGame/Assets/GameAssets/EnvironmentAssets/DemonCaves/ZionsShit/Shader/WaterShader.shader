@@ -205,7 +205,7 @@ vertexOutput vert(vertexInput input)
 	output.pos = UnityObjectToClipPos(input.vertex);
 	float noiseSample = tex2Dlod(_NoiseTex, float4(input.texCoord.xy, 0, 0));
 	output.pos.y += sin(_Time * _WaveSpeed * noiseSample) * _WaveAmp * -_HeightFactor;
-	output.pos.x += cos(_Time * _WaveSpeed * noiseSample) * _WaveAmp  ;
+	output.pos.x -= cos(_Time * _WaveSpeed * noiseSample) * _WaveAmp  ;
 
 	// compute depth (screenPos is a float4)
 	output.screenPos = ComputeScreenPos(output.pos);
