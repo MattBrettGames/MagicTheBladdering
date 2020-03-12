@@ -96,8 +96,8 @@ public class Skjegg : PlayerBase
 
         totemSprite.sprite = totemSymbolArray[totemChoiceList[i_currentTotem]];
 
-        anim.ResetTrigger("XAttack");
-        anim.ResetTrigger("YAttack");
+        // anim.ResetTrigger("XAttack");
+        // anim.ResetTrigger("YAttack");
     }
 
     public override void Update()
@@ -239,7 +239,7 @@ public class Skjegg : PlayerBase
             rightFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
             leftFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
         }
-
+        anim.ResetTrigger("XAttack");
         timeXHeld = 0;
         xTimer = xCooldown;
     }
