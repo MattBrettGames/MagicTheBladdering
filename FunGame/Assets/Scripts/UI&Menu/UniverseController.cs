@@ -22,7 +22,7 @@ public class UniverseController : BlankMono
     public Player player;
     DualObjectiveCamera dualCamCode;
     TriObjectiveCamera triCamCode;
-//    AudioManager audioManager;
+    //    AudioManager audioManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -52,7 +52,7 @@ public class UniverseController : BlankMono
     {
         player = ReInput.players.GetPlayer("System");
 
-      //  audioManager = GetComponentInChildren<AudioManager>();
+        //  audioManager = GetComponentInChildren<AudioManager>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -100,11 +100,11 @@ public class UniverseController : BlankMono
     public void SelectedPlay()
     {
         numOfPlayers = 2;
-        /*
+
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
-        */
+
 
         if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
         if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
@@ -204,6 +204,7 @@ public class UniverseController : BlankMono
              }
 
             triCamCode.enabled = true;
+            */
 
             if (numOfPlayers == 2)
             {
@@ -215,7 +216,6 @@ public class UniverseController : BlankMono
             {
                 triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
             }
-            */
             PlayerBase[] playerBases = new PlayerBase[4];
 
             #region Player 1
@@ -442,10 +442,7 @@ public class UniverseController : BlankMono
             PlayerBase playerCode = player.GetComponent<PlayerBase>();
             player.GetComponent<Rigidbody>().isKinematic = true;
 
-            // dualCamCode.Death(playerCode.playerID);
-
             playerCode.numOfDeaths++;
-            //   print(player.name + " has died " + playerCode.numOfDeaths + " times");
 
             if (playerCode.numOfDeaths != numOfRespawns)
             {
@@ -480,10 +477,7 @@ public class UniverseController : BlankMono
                     Time.timeScale = 0.5f;
                     print(winner.name + " is the winner");
                 }
-                /*
-                triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-                */
+
                 RemovePlayerFromTargets(playerCode.playerID - 1);
 
             }
@@ -522,20 +516,20 @@ public class UniverseController : BlankMono
                     }
 
                     winner = player;
-                    Invoke("EndGame", 4);
+                    winner.transform.parent = transform;
+                    Invoke("EndGame", 2);
+                    Time.timeScale = 0.5f;
+                    print(winner.name + " is the winner");
                 }
-                /*
-                triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-                */
+
                 RemovePlayerFromTargets(playerCode.playerID + 1);
             }
         }
     }
-    void EndGame() 
+    void EndGame()
     {
         victoryScene = SceneManager.GetActiveScene().name;
-        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver"); 
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver");
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
@@ -599,6 +593,6 @@ public class UniverseController : BlankMono
 
     public void CameraRumbleCall(float degree) { dualCamCode.CamShake(degree); }
 
-   // public void PlaySound(string clip) { audioManager.Play(clip); }
+    // public void PlaySound(string clip) { audioManager.Play(clip); }
 
 }
