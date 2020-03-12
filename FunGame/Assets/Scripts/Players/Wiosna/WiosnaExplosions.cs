@@ -10,24 +10,31 @@ public class WiosnaExplosions : MonoBehaviour
     int knockFull;
     Vector3 knockDir;
     float spaceTrue;
+    float scaleChange;
     ParticleSystem parts;
+    float knockbackDuration;
 
-    public void Setup()
+    public void Start()
     {
         parts = GetComponentInChildren<ParticleSystem>();
+        parts.Stop();
+        transform.localScale += transform.localScale * scaleChange;
+        gameObject.SetActive(false);
     }
 
-    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, string ySound)
+    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, AudioClip ySound, float knockDur)
     {
-        tag = owner.tag;
+        gameObject.tag = owner.tag;
 
         ownerTrue = owner;
         damageFull = damage;
         knockFull = knockback;
         knockDir = dir;
         spaceTrue = spacing;
-
         parts.Clear();
+        parts.Play();
+        knockbackDuration = knockDur;
+
         gameObject.SetActive(true);
 
         gameObject.transform.position += (dir * spacing);
@@ -38,39 +45,33 @@ public class WiosnaExplosions : MonoBehaviour
         if (remaining > 0)
         {
             StartCoroutine(NextBlast(timeBetweenBlasts, nextBlast, remaining, uni, ySound));
-            uni.PlaySound(ySound);
+            owner.PlaySound(ySound, null);
         }
 
-        parts.Play();
-
         StartCoroutine(Fade(timeBetweenBlasts * 2f));
-
     }
 
-
-    IEnumerator NextBlast(float time, WiosnaExplosions next, int remaining, UniverseController uni, string ySound)
+    IEnumerator NextBlast(float time, WiosnaExplosions next, int remaining, UniverseController uni, AudioClip ySound)
     {
         yield return new WaitForSeconds(time);
 
-        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound);
+        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound, knockbackDuration);//, transform.localScale - (transform.localScale / scaleChange));
     }
 
     IEnumerator Fade(float time)
     {
         yield return new WaitForSeconds(time);
 
-        parts.Stop();
-        parts.Clear();
         gameObject.SetActive(false);
     }
-    
+
     public virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag != tag || other.tag == "Untagged")
         {
             ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-            player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue);
-            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+            player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue, knockbackDuration);
+            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f, false, null);
         }
     }
 }

@@ -26,6 +26,7 @@ public class CharacterSelector : BlankMono
     [Header("Readying Up")]
     public bool locked;
     [HideInInspector] public UniverseController universe;
+    [SerializeField] Vector3 targetLookatForChar;
     public Camera cam;
     public float camFOVLocked;
     private float camFOVBase;
@@ -37,11 +38,16 @@ public class CharacterSelector : BlankMono
     [SerializeField] CharacterSelector otherChar2;
     [SerializeField] CharacterSelector otherChar3;
 
+    [Header("Sounds")]
+    [SerializeField] AudioClip[] chosenSounds = new AudioClip[0];
+    private AudioSource audioSource;
+
     [Header("UI Elements")]
     public GameObject characterText;
     public Text skinText;
     public GameObject displayChar;
     public GameObject characterCover;
+    public GameObject[] characterAblityArray = new GameObject[4];
 
     [Header("Background Images")]
     public GameObject[] backImages = new GameObject[2];
@@ -51,7 +57,6 @@ public class CharacterSelector : BlankMono
 
     void Start()
     {
-
         store = transform.GetChild(0).gameObject;
         backStore = transform.parent.GetChild(1).gameObject;
         camOffsetBase = store.transform.position;
@@ -67,6 +72,15 @@ public class CharacterSelector : BlankMono
         player = ReInput.players.GetPlayer(thisPInt);
 
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        currentChar = UnityEngine.Random.Range(0, characters.Count);
+        while (currentChar == otherChar1.currentChar && thisPInt != 0)
+        {
+            currentChar = UnityEngine.Random.Range(0, characters.Count);
+        }
+
+        UpdateDisplay();
     }
 
     void Update()
@@ -75,6 +89,7 @@ public class CharacterSelector : BlankMono
         {
             if (player.GetAxis("HoriMove") >= 0.4f && !inputCooldown)
             {
+                characterAblityArray[currentChar].SetActive(false);
                 currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar < characters.Count - 1)
@@ -94,19 +109,19 @@ public class CharacterSelector : BlankMono
             }
             if (player.GetAxis("HoriMove") <= -0.4f && !inputCooldown)
             {
+                characterAblityArray[currentChar].SetActive(false);
+                currentSkin = 0;
                 inputCooldown = true;
                 if (currentChar != 0)
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar--;
-                    currentSkin = 0;
                     UpdateDisplay(0.2f);
                 }
                 else
                 {
                     for (int i = 0; i < 72; i++) { StartCoroutine(SpinTrigger(-5, i)); }
                     currentChar = characters.Count - 1;
-                    currentSkin = 0;
                     UpdateDisplay(0.2f);
                 }
                 Invoke("EndCooldown", 0.3f);
@@ -143,12 +158,28 @@ public class CharacterSelector : BlankMono
                 Invoke("EndCooldown", 0.3f);
             }
 
-            if (player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
+            if ((player.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H)) && !inputCooldown)
             {
                 if (!characters[currentChar].skins[currentSkin].lockedChar)
                 {
+                    audioSource.PlayOneShot(chosenSounds[currentChar]);
+                    characterAblityArray[currentChar].SetActive(false);
                     LockInCharacter();
                 }
+            }
+
+            if (player.GetButtonDown("YAttack"))
+            {
+                characterAblityArray[currentChar].SetActive(false);
+
+                currentChar = UnityEngine.Random.Range(0, characters.Count);
+                currentSkin = UnityEngine.Random.Range(0, characters[currentChar].skins.Count);
+
+                UpdateDisplay();
+            }
+            if (player.GetButtonDown("XAttack"))
+            {
+                characterAblityArray[currentChar].SetActive(!characterAblityArray[currentChar].activeSelf);
             }
         }
         if (player.GetButtonDown("BAttack"))
@@ -159,9 +190,21 @@ public class CharacterSelector : BlankMono
             }
             else
             {
+                characters[otherChar1.currentChar].skins[otherChar1.currentSkin].Skin.GetComponent<PlayerBase>().isAI = false;
                 locked = false;
                 Unlock();
                 universe.Unlock(thisPInt);
+            }
+        }
+        if ((player.GetAxis("LockOn") >= 0.4f && !inputCooldown) || Input.GetKeyDown(KeyCode.G))
+        {
+            if (!otherChar1.locked)
+            {
+                PlayerBase target = otherChar1.characters[otherChar1.currentChar].skins[otherChar1.currentSkin].Skin.GetComponent<PlayerBase>();
+                target.isAI = true;
+                otherChar1.LockInCharacter();
+                inputCooldown = true;
+                Invoke("EndCooldown", 0.3f);
             }
         }
     }
@@ -171,7 +214,7 @@ public class CharacterSelector : BlankMono
         backStore.transform.position += camOffsetLocked;
         cam.fieldOfView = camFOVLocked;
         lockedForward = displayChar.transform.forward;
-        store.transform.eulerAngles = new Vector3(0, 90 + (90 * thisPInt * 2), 0);
+        store.transform.eulerAngles = targetLookatForChar;
 
         StartCoroutine(StartLoad());
 
@@ -197,6 +240,11 @@ public class CharacterSelector : BlankMono
         yield return new WaitForSeconds(0);
         displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseController").transform);
         universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
+
+        displayChar.GetComponent<PlayerBase>().playerID = thisPInt;
+        displayChar.GetComponent<PlayerBase>().thisPlayer = thisPlayer;
+
+        //print(displayChar.name + " is the displayChar, but sucessful");
     }
 
     private void Unlock()
@@ -206,12 +254,12 @@ public class CharacterSelector : BlankMono
 
         if (otherChar2 != null)
         {
-            otherChar2.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar2.characters[currentChar].skins[currentSkin].lockedChar = false;
             otherChar2.UpdateDisplay();
         }
         if (otherChar3 != null)
         {
-            otherChar3.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar3.characters[currentChar].skins[currentSkin].lockedChar = false;
             otherChar3.UpdateDisplay();
         }
 

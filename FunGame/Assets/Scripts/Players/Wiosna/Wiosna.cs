@@ -13,22 +13,32 @@ public class Wiosna : PlayerBase
     [Header("X Attack")]
     [SerializeField] int xDamage;
     [SerializeField] int xKnockback;
+    [SerializeField] float xKnockbackDuration;
 
     [Header("Y Attack")]
     [SerializeField] int yDamage;
     [SerializeField] int yKnockback;
     [SerializeField] float ySpacing;
     [SerializeField] float yTimeBetweenBlasts;
+    [SerializeField] float yDelay;
     [SerializeField] int numberOfBlasts;
+    [SerializeField] GameObject explosionPrefabs;
+    [SerializeField] float explosionKnockbackDuration;
 
     WiosnaExplosions blast1;
     WiosnaExplosions blast2;
+
+    [Header("Teleport")]
+    [SerializeField] GameObject vanishEffect;
+    [SerializeField] GameObject appearEffect;
+    [SerializeField] float dodgeDistance;
 
     [Header("Flaming Clone")]
     [SerializeField] int cloneDamage;
     [SerializeField] Color cloneColour;
     private GameObject flamingClone;
     GameObject cloneExplosion;
+    [SerializeField] GameObject summonParticles;
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
@@ -42,10 +52,13 @@ public class Wiosna : PlayerBase
         flamingClone = objectPooler.cloneList[playerID];
         cloneExplosion = objectPooler.cloneExplosionList[playerID];
 
-        flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);        
+        flamingClone.GetComponent<FlamingWiosna>().SetInfo(thisPlayer, cloneDamage, cloneColour, tag, cloneExplosion, this);
 
-        blast1 = objectPooler.blastList[playerID * 2].GetComponent<WiosnaExplosions>();
-        blast2 = objectPooler.blastList[(playerID * 2) + 1].GetComponent<WiosnaExplosions>();
+        blast1 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
+        blast2 = GameObject.Instantiate(explosionPrefabs).GetComponent<WiosnaExplosions>();
+
+        vanishEffect.transform.SetParent(gameObject.transform.parent);
+        appearEffect.transform.SetParent(gameObject.transform.parent);
 
     }
 
@@ -53,72 +66,102 @@ public class Wiosna : PlayerBase
     {
         if (xTimer <= 0)
         {
+            base.XAction();
+
             anim.SetTrigger("XAttack");
-            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true);
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
             xTimer = xCooldown;
-            universe.PlaySound(xSound);
+            PlaySound(xSound, xVoice);
         }
     }
 
-    public override void AAction()
+    public override void AAction(bool playAnim)
     {
         if (aTimer <= 0)
         {
-            int thisLayer;
-            if (playerID == 0)
-            {
-                thisLayer = 13;
-            }
-            else
-            {
-                thisLayer = 14;
-            }
-            Physics.IgnoreLayerCollision(thisLayer, 12, true);
-            outline.OutlineColor = Color.grey;
-
             anim.SetTrigger("AAction");
-
-            state = State.dodging;
-
-            StartCoroutine(EndDig(thisLayer));
-
-            universe.PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
+
+    public void DotheDodge()
+    {
+        // base.AAction(false);
+
+        int thisLayer;
+        if (playerID == 0)
+        {
+            thisLayer = 13;
+        }
+        else
+        {
+            thisLayer = 14;
+        }
+        Physics.IgnoreLayerCollision(thisLayer, 12, true);
+        outline.OutlineColor = Color.grey;
+
+        vanishEffect.SetActive(false);
+        vanishEffect.transform.localPosition = transform.localPosition;
+        vanishEffect.SetActive(true);
+
+        TeleportPlayer(transform.position + (visuals.transform.forward * dodgeDistance));
+
+        StartCoroutine(EndDig(thisLayer));
+        appearEffect.SetActive(false);
+    }
+
     IEnumerator EndDig(int layer)
     {
         yield return new WaitForSeconds(dodgeDur);
         outline.OutlineColor = Color.black;
-        aTimer = aCooldown;
         base.EndDodge();
         Physics.IgnoreLayerCollision(layer, 12, false);
+        appearEffect.transform.localPosition = transform.localPosition;
+        appearEffect.SetActive(true);
     }
 
     public override void YAction()
     {
         if (yTimer <= 0)
         {
+            base.YAction();
+
             anim.SetTrigger("YAttack");
-
-            blast1.transform.position = gameObject.transform.position;
-            blast2.transform.position = gameObject.transform.position;
-
-            blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
+            StartCoroutine(DelayedY());
 
             yTimer = yCooldown;
         }
+    }
+
+    IEnumerator DelayedY()
+    {
+        yield return new WaitForSeconds(yDelay);
+
+        blast1.transform.position = gameObject.transform.position;
+        blast2.transform.position = gameObject.transform.position;
+
+        blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound, explosionKnockbackDuration);
     }
 
     public override void BAction()
     {
         if (bTimer <= 0)
         {
-            flamingClone.transform.position = transform.position;
-            flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
-            flamingClone.SetActive(true);
+            summonParticles.SetActive(false);
+            base.BAction();
+
             bTimer = bCooldown;
-            
-            universe.PlaySound(bSound);
+            anim.SetTrigger("BAttack");
+            summonParticles.SetActive(true);
+
+            PlaySound(bSound, bVoice);
         }
+    }
+
+    public void SummonClone()
+    {
+        flamingClone.transform.position = transform.position;
+        flamingClone.GetComponent<FlamingWiosna>().AwakenClone(lockTargetList[currentLock].transform);
+        flamingClone.SetActive(true);
     }
 }

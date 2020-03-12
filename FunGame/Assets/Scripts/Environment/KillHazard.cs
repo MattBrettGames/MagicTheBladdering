@@ -10,6 +10,7 @@ public class KillHazard : BlankMono
     [Header("Knockback")]
     public Vector3 dir;
     public int force;
+    [SerializeField] float knockbackDuration = 0.1f;
 
     [Header("Animation?")]
     [SerializeField] bool hasAnimation;
@@ -18,12 +19,22 @@ public class KillHazard : BlankMono
 
     void OnCollisionEnter(Collision other)
     {
+        DealDamage(other.gameObject);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        DealDamage(other.gameObject);
+    }
+
+    void DealDamage(GameObject other)
+    {
         if (other.transform.tag != "Zone")
         {
             if (other.gameObject.GetComponent<PlayerBase>() != null)
             {
                 PlayerBase code = other.gameObject.GetComponent<PlayerBase>();
-                code.TakeDamage(damageToPlayer, dir, force, false, false, null);
+                code.TakeDamage(damageToPlayer, dir, force, false, false, null, knockbackDuration);
 
                 if (hasAnimation)
                 {
@@ -37,7 +48,9 @@ public class KillHazard : BlankMono
                 }
             }
         }
+
     }
+
 
     IEnumerator EndPass(int otherLayer)
     {

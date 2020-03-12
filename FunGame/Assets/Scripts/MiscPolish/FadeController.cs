@@ -12,33 +12,40 @@ public class FadeController : MonoBehaviour
     public void Start()
     {
         cover = GetComponentInChildren<Image>();
-        FadeFromBlack();
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            FadeFromBlack();
+        }
         cover.color = Color.black;
     }
 
     public void FadeToBlack(string levelToLoad)
     {
-        cover.canvasRenderer.SetAlpha(0);
-        cover.CrossFadeAlpha(1f, 0.5f, true);
+        FadeToBlack();
         StartCoroutine(LoadLevel(levelToLoad));
     }
     IEnumerator LoadLevel(string level)
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.3f);
         SceneManager.LoadScene(level);
     }
 
     public void FadeToBlack()
     {
         cover.canvasRenderer.SetAlpha(0);
-        cover.CrossFadeAlpha(1f, 0.5f, true);
+        cover.CrossFadeAlpha(1f, 0.3f, true);
     }
 
 
     public void FadeFromBlack()
     {
         cover.canvasRenderer.SetAlpha(1);
-        cover.CrossFadeAlpha(0f, 0.5f, true);
+        StartCoroutine(TrueFade());
     }
 
+    IEnumerator TrueFade()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        cover.CrossFadeAlpha(0f, 0.3f, true);
+    }
 }

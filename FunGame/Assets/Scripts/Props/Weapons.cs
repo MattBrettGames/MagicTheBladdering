@@ -14,8 +14,10 @@ public class Weapons : BlankMono
     PlayerBase ownerTrue;
     bool stopAttackTrue;
     [HideInInspector] public Transform head;
+    AttackType currentAttack;
+    float currentKnockback;
 
-    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner, bool stopAttack)
+    public void GainInfo(int damage, int knockback, Vector3 forward, bool pvp, float stunDur, PlayerBase owner, bool stopAttack, AttackType attackType, float knockDur)
     {
         damageFull = damage;
         knockFull = knockback;
@@ -25,6 +27,9 @@ public class Weapons : BlankMono
         ownerTrue = owner;
         stopAttackTrue = stopAttack;
         head = trails.transform;
+        tag = owner.tag;
+        currentAttack = attackType;
+        currentKnockback = knockDur;
     }
 
     private void Start()
@@ -32,25 +37,35 @@ public class Weapons : BlankMono
         hitBox = gameObject.GetComponent<Collider>();
         hitBox.enabled = false;
         trails = gameObject.GetComponentInChildren<TrailRenderer>();
-        trails.enabled = false;
+        trails.gameObject.SetActive(false);
     }
 
     public void StartAttack()
     {
         hitBox.enabled = true;
         trails.enabled = true;
+        trails.gameObject.SetActive(true);
     }
 
     public void EndAttack()
     {
         hitBox.enabled = false;
         trails.enabled = false;
+        trails.gameObject.SetActive(false);
     }
 
     public virtual void OnTriggerEnter(Collider other)
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-        player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue);
-        ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f);
+        if (other.tag != tag)
+        {
+            player.TakeDamage(damageFull, knockDir, knockFull, true, stopAttackTrue, ownerTrue, currentKnockback);
+            PlayerBase newPlayer = (PlayerBase)player;
+            if (!newPlayer.iFrames && !newPlayer.trueIFrames)
+            {
+                ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f, true, player as PlayerBase);
+                ownerTrue.OnHit(player as PlayerBase, currentAttack);
+            }
+        }
     }
 }

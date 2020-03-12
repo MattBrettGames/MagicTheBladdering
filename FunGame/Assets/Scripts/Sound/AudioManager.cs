@@ -2,16 +2,16 @@
 using UnityEngine;
 using System;
 
+/*
 public class AudioManager : MonoBehaviour
 {
 
-    //[SerializeField] string menuTheme;
     [Space]
     [SerializeField] SoundClip[] sounds = new SoundClip[0];
     SoundClip currentTrack = null;
 
     public float masterVolume = 1;
-    public float musicVolume = 1;
+    public float musicVolume = 0.3f;
     public float sfxVolume = 1;
 
     public void Start()
@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            s.source.volume = s.volume * masterVolume * sfxVolume;
+            s.source.volume = (s.volume * masterVolume * sfxVolume) - 0.5f;
             s.source.pitch = 1 + UnityEngine.Random.Range(-0.3f, 0.3f);
         }
 
@@ -77,3 +77,4 @@ public class SoundClip
     [Range(0, 3)] public float pitch = 1;
 
 }
+*/

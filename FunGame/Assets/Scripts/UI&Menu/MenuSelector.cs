@@ -62,7 +62,7 @@ public class MenuSelector : MonoBehaviour
             else { currentSel--; }
             cursorTransform.anchoredPosition = optionTransforms[currentSel].anchoredPosition;
         }
-        if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction") || player3.GetButtonDown("AAction") || player4.GetButtonDown("AAction"))
+        if (player1.GetButtonDown("AAction") || player2.GetButtonDown("AAction") || player3.GetButtonDown("AAction") || player4.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H)) 
         {
             Invoke(options[currentSel].name, 0);
             cursorTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);

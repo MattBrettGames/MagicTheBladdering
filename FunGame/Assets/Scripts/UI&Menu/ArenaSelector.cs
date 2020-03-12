@@ -6,8 +6,6 @@ using Rewired;
 
 public class ArenaSelector : BlankMono
 {
-    [SerializeField] GameObject loadingScreen;
-
     private bool inputCooldown;
     [SerializeField] float speed;
     public List<GameObject> displays;
@@ -27,7 +25,6 @@ public class ArenaSelector : BlankMono
 
     void Start()
     {
-        loadingScreen.SetActive(false);
         cam = Camera.main.gameObject;
         for (int i = 0; i < displays.Count; i++)
         {
@@ -91,9 +88,8 @@ public class ArenaSelector : BlankMono
             Invoke("EndCooldown", 0.3f);
         }
 
-        if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction"))
+        if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
         {
-            loadingScreen.SetActive(true);
             universe.ChooseArena(displays[currentDisplay].name);
         }
     }
