@@ -94,9 +94,13 @@ public abstract class PlayerBase : ThingThatCanDie
 
     [Header("Sounds")]
     [SerializeField] protected AudioClip aSound;
+    [SerializeField] protected AudioClip aVoice;
     [SerializeField] protected AudioClip bSound;
+    [SerializeField] protected AudioClip bVoice;
     [SerializeField] protected AudioClip xSound;
+    [SerializeField] protected AudioClip xVoice;
     [SerializeField] protected AudioClip ySound;
+    [SerializeField] protected AudioClip yVoice;
     [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
     [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
     [SerializeField] protected AudioClip victorySound;
@@ -335,7 +339,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
             Invoke("EndDodge", dodgeDur);
 
-            PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
     public virtual void EndDodge()
@@ -361,7 +365,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
 
     #region SoundControl
-    public void PlaySound(AudioClip clipToPlay)
+    public void PlaySound(AudioClip clipToPlay, AudioClip voiceClip)
     {
         if (audioSource.clip != clipToPlay)
         {
@@ -370,6 +374,9 @@ public abstract class PlayerBase : ThingThatCanDie
             audioSource.Stop();
             audioSource.clip = clipToPlay;
             audioSource.Play();
+
+            if (voiceClip != null && UnityEngine.Random.Range(0, 100) < 25)
+                audioSource.PlayOneShot(voiceClip);
         }
     }
     public void PlaySound(AudioClip[] clipsToPlay)
@@ -387,7 +394,7 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public void PlayVictorySound()
     {
-        PlaySound(victorySound);
+        PlaySound(victorySound, null);
     }
     #endregion
 

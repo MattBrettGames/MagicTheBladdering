@@ -40,7 +40,7 @@ public class CarmenEventHandler : MonoBehaviour
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        carmen.PlaySound(clipToPlay);
+        carmen.PlaySound(clipToPlay, null);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {

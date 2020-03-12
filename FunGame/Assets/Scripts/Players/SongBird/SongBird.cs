@@ -97,7 +97,7 @@ public class SongBird : PlayerBase
             anim.SetTrigger("XAttack");
             weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDur);
             xTimer = xCooldown;
-            PlaySound(xSound);
+            PlaySound(xSound, xVoice);
         }
     }
 
@@ -109,7 +109,7 @@ public class SongBird : PlayerBase
 
             anim.SetTrigger("YAction");
             yTimer = yCooldown;
-            PlaySound(ySound);
+            PlaySound(ySound, yVoice);
         }
     }
 
@@ -126,7 +126,7 @@ public class SongBird : PlayerBase
                 hasCannister = false;
                 anim.SetTrigger("BAction");
                 bTimer = bCooldown;
-                PlaySound(bSound);
+                PlaySound(bSound, null);
             }
         }
         else
@@ -134,7 +134,7 @@ public class SongBird : PlayerBase
             hasCannister = true;
             smokeCloudCannister.transform.localScale = Vector3.one;
             cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterCloudTime, this, cannisterImpactDur, cannisterInterrupt, playerColour, cannisterBurstKnockbackDuration);
-            PlaySound(bSoundBonus);
+            PlaySound(bSoundBonus, bVoice);
         }
     }
 
@@ -159,7 +159,7 @@ public class SongBird : PlayerBase
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDodge));
             }
-            PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
 

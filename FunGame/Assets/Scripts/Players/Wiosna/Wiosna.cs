@@ -71,7 +71,7 @@ public class Wiosna : PlayerBase
             anim.SetTrigger("XAttack");
             basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
             xTimer = xCooldown;
-            PlaySound(xSound);
+            PlaySound(xSound, xVoice);
         }
     }
 
@@ -80,7 +80,7 @@ public class Wiosna : PlayerBase
         if (aTimer <= 0)
         {
             anim.SetTrigger("AAction");
-            PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
 
@@ -154,7 +154,7 @@ public class Wiosna : PlayerBase
             anim.SetTrigger("BAttack");
             summonParticles.SetActive(true);
 
-            PlaySound(bSound);
+            PlaySound(bSound, bVoice);
         }
     }
 

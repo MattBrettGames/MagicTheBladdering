@@ -24,7 +24,7 @@ public class Valderheim : PlayerBase
     private float overheadStun;
     [SerializeField] int ySpeedDebuff = 10;
     [SerializeField] float slamKnockbackDuration;
-    bool canInput;
+    [SerializeField] bool canInput;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -54,6 +54,7 @@ public class Valderheim : PlayerBase
         hammer.gameObject.tag = tag;
         dodgeDurDefault = dodgeDur;
         dodgeSpeedDefault = dodgeSpeed;
+        canInput = true;
     }
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -64,7 +65,6 @@ public class Valderheim : PlayerBase
         crackEffect = Instantiate(crackEffect);
         crackEffect.SetActive(false);
     }
-
 
     public override void Update()
     {
@@ -167,7 +167,7 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            if (xTimer <= 0 && canInput)
+            if (xTimer <= 0)
             {
                 base.XAction();
 
@@ -175,7 +175,7 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
-                PlaySound(xSound);
+                PlaySound(xSound, xVoice);
             }
         }
         else
@@ -183,7 +183,7 @@ public class Valderheim : PlayerBase
             canInput = false;
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, spinKnockbackDuration);
             anim.SetTrigger("Spin");
-            PlaySound(xSound);
+            PlaySound(xSound, xVoice);
         }
     }
 
@@ -191,7 +191,7 @@ public class Valderheim : PlayerBase
     {
         if (!comboTime)
         {
-            if (yTimer <= 0 && canInput)
+            if (yTimer <= 0)
             {
                 canInput = false;
                 base.YAction();
@@ -199,7 +199,7 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y, slamKnockbackDuration);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
-                PlaySound(ySound);
+                PlaySound(ySound, yVoice);
             }
         }
         else
@@ -208,20 +208,15 @@ public class Valderheim : PlayerBase
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y, kickKnockbackDuration);
             anim.SetTrigger("ComboKick");
             comboTime = false;
-            PlaySound(ySound);
+            PlaySound(ySound, yVoice);
         }
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
-    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1);  canInput = false; }
+    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); canInput = false; }
     public void EndSlow() { bonusSpeed += ySpeedDebuff; }
 
-    public override void EndActing()
-    {
-        canInput = true;
-        base.EndActing();
-    }
 
     private void CloseComboKick()
     {
@@ -272,7 +267,7 @@ public class Valderheim : PlayerBase
         yield return new WaitForSeconds(2);
         crack.SetActive(false);
     }
-    
+
 
     public override void BAction()
     {
@@ -294,7 +289,7 @@ public class Valderheim : PlayerBase
             frenzyEffects.SetActive(true);
             bTimer = bCooldown;
 
-            PlaySound(bSound);
+            PlaySound(bSound, bVoice);
         }
     }
     private IEnumerator StopFrenzy()

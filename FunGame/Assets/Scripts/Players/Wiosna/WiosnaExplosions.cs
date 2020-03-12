@@ -47,7 +47,7 @@ public class WiosnaExplosions : MonoBehaviour
         if (remaining > 0)
         {
             StartCoroutine(NextBlast(timeBetweenBlasts, nextBlast, remaining, uni, ySound));
-            owner.PlaySound(ySound);
+            owner.PlaySound(ySound, null);
         }
 
 
