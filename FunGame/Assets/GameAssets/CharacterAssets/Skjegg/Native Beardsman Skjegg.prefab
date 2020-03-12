@@ -147,17 +147,25 @@ MonoBehaviour:
   xTimer: 0
   yTimer: 0
   aSound: {fileID: 0}
+  aVoice: {fileID: 0}
   bSound: {fileID: 0}
+  bVoice: {fileID: 0}
   xSound: {fileID: 0}
+  xVoice: {fileID: 0}
   ySound: {fileID: 0}
+  yVoice: {fileID: 0}
   ouchSounds: []
   deathSounds: []
   victorySound: {fileID: 0}
   leftFist: {fileID: 6720479324008502717}
   rightFist: {fileID: 4398305334619222949}
-  xDamage: 15
-  xKnockback: 1
-  xKnockbackDuration: 0.1
+  xShortDamage: 0
+  xLongDamage: 0
+  xShortKnockback: 0
+  xLongKnockback: 0
+  xShortKnockbackDuration: 0
+  xLongKnockbackDuration: 0
+  minTimeHeldTOMaxHoldtime: {x: 1.5, y: 2.5}
   yDamage: 30
   yKnockback: 3
   yKnockbackDuration: 0.2
@@ -25914,16 +25922,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947739376068138366}
     m_Modifications:
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_Name
-      value: HitEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25977,6 +25975,16 @@ PrefabInstance:
     - target: {fileID: 7179471183194727620, guid: a43527da9a0175244ab885aea78e8689,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_Name
+      value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559365333925942410, guid: a43527da9a0175244ab885aea78e8689,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
