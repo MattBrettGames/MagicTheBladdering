@@ -26,8 +26,6 @@ public class WiosnaExplosions : MonoBehaviour
     {
         gameObject.tag = owner.tag;
 
-        // scaleChange = (damage + remaining) * 0.1f;
-
         ownerTrue = owner;
         damageFull = damage;
         knockFull = knockback;
@@ -50,11 +48,8 @@ public class WiosnaExplosions : MonoBehaviour
             owner.PlaySound(ySound, null);
         }
 
-
         StartCoroutine(Fade(timeBetweenBlasts * 2f));
-
     }
-
 
     IEnumerator NextBlast(float time, WiosnaExplosions next, int remaining, UniverseController uni, AudioClip ySound)
     {
