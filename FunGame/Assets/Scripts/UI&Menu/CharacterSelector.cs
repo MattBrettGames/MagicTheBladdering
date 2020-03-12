@@ -240,6 +240,11 @@ public class CharacterSelector : BlankMono
         yield return new WaitForSeconds(0);
         displayChar.transform.SetParent(GameObject.FindGameObjectWithTag("UniverseController").transform);
         universe.CheckReady(thisPInt, displayChar, characters[currentChar].name, characters[currentChar].skins[currentSkin].name);
+
+        displayChar.GetComponent<PlayerBase>().playerID = thisPInt;
+        displayChar.GetComponent<PlayerBase>().thisPlayer = thisPlayer;
+
+        //print(displayChar.name + " is the displayChar, but sucessful");
     }
 
     private void Unlock()
@@ -249,12 +254,12 @@ public class CharacterSelector : BlankMono
 
         if (otherChar2 != null)
         {
-            otherChar2.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar2.characters[currentChar].skins[currentSkin].lockedChar = false;
             otherChar2.UpdateDisplay();
         }
         if (otherChar3 != null)
         {
-            otherChar3.characters[currentChar].skins[currentSkin].lockedChar = true;
+            otherChar3.characters[currentChar].skins[currentSkin].lockedChar = false;
             otherChar3.UpdateDisplay();
         }
 

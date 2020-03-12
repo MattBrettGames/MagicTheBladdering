@@ -96,8 +96,8 @@ public class Skjegg : PlayerBase
 
         totemSprite.sprite = totemSymbolArray[totemChoiceList[i_currentTotem]];
 
-        anim.ResetTrigger("XAttack");
-        anim.ResetTrigger("YAttack");
+        // anim.ResetTrigger("XAttack");
+        // anim.ResetTrigger("YAttack");
     }
 
     public override void Update()
@@ -208,7 +208,7 @@ public class Skjegg : PlayerBase
 
     public override void XAction()
     {
-        if (xTimer <= 0)
+        if (xTimer <= 0 && !acting)
         {
             base.XAction();
             anim.SetTrigger("XAttack");
@@ -227,19 +227,19 @@ public class Skjegg : PlayerBase
     }
     void ReleaseXAction()
     {
-        if (timeXHeld < minTimeHeldTOMaxHoldtime.x)
+        if (timeXHeld < minTimeHeldTOMaxHoldtime.x && !acting)
         {
             anim.SetTrigger("ShortPunch");
             rightFist.GainInfo(xShortDamage, xShortKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xShortKnockbackDuration);
             leftFist.GainInfo(xShortDamage, xShortKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xShortKnockbackDuration);
         }
-        else
+        else if (!acting)
         {
             anim.SetTrigger("LongPunch");
             rightFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
             leftFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
         }
-
+        anim.ResetTrigger("XAttack");
         timeXHeld = 0;
         xTimer = xCooldown;
     }
