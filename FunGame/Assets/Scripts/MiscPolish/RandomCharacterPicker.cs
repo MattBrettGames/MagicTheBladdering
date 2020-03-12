@@ -6,28 +6,18 @@ using System;
 public class RandomCharacterPicker : MonoBehaviour
 {
     public MenuSelector menu;
-    AudioSource audioManager;
+    AudioManager audioManager;
     [Space]
     public GameObjects[] chars = new GameObjects[2];
-    public AudioClip[] themes = new AudioClip[0];
-    AudioSource thisSource;
+    public String[] themes = new string[0];
 
     void Start()
     {
         int rando = UnityEngine.Random.Range(0, chars.Length);
         chars[rando].characters.SetActive(true);
         menu.cursor = menu.cursors[rando];
-        thisSource = gameObject.AddComponent<AudioSource>();
-
-        if (thisSource.clip != themes[rando] || thisSource.clip == null)
-        {
-            thisSource.Stop();
-            thisSource.clip = themes[rando];
-            thisSource.Play();
-        }
-
-        //audioManager.volume = OptionMenuController.masterVolume * OptionMenuController.musicVolume;
-        //audioManager.PlayOneShot(themes[rando]);
+        audioManager = GameObject.FindGameObjectWithTag("UniverseController").GetComponentInChildren<AudioManager>();
+        audioManager.Play(themes[rando]);
     }
 
     [Serializable]

@@ -11,10 +11,7 @@ public class ValdyEventHandler : BlankMono
     public void HammerBoxOff() { hammer.EndAttack(); }
 
     public void OpenKickCombo() { valdy.OpenComboKick(); }
-    public void Vibration(float intensity, float dur) { valdy.ControllerRumble(intensity, dur, false, null); }
-
-    public void BeginSlow() { valdy.BeginSlow(); }
-    public void EndSlow() { }// valdy.EndSlow(); }
+    public void Vibration(float intensity, float dur) { valdy.ControllerRumble(intensity, dur); }
 
     public void CreateCrack() { valdy.LeaveCrack(hammer.head.position); }
 
@@ -26,18 +23,5 @@ public class ValdyEventHandler : BlankMono
 
     public void BeginActing() { valdy.BeginActing(); }
     public void EndActing() { valdy.EndActing(); }
-
-
-    #region Sound
-    public void PlaySound(AudioClip clipToPlay)
-    {
-        valdy.PlaySound(clipToPlay, null);
-    }
-    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
-    {
-        valdy.PlaySound(clipsToPlay);
-    }
-    #endregion
-
 
 }

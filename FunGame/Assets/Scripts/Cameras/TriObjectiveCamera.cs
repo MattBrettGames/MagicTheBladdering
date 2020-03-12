@@ -26,13 +26,11 @@ public class TriObjectiveCamera : MonoBehaviour
         universe.GetCam(null, this);
     }
 
-    public void Update()
+    public void LateUpdate()
     {
         transform.position = boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z);
 
-        //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), ref velocity, Time.deltaTime);
-
-        blank.transform.LookAt(boundBox.center + lookatOffset + (new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * camShake));
+        blank.transform.LookAt(boundBox.center + lookatOffset + (Vector3.one * camShake));
         blank.transform.position = transform.position;
 
         transform.forward = Vector3.Lerp(transform.forward, blank.transform.forward, Time.deltaTime);

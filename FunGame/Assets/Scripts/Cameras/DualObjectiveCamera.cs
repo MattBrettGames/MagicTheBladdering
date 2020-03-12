@@ -21,7 +21,7 @@ public class DualObjectiveCamera : MonoBehaviour
     public virtual void Start()
     {
         universe = GameObject.Find("UniverseController").GetComponent<UniverseController>();
-        universe.GetCam(this, null);
+        universe.GetCam(this, GetComponent<TriObjectiveCamera>());
         bothPlayersAlive = true;
     }
 
@@ -45,11 +45,11 @@ public class DualObjectiveCamera : MonoBehaviour
         {
             if (deadPlayer == 0)
             {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(firstTarget.transform.position.x, firstTarget.transform.position.y + 5, firstTarget.transform.position.z) + offset, 0.3f);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(firstTarget.transform.position.x, firstTarget.transform.position.y + 5, firstTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
             }
             else
             {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(secondTarget.transform.position.x, secondTarget.transform.position.y + 5, secondTarget.transform.position.z) + offset, 0.3f);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(secondTarget.transform.position.x, secondTarget.transform.position.y + 5, secondTarget.transform.position.z) + offset, 0.3f * Time.deltaTime);
             }
         }
     }
@@ -80,11 +80,10 @@ public class DualObjectiveCamera : MonoBehaviour
     public void CamShake(float dur)
     {
         rumble = true;
-        StartCoroutine(EndRumble(dur));
+        Invoke("EndRumble", dur);
     }
-    IEnumerator EndRumble(float dur)
+    void EndRumble()
     {
-        yield return new WaitForSecondsRealtime(dur);
         rumble = false;
     }
 

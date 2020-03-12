@@ -9,8 +9,6 @@ public class FlamingWiosna : ThingThatCanDie
     [SerializeField] float lifeSpan;
     [SerializeField] Material mat0;
     [SerializeField] Material mat1;
-    [SerializeField] Material mat2;
-    [SerializeField] Material mat3;
     private Transform target;
     private string thisID;
     int damage;
@@ -26,9 +24,9 @@ public class FlamingWiosna : ThingThatCanDie
         looker.transform.LookAt(target.position - new Vector3(0, 5, 0));
         looker.transform.position = transform.position;
 
-        transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed * Time.deltaTime);
+        transform.forward = Vector3.Lerp(transform.forward, looker.transform.forward, lookSpeed);
 
-        transform.position += transform.forward.normalized * speed * Time.deltaTime;
+        transform.position += transform.forward * speed;
 
         remainingTime -= Time.deltaTime;
         if (remainingTime <= 0)
@@ -41,16 +39,16 @@ public class FlamingWiosna : ThingThatCanDie
     {
         ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
 
-        if (player != null && other.tag != tag)
+        if (player != null && player.tag != tag)
         {
-            Invoke("Disappear", 0.1f);
-            player.TakeDamage(damage, Vector3.zero, 0, true, false, owner, 0);
+            player.TakeDamage(damage, Vector3.zero, 0, true, true, owner);
             cloneBurst.transform.position = transform.position;
             cloneBurst.SetActive(true);
+            Disappear();
         }
     }
 
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker, float knockbackDur)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -66,7 +64,6 @@ public class FlamingWiosna : ThingThatCanDie
 
     public void AwakenClone(Transform targetTemp)
     {
-        transform.forward = owner.visuals.transform.forward;
         remainingTime = lifeSpan;
         cloneBurst.SetActive(false);
         target = targetTemp;
@@ -77,15 +74,12 @@ public class FlamingWiosna : ThingThatCanDie
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         thisID = id;
         damage = damageTemp;
-        gameObject.tag = newTag;
+        tag = newTag;
         cloneBurst = cloneExplosion;
         owner = ownerTemp;
-        tag = owner.tag;
 
         if (id == "P1") { activeMaterial = mat0; }
-        else if (id == "P2") { activeMaterial = mat1; }
-        else if (id == "P3") { activeMaterial = mat2; }
-        else { activeMaterial = mat3; }
+        else { activeMaterial = mat1; }
 
         looker = new GameObject("FlamingCloneLooker");
 

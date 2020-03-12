@@ -11,25 +11,19 @@ public class Valderheim : PlayerBase
     [Header("Wide Swing")]
     public int xAttack;
     public int xKnockback;
-    [SerializeField] float xKnockbackDuration;
 
     [Header("Spin")]
     public int spinDamage;
     public int spinKnockback;
-    [SerializeField] float spinKnockbackDuration;
 
     [Header("Ground Slam")]
     public int slamAttack;
     public int slamKnockback;
-    private float overheadStun;
-    [SerializeField] int ySpeedDebuff = 10;
-    [SerializeField] float slamKnockbackDuration;
-    [SerializeField] bool canInput;
+    [SerializeField] private float overheadStun;
 
     [Header("Kick Up")]
     public int kickAttack;
     public int kickKnockback;
-    [SerializeField] float kickKnockbackDuration;
 
     [Header("Frenzy")]
     public int frenzyDuration;
@@ -37,24 +31,20 @@ public class Valderheim : PlayerBase
     public int frenzySpeedBuff;
     private bool frenzy;
     public GameObject frenzyEffects;
-    float dodgeDurDefault;
-    float dodgeSpeedDefault;
 
     [Header("Passives")]
     [SerializeField] private float comboTimeDur;
-    [SerializeField] private bool comboTime;
+    private bool comboTime;
 
     //[Header("Polish")]
     //[SerializeField] Color skinColour;
-    [SerializeField] GameObject crackEffect;
+    GameObject crack1;
+    GameObject crack2;
 
     public override void Start()
     {
         base.Start();
         hammer.gameObject.tag = tag;
-        dodgeDurDefault = dodgeDur;
-        dodgeSpeedDefault = dodgeSpeed;
-        canInput = true;
     }
 
     public override void SetInfo(UniverseController uni, int layerNew)
@@ -62,104 +52,90 @@ public class Valderheim : PlayerBase
         base.SetInfo(uni, layerNew);
 
         ObjectPooler objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
-        crackEffect = Instantiate(crackEffect);
-        crackEffect.SetActive(false);
+        crack1 = objectPooler.crackList[playerID * 2];
+        crack2 = objectPooler.crackList[(playerID * 2) + 1];
     }
+
 
     public override void Update()
     {
-        //This bit is the controls
-        if (!isAI)
+        if (aTimer > 0) aTimer -= Time.deltaTime;
+        if (bTimer > 0) bTimer -= Time.deltaTime;
+        if (xTimer > 0) xTimer -= Time.deltaTime;
+        if (yTimer > 0) yTimer -= Time.deltaTime;
+
+        dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+
+        aimTarget.position = transform.position + dir * 5;
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
+        if (player.GetButtonDown("BAttack")) { BAction(); }
+
+        switch (state)
         {
-            if (player.GetButtonDown("BAttack") || Input.GetKeyDown(KeyCode.B)) { BAction(); }
+            case State.attack:
+                break;
 
-            if (aTimer > 0) aTimer -= Time.deltaTime;
-            if (bTimer > 0) bTimer -= Time.deltaTime;
-            if (xTimer > 0) xTimer -= Time.deltaTime;
-            if (yTimer > 0) yTimer -= Time.deltaTime;
+            case State.normal:
 
-            dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
-            if (dir != Vector3.zero)
-                lastDir = dir;
+                anim.SetBool("LockOn", false);
+                if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
 
-            aimTarget.position = transform.position + (dir * 2) + lastDir;
+                if (!acting)
+                {
+                    //Rotating the Character Model
+                    visuals.transform.LookAt(aimTarget);
+                    rb2d.velocity = dir * speed;
 
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+                    //Standard Inputs
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
 
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                    anim.SetFloat("Movement", (Mathf.Abs(dir.normalized.x * 2) + Mathf.Abs(dir.normalized.z)) * 0.5f);
+                }
+                else
+                {
+                    dir = Vector3.zero;
+                }
+                break;
 
-            switch (state)
-            {
-                case State.attack:
-                    break;
+            case State.lockedOn:
 
-                case State.normal:
+                walkDirection.position = dir + transform.position;
 
-                    anim.SetBool("LockOn", false);
-                    if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+                anim.SetBool("LockOn", true);
+                if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
 
-                    if (!acting)
-                    {
-                        //Rotating the Character Model
-                        visuals.transform.LookAt(aimTarget);
-                        rb2d.velocity = dir * (speed + bonusSpeed);
+                if (!acting)
+                {
+                    rb2d.velocity = dir * speed;
 
-                        //Standard Inputs
-                        if (player.GetButtonDown("AAction")) { AAction(true); }
-                        if (player.GetButtonDown("XAttack")) { XAction(); }
-                        if (player.GetButtonDown("YAttack")) { YAction(); }
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                    }
-                    else
-                    {
-                        dir = Vector3.zero;
-                    }
-                    break;
+                    if (player.GetButtonDown("AAction")) { AAction(); }
+                    if (player.GetButtonDown("XAttack")) { XAction(); }
+                    if (player.GetButtonDown("YAttack")) { YAction(); }
 
-                case State.lockedOn:
+                    if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
+                    else { anim.SetFloat("Movement", 0); }
 
-                    walkDirection.position = dir + transform.position;
+                    anim.SetFloat("Movement_X", transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                    anim.SetFloat("Movement_ZY", transform.InverseTransformDirection(rb2d.velocity).z / speed);
 
-                    anim.SetBool("LockOn", true);
-                    if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
+                    aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+                    visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, 0.3f);
+                    LockOnScroll();
+                }
 
-                    if (!acting)
-                    {
-                        rb2d.velocity = dir * (speed + bonusSpeed);
+                break;
 
-                        if (player.GetButtonDown("AAction")) { AAction(true); }
-                        if (player.GetButtonDown("XAttack")) { XAction(); }
-                        if (player.GetButtonDown("YAttack")) { YAction(); }
-                        /*
-                        if (player.GetAxis("HoriMove") != 0 || player.GetAxis("VertMove") != 0) { anim.SetFloat("Movement", 1); }
-                        else { anim.SetFloat("Movement", 0); }
-                        */
+            case State.dodging:
+                if (aTimer <= 0) DodgeSliding(dir);
+                break;
 
-                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
-                        anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
-                        anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
-
-                        aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
-                        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
-                        LockOnScroll();
-                    }
-
-                    break;
-
-                case State.dodging:
-                    if (aTimer <= 0) DodgeSliding(dir);
-                    break;
-
-                case State.knockback:
-                    KnockbackContinual();
-                    break;
-            }
-        }
-
-        // This bit is the AI
-        else
-        {
-            AIUpdate();
+            case State.knockback:
+                KnockbackContinual();
+                break;
         }
     }
 
@@ -169,117 +145,96 @@ public class Valderheim : PlayerBase
         {
             if (xTimer <= 0)
             {
-                base.XAction();
-
-                canInput = false;
-                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
+                hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
-                PlaySound(xSound, xVoice);
+                universe.PlaySound(xSound);
             }
         }
         else
         {
-            canInput = false;
-            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, spinKnockbackDuration);
+            hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
             anim.SetTrigger("Spin");
-            PlaySound(xSound, xVoice);
+            universe.PlaySound(xSound);
         }
     }
 
     public override void YAction()
     {
-        if (!comboTime)
+        if (comboTime)
         {
-            if (yTimer <= 0)
-            {
-                canInput = false;
-                base.YAction();
-
-                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y, slamKnockbackDuration);
-                anim.SetTrigger("YAttack");
-                yTimer = yCooldown;
-                PlaySound(ySound, yVoice);
-            }
+            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true);
+            anim.SetTrigger("ComboKick");
+            comboTime = false;
+            universe.PlaySound(ySound);
         }
         else
         {
-            canInput = false;
-            hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y, kickKnockbackDuration);
-            anim.SetTrigger("ComboKick");
-            comboTime = false;
-            PlaySound(ySound, yVoice);
+            if (yTimer <= 0)
+            {
+                hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true);
+                anim.SetTrigger("YAttack");
+                yTimer = yCooldown;
+                universe.PlaySound(ySound);
+            }
         }
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
-    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); canInput = false; }
-    public void EndSlow() { bonusSpeed += ySpeedDebuff; }
-
-
-    private void CloseComboKick()
-    {
-        comboTime = false;
-        anim.ResetTrigger("ComboKick");
-        anim.ResetTrigger("Spin");
-        outline.OutlineColor = new Color(0, 0, 0);
-    }
-
-    public override void Death(PlayerBase killer)
-    {
-        bonusSpeed = 0;
-        base.Death(killer);
-        StopCoroutine(StopFrenzy());
-        dodgeDur -= 0.2f;
-        dodgeSpeed -= 5;
-        frenzy = false;
-        frenzyEffects.SetActive(false);
-    }
-    public override void Respawn()
-    {
-        CloseComboKick();
-        base.Respawn();
-        bonusSpeed = 0;
-        dodgeDur = dodgeDurDefault;
-        dodgeSpeed = dodgeSpeedDefault;
-    }
+    private void CloseComboKick() { comboTime = false; outline.OutlineColor = new Color(0, 0, 0); }
 
     public override void LeaveCrack(Vector3 pos)
     {
-        crackEffect.transform.position = new Vector3(pos.x, 0.4f, pos.z);
-        crackEffect.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
+        crack1.transform.position = new Vector3(pos.x, 0.4f, pos.z);
+        crack1.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
         if (frenzy)
         {
-            crackEffect.transform.localScale = new Vector3(1f, 1f, 1f);
+            crack1.transform.localScale = new Vector3(1f, 1f, 1f);
         }
         else
         {
-            crackEffect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            crack1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
-        crackEffect.SetActive(true);
-        StartCoroutine(EndCrack(crackEffect));
+        crack1.SetActive(true);
+        StartCoroutine(EndCrack(crack1));
     }
     IEnumerator EndCrack(GameObject crack)
     {
         yield return new WaitForSeconds(2);
         crack.SetActive(false);
     }
+    public void LeaveCrack(Vector3 pos, bool isCrack)
+    {
+        crack2.transform.position = new Vector3(pos.x, 0.4f, pos.z);
+        crack2.transform.eulerAngles = new Vector3(0, Random.Range(0f, 359f), 0);
 
+        if (frenzy)
+        {
+            crack2.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else
+        {
+            crack2.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
 
+        crack2.SetActive(true);
+        StartCoroutine(EndCrack(crack2));
+    }
+    
     public override void BAction()
     {
         if (!frenzy && bTimer <= 0)
         {
-            base.BAction();
 
-            //LeaveCrack(transform.position, true);
+            StopCoroutine(EndCrack(crack2));
+            LeaveCrack(transform.position, true);
             StartCoroutine(StopFrenzy());
             anim.SetTrigger("BAttack");
-
-            bonusSpeed += frenzySpeedBuff;
+            
+            speed += frenzySpeedBuff;
             damageMult += frenzyBonus;
             incomingMult += frenzyBonus;
             frenzy = true;
@@ -289,7 +244,7 @@ public class Valderheim : PlayerBase
             frenzyEffects.SetActive(true);
             bTimer = bCooldown;
 
-            PlaySound(bSound, bVoice);
+            universe.PlaySound(bSound);
         }
     }
     private IEnumerator StopFrenzy()
@@ -301,9 +256,9 @@ public class Valderheim : PlayerBase
 
         dodgeDur -= 0.2f;
         dodgeSpeed -= 5;
+
+        speed -= frenzySpeedBuff;
         frenzy = false;
         frenzyEffects.SetActive(false);
-
-        bonusSpeed -= frenzySpeedBuff;
     }
 }
