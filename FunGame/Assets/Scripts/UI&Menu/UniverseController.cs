@@ -22,7 +22,7 @@ public class UniverseController : BlankMono
     public Player player;
     DualObjectiveCamera dualCamCode;
     TriObjectiveCamera triCamCode;
-//    AudioManager audioManager;
+    //    AudioManager audioManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -52,7 +52,7 @@ public class UniverseController : BlankMono
     {
         player = ReInput.players.GetPlayer("System");
 
-      //  audioManager = GetComponentInChildren<AudioManager>();
+        //  audioManager = GetComponentInChildren<AudioManager>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -100,11 +100,10 @@ public class UniverseController : BlankMono
     public void SelectedPlay()
     {
         numOfPlayers = 2;
-        /*
+
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
-        */
 
         if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
         if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
@@ -193,29 +192,9 @@ public class UniverseController : BlankMono
             int[] charInts = new int[4];
             livingPlayers = numOfPlayers;
 
-            /*if (numOfPlayers == 2)
-            {
-                dualCamCode.enabled = true;
-                triCamCode.enabled = false;
-            }
-            else
-            {
-             dualCamCode.enabled = false;
-             }
-
+            triCamCode = Camera.main.GetComponent<TriObjectiveCamera>();
             triCamCode.enabled = true;
 
-            if (numOfPlayers == 2)
-            {
-                triCamCode.RemoveTarget(GameObject.Find("Player3Base").transform);
-                triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
-            }
-
-            if (numOfPlayers == 3)
-            {
-                triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
-            }
-            */
             PlayerBase[] playerBases = new PlayerBase[4];
 
             #region Player 1
@@ -532,10 +511,10 @@ public class UniverseController : BlankMono
             }
         }
     }
-    void EndGame() 
+    void EndGame()
     {
         victoryScene = SceneManager.GetActiveScene().name;
-        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver"); 
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver");
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
@@ -583,7 +562,7 @@ public class UniverseController : BlankMono
     public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
         dualCamCode = duoCam;
-        // triCamCode = triCam;
+        triCamCode = triCam;
     }
 
     IEnumerator DelayedVictory()
@@ -597,8 +576,8 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CameraRumbleCall(float degree) { dualCamCode.CamShake(degree); }
+    public void CameraRumbleCall(float degree) { triCamCode.CamShake(degree); }
 
-   // public void PlaySound(string clip) { audioManager.Play(clip); }
+    // public void PlaySound(string clip) { audioManager.Play(clip); }
 
 }
