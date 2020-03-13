@@ -14,6 +14,7 @@ public enum TotemType
 public class Skjegg : PlayerBase
 {
     [Header("Components")]
+    [SerializeField] Weapons spiritAttackBox;
     [SerializeField] Weapons leftFist;
     [SerializeField] Weapons rightFist;
 
@@ -204,22 +205,21 @@ public class Skjegg : PlayerBase
         }
     }
 
-
-
     public override void XAction()
     {
         if (xTimer <= 0 && !acting)
         {
-            base.XAction();
-            anim.SetTrigger("XAttack");
+            anim.SetBool("Charging", true);
             timeXHeld += Time.deltaTime;
 
             if (timeXHeld >= minTimeHeldTOMaxHoldtime.x)
             {
+                anim.SetBool("Charging", false);
                 anim.SetTrigger("LongPunch");
                 rightFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
                 leftFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
 
+                base.XAction();
                 timeXHeld = 0;
                 xTimer = xCooldown;
             }
@@ -227,6 +227,7 @@ public class Skjegg : PlayerBase
     }
     void ReleaseXAction()
     {
+        anim.SetBool("Charging", false);
         if (timeXHeld < minTimeHeldTOMaxHoldtime.x && !acting)
         {
             anim.SetTrigger("ShortPunch");
@@ -239,7 +240,7 @@ public class Skjegg : PlayerBase
             rightFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
             leftFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
         }
-        anim.ResetTrigger("XAttack");
+        base.XAction();
         timeXHeld = 0;
         xTimer = xCooldown;
     }
