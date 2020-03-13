@@ -470,7 +470,10 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             visuals.SetActive(false);
             if (enviroDeathEffect != null)
+            {
+                enviroDeathEffect.transform.position = transform.position;// -= new Vector3(0, 5, 0);
                 enviroDeathEffect.SetActive(true);
+            }
         }
         enabled = false;
         dead = true;
