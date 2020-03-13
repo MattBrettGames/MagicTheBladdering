@@ -20,6 +20,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public int playerID;
     [HideInInspector] public int numOfDeaths = 0;
     [HideInInspector] public bool pvp = true;
+    [HideInInspector] public GameObject enviroDeathEffect;
 
     [Header("Movement Stats")]
     public float speed;
@@ -460,8 +461,17 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void Death(PlayerBase killer)
     {
-        anim.ResetTrigger("Respawn");
-        anim.SetTrigger("Death");
+        if (killer != null)
+        {
+            anim.ResetTrigger("Respawn");
+            anim.SetTrigger("Death");
+        }
+        else
+        {
+            visuals.SetActive(false);
+            if (enviroDeathEffect != null)
+                enviroDeathEffect.SetActive(true);
+        }
         enabled = false;
         dead = true;
 
@@ -542,7 +552,7 @@ public abstract class PlayerBase : ThingThatCanDie
         yTimer = 0;
 
         aiAgent.isStopped = false;
-
+        visuals.SetActive(true);
         GainTrueFrames();
         StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");
@@ -555,6 +565,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
         EndActing();
         anim.SetFloat("Movement", 0);
+        enviroDeathEffect.SetActive(false);
     }
 
     public virtual IEnumerator PoisonTick()

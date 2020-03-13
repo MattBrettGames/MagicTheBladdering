@@ -213,10 +213,4 @@ public class SongBird : PlayerBase
         yield return new WaitForSeconds(1);
         smokeCloud.transform.localScale -= Vector3.one;
     }
-
-    public override void Respawn()
-    {
-        visuals.SetActive(true);
-        base.Respawn();
-    }
 }
