@@ -24,7 +24,9 @@ public class Valderheim : PlayerBase
     private float overheadStun;
     [SerializeField] int ySpeedDebuff = 10;
     [SerializeField] float slamKnockbackDuration;
-    [SerializeField] bool canInput;
+    [Space]
+    [SerializeField] private float ragingShatterRadius = 3;
+    [SerializeField] int ragingShatterDamage;
 
     [Header("Kick Up")]
     public int kickAttack;
@@ -47,6 +49,7 @@ public class Valderheim : PlayerBase
     //[Header("Polish")]
     //[SerializeField] Color skinColour;
     [SerializeField] GameObject crackEffect;
+    ShatterScript crackDamage;
 
     public override void Start()
     {
@@ -54,15 +57,16 @@ public class Valderheim : PlayerBase
         hammer.gameObject.tag = tag;
         dodgeDurDefault = dodgeDur;
         dodgeSpeedDefault = dodgeSpeed;
-        canInput = true;
     }
 
     public override void SetInfo(UniverseController uni, int layerNew)
     {
         base.SetInfo(uni, layerNew);
 
-        ObjectPooler objectPooler = GameObject.FindGameObjectWithTag("ObjectPooler").GetComponent<ObjectPooler>();
         crackEffect = Instantiate(crackEffect);
+        crackDamage = crackEffect.GetComponent<ShatterScript>();
+        crackDamage.SetInfo(ragingShatterDamage, this);
+        crackDamage.tag = tag;
         crackEffect.SetActive(false);
     }
 
@@ -171,7 +175,6 @@ public class Valderheim : PlayerBase
             {
                 base.XAction();
 
-                canInput = false;
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
@@ -180,7 +183,6 @@ public class Valderheim : PlayerBase
         }
         else
         {
-            canInput = false;
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, spinKnockbackDuration);
             anim.SetTrigger("Spin");
             PlaySound(xSound, xVoice);
@@ -193,7 +195,6 @@ public class Valderheim : PlayerBase
         {
             if (yTimer <= 0)
             {
-                canInput = false;
                 base.YAction();
 
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y, slamKnockbackDuration);
@@ -204,7 +205,6 @@ public class Valderheim : PlayerBase
         }
         else
         {
-            canInput = false;
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y, kickKnockbackDuration);
             anim.SetTrigger("ComboKick");
             comboTime = false;
@@ -214,7 +214,7 @@ public class Valderheim : PlayerBase
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
     IEnumerator CallCloseCombo() { yield return new WaitForSeconds(comboTimeDur); CloseComboKick(); }
 
-    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); canInput = false; }
+    public void BeginSlow() { bonusSpeed -= ySpeedDebuff; Invoke("EndSlow", 1); }
     public void EndSlow() { bonusSpeed += ySpeedDebuff; }
 
 
@@ -252,7 +252,8 @@ public class Valderheim : PlayerBase
 
         if (frenzy)
         {
-            crackEffect.transform.localScale = new Vector3(1f, 1f, 1f);
+            crackEffect.transform.localScale = new Vector3(ragingShatterRadius, ragingShatterRadius, ragingShatterRadius);
+            StartCoroutine(crackDamage.DealDamage());
         }
         else
         {

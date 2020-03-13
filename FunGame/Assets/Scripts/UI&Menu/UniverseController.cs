@@ -420,100 +420,46 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player, GameObject otherPlayer)
     {
-        if (numOfPlayers == 2)
+
+        PlayerBase playerCode = player.GetComponent<PlayerBase>();
+
+        playerCode.numOfDeaths++;
+
+        if (playerCode.numOfDeaths != numOfRespawns)
         {
-
-            PlayerBase playerCode = player.GetComponent<PlayerBase>();
-            player.GetComponent<Rigidbody>().isKinematic = true;
-
-            // dualCamCode.Death(playerCode.playerID);
-
-            playerCode.numOfDeaths++;
-            //   print(player.name + " has died " + playerCode.numOfDeaths + " times");
-
-            if (playerCode.numOfDeaths != numOfRespawns)
-            {
-                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
-            }
-            else
-            {
-                livingPlayers--;
-                if (livingPlayers <= 1)
-                {
-                    if (playerCode.playerID == 1)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player1");
-                    }
-                    else if (playerCode.playerID == 0)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player2");
-                    }
-                    /*
-                    else if (playerCode.playerID == 3)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player3");
-                    }
-                    else
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player4");
-                    }
-                    */
-                    winner = player;
-                    winner.transform.parent = transform;
-                    Invoke("EndGame", 2);
-                    Time.timeScale = 0.5f;
-                    print(winner.name + " is the winner");
-                }
-                /*
-                triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-                */
-                RemovePlayerFromTargets(playerCode.playerID - 1);
-
-            }
+            StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
         }
         else
         {
-
-            PlayerBase playerCode = player.GetComponent<PlayerBase>();
-
-            playerCode.numOfDeaths++;
-
-            if (playerCode.numOfDeaths != numOfRespawns)
+            livingPlayers--;
+            if (livingPlayers <= 1)
             {
-                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
-            }
-            else
-            {
-                livingPlayers--;
-                if (livingPlayers <= 1)
+                if (playerCode.playerID == 0)
                 {
-                    if (playerCode.playerID == 1)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player1");
-                    }
-                    else if (playerCode.playerID == 2)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player2");
-                    }
-                    else if (playerCode.playerID == 3)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player3");
-                    }
-                    else
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player4");
-                    }
-
-                    winner = player;
-                    Invoke("EndGame", 4);
+                    player = GameObject.FindGameObjectWithTag("Player1");
                 }
-                /*
-                triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-                */
-                RemovePlayerFromTargets(playerCode.playerID + 1);
+                else if (playerCode.playerID == 1)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player2");
+                }
+                else if (playerCode.playerID == 2)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player3");
+                }
+                else
+                {
+                    player = GameObject.FindGameObjectWithTag("Player4");
+                }
+
+                winner = player;
+                winner.transform.parent = transform;
+                Invoke("EndGame", 2);
+                Time.timeScale = 0.5f;
+                //print(winner.name + " is the winner");
             }
+
+            triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
+            RemovePlayerFromTargets(playerCode.playerID + 1);
         }
     }
     void EndGame()
