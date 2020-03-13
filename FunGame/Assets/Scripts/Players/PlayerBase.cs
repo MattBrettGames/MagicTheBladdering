@@ -404,7 +404,6 @@ public abstract class PlayerBase : ThingThatCanDie
     {
         if (!iFrames && !trueIFrames)
         {
-            universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             hitEffects.SetActive(true);
             if (fromAttack)
             {
@@ -413,6 +412,7 @@ public abstract class PlayerBase : ThingThatCanDie
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
             Knockback(knockback, dirTemp, knockbackDur);
+            universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             PlaySound(ouchSounds);
         }
         if (iFrames || trueIFrames)

@@ -6,7 +6,7 @@ using Rewired;
 public class CharacterRotater : MonoBehaviour
 {
     Player player;
-    [SerializeField] int thisPInt;
+    [SerializeField] public int thisPInt;
     [SerializeField] float speed;
 
     void Start()
