@@ -252,8 +252,8 @@ public class Valderheim : PlayerBase
 
         if (frenzy)
         {
-            crackEffect.transform.localScale = new Vector3(ragingShatterRadius, ragingShatterRadius, ragingShatterRadius);
-            StartCoroutine(crackDamage.DealDamage());
+            crackEffect.transform.localScale = new Vector3(1, 1, 1);
+            //StartCoroutine(crackDamage.DealDamage());
         }
         else
         {

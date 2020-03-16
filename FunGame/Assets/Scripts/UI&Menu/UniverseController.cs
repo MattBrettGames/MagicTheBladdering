@@ -30,7 +30,7 @@ public class UniverseController : BlankMono
     private int lockedInPlayers;
     public int numOfRespawns;
     public int respawnTimer;
-    PlayerBase[] playerBases;
+    List<PlayerBase> playerBases;
 
     private int livingPlayers;
     private int currentLevel;
@@ -53,15 +53,12 @@ public class UniverseController : BlankMono
     {
         player = ReInput.players.GetPlayer("System");
 
-        //  audioManager = GetComponentInChildren<AudioManager>();
+        //audioManager = GetComponentInChildren<AudioManager>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        if (GameObject.FindGameObjectsWithTag("UniverseController").Length == 1)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-        else { Destroy(gameObject); }
+        if (GameObject.FindGameObjectsWithTag("UniverseController").Length == 1) DontDestroyOnLoad(gameObject);
+        else Destroy(gameObject);
     }
 
     private void Update()
@@ -100,7 +97,7 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-
+        numOfPlayers = 0;
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
@@ -123,8 +120,10 @@ public class UniverseController : BlankMono
     {
         yield return new WaitForEndOfFrame();
 
+        //        print(livingPlayers + "|" + numOfPlayers + "Before");
+        numOfPlayers = ReInput.controllers.controllerCount - 2;
         livingPlayers = numOfPlayers;
-        print(livingPlayers + "|" + numOfPlayers);
+
         GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
         currentLevel = level;
 
@@ -197,7 +196,7 @@ public class UniverseController : BlankMono
             int[] charInts = new int[4];
             livingPlayers = numOfPlayers;
 
-            playerBases = new PlayerBase[4];
+            playerBases = new List<PlayerBase>();
 
             #region Player 1
             GameObject p1 = selectedChars[0];
@@ -220,7 +219,7 @@ public class UniverseController : BlankMono
             else if (p1.name.Contains("Wiosna")) { charInts[0] = 3; }
             else if (p1.name.Contains("Skjegg")) { charInts[0] = 4; }
             playerCode.SetInfo(this, 13);
-            playerBases[0] = playerCode;
+            playerBases.Add(playerCode);
             #endregion
 
             targetLook = new Vector3(0, -90, 0);
@@ -246,10 +245,10 @@ public class UniverseController : BlankMono
             else if (p2.name.Contains("Skjegg")) { charInts[1] = 4; }
             p2.transform.localScale = targetScale;
             playerCode2.SetInfo(this, 14);
-            playerBases[1] = playerCode2;
+            playerBases.Add(playerCode2);
             #endregion
 
-            targetLook = new Vector3(0, 0, 0);
+            targetLook = new Vector3(0, 180, 0);
 
             #region Player 3
             PlayerBase playerCode3;
@@ -275,12 +274,12 @@ public class UniverseController : BlankMono
                 else if (p3.name.Contains("Skjegg")) { charInts[2] = 4; }
                 p3.transform.localScale = targetScale;
                 playerCode3.SetInfo(this, 15);
-                playerBases[2] = playerCode3;
+                playerBases.Add(playerCode3);
             }
             else { selectedChars[2] = new GameObject("NullObjectException"); }
             #endregion
 
-            targetLook = new Vector3(0, 180, 0);
+            targetLook = new Vector3(0, 0, 0);
 
             #region Player 4
             PlayerBase playerCode4;
@@ -306,7 +305,7 @@ public class UniverseController : BlankMono
                 else if (p4.name.Contains("Skjegg")) { charInts[3] = 4; }
                 p4.transform.localScale = targetScale;
                 playerCode4.SetInfo(this, 16);
-                playerBases[3] = playerCode4;
+                playerBases.Add(playerCode4);
             }
             else { selectedChars[3] = new GameObject("NullObjectException"); }
             #endregion
@@ -328,17 +327,18 @@ public class UniverseController : BlankMono
             }
 
             CheckForDualCamera();
-            StartCoroutine(DelayedStart(playerBases[0], playerBases[1], playerBases[2], playerBases[3]));
+            StartCoroutine(DelayedStart(playerBases));
         }
     }
 
-    IEnumerator DelayedStart(PlayerBase p1, PlayerBase p2, PlayerBase p3, PlayerBase p4)
+    IEnumerator DelayedStart(List<PlayerBase> p1)
     {
         yield return new WaitForSecondsRealtime(3.3f);
-        p1.enabled = true;
-        p2.enabled = true;
-        p3.enabled = true;
-        p4.enabled = true;
+        for (int i = 0; i < p1.Count; i++)
+            p1[i].enabled = true;
+        //p2.enabled = true;
+        //p3.enabled = true;
+        //p4.enabled = true;
     }
 
     public void CheckReady(int arrayIndex, GameObject gobject, GameObject character, string skin)
@@ -421,16 +421,13 @@ public class UniverseController : BlankMono
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
         playerCode.numOfDeaths++;
 
-        print(livingPlayers + "|" + numOfPlayers);
-
         if (playerCode.numOfDeaths < numOfRespawns)
         {
             StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
         }
         else
         {
-            CheckForDualCamera();
-            playerBases[playerCode.playerID] = null;
+            playerBases.RemoveAt(Mathf.Clamp(playerCode.playerID, 0, playerBases.Count));
             if (triCamCode != null && triCamCode.enabled)
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
             RemovePlayerFromTargets(playerCode.playerID + 1);
@@ -449,16 +446,16 @@ public class UniverseController : BlankMono
                 Invoke("EndGame", 2);
                 Time.timeScale = 0.5f;
             }
+            CheckForDualCamera();
         }
     }
 
     private void CheckForDualCamera()
     {
-
         triCamCode = Camera.main.GetComponent<TriObjectiveCamera>();
         DualObjectiveCamera dualCam = Camera.main.GetComponent<DualObjectiveCamera>();
 
-        if (livingPlayers < 3)
+        if (livingPlayers <= 2)
         {
             triCamCode.enabled = false;
             dualCam.enabled = true;
@@ -474,10 +471,13 @@ public class UniverseController : BlankMono
             dualCam.enabled = false;
             List<PlayerBase> tempPlayerList = new List<PlayerBase>();
             tempPlayerList.AddRange(playerBases);
-            triCamCode.targets = null;
+            triCamCode.targets = new List<Transform>();
 
             for (int i = 0; i < tempPlayerList.Count; i++)
-                triCamCode.targets.Add(tempPlayerList[i].transform);
+            {
+                if (tempPlayerList[i] != null)
+                    triCamCode.targets.Add(tempPlayerList[i].transform);
+            }
 
         }
     }
