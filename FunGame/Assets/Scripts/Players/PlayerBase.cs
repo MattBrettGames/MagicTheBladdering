@@ -501,7 +501,8 @@ public abstract class PlayerBase : ThingThatCanDie
         {
             universe.PlayerDeath(gameObject, null);
         }
-        PlaySound(deathSounds);
+        if (deathSounds != null)
+            PlaySound(deathSounds);
     }
 
     #region Knockback Controls
