@@ -100,7 +100,6 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-        // numOfPlayers = 2;
 
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
@@ -108,7 +107,6 @@ public class UniverseController : BlankMono
 
         if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
         if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
-
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack(numOfPlayers + "CharacterSelectorPVP");
     }
@@ -329,8 +327,8 @@ public class UniverseController : BlankMono
 
             }
 
-            StartCoroutine(DelayedStart(playerBases[0], playerBases[1], playerBases[2], playerBases[3]));
             CheckForDualCamera();
+            StartCoroutine(DelayedStart(playerBases[0], playerBases[1], playerBases[2], playerBases[3]));
         }
     }
 
