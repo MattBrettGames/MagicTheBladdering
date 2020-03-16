@@ -30,6 +30,7 @@ public class UniverseController : BlankMono
     private int lockedInPlayers;
     public int numOfRespawns;
     public int respawnTimer;
+    PlayerBase[] playerBases;
 
     private int livingPlayers;
     private int currentLevel;
@@ -99,7 +100,7 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-        numOfPlayers = 2;
+       // numOfPlayers = 2;
 
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
@@ -125,6 +126,7 @@ public class UniverseController : BlankMono
         yield return new WaitForEndOfFrame();
 
         livingPlayers = numOfPlayers;
+        print(livingPlayers + "|" + numOfPlayers);
         GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
         currentLevel = level;
 
@@ -200,7 +202,7 @@ public class UniverseController : BlankMono
             triCamCode = Camera.main.GetComponent<TriObjectiveCamera>();
             triCamCode.enabled = true;
 
-            PlayerBase[] playerBases = new PlayerBase[4];
+            playerBases = new PlayerBase[4];
 
             #region Player 1
             GameObject p1 = selectedChars[0];
@@ -422,44 +424,33 @@ public class UniverseController : BlankMono
     {
 
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
-
         playerCode.numOfDeaths++;
 
-        if (playerCode.numOfDeaths != numOfRespawns)
+        print(livingPlayers + "|" + numOfPlayers);
+
+        if (playerCode.numOfDeaths < numOfRespawns)
         {
             StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
         }
         else
         {
+            playerBases[playerCode.playerID] = null;
+            triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
+            RemovePlayerFromTargets(playerCode.playerID + 1);
+            
             livingPlayers--;
             if (livingPlayers <= 1)
             {
-                if (playerCode.playerID == 0)
-                {
-                    player = GameObject.FindGameObjectWithTag("Player1");
-                }
-                else if (playerCode.playerID == 1)
-                {
-                    player = GameObject.FindGameObjectWithTag("Player2");
-                }
-                else if (playerCode.playerID == 2)
-                {
-                    player = GameObject.FindGameObjectWithTag("Player3");
-                }
-                else
-                {
-                    player = GameObject.FindGameObjectWithTag("Player4");
-                }
+                if (playerBases[0] != null) player = playerBases[0].gameObject;
+                else if (playerBases[1] != null) player = playerBases[0].gameObject;
+                else if (playerBases[2] != null) player = playerBases[0].gameObject;
+                else if (playerBases[3] != null) player = playerBases[0].gameObject;
 
                 winner = player;
                 winner.transform.parent = transform;
                 Invoke("EndGame", 2);
                 Time.timeScale = 0.5f;
-                //print(winner.name + " is the winner");
             }
-
-            triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-            RemovePlayerFromTargets(playerCode.playerID + 1);
         }
     }
     void EndGame()
