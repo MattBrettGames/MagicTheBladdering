@@ -28,7 +28,7 @@ public class TriObjectiveCamera : MonoBehaviour
 
     public void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), 0.3f);
+        transform.position = Vector3.Lerp(transform.position, boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), 0.6f);
 
         //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), ref velocity, Time.deltaTime);
 
