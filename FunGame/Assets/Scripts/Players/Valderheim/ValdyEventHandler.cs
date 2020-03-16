@@ -31,7 +31,7 @@ public class ValdyEventHandler : BlankMono
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        valdy.PlaySound(clipToPlay);
+        valdy.PlaySound(clipToPlay, null);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {

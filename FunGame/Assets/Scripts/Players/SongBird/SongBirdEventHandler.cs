@@ -32,7 +32,7 @@ public class SongBirdEventHandler : BlankMono
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        songBird.PlaySound(clipToPlay);
+        songBird.PlaySound(clipToPlay, null);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {

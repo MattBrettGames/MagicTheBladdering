@@ -14,16 +14,24 @@ public enum TotemType
 public class Skjegg : PlayerBase
 {
     [Header("Components")]
+    [SerializeField] Weapons spiritAttackBox;
     [SerializeField] Weapons leftFist;
     [SerializeField] Weapons rightFist;
 
     [Header("X Attack")]
-    [SerializeField] int xDamage;
-    [SerializeField] int xKnockback;
+    [SerializeField] int xShortDamage;
+    [SerializeField] int xLongDamage;
+    [SerializeField] int xShortKnockback;
+    [SerializeField] int xLongKnockback;
+    [SerializeField] float xShortKnockbackDuration;
+    [SerializeField] float xLongKnockbackDuration;
+    float timeXHeld;
+    [SerializeField] Vector2 minTimeHeldTOMaxHoldtime;
 
     [Header("Y Attack")]
     [SerializeField] int yDamage;
     [SerializeField] int yKnockback;
+    [SerializeField] float yKnockbackDuration;
 
     [Header("Totem Vars")]
     [SerializeField] SpriteRenderer totemSprite;
@@ -55,9 +63,11 @@ public class Skjegg : PlayerBase
     [SerializeField] float bearDamageGainedOnAttack;
 
     [Header("Ram Stats")]
-    [SerializeField] float ramBurstDistance;
+    [SerializeField] float ramBurstRadius;
     [SerializeField] int ramBurstPower;
+    [SerializeField] float ramBurstKnockbackDur;
     [SerializeField] int ramAttackKnockback;
+    [SerializeField] float ramAttackKnockbackDur;
 
     [Header("Bird Stats")]
     [SerializeField] int birdBonusSpeed;
@@ -87,21 +97,154 @@ public class Skjegg : PlayerBase
 
         totemSprite.sprite = totemSymbolArray[totemChoiceList[i_currentTotem]];
 
-        anim.ResetTrigger("XAttack");
-        anim.ResetTrigger("YAttack");
+        // anim.ResetTrigger("XAttack");
+        // anim.ResetTrigger("YAttack");
+    }
+
+    public override void Update()
+    {
+        if (!isAI)
+        {
+            if (aTimer > 0) aTimer -= Time.deltaTime;
+            if (bTimer > 0) bTimer -= Time.deltaTime;
+            if (xTimer > 0) xTimer -= Time.deltaTime;
+            if (yTimer > 0) yTimer -= Time.deltaTime;
+
+            dir = new Vector3(player.GetAxis("HoriMove"), 0, player.GetAxis("VertMove"));
+            if (dir != Vector3.zero)
+                lastDir = dir;
+
+            aimTarget.position = transform.position + (dir * 2) + lastDir;
+
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) acting = false;
+
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+            switch (state)
+            {
+                case State.stun:
+                    anim.SetBool("Stunned", true);
+                    break;
+
+                case State.attack:
+                    break;
+
+                case State.normal:
+
+                    anim.SetBool("LockOn", false);
+                    if (player.GetAxis("LockOn") >= 0.4f) { state = State.lockedOn; }
+
+                    if (!acting)
+                    {
+                        //Rotating the Character Model
+                        visuals.transform.LookAt(aimTarget);
+                        rb2d.velocity = dir * (speed + bonusSpeed);
+
+                        //Standard Inputs
+                        if (player.GetButtonDown("AAction")) { AAction(true); }
+                        if (player.GetButtonDown("BAttack")) { BAction(); }
+                        if (player.GetButtonDown("YAttack")) { YAction(); }
+
+
+                        if (player.GetButton("XAttack")) XAction();
+                        if (player.GetButtonUp("XAttack")) ReleaseXAction();
+
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                    }
+                    break;
+
+                case State.lockedOn:
+
+                    walkDirection.position = dir + transform.position;
+
+                    anim.SetBool("LockOn", true);
+                    if (player.GetAxis("LockOn") <= 0.4f) { state = State.normal; }
+
+                    if (!acting)
+                    {
+                        rb2d.velocity = dir * (speed + bonusSpeed);
+
+                        if (player.GetButtonDown("AAction")) { AAction(true); }
+                        if (player.GetButtonDown("BAttack")) { BAction(); }
+                        if (player.GetButtonDown("YAttack")) { YAction(); }
+
+                        if (player.GetButton("XAttack")) XAction();
+                        if (player.GetButtonUp("XAttack")) ReleaseXAction();
+
+                        anim.SetFloat("Movement", dir.magnitude + 0.001f);
+                        anim.SetFloat("Movement_X", visuals.transform.InverseTransformDirection(rb2d.velocity).x / speed);
+                        anim.SetFloat("Movement_ZY", visuals.transform.InverseTransformDirection(rb2d.velocity).z / speed);
+
+                        aimTarget.LookAt(lockTargetList[currentLock].position + lookAtVariant);
+
+                        visuals.transform.forward = Vector3.Lerp(visuals.transform.forward, aimTarget.forward, lockOnLerpSpeed);
+
+                        LockOnScroll();
+                    }
+
+                    break;
+
+                case State.dodging:
+
+                    if (aTimer <= 0)
+                    {
+                        DodgeSliding(visuals.transform.forward);
+                    }
+                    break;
+
+                case State.knockback:
+                    KnockbackContinual();
+                    break;
+            }
+        }
+
+        // This bit is the AI
+        else
+        {
+            AIUpdate();
+        }
     }
 
     public override void XAction()
     {
-        if (xTimer <= 0)
+        if (xTimer <= 0 && !acting)
         {
-            base.XAction();
-            anim.SetTrigger("XAttack");
-            rightFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X);
-            leftFist.GainInfo(xDamage, xKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X);
-            xTimer = xCooldown;
+            anim.SetBool("Charging", true);
+            timeXHeld += Time.deltaTime;
+
+            if (timeXHeld >= minTimeHeldTOMaxHoldtime.x)
+            {
+                anim.SetBool("Charging", false);
+                anim.SetTrigger("LongPunch");
+                rightFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
+                leftFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
+
+                base.XAction();
+                timeXHeld = 0;
+                xTimer = xCooldown;
+            }
         }
     }
+    void ReleaseXAction()
+    {
+        anim.SetBool("Charging", false);
+        if (timeXHeld < minTimeHeldTOMaxHoldtime.x && !acting)
+        {
+            anim.SetTrigger("ShortPunch");
+            rightFist.GainInfo(xShortDamage, xShortKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xShortKnockbackDuration);
+            leftFist.GainInfo(xShortDamage, xShortKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xShortKnockbackDuration);
+        }
+        else if (!acting)
+        {
+            anim.SetTrigger("LongPunch");
+            rightFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
+            leftFist.GainInfo(xLongDamage, xLongKnockback, visuals.transform.forward, true, 0, this, true, AttackType.X, xLongKnockbackDuration);
+        }
+        base.XAction();
+        timeXHeld = 0;
+        xTimer = xCooldown;
+    }
+
 
     public override void YAction()
     {
@@ -109,8 +252,8 @@ public class Skjegg : PlayerBase
         {
             base.YAction();
             anim.SetTrigger("YAttack");
-            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y);
-            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y);
+            rightFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y, yKnockbackDuration);
+            leftFist.GainInfo(yDamage, yKnockback, visuals.transform.forward, true, 0, this, true, AttackType.Y, yKnockbackDuration);
             yTimer = yCooldown;
         }
     }
@@ -166,14 +309,14 @@ public class Skjegg : PlayerBase
 
         if (isRam)
         {
-            hitTarget.Knockback(ramAttackKnockback, visuals.transform.forward);
+            hitTarget.Knockback(ramAttackKnockback, visuals.transform.forward, ramAttackKnockbackDur);
         }
 
         if (isBird)
         {
             if (Random.Range(0, 100) <= birdCritChance)
             {
-                hitTarget.TakeDamage(birdCritDamageBonus, Vector3.zero, 0, false, true, this);
+                hitTarget.TakeDamage(birdCritDamageBonus, Vector3.zero, 0, false, true, this, 0);
             }
         }
     }
@@ -204,11 +347,11 @@ public class Skjegg : PlayerBase
 
             case TotemType.ram:
                 isRam = true;
-                if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) <= ramBurstDistance)
+                if (Vector3.Distance(totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position, lockTargetList[currentLock].transform.position) <= ramBurstRadius)
                 {
                     lockTargetList[currentLock].gameObject.GetComponentInParent<PlayerBase>().Knockback(ramBurstPower,
                         lockTargetList[currentLock].transform.position - totemBaseList[totemChoiceList[i_currentTotem]].gameObject.transform.position
-                        );
+                        , ramBurstKnockbackDur);
                 }
                 break;
 

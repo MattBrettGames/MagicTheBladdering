@@ -13,6 +13,7 @@ public class Wiosna : PlayerBase
     [Header("X Attack")]
     [SerializeField] int xDamage;
     [SerializeField] int xKnockback;
+    [SerializeField] float xKnockbackDuration;
 
     [Header("Y Attack")]
     [SerializeField] int yDamage;
@@ -22,6 +23,7 @@ public class Wiosna : PlayerBase
     [SerializeField] float yDelay;
     [SerializeField] int numberOfBlasts;
     [SerializeField] GameObject explosionPrefabs;
+    [SerializeField] float explosionKnockbackDuration;
 
     WiosnaExplosions blast1;
     WiosnaExplosions blast2;
@@ -67,9 +69,9 @@ public class Wiosna : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X);
+            basicMelee.GainInfo(xDamage, xKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
             xTimer = xCooldown;
-            PlaySound(xSound);
+            PlaySound(xSound, xVoice);
         }
     }
 
@@ -78,7 +80,7 @@ public class Wiosna : PlayerBase
         if (aTimer <= 0)
         {
             anim.SetTrigger("AAction");
-            PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
 
@@ -138,7 +140,7 @@ public class Wiosna : PlayerBase
         blast1.transform.position = gameObject.transform.position;
         blast2.transform.position = gameObject.transform.position;
 
-        blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound);
+        blast1.StartChain(this, yDamage, yKnockback, blast2, transform.position, visuals.transform.forward, ySpacing, yTimeBetweenBlasts, numberOfBlasts, universe, ySound, explosionKnockbackDuration);
     }
 
     public override void BAction()
@@ -152,7 +154,7 @@ public class Wiosna : PlayerBase
             anim.SetTrigger("BAttack");
             summonParticles.SetActive(true);
 
-            PlaySound(bSound);
+            PlaySound(bSound, bVoice);
         }
     }
 

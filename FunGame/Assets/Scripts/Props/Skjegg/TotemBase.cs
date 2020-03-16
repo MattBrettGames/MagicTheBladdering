@@ -17,9 +17,9 @@ public class TotemBase : ThingThatCanDie
         }
     }
 
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker, float knockbackDur)
     {
-        base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker);
+        base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker, knockbackDur);
         if (currentHealth <= 0)
         {
             Vanish();

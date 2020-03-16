@@ -17,6 +17,7 @@ public class Carmen : PlayerBase
     [Header("Dash-Slash")]
     public int slashDamage;
     public int slashKnockback;
+    [SerializeField] float slashKnockbackDuration;
     public float slashTravelDuration;
     [SerializeField] Weapons spinSphere;
     [SerializeField] float spinRadius;
@@ -175,7 +176,7 @@ public class Carmen : PlayerBase
 
         if (hitWith == AttackType.Y && stabSymbol.activeSelf)
         {
-            PlaySound(ySoundBonus);
+            PlaySound(ySoundBonus, yVoice);
         }
     }
 
@@ -212,12 +213,12 @@ public class Carmen : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false, AttackType.X);
+            spinSphere.GainInfo(slashDamage, slashKnockback, visuals.transform.forward, pvp, 0, this, false, AttackType.X, slashKnockbackDuration);
             state = State.dodging;
             Invoke("StopKnockback", slashTravelDuration);
 
             xTimer = xCooldown;
-            PlaySound(xSound);
+            PlaySound(xSound,xVoice);
         }
     }
 
@@ -235,7 +236,7 @@ public class Carmen : PlayerBase
 
             if (lookDif <= backstabAngle)
             {
-                backStabBox.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y);
+                backStabBox.GainInfo(Mathf.RoundToInt(stabDamage * backStabDamageMult), stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y, 0);
 
                 if (Vector3.Distance(transform.position, lockTargetList[currentLock].position) <= 11)
                 {
@@ -247,8 +248,8 @@ public class Carmen : PlayerBase
             }
             else
             {
-                backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y);
-                PlaySound(ySound);
+                backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y, 0);
+                PlaySound(ySound, yVoice);
             }
         }
     }
@@ -276,7 +277,7 @@ public class Carmen : PlayerBase
             grapplingTrap.OnThrow(visuals.transform.forward, this, playerID + 13, bDamage);
 
             bTimer = bCooldown;
-            PlaySound(bSound);
+            PlaySound(bSound, bVoice);
         }
     }
 
@@ -294,10 +295,10 @@ public class Carmen : PlayerBase
         hazardFrames = false;
     }
 
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker, float knockbackDur)
     {
         anim.SetBool("Grappling", false);
-        base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker);
+        base.TakeDamage(damageInc, dirTemp, knockback, fromAttack, stopAttack, attacker, knockbackDur);
     }
 
     public override void Death(PlayerBase killer)

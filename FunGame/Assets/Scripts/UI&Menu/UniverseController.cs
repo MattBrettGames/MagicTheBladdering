@@ -22,7 +22,7 @@ public class UniverseController : BlankMono
     public Player player;
     DualObjectiveCamera dualCamCode;
     TriObjectiveCamera triCamCode;
-    AudioManager audioManager;
+    //    AudioManager audioManager;
 
     [Header("Character Info")]
     public GameObject[] selectedChars = new GameObject[4];
@@ -43,6 +43,7 @@ public class UniverseController : BlankMono
     [SerializeField] string gameOverText;
     private GameObject winner;
     private Text victoryText;
+    private string victoryScene;
 
     [Header("Settings")]
     [HideInInspector] public bool isPostProcessing = true;
@@ -51,7 +52,7 @@ public class UniverseController : BlankMono
     {
         player = ReInput.players.GetPlayer("System");
 
-        audioManager = GetComponentInChildren<AudioManager>();
+        //  audioManager = GetComponentInChildren<AudioManager>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -99,11 +100,10 @@ public class UniverseController : BlankMono
     public void SelectedPlay()
     {
         numOfPlayers = 2;
-        /*
+
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
         if (numOfPlayers > 4) { numOfPlayers = 4; }
-        */
 
         if (Input.GetKey(KeyCode.Alpha3)) { numOfPlayers = 3; }
         if (Input.GetKey(KeyCode.Alpha4)) { numOfPlayers = 4; }
@@ -166,20 +166,27 @@ public class UniverseController : BlankMono
         {
             Time.timeScale = 1;
             victoryText = GameObject.Find("VictoryText").GetComponent<Text>();
-            victoryText.text = gameOverText.Replace("<winner>", winner.name);
+            if (winner != null)
+            {
+                victoryText.text = gameOverText.Replace("<winner>", winner.name);
 
-            winner.transform.SetParent(GameObject.Find("CharacterPlaceHolder").transform);
-            winner.transform.localPosition = Vector3.zero;
-            winner.transform.localScale = Vector3.one;
-            PlayerBase winnerCode = winner.GetComponent<PlayerBase>();
-            winnerCode.OnVictory();
-            winnerCode.enabled = false;
-            Rigidbody winnerRB = winnerCode.GetComponent<Rigidbody>();
-            winnerRB.isKinematic = true;
-            winnerRB.velocity = Vector3.zero;
+                winner.transform.SetParent(GameObject.Find("CharacterPlaceHolder").transform);
+                winner.transform.localPosition = Vector3.zero;
+                winner.transform.localScale = Vector3.one;
+                PlayerBase winnerCode = winner.GetComponent<PlayerBase>();
+                winnerCode.OnVictory();
+                winnerCode.enabled = false;
+                Rigidbody winnerRB = winnerCode.GetComponent<Rigidbody>();
+                winnerRB.isKinematic = true;
+                winnerRB.velocity = Vector3.zero;
 
-            winnerCode.visuals.transform.LookAt(Camera.main.transform);
-            winnerCode.visuals.transform.eulerAngles = new Vector3(0, winnerCode.visuals.transform.eulerAngles.y, 0);
+                winnerCode.visuals.transform.LookAt(Camera.main.transform);
+                winnerCode.visuals.transform.eulerAngles = new Vector3(0, winnerCode.visuals.transform.eulerAngles.y, 0);
+            }
+            else
+                victoryText.text = "A Draw!";
+
+            GameObject.Find("BackgroundController").GetComponent<GameOverBackgroundController>().SetBackground(victoryScene);
         }
         //Game-Level Setup
         else if (level >= firstArenaID)
@@ -190,29 +197,9 @@ public class UniverseController : BlankMono
             int[] charInts = new int[4];
             livingPlayers = numOfPlayers;
 
-            /*if (numOfPlayers == 2)
-            {
-                dualCamCode.enabled = true;
-                triCamCode.enabled = false;
-            }
-            else
-            {
-             dualCamCode.enabled = false;
-             }
-
+            triCamCode = Camera.main.GetComponent<TriObjectiveCamera>();
             triCamCode.enabled = true;
 
-            if (numOfPlayers == 2)
-            {
-                triCamCode.RemoveTarget(GameObject.Find("Player3Base").transform);
-                triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
-            }
-
-            if (numOfPlayers == 3)
-            {
-                triCamCode.RemoveTarget(GameObject.Find("Player4Base").transform);
-            }
-            */
             PlayerBase[] playerBases = new PlayerBase[4];
 
             #region Player 1
@@ -433,103 +420,53 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player, GameObject otherPlayer)
     {
-        if (numOfPlayers == 2)
+
+        PlayerBase playerCode = player.GetComponent<PlayerBase>();
+
+        playerCode.numOfDeaths++;
+
+        if (playerCode.numOfDeaths != numOfRespawns)
         {
-
-            PlayerBase playerCode = player.GetComponent<PlayerBase>();
-            player.GetComponent<Rigidbody>().isKinematic = true;
-
-            // dualCamCode.Death(playerCode.playerID);
-
-            playerCode.numOfDeaths++;
-            //   print(player.name + " has died " + playerCode.numOfDeaths + " times");
-
-            if (playerCode.numOfDeaths != numOfRespawns)
-            {
-                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
-            }
-            else
-            {
-                livingPlayers--;
-                if (livingPlayers <= 1)
-                {
-                    if (playerCode.playerID == 1)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player1");
-                    }
-                    else if (playerCode.playerID == 0)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player2");
-                    }
-                    /*
-                    else if (playerCode.playerID == 3)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player3");
-                    }
-                    else
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player4");
-                    }
-                    */
-                    winner = player;
-                    winner.transform.parent = transform;
-                    Invoke("EndGame", 2);
-                    Time.timeScale = 0.5f;
-                    print(winner.name + " is the winner");
-                }
-                /*
-                triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-                */
-                RemovePlayerFromTargets(playerCode.playerID - 1);
-
-            }
+            StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
         }
         else
         {
-
-            PlayerBase playerCode = player.GetComponent<PlayerBase>();
-
-            playerCode.numOfDeaths++;
-
-            if (playerCode.numOfDeaths != numOfRespawns)
+            livingPlayers--;
+            if (livingPlayers <= 1)
             {
-                StartCoroutine(StartSpawn(playerCode, playerCode.playerID));
-            }
-            else
-            {
-                livingPlayers--;
-                if (livingPlayers <= 1)
+                if (playerCode.playerID == 0)
                 {
-                    if (playerCode.playerID == 1)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player1");
-                    }
-                    else if (playerCode.playerID == 2)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player2");
-                    }
-                    else if (playerCode.playerID == 3)
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player3");
-                    }
-                    else
-                    {
-                        player = GameObject.FindGameObjectWithTag("Player4");
-                    }
-
-                    winner = player;
-                    Invoke("EndGame", 4);
+                    player = GameObject.FindGameObjectWithTag("Player1");
                 }
-                /*
-                triCamCode.enabled = true;
-                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
-                */
-                RemovePlayerFromTargets(playerCode.playerID + 1);
+                else if (playerCode.playerID == 1)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player2");
+                }
+                else if (playerCode.playerID == 2)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player3");
+                }
+                else
+                {
+                    player = GameObject.FindGameObjectWithTag("Player4");
+                }
+
+                winner = player;
+                winner.transform.parent = transform;
+                Invoke("EndGame", 2);
+                Time.timeScale = 0.5f;
+                //print(winner.name + " is the winner");
             }
+
+            triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
+            RemovePlayerFromTargets(playerCode.playerID + 1);
         }
     }
-    void EndGame() { GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver"); }
+    void EndGame()
+    {
+        victoryScene = SceneManager.GetActiveScene().name;
+        GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("NewGameOver");
+    }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt)
     {
@@ -537,7 +474,7 @@ public class UniverseController : BlankMono
         player.enabled = true;
         // triCamCode.AddTarget(playerInt + 1);
         player.Respawn();
-        player.TeleportPlayer(Vector3.zero);
+        player.TeleportPlayer(GameObject.Find("PlayerRespawnPoint").transform.position);
     }
 
     private IEnumerator StartSpawn(PlayerBase player, int playerInt, PlayerBase otherPlayer)
@@ -576,7 +513,7 @@ public class UniverseController : BlankMono
     public void GetCam(DualObjectiveCamera duoCam, TriObjectiveCamera triCam)
     {
         dualCamCode = duoCam;
-        // triCamCode = triCam;
+        triCamCode = triCam;
     }
 
     IEnumerator DelayedVictory()
@@ -590,8 +527,8 @@ public class UniverseController : BlankMono
         }
     }
 
-    public void CameraRumbleCall(float degree) { dualCamCode.CamShake(degree); }
+    public void CameraRumbleCall(float degree) { triCamCode.CamShake(degree); }
 
-    public void PlaySound(string clip) { audioManager.Play(clip); }
+    // public void PlaySound(string clip) { audioManager.Play(clip); }
 
 }

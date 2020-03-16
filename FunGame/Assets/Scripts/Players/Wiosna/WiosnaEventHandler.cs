@@ -41,7 +41,7 @@ public class WiosnaEventHandler : BlankMono
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        wiosna.PlaySound(clipToPlay);
+        wiosna.PlaySound(clipToPlay, null);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {

@@ -16,9 +16,10 @@ public class SongBird : PlayerBase
     private GameObject cannister;
     [SerializeField] Color playerColour;
 
-    [Header("Dagger Swipe")]
+    [Header("Cane Swipe")]
     public int baseXDamage;
     public int baseXKnockback;
+    [SerializeField] float xKnockbackDur;
 
     [Header("All Prefabs for Instantiation")]
     [SerializeField] GameObject smokeCloudPrefab;
@@ -28,6 +29,7 @@ public class SongBird : PlayerBase
     [SerializeField] int cannisterCloudSize;
     [SerializeField] int cannisterBurstDamage;
     [SerializeField] int cannisterSmokeKnockback;
+    [Space, SerializeField] float cannisterBurstKnockbackDuration;
     [SerializeField] float cannisterCloudTime;
     [SerializeField] float cannisterImpactDur;
     [SerializeField] bool cannisterInterrupt;
@@ -93,9 +95,9 @@ public class SongBird : PlayerBase
             base.XAction();
 
             anim.SetTrigger("XAttack");
-            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X);
+            weapon.GainInfo(baseXDamage, baseXKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDur);
             xTimer = xCooldown;
-            PlaySound(xSound);
+            PlaySound(xSound, xVoice);
         }
     }
 
@@ -107,7 +109,7 @@ public class SongBird : PlayerBase
 
             anim.SetTrigger("YAction");
             yTimer = yCooldown;
-            PlaySound(ySound);
+            PlaySound(ySound, yVoice);
         }
     }
 
@@ -124,15 +126,15 @@ public class SongBird : PlayerBase
                 hasCannister = false;
                 anim.SetTrigger("BAction");
                 bTimer = bCooldown;
-                PlaySound(bSound);
+                PlaySound(bSound, null);
             }
         }
         else
         {
             hasCannister = true;
             smokeCloudCannister.transform.localScale = Vector3.one;
-            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterCloudTime, this, cannisterImpactDur, cannisterInterrupt, playerColour);
-            PlaySound(bSoundBonus);
+            cannister.GetComponent<Cannister>().TriggerBurst(smokeCloudCannister, cannisterBurstDamage, cannisterCloudSize, cannisterSmokeKnockback, cannisterCloudTime, this, cannisterImpactDur, cannisterInterrupt, playerColour, cannisterBurstKnockbackDuration);
+            PlaySound(bSoundBonus, bVoice);
         }
     }
 
@@ -149,7 +151,7 @@ public class SongBird : PlayerBase
 
             smokeCloudDodge.transform.position = transform.position;
             smokeCloudDodge.transform.localScale = Vector3.zero;
-            smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
+            //smokeCloudDodge.transform.eulerAngles = new Vector3(0, 0, 180);
             smokeCloudDodge.SetActive(true);
             smokeCloudDodge.GetComponent<SmokeBase>().Begin(dodgeBurstDamage, dodgeSmokeKnockback, dodgeCloudSize, dodgeCloudTime, this, tag, dodgeImpactdur, dodgeInterrupt, playerColour);
 
@@ -157,7 +159,7 @@ public class SongBird : PlayerBase
             {
                 StartCoroutine(smokeGrowth(i * 0.01f, smokeCloudDodge));
             }
-            PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
 
@@ -171,7 +173,7 @@ public class SongBird : PlayerBase
     {
         smokeCloudDeath.transform.position = transform.position;
         smokeCloudDeath.transform.localScale = Vector3.zero;
-        smokeCloudDeath.transform.eulerAngles = new Vector3(0, 0, 180);
+        //smokeCloudDeath.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloudDeath.SetActive(true);
         smokeCloudDeath.GetComponent<SmokeBase>().Begin(deathBurstDamage, deathSmokeKnockback, deathCloudSize, deathCloudTime, this, tag, deathImpactDur, deathInterrupt, playerColour);
 
@@ -188,7 +190,7 @@ public class SongBird : PlayerBase
     {
         smokeCloud.transform.position = transform.position;
         smokeCloud.transform.localScale = Vector3.zero;
-        smokeCloud.transform.eulerAngles = new Vector3(0, 0, 180);
+        //smokeCloud.transform.eulerAngles = new Vector3(0, 0, 180);
         smokeCloud.SetActive(true);
         smokeCloud.GetComponent<SmokeBase>().Begin(thrownBurstDamage, thrownSmokeKnockback, thrownCloudSize, thrownCloudTime, this, tag, thrownImpactDur, thrownInterrupt, playerColour);
 
@@ -210,11 +212,5 @@ public class SongBird : PlayerBase
     {
         yield return new WaitForSeconds(1);
         smokeCloud.transform.localScale -= Vector3.one;
-    }
-
-    public override void Respawn()
-    {
-        visuals.SetActive(true);
-        base.Respawn();
     }
 }

@@ -53,7 +53,7 @@ public class GrapplingTrap : MonoBehaviour
             rb2d.velocity = Vector3.zero;
 
             Invoke("EndParts", 0);
-            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true, carTrue);
+            other.gameObject.GetComponent<PlayerBase>().TakeDamage(damageTrue, Vector3.zero, 0, true, true, carTrue, 0);
         }
         else
         {

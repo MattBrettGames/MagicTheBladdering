@@ -6,7 +6,7 @@ public class Cannister : BlankMono
 {
     [SerializeField] GameObject parts;
 
-    public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner, float impactDur, bool interrupt, Color playerColour)
+    public void TriggerBurst(GameObject smoke, int damage, int size, int knockback, float time, PlayerBase owner, float impactDur, bool interrupt, Color playerColour, float knockDur)
     {
 
         smoke.SetActive(true);
@@ -15,7 +15,7 @@ public class Cannister : BlankMono
 
         smoke.transform.position = transform.position;
         smoke.transform.localScale = Vector3.zero;
-        smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
+        //smoke.transform.rotation = new Quaternion(0, 0, 180, 0);
 
         SmokeBase smoke1 = smoke.GetComponent<SmokeBase>();
         smoke1.Begin(damage, knockback, size, time, owner, tag, impactDur, interrupt, playerColour);
@@ -33,7 +33,7 @@ public class Cannister : BlankMono
                 ThingThatCanDie thing = overlaps[i].GetComponent<ThingThatCanDie>();
                 if (thing != null && thing.tag != tag)
                 {
-                    thing.TakeDamage(damage, Vector3.zero, 0, true, interrupt, owner);
+                    thing.TakeDamage(damage, Vector3.zero, 0, true, interrupt, owner, knockDur);
                 }
             }
         }

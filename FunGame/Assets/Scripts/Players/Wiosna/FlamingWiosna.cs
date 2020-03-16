@@ -43,14 +43,14 @@ public class FlamingWiosna : ThingThatCanDie
 
         if (player != null && other.tag != tag)
         {
-            Disappear();
-            player.TakeDamage(damage, Vector3.zero, 0, true, false, owner); ;
+            Invoke("Disappear", 0.1f);
+            player.TakeDamage(damage, Vector3.zero, 0, true, false, owner, 0);
             cloneBurst.transform.position = transform.position;
             cloneBurst.SetActive(true);
         }
     }
 
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker, float knockbackDur)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)

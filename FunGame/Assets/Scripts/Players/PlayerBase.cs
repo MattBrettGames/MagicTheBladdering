@@ -20,6 +20,7 @@ public abstract class PlayerBase : ThingThatCanDie
     public int playerID;
     [HideInInspector] public int numOfDeaths = 0;
     [HideInInspector] public bool pvp = true;
+    [HideInInspector] public GameObject enviroDeathEffect;
 
     [Header("Movement Stats")]
     public float speed;
@@ -94,9 +95,13 @@ public abstract class PlayerBase : ThingThatCanDie
 
     [Header("Sounds")]
     [SerializeField] protected AudioClip aSound;
+    [SerializeField] protected AudioClip aVoice;
     [SerializeField] protected AudioClip bSound;
+    [SerializeField] protected AudioClip bVoice;
     [SerializeField] protected AudioClip xSound;
+    [SerializeField] protected AudioClip xVoice;
     [SerializeField] protected AudioClip ySound;
+    [SerializeField] protected AudioClip yVoice;
     [SerializeField] protected AudioClip[] ouchSounds = new AudioClip[0];
     [SerializeField] protected AudioClip[] deathSounds = new AudioClip[0];
     [SerializeField] protected AudioClip victorySound;
@@ -335,13 +340,14 @@ public abstract class PlayerBase : ThingThatCanDie
 
             Invoke("EndDodge", dodgeDur);
 
-            PlaySound(aSound);
+            PlaySound(aSound, aVoice);
         }
     }
     public virtual void EndDodge()
     {
         state = State.normal;
         aTimer = aCooldown;
+        TeleportPlayer(transform.position);
     }
 
     public virtual void BAction()
@@ -360,7 +366,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
 
     #region SoundControl
-    public void PlaySound(AudioClip clipToPlay)
+    public void PlaySound(AudioClip clipToPlay, AudioClip voiceClip)
     {
         if (audioSource.clip != clipToPlay)
         {
@@ -369,6 +375,9 @@ public abstract class PlayerBase : ThingThatCanDie
             audioSource.Stop();
             audioSource.clip = clipToPlay;
             audioSource.Play();
+
+            if (voiceClip != null && UnityEngine.Random.Range(0, 100) < 25)
+                audioSource.PlayOneShot(voiceClip);
         }
     }
     public void PlaySound(AudioClip[] clipsToPlay)
@@ -386,17 +395,16 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public void PlayVictorySound()
     {
-        PlaySound(victorySound);
+        PlaySound(victorySound, null);
     }
     #endregion
 
 
     #region Common Events
-    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker)
+    public override void TakeDamage(int damageInc, Vector3 dirTemp, int knockback, bool fromAttack, bool stopAttack, PlayerBase attacker, float knockbackDur)
     {
         if (!iFrames && !trueIFrames)
         {
-            universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             hitEffects.SetActive(true);
             if (fromAttack)
             {
@@ -404,7 +412,8 @@ public abstract class PlayerBase : ThingThatCanDie
             }
             HealthChange(Mathf.RoundToInt(-damageInc * incomingMult), attacker);
             if (currentHealth > 0 && !hyperArmour && stopAttack) { anim.SetTrigger("Stagger"); }
-            Knockback(knockback, dirTemp);
+            Knockback(knockback, dirTemp, knockbackDur);
+            universe.CameraRumbleCall(Mathf.Clamp(damageInc * 0.01f, 0.3f, 0.1f));
             PlaySound(ouchSounds);
         }
         if (iFrames || trueIFrames)
@@ -444,6 +453,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void OnVictory()
     {
+        PlayVictorySound();
         anim.SetFloat("Movement", 0);
         anim.SetBool("LockOn", false);
     }
@@ -451,7 +461,20 @@ public abstract class PlayerBase : ThingThatCanDie
 
     public virtual void Death(PlayerBase killer)
     {
-        anim.SetTrigger("Death");
+        if (killer != null)
+        {
+            anim.ResetTrigger("Respawn");
+            anim.SetTrigger("Death");
+        }
+        else
+        {
+            visuals.SetActive(false);
+            if (enviroDeathEffect != null)
+            {
+                enviroDeathEffect.transform.position = transform.position;// -= new Vector3(0, 5, 0);
+                enviroDeathEffect.SetActive(true);
+            }
+        }
         enabled = false;
         dead = true;
 
@@ -480,21 +503,27 @@ public abstract class PlayerBase : ThingThatCanDie
         }
         PlaySound(deathSounds);
     }
+
+    #region Knockback Controls
     public virtual void KnockbackContinual()
     {
-        if (isAI)
-            transform.position += knockbackForce * knockBackPower * Time.deltaTime;
-        else
-            aiAgent.Move(knockbackForce * knockBackPower * Time.deltaTime);
+        transform.position += knockbackForce * knockBackPower * Time.deltaTime;
     }
-    public override void Knockback(int power, Vector3 direction)
+    public override void Knockback(int power, Vector3 direction, float knockbackDur)
     {
         knockbackForce = direction;
         knockBackPower = power * 10;
         state = State.knockback;
-        Invoke("StopKnockback", power * 0.01f);
+        Invoke("StopKnockback", knockbackDur);
     }
-    public virtual void StopKnockback() { knockbackForce = Vector3.zero; state = State.normal; }
+    public virtual void StopKnockback()
+    {
+        knockbackForce = Vector3.zero;
+        state = State.normal;
+        TeleportPlayer(transform.position);
+    }
+    #endregion
+
     #endregion
 
     #region Utility Functions
@@ -526,7 +555,7 @@ public abstract class PlayerBase : ThingThatCanDie
         yTimer = 0;
 
         aiAgent.isStopped = false;
-
+        visuals.SetActive(true);
         GainTrueFrames();
         StartCoroutine(LoseTrueFrames(2));
         anim.SetTrigger("Respawn");
@@ -539,6 +568,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
         EndActing();
         anim.SetFloat("Movement", 0);
+        enviroDeathEffect.SetActive(false);
     }
 
     public virtual IEnumerator PoisonTick()
@@ -556,8 +586,23 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public virtual void ExtraUpdate() { }
 
-    public virtual void BeginActing() { acting = true; rb2d.velocity = Vector3.zero; state = State.attack; }
-    public void EndActing()
+    public virtual void BeginActing()
+    {
+        acting = true;
+        rb2d.velocity = Vector3.zero;
+        state = State.attack;
+        ResetTriggers();
+    }
+
+    private void ResetTriggers()
+    {
+        anim.ResetTrigger("XAttack");
+        anim.ResetTrigger("YAttack");
+        anim.ResetTrigger("AAction");
+        anim.ResetTrigger("BAttack");
+    }
+
+    public virtual void EndActing()
     {
         acting = false;
         rb2d.velocity = Vector3.zero;
