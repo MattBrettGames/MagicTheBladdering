@@ -100,7 +100,7 @@ public class UniverseController : BlankMono
 
     public void SelectedPlay()
     {
-       // numOfPlayers = 2;
+        // numOfPlayers = 2;
 
         numOfPlayers = ReInput.controllers.controllerCount - 2;
         if (numOfPlayers < 2) { numOfPlayers = 2; }
@@ -198,9 +198,6 @@ public class UniverseController : BlankMono
             Vector3 targetPos = new Vector3(0, 5, 0);
             int[] charInts = new int[4];
             livingPlayers = numOfPlayers;
-
-            triCamCode = Camera.main.GetComponent<TriObjectiveCamera>();
-            triCamCode.enabled = true;
 
             playerBases = new PlayerBase[4];
 
@@ -333,6 +330,7 @@ public class UniverseController : BlankMono
             }
 
             StartCoroutine(DelayedStart(playerBases[0], playerBases[1], playerBases[2], playerBases[3]));
+            CheckForDualCamera();
         }
     }
 
@@ -414,7 +412,7 @@ public class UniverseController : BlankMono
     {
         for (int i = 0; i < livingPlayers; i++)
         {
-            //        print("Removing " + "Player" + deadPlayer + "Base" + " from " + "Player" + (i + 1) + "Base");
+            //print("Removing " + "Player" + deadPlayer + "Base" + " from " + "Player" + (i + 1) + "Base");
             PlayerBase playerI = GameObject.Find("Player" + (i + 1) + "Base").GetComponentInParent<PlayerBase>();
             playerI.RemoveTarget(GameObject.Find("Player" + deadPlayer + "Base").transform);
         }
@@ -422,7 +420,6 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player, GameObject otherPlayer)
     {
-
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
         playerCode.numOfDeaths++;
 
@@ -434,11 +431,14 @@ public class UniverseController : BlankMono
         }
         else
         {
+            CheckForDualCamera();
             playerBases[playerCode.playerID] = null;
-            triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
+            if (triCamCode != null && triCamCode.enabled)
+                triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
             RemovePlayerFromTargets(playerCode.playerID + 1);
-            
+
             livingPlayers--;
+
             if (livingPlayers <= 1)
             {
                 if (playerBases[0] != null) player = playerBases[0].gameObject;
@@ -453,6 +453,37 @@ public class UniverseController : BlankMono
             }
         }
     }
+
+    private void CheckForDualCamera()
+    {
+
+        triCamCode = Camera.main.GetComponent<TriObjectiveCamera>();
+        DualObjectiveCamera dualCam = Camera.main.GetComponent<DualObjectiveCamera>();
+
+        if (livingPlayers < 3)
+        {
+            triCamCode.enabled = false;
+            dualCam.enabled = true;
+            List<PlayerBase> tempPlayerList = new List<PlayerBase>();
+            tempPlayerList.AddRange(playerBases);
+
+            dualCam.firstTarget = tempPlayerList[0].transform;
+            dualCam.secondTarget = tempPlayerList[1].transform;
+        }
+        else
+        {
+            triCamCode.enabled = true;
+            dualCam.enabled = false;
+            List<PlayerBase> tempPlayerList = new List<PlayerBase>();
+            tempPlayerList.AddRange(playerBases);
+            triCamCode.targets = null;
+
+            for (int i = 0; i < tempPlayerList.Count; i++)
+                triCamCode.targets.Add(tempPlayerList[i].transform);
+
+        }
+    }
+
     void EndGame()
     {
         victoryScene = SceneManager.GetActiveScene().name;
