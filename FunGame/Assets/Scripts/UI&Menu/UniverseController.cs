@@ -437,9 +437,9 @@ public class UniverseController : BlankMono
             if (livingPlayers <= 1)
             {
                 if (playerBases[0] != null) player = playerBases[0].gameObject;
-                else if (playerBases[1] != null) player = playerBases[0].gameObject;
-                else if (playerBases[2] != null) player = playerBases[0].gameObject;
-                else if (playerBases[3] != null) player = playerBases[0].gameObject;
+                else if (playerBases[1] != null) player = playerBases[1].gameObject;
+                else if (playerBases[2] != null) player = playerBases[2].gameObject;
+                else if (playerBases[3] != null) player = playerBases[3].gameObject;
 
                 winner = player;
                 winner.transform.parent = transform;
