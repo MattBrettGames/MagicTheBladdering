@@ -7,7 +7,8 @@ public class TriObjectiveCamera : MonoBehaviour
     [SerializeField]
     public List<Transform> targets;
     private Bounds boundBox;
-    public float dampTime;
+    public float movementDampTime;
+    public float lookDampTime;
     GameObject blank;
     Vector3 velocity;
 
@@ -28,14 +29,14 @@ public class TriObjectiveCamera : MonoBehaviour
 
     public void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), 0.6f);
+        transform.position = Vector3.Lerp(transform.position, boundBox.center + new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), movementDampTime);
 
         //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(offset.x, Mathf.Max(boundBox.size.x, boundBox.size.z) + offset.y, offset.z), ref velocity, Time.deltaTime);
 
         blank.transform.LookAt(boundBox.center + lookatOffset + (new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * camShake));
         blank.transform.position = transform.position;
 
-        transform.forward = Vector3.Lerp(transform.forward, blank.transform.forward, Time.deltaTime);
+        transform.forward = Vector3.Lerp(transform.forward, blank.transform.forward, lookDampTime);
 
         RetryTargets();
     }
