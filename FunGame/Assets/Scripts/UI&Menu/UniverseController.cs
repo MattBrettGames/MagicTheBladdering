@@ -121,7 +121,7 @@ public class UniverseController : BlankMono
         yield return new WaitForEndOfFrame();
 
         //        print(livingPlayers + "|" + numOfPlayers + "Before");
-        numOfPlayers = ReInput.controllers.controllerCount - 2;
+        //numOfPlayers = ReInput.controllers.controllerCount - 2;
         livingPlayers = numOfPlayers;
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
