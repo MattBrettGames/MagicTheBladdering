@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
@@ -30,7 +30,7 @@ public class UniverseController : BlankMono
     private int lockedInPlayers;
     public int numOfRespawns;
     public int respawnTimer;
-    List<PlayerBase> playerBases;
+    [SerializeField] List<PlayerBase> playerBases;
 
     private int livingPlayers;
     private int currentLevel;
@@ -121,7 +121,7 @@ public class UniverseController : BlankMono
         yield return new WaitForEndOfFrame();
 
         //        print(livingPlayers + "|" + numOfPlayers + "Before");
-        //numOfPlayers = ReInput.controllers.controllerCount - 2;
+        // numOfPlayers = ReInput.controllers.controllerCount - 2;
         livingPlayers = numOfPlayers;
 
         GameObject.Find("Cover").GetComponent<FadeController>().FadeFromBlack();
@@ -355,6 +355,8 @@ public class UniverseController : BlankMono
         lockedInPlayers++;
         //gobject.transform.parent = gameObject.transform;
 
+        print(lockedInPlayers + "|" + numOfPlayers);
+
         if (lockedInPlayers == numOfPlayers)
         {
             GameObject.Find("Cover").GetComponent<FadeController>().FadeToBlack("ArenaSelectorPVP");
@@ -418,7 +420,16 @@ public class UniverseController : BlankMono
 
     public void PlayerDeath(GameObject player, GameObject otherPlayer)
     {
+        StartCoroutine(LatePlayerDeath(player));
+    }
+
+    public IEnumerator LatePlayerDeath(GameObject player)
+    {
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
+
+        for (int i = 0; i < playerCode.playerID; i++)
+            yield return new WaitForEndOfFrame();
+
         playerCode.numOfDeaths++;
 
         if (playerCode.numOfDeaths < numOfRespawns)
@@ -427,21 +438,24 @@ public class UniverseController : BlankMono
         }
         else
         {
-            playerBases.RemoveAt(Mathf.Clamp(playerCode.playerID, 0, playerBases.Count));
+            playerBases.Remove(playerCode);
             if (triCamCode != null && triCamCode.enabled)
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
             RemovePlayerFromTargets(playerCode.playerID + 1);
 
             livingPlayers--;
 
-            if (livingPlayers <= 1)
+            if (playerBases.Count <= 1)//livingPlayers <= 1)
             {
-                if (playerBases[0] != null) player = playerBases[0].gameObject;
+                player = playerBases[0].gameObject;
+                /*
+                if (playerBases[0] != null)
                 else if (playerBases[1] != null) player = playerBases[1].gameObject;
                 else if (playerBases[2] != null) player = playerBases[2].gameObject;
                 else if (playerBases[3] != null) player = playerBases[3].gameObject;
-
+                */
                 winner = player;
+                print(winner.name + " has won");
                 winner.transform.parent = transform;
                 Invoke("EndGame", 2);
                 Time.timeScale = 0.5f;
