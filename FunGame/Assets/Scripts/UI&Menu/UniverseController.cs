@@ -438,7 +438,9 @@ public class UniverseController : BlankMono
         }
         else
         {
-            playerBases.Remove(playerCode);
+            if(playerBases.Count > 1)
+                playerBases.Remove(playerCode);
+            
             if (triCamCode != null && triCamCode.enabled)
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
             RemovePlayerFromTargets(playerCode.playerID + 1);
