@@ -257,24 +257,27 @@ public class UniverseController : BlankMono
                 GameObject p3 = selectedChars[2];
                 p3.SetActive(true);
                 playerCode3 = p3.GetComponent<PlayerBase>();
-                playerCode3.thisPlayer = "P3";
-                p3.tag = "Player3";
-                p3.transform.parent = GameObject.Find("CentreBase").transform;
-                p3.GetComponent<CapsuleCollider>().isTrigger = false;
+                if (playerCode3 != null)
+                {
+                    playerCode3.thisPlayer = "P3";
+                    p3.tag = "Player3";
+                    p3.transform.parent = GameObject.Find("CentreBase").transform;
+                    p3.GetComponent<CapsuleCollider>().isTrigger = false;
 
-                GameObject parent3 = GameObject.Find("Player3Base");
-                parent3.transform.SetParent(p3.transform);
-                parent3.transform.localPosition = targetPos;
-                playerCode3.TeleportPlayer(GameObject.Find("Player3Spawn").transform.position);
-                playerCode3.visuals.transform.eulerAngles = targetLook;
-                if (p3.name.Contains("Valderheim")) { charInts[2] = 0; }
-                else if (p3.name.Contains("Songbird")) { charInts[2] = 1; }
-                else if (p3.name.Contains("Carmen")) { charInts[2] = 2; }
-                else if (p3.name.Contains("Wiosna")) { charInts[2] = 3; }
-                else if (p3.name.Contains("Skjegg")) { charInts[2] = 4; }
-                p3.transform.localScale = targetScale;
-                playerCode3.SetInfo(this, 15);
-                playerBases.Add(playerCode3);
+                    GameObject parent3 = GameObject.Find("Player3Base");
+                    parent3.transform.SetParent(p3.transform);
+                    parent3.transform.localPosition = targetPos;
+                    playerCode3.TeleportPlayer(GameObject.Find("Player3Spawn").transform.position);
+                    playerCode3.visuals.transform.eulerAngles = targetLook;
+                    if (p3.name.Contains("Valderheim")) { charInts[2] = 0; }
+                    else if (p3.name.Contains("Songbird")) { charInts[2] = 1; }
+                    else if (p3.name.Contains("Carmen")) { charInts[2] = 2; }
+                    else if (p3.name.Contains("Wiosna")) { charInts[2] = 3; }
+                    else if (p3.name.Contains("Skjegg")) { charInts[2] = 4; }
+                    p3.transform.localScale = targetScale;
+                    playerCode3.SetInfo(this, 15);
+                    playerBases.Add(playerCode3);
+                }
             }
             else { selectedChars[2] = new GameObject("NullObjectException"); }
             #endregion
@@ -288,24 +291,27 @@ public class UniverseController : BlankMono
                 GameObject p4 = selectedChars[3];
                 p4.SetActive(true);
                 playerCode4 = p4.GetComponent<PlayerBase>();
-                playerCode4.thisPlayer = "P4";
-                p4.tag = "Player4";
-                p4.transform.parent = GameObject.Find("CentreBase").transform;
-                p4.GetComponent<CapsuleCollider>().isTrigger = false;
+                if (playerCode4 != null)
+                {
+                    playerCode4.thisPlayer = "P4";
+                    p4.tag = "Player4";
+                    p4.transform.parent = GameObject.Find("CentreBase").transform;
+                    p4.GetComponent<CapsuleCollider>().isTrigger = false;
 
-                GameObject parent4 = GameObject.Find("Player4Base");
-                parent4.transform.SetParent(p4.transform);
-                parent4.transform.localPosition = targetPos;
-                playerCode4.TeleportPlayer(GameObject.Find("Player4Spawn").transform.position);
-                playerCode4.visuals.transform.eulerAngles = targetLook;
-                if (p4.name.Contains("Valderheim")) { charInts[3] = 0; }
-                else if (p4.name.Contains("Songbird")) { charInts[3] = 1; }
-                else if (p4.name.Contains("Carmen")) { charInts[3] = 2; }
-                else if (p4.name.Contains("Wiosna")) { charInts[3] = 3; }
-                else if (p4.name.Contains("Skjegg")) { charInts[3] = 4; }
-                p4.transform.localScale = targetScale;
-                playerCode4.SetInfo(this, 16);
-                playerBases.Add(playerCode4);
+                    GameObject parent4 = GameObject.Find("Player4Base");
+                    parent4.transform.SetParent(p4.transform);
+                    parent4.transform.localPosition = targetPos;
+                    playerCode4.TeleportPlayer(GameObject.Find("Player4Spawn").transform.position);
+                    playerCode4.visuals.transform.eulerAngles = targetLook;
+                    if (p4.name.Contains("Valderheim")) { charInts[3] = 0; }
+                    else if (p4.name.Contains("Songbird")) { charInts[3] = 1; }
+                    else if (p4.name.Contains("Carmen")) { charInts[3] = 2; }
+                    else if (p4.name.Contains("Wiosna")) { charInts[3] = 3; }
+                    else if (p4.name.Contains("Skjegg")) { charInts[3] = 4; }
+                    p4.transform.localScale = targetScale;
+                    playerCode4.SetInfo(this, 16);
+                    playerBases.Add(playerCode4);
+                }
             }
             else { selectedChars[3] = new GameObject("NullObjectException"); }
             #endregion
@@ -427,7 +433,7 @@ public class UniverseController : BlankMono
     {
         PlayerBase playerCode = player.GetComponent<PlayerBase>();
 
-        for (int i = 0; i < playerCode.playerID; i++)
+       // for (int i = 0; i < playerCode.playerID; i++)
             yield return new WaitForEndOfFrame();
 
         playerCode.numOfDeaths++;
@@ -438,9 +444,9 @@ public class UniverseController : BlankMono
         }
         else
         {
-            if(playerBases.Count > 1)
+            if (playerBases.Count > 1)
                 playerBases.Remove(playerCode);
-            
+
             if (triCamCode != null && triCamCode.enabled)
                 triCamCode.RemoveTarget(GameObject.Find("Player" + (playerCode.playerID + 1) + "Base").transform);
             RemovePlayerFromTargets(playerCode.playerID + 1);
@@ -457,7 +463,6 @@ public class UniverseController : BlankMono
                 else if (playerBases[3] != null) player = playerBases[3].gameObject;
                 */
                 winner = player;
-                print(winner.name + " has won");
                 winner.transform.parent = transform;
                 Invoke("EndGame", 2);
                 Time.timeScale = 0.5f;
