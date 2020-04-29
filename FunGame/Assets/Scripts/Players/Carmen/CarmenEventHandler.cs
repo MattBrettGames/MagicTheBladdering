@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +40,7 @@ public class CarmenEventHandler : MonoBehaviour
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        carmen.PlaySound(clipToPlay, null);
+        carmen.PlaySound(clipToPlay);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {
