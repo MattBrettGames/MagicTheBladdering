@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ public class ValdyEventHandler : BlankMono
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        valdy.PlaySound(clipToPlay, null);
+        valdy.PlaySound(clipToPlay);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {
