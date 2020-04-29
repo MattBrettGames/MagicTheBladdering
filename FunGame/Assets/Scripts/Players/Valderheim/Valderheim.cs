@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
@@ -178,14 +178,14 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(xAttack * damageMult), Mathf.RoundToInt(xKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, xKnockbackDuration);
                 anim.SetTrigger("XAttack");
                 xTimer = xCooldown;
-                PlaySound(xSound, xVoice);
+                PlaySound(xSound);
             }
         }
         else
         {
             hammer.GainInfo(Mathf.RoundToInt(spinDamage * damageMult), Mathf.RoundToInt(spinKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.X, spinKnockbackDuration);
             anim.SetTrigger("Spin");
-            PlaySound(xSound, xVoice);
+            PlaySound(xSound);
         }
     }
 
@@ -200,7 +200,7 @@ public class Valderheim : PlayerBase
                 hammer.GainInfo(Mathf.RoundToInt(slamAttack * damageMult), Mathf.RoundToInt(slamKnockback * damageMult), visuals.transform.forward, pvp, overheadStun, this, true, AttackType.Y, slamKnockbackDuration);
                 anim.SetTrigger("YAttack");
                 yTimer = yCooldown;
-                PlaySound(ySound, yVoice);
+                PlaySound(ySound);
             }
         }
         else
@@ -208,7 +208,7 @@ public class Valderheim : PlayerBase
             hammer.GainInfo(Mathf.RoundToInt(kickAttack * damageMult), Mathf.RoundToInt(kickKnockback * damageMult), visuals.transform.forward, pvp, 0, this, true, AttackType.Y, kickKnockbackDuration);
             anim.SetTrigger("ComboKick");
             comboTime = false;
-            PlaySound(ySound, yVoice);
+            PlaySound(ySound);
         }
     }
     public void OpenComboKick() { comboTime = true; outline.OutlineColor = new Color(1, 1, 1); StartCoroutine(CallCloseCombo()); }
@@ -290,7 +290,7 @@ public class Valderheim : PlayerBase
             frenzyEffects.SetActive(true);
             bTimer = bCooldown;
 
-            PlaySound(bSound, bVoice);
+            PlaySound(bSound);
         }
     }
     private IEnumerator StopFrenzy()
