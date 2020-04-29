@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -340,7 +340,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
             Invoke("EndDodge", dodgeDur);
 
-            PlaySound(aSound, aVoice);
+            PlaySound(aSound);
         }
     }
     public virtual void EndDodge()
@@ -366,7 +366,7 @@ public abstract class PlayerBase : ThingThatCanDie
 
 
     #region SoundControl
-    public void PlaySound(AudioClip clipToPlay, AudioClip voiceClip)
+    public void PlaySound(AudioClip clipToPlay)
     {
         if (audioSource.clip != clipToPlay)
         {
@@ -375,9 +375,6 @@ public abstract class PlayerBase : ThingThatCanDie
             audioSource.Stop();
             audioSource.clip = clipToPlay;
             audioSource.Play();
-
-            if (voiceClip != null && UnityEngine.Random.Range(0, 100) < 25)
-                audioSource.PlayOneShot(voiceClip);
         }
     }
     public void PlaySound(AudioClip[] clipsToPlay)
@@ -395,7 +392,7 @@ public abstract class PlayerBase : ThingThatCanDie
     }
     public void PlayVictorySound()
     {
-        PlaySound(victorySound, null);
+        PlaySound(victorySound);
     }
     #endregion
 
