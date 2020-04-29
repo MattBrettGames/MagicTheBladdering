@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +45,7 @@ public class WiosnaExplosions : MonoBehaviour
         if (remaining > 0)
         {
             StartCoroutine(NextBlast(timeBetweenBlasts, nextBlast, remaining, uni, ySound));
-            owner.PlaySound(ySound, null);
+            owner.PlaySound(ySound);
         }
 
         StartCoroutine(Fade(timeBetweenBlasts * 2f));
