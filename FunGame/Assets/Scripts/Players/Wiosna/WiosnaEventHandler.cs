@@ -2,76 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WiosnaExplosions : MonoBehaviour
+public class WiosnaEventHandler : BlankMono
 {
 
-    PlayerBase ownerTrue;
-    int damageFull;
-    int knockFull;
-    Vector3 knockDir;
-    float spaceTrue;
-    float scaleChange;
-    ParticleSystem parts;
-    float knockbackDuration;
+    public Wiosna wiosna;
+    public Weapons melee;
+    [SerializeField] GameObject fireEffect;
 
-    public void Start()
+    void Start()
     {
-        parts = GetComponentInChildren<ParticleSystem>();
-        parts.Stop();
-        transform.localScale += transform.localScale * scaleChange;
-        gameObject.SetActive(false);
+        fireEffect.SetActive(false);
     }
 
-    public void StartChain(PlayerBase owner, int damage, int knockback, WiosnaExplosions nextBlast, Vector3 lastPos, Vector3 dir, float spacing, float timeBetweenBlasts, int remaining, UniverseController uni, AudioClip ySound, float knockDur)
+    public void BeginMelee() { melee.gameObject.SetActive(true); melee.StartAttack(); Invoke("EndMelee", 0.4f); }
+    public void EndMelee() { melee.EndAttack(); melee.gameObject.SetActive(false); }
+
+    public void BeginActing() { wiosna.BeginActing(); }
+    public void EndActing() { wiosna.EndActing(); }
+
+    public void TurnFireOn()
     {
-        gameObject.tag = owner.tag;
-
-        ownerTrue = owner;
-        damageFull = damage;
-        knockFull = knockback;
-        knockDir = dir;
-        spaceTrue = spacing;
-        parts.Clear();
-        parts.Play();
-        knockbackDuration = knockDur;
-
-        gameObject.SetActive(true);
-
-        gameObject.transform.position += (dir * spacing);
-        nextBlast.transform.position += (dir * spacing);
-        remaining--;
-        damageFull -= 2;
-
-        if (remaining > 0)
-        {
-            StartCoroutine(NextBlast(timeBetweenBlasts, nextBlast, remaining, uni, ySound));
-            owner.PlaySound(ySound);
-        }
-
-        StartCoroutine(Fade(timeBetweenBlasts * 2f));
+        fireEffect.SetActive(true);
+    }
+    public void TurnFireOff()
+    {
+        fireEffect.SetActive(false);
     }
 
-    IEnumerator NextBlast(float time, WiosnaExplosions next, int remaining, UniverseController uni, AudioClip ySound)
+
+    public void DoTheDodge() { wiosna.DotheDodge(); }
+
+    public void SummonClone() { wiosna.SummonClone(); }
+
+    public void Vibration(float intensity, float dur) { wiosna.ControllerRumble(intensity, dur, false, null); }
+    public void GainIFrmaes() { wiosna.GainIFrames(); }
+    public void LoseIFrmaes() { wiosna.LoseIFrames(); }
+
+    #region Sound
+    public void PlaySound(AudioClip clipToPlay)
     {
-        yield return new WaitForSeconds(time);
-
-        next.StartChain(ownerTrue, damageFull, knockFull, this, transform.position, knockDir, spaceTrue, time, remaining, uni, ySound, knockbackDuration);//, transform.localScale - (transform.localScale / scaleChange));
+        wiosna.PlaySound(clipToPlay);
     }
-
-    IEnumerator Fade(float time)
+    public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {
-        yield return new WaitForSeconds(time);
-
-        gameObject.SetActive(false);
+        wiosna.PlaySound(clipsToPlay);
     }
+    #endregion
 
-    public virtual void OnTriggerEnter(Collider other)
-    {
-        if (other.tag != tag || other.tag == "Untagged")
-        {
-            ThingThatCanDie player = other.gameObject.GetComponent<ThingThatCanDie>();
-            player.TakeDamage(damageFull, knockDir, knockFull, true, true, ownerTrue, knockbackDuration);
-            ownerTrue.ControllerRumble(damageFull * 0.1f, 0.2f, false, null);
-        }
-    }
 }
