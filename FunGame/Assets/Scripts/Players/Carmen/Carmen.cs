@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -176,7 +176,7 @@ public class Carmen : PlayerBase
 
         if (hitWith == AttackType.Y && stabSymbol.activeSelf)
         {
-            PlaySound(ySoundBonus, yVoice);
+            PlaySound(ySoundBonus);
         }
     }
 
@@ -218,7 +218,7 @@ public class Carmen : PlayerBase
             Invoke("StopKnockback", slashTravelDuration);
 
             xTimer = xCooldown;
-            PlaySound(xSound,xVoice);
+            PlaySound(xSound);
         }
     }
 
@@ -249,7 +249,7 @@ public class Carmen : PlayerBase
             else
             {
                 backStabBox.GainInfo(stabDamage, stabKnockback, visuals.transform.forward, pvp, 0, this, true, AttackType.Y, 0);
-                PlaySound(ySound, yVoice);
+                PlaySound(ySound);
             }
         }
     }
@@ -277,7 +277,7 @@ public class Carmen : PlayerBase
             grapplingTrap.OnThrow(visuals.transform.forward, this, playerID + 13, bDamage);
 
             bTimer = bCooldown;
-            PlaySound(bSound, bVoice);
+            PlaySound(bSound);
         }
     }
 
