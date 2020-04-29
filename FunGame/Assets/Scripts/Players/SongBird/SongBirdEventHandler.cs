@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,7 +32,7 @@ public class SongBirdEventHandler : BlankMono
     #region Sound
     public void PlaySound(AudioClip clipToPlay)
     {
-        songBird.PlaySound(clipToPlay, null);
+        songBird.PlaySound(clipToPlay);
     }
     public void PlaySoundFromArray(AudioClip[] clipsToPlay)
     {
