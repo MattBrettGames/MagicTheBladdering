@@ -134,6 +134,7 @@ public class UniverseController : BlankMono
         }
         if (level == 2)
         {
+        numOfPlayers = 2;
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -141,6 +142,7 @@ public class UniverseController : BlankMono
         }
         else if (level == 3)
         {
+        numOfPlayers = 3;
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
@@ -151,6 +153,7 @@ public class UniverseController : BlankMono
         }
         else if (level == 4)
         {
+        numOfPlayers = 4;
             charSelector1 = GameObject.FindGameObjectWithTag("P1Selector").GetComponent<CharacterSelector>();
             charSelector1.SetUniverse(this);
             charSelector2 = GameObject.FindGameObjectWithTag("P2Selector").GetComponent<CharacterSelector>();
