@@ -66,7 +66,7 @@ public class ArenaSelector : BlankMono
                 arenaName.text = displays[currentDisplay].name;
             }
             inputCooldown = true;
-            Invoke("EndCooldown", 0.3f);
+            Invoke("EndCooldown", 0.6f);
         }
         if ((player.GetAxis("HoriMove") <= -0.4f && !inputCooldown) || (player2.GetAxis("HoriMove") <= -0.4f && !inputCooldown))
         {
@@ -85,7 +85,7 @@ public class ArenaSelector : BlankMono
                 arenaName.text = displays[currentDisplay].name; 
             }
             inputCooldown = true;
-            Invoke("EndCooldown", 0.3f);
+            Invoke("EndCooldown", 0.6f);
         }
 
         if (player.GetButtonDown("AAction") || player2.GetButtonDown("AAction") || Input.GetKeyDown(KeyCode.H))
